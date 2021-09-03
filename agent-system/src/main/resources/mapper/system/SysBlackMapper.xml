@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manager.system.mapper.SysBlackMapper">
+
+    <insert id="insertBlack" parameterType="com.manager.common.core.domain.entity.SysBlack">
+        insert into sys_black(t_id, black_type,handle_type,black_num,create_time,create_by) values
+        <foreach item="item" index="index" collection="blackNum.split(',')" separator=",">
+            (#{tid},#{blackType},#{handleType},#{item},sysdate(),#{createBy})
+        </foreach>
+    </insert>
+
+    <select id="getSysBlacks" parameterType="com.manager.common.core.domain.entity.SysBlack" resultType="java.util.Map">
+        select b.id,b.black_type blackType,
+        b.handle_type handleType,
+        t.t_name tname,
+        b.black_num blackNum,b.create_time createTime,b.create_by createBy
+        from sys_black b
+        left join sys_tenant t on b.t_id = t.t_id
+        <where>
+            <if test="beginTime !=null and beginTime !=''">
+                and b.create_time >=#{beginTime}
+            </if>
+            <if test="endTime !=null and endTime !=''">
+                and #{endTime} >=b.create_time
+            </if>
+            <if test="blackType !=null and blackType !=''">
+                and b.black_type = #{blackType}
+            </if>
+            <if test="handleType !=null and handleType !=''">
+                and b.handle_type = #{handleType}
+            </if>
+            <if test="blackNum !=null and blackNum !=''">
+                and b.black_num = #{blackNum}
+            </if>
+        </where>
+
+    </select>
+</mapper>

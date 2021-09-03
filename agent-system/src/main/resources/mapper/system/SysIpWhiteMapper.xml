@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manager.system.mapper.SysIpWhiteMapper">
+
+    <insert id="insertIpWhite">
+        insert into sys_ip_white(
+            t_id,
+            user_id,
+            ip,
+            create_user_id)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+                #{item.tid},
+                #{item.userId},
+                #{item.ip},
+                #{item.createUserId}
+            )
+        </foreach>
+
+    </insert>
+
+    <select id="selectIpWhiteList" resultType="java.util.Map">
+        select su.user_name userName
+        ,sur.user_name createName
+        ,ip.ip
+        ,DATE_FORMAT(ip.create_time,'%Y-%m-%d %H:%i-%s') createTime
+        ,ip.id
+        ,t.t_name tName
+        from sys_ip_white ip
+        left join sys_user su on ip.user_id = su.user_id
+        left join sys_user sur on ip.create_user_id = sur.user_id
+        left join sys_tenant t on ip.t_id = t.t_id
+        <where>
+            <if test="tid != null and tid != ''">
+                and ip.t_id = #{tid}
+            </if>
+            <if test="userId != null and userId != ''">
+                and ip.user_id = #{userId}
+            </if>
+            <if test="userName != null and userName != ''">
+                and su.user_name = #{userName}
+            </if>
+            <if test="ip != null and ip != ''">
+                and ip.ip = #{ip}
+            </if>
+        </where>
+        order by ip.create_time desc
+    </select>
+
+    <select id="selectIpByUserId" resultType="java.util.Map">
+        select i.ip
+        from sys_ip_white i
+        left join sys_user u on i.user_id = u.user_id
+        <where>
+            <if test="userId != null and userId != ''">
+                and i.user_id = #{userId}
+            </if>
+        </where>
+    </select>
+</mapper>
