@@ -34,16 +34,16 @@ spring:
     druid:
       # 主库数据源
       master:
-        url: jdbc:mysql://18.142.67.104:3306/sys-manager?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+        url: jdbc:mysql://18.142.67.104:3306/agent-manager?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
         username: root
         password: AAK212@VS%
       # 从库数据源
       slave:
         # 从数据源开关/默认关闭
         enabled: false
-        url:
-        username:
-        password:
+        url: jdbc:mysql://18.142.67.104:3306/sys-data?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+        username: root
+        password: AAK212@VS%
       # 初始连接数
       initialSize: 5
       # 最小连接池数量
@@ -89,6 +89,7 @@ spring:
 manager:
   # 名称
   name: system-manager
+  tid: 100
   # 版本
   version: 1.0.0
   # 版权年份
@@ -106,7 +107,7 @@ manager:
 # 开发环境配置
 server:
   # 服务器的HTTP端口，默认为8080
-  port: 8080
+  port: 3080
   servlet:
     # 应用的访问路径
     context-path: /

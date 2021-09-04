@@ -38,6 +38,8 @@ public class ManagerConfig {
      */
     private static String profile;
 
+    private Integer tid;
+
     /**
      * 获取地址开关
      */
