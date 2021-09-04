@@ -40,6 +40,7 @@ public class ManagerConfig {
 
     private Integer tid;
 
+    private String tname;
     /**
      * 获取地址开关
      */

@@ -26,6 +26,6 @@ public class SysIndexController {
      */
     @RequestMapping("/")
     public String index() {
-        return StringUtils.format("欢迎使用{}后台管理系统，当前版本：v{}，请通过前端访问！！！(♥◠‿◠)ﾉﾞ", managerConfig.getName(), managerConfig.getVersion());
+        return StringUtils.format("欢迎使用{}后台管理系统，当前版本：v{}，平台id：{},平台名称：{}(♥◠‿◠)ﾉﾞ", managerConfig.getName(), managerConfig.getVersion(),managerConfig.getTid(),managerConfig.getTname());
     }
 }
