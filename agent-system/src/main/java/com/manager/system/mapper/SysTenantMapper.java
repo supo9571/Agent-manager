@@ -1,6 +1,5 @@
 package com.manager.system.mapper;
 
-import com.manager.common.core.domain.entity.SysDept;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

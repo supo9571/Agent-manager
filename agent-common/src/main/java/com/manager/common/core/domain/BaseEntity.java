@@ -1,17 +1,16 @@
 package com.manager.common.core.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * Entity基类
@@ -25,7 +24,7 @@ public class BaseEntity implements Serializable {
     /**
      * 搜索值
      */
-    @JsonIgnore
+    @ApiModelProperty(hidden = true)
     private String searchValue;
 
     /**
@@ -71,7 +70,7 @@ public class BaseEntity implements Serializable {
     /**
      * 备注
      */
-    @JsonIgnore
+    @ApiModelProperty(hidden = true)
     private String remark;
 
     @ApiModelProperty("页码")
@@ -89,19 +88,19 @@ public class BaseEntity implements Serializable {
     /**
      * 请求参数
      */
-    @JsonIgnore
+    @ApiModelProperty(hidden = true)
     private Map<String, Object> params;
 
     /**
      * 开始时间 ms
      */
-    @JsonIgnore
+    @ApiModelProperty(hidden = true)
     private String beginms;
 
     /**
      * 结束时间 ms
      */
-    @JsonIgnore
+    @ApiModelProperty(hidden = true)
     private String endms;
 
     public String getBeginms(){

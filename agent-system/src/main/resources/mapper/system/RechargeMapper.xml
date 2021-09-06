@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manager.system.mapper.RechargeMapper">
+
+    <insert id="saveVipRecharge" parameterType="com.manager.common.core.domain.entity.VipRecharge">
+        insert into config_vip_recharge (vip_name,recharge_type,recharge_other_type,open_type,img_type,
+                                        live_addr,url,qq,wechat,status,create_time,update_time,create_by,update_by,ys_id)
+        values
+            (#{vipName},#{rechargeType},#{rechargeOtherType},#{openType},#{imgType},
+             #{liveAddr},#{url},#{qq},#{wechat},#{status},sysdate(),sysdate(),#{createBy},#{createBy},#{ysid})
+    </insert>
+
+    <select id="findVipRecharge" resultType="java.util.Map">
+        select id, vip_name vipName,recharge_type rechargeType,recharge_other_type rechargeOtherType,open_type openType,img_type imgType,
+               live_addr liveAddr,url,qq,wechat,status,update_time updateTime,ys_id ysid
+        from config_vip_recharge
+
+    </select>
+
+    <update id="updateVipRecharge">
+        update config_vip_recharge
+        <set>
+            <if test="status!=null and status!=''"> status = #{status},</if>
+            <if test="openType!=null and openType!=''"> open_type = #{openType},</if>
+            <if test="vipName!=null and vipName!=''"> vip_name = #{vipName},</if>
+            <if test="imgType!=null and imgType!=''"> img_type = #{imgType},</if>
+            <if test="rechargeType!=null and rechargeType!=''"> recharge_type = #{rechargeType},</if>
+            <if test="rechargeOtherType!=null and rechargeOtherType!=''"> recharge_other_type = #{rechargeOtherType},</if>
+            <if test="ysid!=null and ysid!=''"> ys_id = #{ysid},</if>
+            <if test="liveAddr!=null and liveAddr!=''"> live_addr = #{liveAddr},</if>
+            <if test="url!=null and url!=''"> url = #{url},</if>
+            <if test="qq!=null and qq!=''"> qq = #{qq},</if>
+            <if test="wechat!=null and wechat!=''"> wechat = #{wechat},</if>
+            update_time = sysdate(),
+            update_by = #{updateBy}
+        </set>
+        where id = #{id}
+    </update>
+</mapper>
