@@ -38,4 +38,48 @@
         </set>
         where id = #{id}
     </update>
+
+    <!--添加线上充值信息-->
+    <insert id="saveOnlineRecharge" parameterType="com.manager.common.core.domain.entity.OnlineRecharge">
+        insert into config_online_recharge (pay_id,pay_type,vip_list,other_name,is_diy,diy_min,
+                                            diy_max,btn,pay_url,sort,channel_list,use_mobile,status,update_time,create_time,update_by,msg)
+        values
+            (#{payid},#{payType},#{vipList},#{otherName},#{isDiy},#{diyMin},
+             #{diyMax},#{btn},#{payUrl},#{sort},#{channelList},#{useMobile},#{status},sysdate(),sysdate(),#{updateBy},#{msg})
+
+    </insert>
+
+    <select id="findOnlineRecharge" resultType="java.util.Map">
+        select id, pay_id payid,pay_type payType,vip_list vipList,other_name otherName,is_diy isDiy,diy_min diyMin,
+               diy_max diyMax,btn,pay_url payUrl,sort,channel_list channelList, use_mobile useMobile,status,update_time updateTime,update_by updateBy,msg
+        from config_online_recharge
+        <where>
+            <if test="payType!=null and payType!=''"> and pay_type = #{payType} </if>
+            <if test="status!=null and status!=''"> and status = #{status} </if>
+            <if test="vipList!=null and vipList!=''"> and vip_list like concat('%',#{vipList},'%') </if>
+        </where>
+    </select>
+
+    <update id="updateOnlineRecharge">
+        update config_online_recharge
+        <set>
+            <if test="payid!=null and payid!=''"> pay_id = #{payid},</if>
+            <if test="payType!=null and payType!=''"> pay_type = #{payType},</if>
+            <if test="vipList!=null and vipList!=''"> vip_list = #{vipList},</if>
+            <if test="otherName!=null and otherName!=''"> other_name = #{otherName},</if>
+            <if test="isDiy!=null and isDiy!=''"> is_diy = #{isDiy},</if>
+            <if test="diyMin!=null and diyMin!=''"> diy_min = #{diyMin},</if>
+            <if test="diyMax!=null and diyMax!=''"> diy_max = #{diyMax},</if>
+            <if test="btn!=null and btn!=''"> btn = #{btn},</if>
+            <if test="payUrl!=null and payUrl!=''"> pay_url = #{payUrl},</if>
+            <if test="sort!=null and sort!=''"> sort = #{sort},</if>
+            <if test="channelList!=null and channelList!=''"> channel_list = #{channelList},</if>
+            <if test="useMobile!=null and useMobile!=''"> use_mobile = #{useMobile},</if>
+            <if test="status!=null and status!=''"> status = #{status},</if>
+            <if test="msg!=null and msg!=''"> msg = #{msg},</if>
+            update_time = sysdate(),
+            update_by = #{updateBy}
+        </set>
+        where id = #{id}
+    </update>
 </mapper>

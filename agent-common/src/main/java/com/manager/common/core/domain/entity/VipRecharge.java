@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 public class VipRecharge extends BaseEntity {
 
-    @ApiModelProperty(hidden = true)
+    @ApiModelProperty("主键id")
     private Integer id;
 
     @ApiModelProperty(hidden = true)
