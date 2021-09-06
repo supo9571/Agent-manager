@@ -3,6 +3,7 @@ package com.manager.web.controller.game;
 import com.manager.common.annotation.Log;
 import com.manager.common.core.controller.BaseController;
 import com.manager.common.core.domain.AjaxResult;
+import com.manager.common.core.domain.entity.BankRecharge;
 import com.manager.common.core.domain.entity.OnlineRecharge;
 import com.manager.common.core.domain.entity.VipRecharge;
 import com.manager.common.enums.BusinessType;
@@ -110,6 +111,43 @@ public class RechargeController extends BaseController {
     public AjaxResult editOnline(OnlineRecharge onlineRecharge) {
         onlineRecharge.setUpdateBy(SecurityUtils.getUsername());
         Integer i = rechargeService.updateOnlineRecharge(onlineRecharge);
+        return i>0?AjaxResult.success():AjaxResult.error();
+    }
+
+    /**
+     * 添加 银行卡充值
+     */
+    @PreAuthorize("@ss.hasPermi('system:recharge:addbank')")
+    @ApiOperation(value = "添加银行卡充值")
+    @Log(title = "添加银行卡充值", businessType = BusinessType.INSERT)
+    @PostMapping("/addbank")
+    public AjaxResult addBank(BankRecharge bankRecharge) {
+        bankRecharge.setUpdateBy(SecurityUtils.getUsername());
+        Integer i = rechargeService.saveBankRecharge(bankRecharge);
+        return i>0?AjaxResult.success():AjaxResult.error();
+    }
+
+    /**
+     * 查询 银行卡充值 列表
+     */
+    @PreAuthorize("@ss.hasPermi('system:recharge:banklist')")
+    @ApiOperation(value = "查询银行卡充值")
+    @PostMapping("/banklist")
+    public AjaxResult bankList(BankRecharge bankRecharge) {
+        startPage();
+        List list = rechargeService.findBankRecharge(bankRecharge);
+        return AjaxResult.success(getDataTable(list));
+    }
+
+    /**
+     * 修改 银行卡充值 配置
+     */
+    @PreAuthorize("@ss.hasPermi('system:recharge:editbank')")
+    @ApiOperation(value = "修改银行卡充值")
+    @PostMapping("/editbank")
+    public AjaxResult editBank(BankRecharge bankRecharge) {
+        bankRecharge.setUpdateBy(SecurityUtils.getUsername());
+        Integer i = rechargeService.updateBankRecharge(bankRecharge);
         return i>0?AjaxResult.success():AjaxResult.error();
     }
 }

@@ -1,5 +1,6 @@
 package com.manager.system.mapper;
 
+import com.manager.common.core.domain.entity.BankRecharge;
 import com.manager.common.core.domain.entity.OnlineRecharge;
 import com.manager.common.core.domain.entity.VipRecharge;
 import org.apache.ibatis.annotations.Mapper;
@@ -28,4 +29,10 @@ public interface RechargeMapper {
     List findOnlineRecharge(OnlineRecharge onlineRecharge);
 
     Integer updateOnlineRecharge(OnlineRecharge onlineRecharge);
+
+    Integer saveBankRecharge(BankRecharge bankRecharge);
+
+    List findBankRecharge(BankRecharge bankRecharge);
+
+    Integer updateBankRecharge(BankRecharge bankRecharge);
 }

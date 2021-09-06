@@ -16,7 +16,6 @@
         select id, vip_name vipName,recharge_type rechargeType,recharge_other_type rechargeOtherType,open_type openType,img_type imgType,
                live_addr liveAddr,url,qq,wechat,status,update_time updateTime,ys_id ysid
         from config_vip_recharge
-
     </select>
 
     <update id="updateVipRecharge">
@@ -77,6 +76,38 @@
             <if test="useMobile!=null and useMobile!=''"> use_mobile = #{useMobile},</if>
             <if test="status!=null and status!=''"> status = #{status},</if>
             <if test="msg!=null and msg!=''"> msg = #{msg},</if>
+            update_time = sysdate(),
+            update_by = #{updateBy}
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--添加银行充值 配置信息-->
+    <insert id="saveBankRecharge" parameterType="com.manager.common.core.domain.entity.BankRecharge">
+        insert into config_bank_recharge
+            (vip_list,open_type,btn,live_addr,bank_value,create_time,update_time,update_by,status)
+        values
+            (#{vipList},#{openType},#{btn},#{liveAddr},#{bankValue},sysdate(),sysdate(),#{updateBy},#{status})
+    </insert>
+
+    <select id="findBankRecharge" resultType="java.util.Map">
+        select id,vip_list vipList,open_type openType,btn,live_addr liveAddr,bank_value bankValue,update_time updateTime,update_by updateBy,status
+        from config_bank_recharge
+        <where>
+            <if test="status!=null and status!=''"> and status = #{status} </if>
+            <if test="vipList!=null and vipList!=''"> and vip_list like concat('%',#{vipList},'%') </if>
+        </where>
+    </select>
+
+    <update id="updateBankRecharge">
+        update config_bank_recharge
+        <set>
+            <if test="vipList!=null and vipList!=''"> vip_list = #{vipList},</if>
+            <if test="openType!=null and openType!=''"> open_type = #{openType},</if>
+            <if test="btn!=null and btn!=''"> btn = #{btn},</if>
+            <if test="liveAddr!=null and liveAddr!=''"> live_addr = #{liveAddr},</if>
+            <if test="bankValue!=null and bankValue!=''"> bank_value = #{bankValue},</if>
+            <if test="status!=null and status!=''"> status = #{status},</if>
             update_time = sysdate(),
             update_by = #{updateBy}
         </set>

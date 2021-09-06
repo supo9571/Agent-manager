@@ -1,6 +1,6 @@
 package com.manager.system.service;
 
-import com.manager.common.core.domain.AjaxResult;
+import com.manager.common.core.domain.entity.BankRecharge;
 import com.manager.common.core.domain.entity.OnlineRecharge;
 import com.manager.common.core.domain.entity.VipRecharge;
 
@@ -23,4 +23,10 @@ public interface RechargeService {
     List findOnlineRecharge(OnlineRecharge onlineRecharge);
 
     Integer updateOnlineRecharge(OnlineRecharge onlineRecharge);
+
+    Integer saveBankRecharge(BankRecharge bankRecharge);
+
+    List findBankRecharge(BankRecharge bankRecharge);
+
+    Integer updateBankRecharge(BankRecharge bankRecharge);
 }
