@@ -6,6 +6,7 @@ import com.manager.common.core.domain.entity.SysUser;
 import com.manager.common.utils.google.GoogleAuth;
 import com.manager.framework.manager.AsyncManager;
 import com.manager.system.service.SysIpWhiteService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -87,9 +88,14 @@ public class SysLoginService
         }
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         //验证google验证码
-        if(loginUser.getUser().isSwitchOpen() && !GoogleAuth.isPattern(loginUser.getUser().getGoogleKey(),googleCode)){
-            throw new CustomException("google验证码错误");
+        if(StringUtils.isNotBlank(googleCode)){
+            if(loginUser.getUser().isSwitchOpen() && !GoogleAuth.isPattern(loginUser.getUser().getGoogleKey(),googleCode)){
+                throw new CustomException("google验证码错误");
+            }
+        }else{
+            throw new CustomException("google验证码不能为空");
         }
+
         //验证ip
         String ips = sysIpWhiteService.selectIpByUserId(loginUser.getUser().getUserId()+"");
         if(ips.isEmpty() || ips.contains(IpUtils.getHostIp())){
