@@ -4,6 +4,7 @@ import com.manager.common.annotation.Log;
 import com.manager.common.core.controller.BaseController;
 import com.manager.common.core.domain.AjaxResult;
 import com.manager.common.core.domain.entity.BankRecharge;
+import com.manager.common.core.domain.entity.MonthRecharge;
 import com.manager.common.core.domain.entity.OnlineRecharge;
 import com.manager.common.core.domain.entity.VipRecharge;
 import com.manager.common.enums.BusinessType;
@@ -148,6 +149,44 @@ public class RechargeController extends BaseController {
     public AjaxResult editBank(BankRecharge bankRecharge) {
         bankRecharge.setUpdateBy(SecurityUtils.getUsername());
         Integer i = rechargeService.updateBankRecharge(bankRecharge);
+        return i>0?AjaxResult.success():AjaxResult.error();
+    }
+
+    /**
+     * 添加 月卡
+     */
+    @PreAuthorize("@ss.hasPermi('system:recharge:addmonth')")
+    @ApiOperation(value = "添加月卡配置")
+    @Log(title = "添加月卡配置", businessType = BusinessType.INSERT)
+    @PostMapping("/addmonth")
+    public AjaxResult addMonth(MonthRecharge monthRecharge) {
+        monthRecharge.setUpdateBy(SecurityUtils.getUsername());
+        Integer i = rechargeService.saveMonthRecharge(monthRecharge);
+        return i>0?AjaxResult.success():AjaxResult.error();
+    }
+
+    /**
+     * 查询 月卡
+     */
+    @PreAuthorize("@ss.hasPermi('system:recharge:monthlist')")
+    @ApiOperation(value = "查询月卡配置")
+    @PostMapping("/monthlist")
+    public AjaxResult monthList(MonthRecharge monthRecharge) {
+        startPage();
+        List list = rechargeService.findMonthRecharge(monthRecharge);
+        return AjaxResult.success(getDataTable(list));
+    }
+
+    /**
+     * 修改 月卡
+     */
+    @PreAuthorize("@ss.hasPermi('system:recharge:editmonth')")
+    @ApiOperation(value = "编辑月卡配置")
+    @Log(title = "编辑月卡配置", businessType = BusinessType.UPDATE)
+    @PostMapping("/editmonth")
+    public AjaxResult editMonth(MonthRecharge monthRecharge) {
+        monthRecharge.setUpdateBy(SecurityUtils.getUsername());
+        Integer i = rechargeService.updateMonthRecharge(monthRecharge);
         return i>0?AjaxResult.success():AjaxResult.error();
     }
 }

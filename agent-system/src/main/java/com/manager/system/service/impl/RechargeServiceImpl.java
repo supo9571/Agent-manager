@@ -1,6 +1,7 @@
 package com.manager.system.service.impl;
 
 import com.manager.common.core.domain.entity.BankRecharge;
+import com.manager.common.core.domain.entity.MonthRecharge;
 import com.manager.common.core.domain.entity.OnlineRecharge;
 import com.manager.common.core.domain.entity.VipRecharge;
 import com.manager.system.mapper.RechargeMapper;
@@ -92,5 +93,25 @@ public class RechargeServiceImpl implements RechargeService {
     @Override
     public Integer updateBankRecharge(BankRecharge bankRecharge) {
         return rechargeMapper.updateBankRecharge(bankRecharge);
+    }
+
+    /**
+     * 添加月卡
+     * @param monthRecharge
+     * @return
+     */
+    @Override
+    public Integer saveMonthRecharge(MonthRecharge monthRecharge) {
+        return rechargeMapper.saveMonthRecharge(monthRecharge);
+    }
+
+    @Override
+    public List findMonthRecharge(MonthRecharge monthRecharge) {
+        return rechargeMapper.findMonthRecharge(monthRecharge);
+    }
+
+    @Override
+    public Integer updateMonthRecharge(MonthRecharge monthRecharge) {
+        return rechargeMapper.updateMonthRecharge(monthRecharge);
     }
 }

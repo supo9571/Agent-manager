@@ -1,6 +1,7 @@
 package com.manager.system.service;
 
 import com.manager.common.core.domain.entity.BankRecharge;
+import com.manager.common.core.domain.entity.MonthRecharge;
 import com.manager.common.core.domain.entity.OnlineRecharge;
 import com.manager.common.core.domain.entity.VipRecharge;
 
@@ -29,4 +30,10 @@ public interface RechargeService {
     List findBankRecharge(BankRecharge bankRecharge);
 
     Integer updateBankRecharge(BankRecharge bankRecharge);
+
+    Integer saveMonthRecharge(MonthRecharge monthRecharge);
+
+    List findMonthRecharge(MonthRecharge monthRecharge);
+
+    Integer updateMonthRecharge(MonthRecharge monthRecharge);
 }

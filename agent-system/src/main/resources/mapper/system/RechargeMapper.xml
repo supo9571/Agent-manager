@@ -113,4 +113,44 @@
         </set>
         where id = #{id}
     </update>
+
+    <!--添加月卡 配置信息-->
+    <insert id="saveMonthRecharge" parameterType="com.manager.common.core.domain.entity.MonthRecharge">
+        insert into config_month_recharge
+        (jin_recharge,jin_recharge_give,jin_recharge_give_day,yin_recharge,yin_recharge_give,yin_recharge_give_day,open_type,live_addr,wechat,
+         qq,create_time,update_time,update_by)
+        values
+            (#{jinRecharge},#{jinRechargeGive},#{jinRechargeGiveDay},#{yinRecharge},#{yinRechargeGive},#{yinRechargeGiveDay},#{openType},#{liveAddr},#{wechat},
+             #{qq},sysdate(),sysdate(),#{updateBy})
+
+    </insert>
+
+    <select id="findMonthRecharge" resultType="java.util.Map">
+        select id,jin_recharge jinRecharge,jin_recharge_give jinRechargeGive,jin_recharge_give_day jinRechargeGiveDay,
+               yin_recharge yinRecharge,yin_recharge_give yinRechargeGive,yin_recharge_give_day yinRechargeGiveDay,
+               open_type openType,live_addr liveAddr,wechat,
+               qq,create_time createTime,update_time updateTime,update_by updateBy
+        from config_month_recharge
+        where status = '1'
+    </select>
+
+    <update id="updateMonthRecharge">
+        update config_month_recharge
+        <set>
+            <if test="jinRecharge!=null and jinRecharge!=''"> jin_recharge = #{jinRecharge},</if>
+            <if test="jinRechargeGive!=null and jinRechargeGive!=''"> jin_recharge_give = #{jinRechargeGive},</if>
+            <if test="jinRechargeGiveDay!=null and jinRechargeGiveDay!=''"> jin_recharge_give_day = #{jinRechargeGiveDay},</if>
+            <if test="yinRecharge!=null and yinRecharge!=''">yin_recharge = #{yinRecharge},</if>
+            <if test="yinRechargeGive!=null and yinRechargeGive!=''"> yin_recharge_give = #{yinRechargeGive},</if>
+            <if test="yinRechargeGiveDay!=null and yinRechargeGiveDay!=''"> yin_recharge_give_day = #{yinRechargeGiveDay},</if>
+            <if test="openType!=null and openType!=''"> open_type = #{openType},</if>
+            <if test="liveAddr!=null and liveAddr!=''"> live_addr = #{liveAddr},</if>
+            <if test="wechat!=null and wechat!=''"> wechat = #{wechat},</if>
+            <if test="qq!=null and qq!=''"> qq = #{qq},</if>
+            update_time = sysdate(),
+            update_by = #{updateBy}
+        </set>
+        where id = #{id}
+    </update>
+
 </mapper>
