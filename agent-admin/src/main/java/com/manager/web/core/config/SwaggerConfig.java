@@ -28,21 +28,24 @@ import java.util.List;
 @Configuration
 @EnableSwagger2
 @EnableKnife4j
-public class SwaggerConfig
-{
-    /** 系统基础配置 */
+public class SwaggerConfig {
+    /**
+     * 系统基础配置
+     */
     @Autowired
     private ManagerConfig managerConfig;
 
-    /** 是否开启swagger */
+    /**
+     * 是否开启swagger
+     */
     @Value("${swagger.enabled}")
     private boolean enabled;
+
     /**
      * 创建API
      */
     @Bean
-    public Docket createRestApi()
-    {
+    public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .enable(enabled)
                 .apiInfo(apiInfo())
@@ -63,10 +66,10 @@ public class SwaggerConfig
 
     /**
      * 安全模式，这里指定token通过Authorization头请求头传递
+     *
      * @return
      */
-    private List<SecurityScheme> securitySchemes()
-    {
+    private List<SecurityScheme> securitySchemes() {
         List<SecurityScheme> apiKeyList = new ArrayList<SecurityScheme>();
         apiKeyList.add(new ApiKey("Authorization", "Authorization", In.HEADER.toValue()));
         return apiKeyList;
@@ -75,15 +78,14 @@ public class SwaggerConfig
     /**
      * 安全上下文
      */
-    private List<SecurityContext> securityContexts()
-    {
+    private List<SecurityContext> securityContexts() {
         //设置需要登录认证的路径
         List<SecurityContext> result = new ArrayList<>();
         result.add(getContextByPath("/brand/.*"));
         return result;
     }
 
-    private SecurityContext getContextByPath(String pathRegex){
+    private SecurityContext getContextByPath(String pathRegex) {
         return SecurityContext.builder()
                 .securityReferences(defaultAuth())
                 .forPaths(PathSelectors.regex(pathRegex))
@@ -105,12 +107,11 @@ public class SwaggerConfig
     /**
      * 添加摘要信息
      */
-    private ApiInfo apiInfo()
-    {
+    private ApiInfo apiInfo() {
         // 用ApiInfoBuilder进行定制
         return new ApiInfoBuilder()
                 // 设置标题
-                .title("Swagger_接口文档")
+                .title("运营后台_swagger接口文档")
                 // 描述
                 .description("描述：方便开发人员测试对接接口......")
                 // 作者信息
