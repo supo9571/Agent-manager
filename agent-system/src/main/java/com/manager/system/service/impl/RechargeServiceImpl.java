@@ -1,11 +1,10 @@
 package com.manager.system.service.impl;
 
-import com.manager.common.core.domain.entity.BankRecharge;
-import com.manager.common.core.domain.entity.MonthRecharge;
-import com.manager.common.core.domain.entity.OnlineRecharge;
-import com.manager.common.core.domain.entity.VipRecharge;
+import com.manager.common.core.domain.entity.*;
+import com.manager.common.utils.SecurityUtils;
 import com.manager.system.mapper.RechargeMapper;
 import com.manager.system.service.RechargeService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -113,5 +112,32 @@ public class RechargeServiceImpl implements RechargeService {
     @Override
     public Integer updateMonthRecharge(MonthRecharge monthRecharge) {
         return rechargeMapper.updateMonthRecharge(monthRecharge);
+    }
+
+    /**
+     * 添加 银商
+     * @param ysinfo
+     * @return
+     */
+    @Override
+    public Integer saveYsinfo(Ysinfo ysinfo) {
+        ysinfo.setPassword(SecurityUtils.encryptPassword(ysinfo.getPassword()));
+        return rechargeMapper.saveYsinfo(ysinfo);
+    }
+
+    @Override
+    public List findYsinfo() {
+        return rechargeMapper.fingYsinfo();
+    }
+
+    @Override
+    public Integer updateYsinfo(Ysinfo ysinfo) {
+        if (StringUtils.isNotBlank(ysinfo.getPassword())) ysinfo.setPassword(SecurityUtils.encryptPassword(ysinfo.getPassword()));
+        return rechargeMapper.updateYsinfo(ysinfo);
+    }
+
+    @Override
+    public List getYsOption() {
+        return rechargeMapper.getYsOption();
     }
 }

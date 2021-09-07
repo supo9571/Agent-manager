@@ -1,9 +1,6 @@
 package com.manager.system.mapper;
 
-import com.manager.common.core.domain.entity.BankRecharge;
-import com.manager.common.core.domain.entity.MonthRecharge;
-import com.manager.common.core.domain.entity.OnlineRecharge;
-import com.manager.common.core.domain.entity.VipRecharge;
+import com.manager.common.core.domain.entity.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -42,4 +39,14 @@ public interface RechargeMapper {
     List findMonthRecharge(MonthRecharge monthRecharge);
 
     Integer updateMonthRecharge(MonthRecharge monthRecharge);
+
+    Integer saveYsinfo(Ysinfo ysinfo);
+
+    @Select("select id,username,password,amount,update_time updateTime,google_check googleCheck,google_key googleKey,recharge_status rechargeStatus from config_ys where status = '1' ")
+    List<Map> fingYsinfo();
+
+    Integer updateYsinfo(Ysinfo ysinfo);
+
+    @Select("select id,username from config_ys where status = '1' ")
+    List<Map> getYsOption();
 }

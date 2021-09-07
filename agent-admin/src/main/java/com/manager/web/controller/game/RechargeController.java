@@ -3,10 +3,7 @@ package com.manager.web.controller.game;
 import com.manager.common.annotation.Log;
 import com.manager.common.core.controller.BaseController;
 import com.manager.common.core.domain.AjaxResult;
-import com.manager.common.core.domain.entity.BankRecharge;
-import com.manager.common.core.domain.entity.MonthRecharge;
-import com.manager.common.core.domain.entity.OnlineRecharge;
-import com.manager.common.core.domain.entity.VipRecharge;
+import com.manager.common.core.domain.entity.*;
 import com.manager.common.enums.BusinessType;
 import com.manager.common.utils.SecurityUtils;
 import com.manager.system.service.RechargeService;
@@ -14,6 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -188,5 +186,48 @@ public class RechargeController extends BaseController {
         monthRecharge.setUpdateBy(SecurityUtils.getUsername());
         Integer i = rechargeService.updateMonthRecharge(monthRecharge);
         return i>0?AjaxResult.success():AjaxResult.error();
+    }
+
+    /**
+     * 添加银商信息
+     */
+    @PreAuthorize("@ss.hasPermi('system:recharge:addys')")
+    @ApiOperation(value = "添加银商信息")
+    @Log(title = "添加银商信息", businessType = BusinessType.INSERT)
+    @PostMapping("/addys")
+    public AjaxResult addYs(Ysinfo ysinfo) {
+        Integer i = rechargeService.saveYsinfo(ysinfo);
+        return i>0?AjaxResult.success():AjaxResult.error();
+    }
+
+    /**
+     * 查询 银商信息
+     */
+    @PreAuthorize("@ss.hasPermi('system:recharge:yslist')")
+    @ApiOperation(value = "查询银商列表")
+    @PostMapping("/yslist")
+    public AjaxResult ysList() {
+        return AjaxResult.success(rechargeService.findYsinfo());
+    }
+
+    /**
+     * 编辑 银商信息
+     */
+    @PreAuthorize("@ss.hasPermi('system:recharge:editys')")
+    @Log(title = "编辑银商列表", businessType = BusinessType.UPDATE)
+    @ApiOperation(value = "编辑银商列表")
+    @PostMapping("/editys")
+    public AjaxResult editYs(Ysinfo ysinfo) {
+        Integer i = rechargeService.updateYsinfo(ysinfo);
+        return i>0?AjaxResult.success():AjaxResult.error();
+    }
+
+    /**
+     * 获取银商下拉框
+     */
+    @ApiOperation(value = "获取银商下拉列表")
+    @GetMapping("/ysoption")
+    public AjaxResult ysOption() {
+        return AjaxResult.success(rechargeService.getYsOption());
     }
 }

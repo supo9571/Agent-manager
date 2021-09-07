@@ -153,4 +153,22 @@
         where id = #{id}
     </update>
 
+    <insert id="saveYsinfo" parameterType="com.manager.common.core.domain.entity.Ysinfo">
+        insert into config_ys(username,password,google_check,google_key,update_time,create_time)
+        values (#{username},#{password},#{googleCheck},#{googleKey},sysdate(),sysdate())
+    </insert>
+
+    <update id="updateYsinfo" parameterType="com.manager.common.core.domain.entity.Ysinfo">
+        update config_ys
+        <set>
+            <if test="username!=null and username!=''"> username = #{username},</if>
+            <if test="password!=null and password!=''"> password = #{password},</if>
+            <if test="googleCheck!=null and googleCheck!=''"> google_check = #{googleCheck},</if>
+            <if test="googleKey!=null and googleKey!=''"> google_key = #{googleKey},</if>
+            <if test="googleKey!=null and googleKey!=''"> google_key = #{googleKey},</if>
+            <if test="rechargeStatus!=null and rechargeStatus!=''"> recharge_status = #{rechargeStatus},</if>
+            update_time = sysdate()
+        </set>
+        where id = #{id}
+    </update>
 </mapper>

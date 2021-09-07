@@ -1,9 +1,7 @@
 package com.manager.system.service;
 
-import com.manager.common.core.domain.entity.BankRecharge;
-import com.manager.common.core.domain.entity.MonthRecharge;
-import com.manager.common.core.domain.entity.OnlineRecharge;
-import com.manager.common.core.domain.entity.VipRecharge;
+import com.manager.common.core.domain.AjaxResult;
+import com.manager.common.core.domain.entity.*;
 
 import java.util.List;
 
@@ -36,4 +34,12 @@ public interface RechargeService {
     List findMonthRecharge(MonthRecharge monthRecharge);
 
     Integer updateMonthRecharge(MonthRecharge monthRecharge);
+
+    Integer saveYsinfo(Ysinfo ysinfo);
+
+    List findYsinfo();
+
+    Integer updateYsinfo(Ysinfo ysinfo);
+
+    List getYsOption();
 }
