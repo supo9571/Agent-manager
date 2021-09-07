@@ -1,6 +1,6 @@
 package com.manager.system.service;
-import com.manager.common.core.domain.entity.Consumer;
 
+import com.manager.common.core.domain.entity.Consumer;
 import java.util.List;
 
 /**
