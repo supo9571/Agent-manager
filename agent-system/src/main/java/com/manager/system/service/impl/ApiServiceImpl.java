@@ -8,10 +8,7 @@ import com.manager.system.service.ApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 /**
  * @author marvin 2021/9/7
@@ -31,7 +28,15 @@ public class ApiServiceImpl implements ApiService {
 
     @Override
     public JSONObject getBookConfig(String data) {
-        JSONObject param = JSONObject.parseObject(data);
+        String phoneType = JSONObject.parseObject(data).getString("phone_type");
+        if("ios".equals(phoneType)){
+            phoneType = "1";
+        }else if("Android".equals(phoneType)){
+            phoneType = "2";
+        }else {
+            phoneType = "3";
+        }
+        Integer vip = JSONObject.parseObject(data).getInteger("vip_level");
         List<Map> list = apiMapper.selectConfigPay();
         JSONArray jsonArray = new JSONArray();
         JSONObject result = new JSONObject();
@@ -40,12 +45,14 @@ public class ApiServiceImpl implements ApiService {
             Integer payType = payInfo.getInteger("pay_type");
             if(payType==1){//vip充值
                 List<Map> payList = apiMapper.selectVipconfig(payInfo.getInteger("id"));
+                payList.forEach(map -> map.put("btn", Arrays.asList(String.valueOf(map.get("btn")).split(","))));
                 payInfo.put("pay_list",payList);
             }else if(payType==3){//银行卡充值
-                List<Map> payList = apiMapper.selectBankconfig(payInfo.getInteger("id"));
+                List<Map> payList = apiMapper.selectBankconfig(payInfo.getInteger("id"),vip);
                 payInfo.put("pay_list",getBankInfo(payList));
             }else{//线上充值
-                List<Map> payList = apiMapper.selectOnlineconfig(payInfo.getInteger("id"));
+                List<Map> payList = apiMapper.selectOnlineconfig(payInfo.getInteger("id"),vip,phoneType);
+                payList.forEach(map -> map.put("btn", Arrays.asList(String.valueOf(map.get("btn")).split(","))));
                 payInfo.put("pay_list",payList);
             }
             payInfo.remove("pay_type");
@@ -76,6 +83,7 @@ public class ApiServiceImpl implements ApiService {
                 }
             }
             jsonObject.remove("bank_value");
+            jsonObject.put("btn",Arrays.asList(jsonObject.getString("btn").split(",")));
             result.add(jsonObject);
         });
         return result;

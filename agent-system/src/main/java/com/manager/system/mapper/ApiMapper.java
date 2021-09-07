@@ -25,9 +25,10 @@ public interface ApiMapper {
             " WHERE pay_id = #{id} AND status = '1'")
     List<Map> selectVipconfig(@Param("id") Integer id);
 
-    @Select("SELECT open_type jump_type,btn,live_addr url,bank_value FROM config_bank_recharge where pay_id = #{id} AND status = '1'")
-    List<Map> selectBankconfig(@Param("id") Integer id);
+    @Select("SELECT open_type jump_type,btn,live_addr url,bank_value FROM config_bank_recharge where pay_id = #{id} AND status = '1' and vip_list like concat('%',#{vip},'%')")
+    List<Map> selectBankconfig(@Param("id") Integer id,@Param("vip") int vip);
 
-    @Select("SELECT btn,diy_max,diy_min,is_diy,msg,other_name,online_config_id,pay_type pay_channel,pay_channel_code FROM config_online_recharge where pay_id = #{id} AND status = '1' ")
-    List<Map> selectOnlineconfig(@Param("id") Integer id);
+    @Select("SELECT btn,diy_max,diy_min,is_diy,msg,other_name,online_config_id,pay_type pay_channel,pay_channel_code FROM config_online_recharge where pay_id = #{id} " +
+            "AND status = '1' and vip_list like concat('%',#{vip},'%') and (use_mobile='3' or use_mobile=#{phoneType}) ")
+    List<Map> selectOnlineconfig(@Param("id") Integer id,@Param("vip") Integer vip, @Param("phoneType") String phoneType);
 }
