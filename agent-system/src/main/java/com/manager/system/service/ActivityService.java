@@ -15,4 +15,6 @@ public interface ActivityService {
     List findActivity(Activity activity);
 
     Integer updateActivity(Activity activity);
+
+    String getActivityConfig();
 }
