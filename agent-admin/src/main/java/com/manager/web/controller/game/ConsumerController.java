@@ -6,6 +6,7 @@ import com.manager.common.core.domain.entity.Consumer;
 import com.manager.common.enums.BusinessType;
 import com.manager.system.service.ConsumerService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -32,7 +33,7 @@ public class ConsumerController extends BaseController {
     @PreAuthorize("@ss.hasPermi('system:game:listConsumer')")
     @ApiOperation(value = "查询客服信息")
     @PostMapping("/listConsumer")
-    public AjaxResult getConsumerList() {
+    public AjaxResult getConsumerList(Integer page) {
         return AjaxResult.success("查询成功", consumerService.getConsumerList());
     }
 
