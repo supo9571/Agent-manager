@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manager.system.mapper.ExchangeMapper">
+
+    <select id="getExchangeList" resultType="java.util.Map">
+        SELECT
+            id,
+            method,
+            count_max as countMax,
+            min_money as minMoney,
+            max_money as maxMoney,
+            status,
+            poundage,
+            keep_money as keepMoney,
+            num,
+            add_mosaic_num as addMosaicNum
+        from
+            config_exchange
+        ORDER BY id
+    </select>
+
+    <update id="editExchange" parameterType="com.manager.common.core.domain.entity.Exchange">
+        update config_exchange
+        <set>
+            <if test="status!=null and status!=''"> status = #{status},</if>
+            <if test="countMax!=null and countMax!=''"> count_max = #{countMax},</if>
+            <if test="maxMoney!=null and maxMoney!=''"> max_money = #{maxMoney},</if>
+            <if test="poundage!=null and poundage!=''"> poundage = #{poundage},</if>
+            update_time = sysdate()
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="editSettingsExchange">
+        update config_exchange
+        <set>
+            <if test="settingsType == 1"> keep_money = #{value},</if>
+            <if test="settingsType == 2"> add_mosaic_num = #{value},</if>
+            <if test="settingsType == 3"> num = #{value},</if>
+            update_time = sysdate()
+        </set>
+        where 1 = 1
+    </update>
+
+</mapper>

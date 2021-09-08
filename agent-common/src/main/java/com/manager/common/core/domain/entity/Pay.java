@@ -29,7 +29,4 @@ public class Pay extends BaseEntity {
     @ApiModelProperty("支付类型 [1:vip][2:线上][3:银行卡]")
     private int payType;
 
-    @ApiModelProperty("更新时间")
-    private int updatedTime;
-
 }
