@@ -29,7 +29,4 @@ public class Consumer extends BaseEntity {
     @ApiModelProperty("是json字符串 type是类型 1：QQ 2：微信 3：其他 val是值")
     private String info;
 
-    @ApiModelProperty("更新时间")
-    private int updatedAt;
-
 }
