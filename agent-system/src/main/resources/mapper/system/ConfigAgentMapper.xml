@@ -42,7 +42,7 @@
     </update>
 
     <select id="getConfigAgentById" resultType="com.manager.common.core.domain.entity.ConfigAgent" parameterType="Long">
-        select a.id, a.lvl lvl,a.lvl_name lvlName,a.min,a.max,a.rebate rebate
+        select a.id, a.lvl lvl,a.lvl_name lvlName,a.min,a.max,a.rebate rebate,a.promotion_domain promotionDomain
         from config_agent a where a.id= #{id}
     </select>
 
