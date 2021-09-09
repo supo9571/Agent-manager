@@ -51,6 +51,7 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     public String getActivityConfig() {
         List<Map> list = activityMapper.getActivityConfig();
+        JSONObject result = new JSONObject();
         JSONObject jsonObject = new JSONObject();
         list.forEach(map -> {
             if(jsonObject.getString(String.valueOf(map.get("ac_type")))==null && !"113114".equals(String.valueOf(map.get("ac_type")))){
@@ -65,8 +66,8 @@ public class ActivityServiceImpl implements ActivityService {
 
         jsonObject.put("116",getMonthConfig());
         String resultStr = StringUtils.jsonToLua(jsonObject);
-        resultStr = "{\"activity_new.lua\" : \"return {".concat(resultStr).concat("} \" }");
-        return resultStr;
+        result.put("game_list.lua","return "+resultStr);
+        return result.toJSONString();
     }
 
     /**
