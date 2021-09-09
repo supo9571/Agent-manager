@@ -1,11 +1,14 @@
 package com.manager.web.controller.game;
 
+import com.alibaba.fastjson.JSONObject;
 import com.manager.common.annotation.Log;
+import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.controller.BaseController;
 import com.manager.common.core.domain.AjaxResult;
 import com.manager.common.core.domain.entity.Activity;
 import com.manager.common.enums.BusinessType;
 import com.manager.common.utils.SecurityUtils;
+import com.manager.common.utils.http.HttpUtils;
 import com.manager.system.service.ActivityService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,6 +30,8 @@ public class ActivityController extends BaseController {
     @Autowired
     private ActivityService activityService;
 
+    @Autowired
+    private ManagerConfig managerConfig;
     /**
      * 添加 活动
      */
@@ -66,5 +71,23 @@ public class ActivityController extends BaseController {
         activity.setUpdateBy(SecurityUtils.getUsername());
         Integer i = activityService.updateActivity(activity);
         return i>0?AjaxResult.success():AjaxResult.error();
+    }
+
+    /**
+     * 发送活动到游戏服
+     */
+    @PreAuthorize("@ss.hasPermi('system:activity:send')")
+    @ApiOperation(value = "发送活动配置")
+//    @Log(title = "发送活动配置", businessType = BusinessType.OTHER)
+    @PostMapping("/send")
+    public AjaxResult send() {
+        //查询 活动配置
+        String param = activityService.getActivityConfig();
+        //发送 活动配置
+        String result = HttpUtils.sendPost(managerConfig.getGameDomain(), "data="+param);
+        if (!"scuess".equals(result)) {
+            return AjaxResult.error(result);
+        }
+        return AjaxResult.success("发送成功");
     }
 }

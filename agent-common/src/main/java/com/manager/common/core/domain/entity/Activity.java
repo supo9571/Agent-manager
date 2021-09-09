@@ -20,7 +20,7 @@ public class Activity extends BaseEntity {
     @ApiModelProperty("活动结束时间")
     private String activityEnd;
 
-    @ApiModelProperty("活动类型 1充值红包 2每日首充 3首充返利 4流水返利 5全民推广 6摇钱树")
+    @ApiModelProperty("活动类型 113114充值红包 109每日首充 3首充返利 122流水返利 115全民推广 112摇钱树 111救济金")
     private String activityType;
 
     @ApiModelProperty("活动排序")

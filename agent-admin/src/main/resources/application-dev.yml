@@ -106,6 +106,8 @@ manager:
   addressEnabled: false
   # 验证码类型 math 数组计算 char 字符验证
   captchaType: math
+  #游戏服 发送配置地址
+  gameDomain: http://10.39.1.88:6661/upload
 
 # 开发环境配置
 server:
