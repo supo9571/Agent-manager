@@ -24,4 +24,9 @@ public interface ActivityMapper {
     @Select("select activity_begin ac_begin_time,activity_end ac_end_time,sort sort_index,'true' open_state,activity_info ac_content,activity_type ac_type from config_activity " +
             "where activity_begin <=sysdate() <= activity_end order by update_time desc")
     List<Map> getActivityConfig();
+
+    @Select("select jin_recharge jinRecharge,jin_recharge_give jinRechargeGive,jin_recharge_give_day jinRechargeGiveDay," +
+            "yin_recharge yinRecharge,yin_recharge_give yinRechargeGive,yin_recharge_give_day yinRechargeGiveDay " +
+            "from config_month_recharge where status = '1' order by update_time desc limit 0,1")
+    Map getMonthConfig();
 }

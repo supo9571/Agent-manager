@@ -5,8 +5,10 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.manager.common.core.domain.entity.Activity;
+import com.manager.common.utils.StringUtils;
 import com.manager.system.mapper.ActivityMapper;
 import com.manager.system.service.ActivityService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,7 @@ import java.util.Map;
  * @author marvin 2021/9/7
  */
 @Service
+@Slf4j
 public class ActivityServiceImpl implements ActivityService {
     @Autowired
     private ActivityMapper activityMapper;
@@ -48,7 +51,6 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     public String getActivityConfig() {
         List<Map> list = activityMapper.getActivityConfig();
-        JSONObject result = new JSONObject();
         JSONObject jsonObject = new JSONObject();
         list.forEach(map -> {
             if(jsonObject.getString(String.valueOf(map.get("ac_type")))==null && !"113114".equals(String.valueOf(map.get("ac_type")))){
@@ -57,59 +59,18 @@ public class ActivityServiceImpl implements ActivityService {
                 acInfo.put("ac_content",JSONObject.parseObject(String.valueOf(map.get("ac_content"))));
                 jsonObject.put(String.valueOf(acInfo.get("ac_type")),acInfo);
             } else if("113114".equals(String.valueOf(map.get("ac_type")))){
-                JSONObject acInfo = JSONObject.parseObject(String.valueOf(map.get("ac_content")));
-                JSONObject level = new JSONObject();// 连续充值红包
-                level.put("ac_name",getNameByType(114));
-                level.put("ac_begin_time",String.valueOf(map.get("ac_begin_time")));
-                level.put("ac_end_time",String.valueOf(map.get("ac_end_time")));
-                level.put("ac_type",114);
-                level.put("sort_index",map.get("sort_index"));
-                level.put("open_state",map.get("open_state"));
-
-                JSONObject levelContent = new JSONObject();
-                levelContent.put("level",acInfo.get("level"));
-                level.put("ac_content",levelContent);
-                jsonObject.put("114",level);
-
-                JSONObject random = new JSONObject();// 每日红包奖励
-                random.put("ac_name",getNameByType(113));
-                random.put("ac_begin_time",String.valueOf(map.get("ac_begin_time")));
-                random.put("ac_end_time",String.valueOf(map.get("ac_end_time")));
-                random.put("ac_type",113);
-                random.put("sort_index",map.get("sort_index"));
-                random.put("open_state",map.get("open_state"));
-
-                JSONObject randomContent = new JSONObject();
-                JSONObject randomArea = new JSONObject();
-                JSONArray jsonArray = acInfo.getJSONArray("random_area");
-                for (int i = 0; i < jsonArray.size(); i++) {
-                    JSONObject randomInfo = new JSONObject();
-                    if(i==0){
-                        randomInfo.put("random_begin",1);
-                        randomInfo.put("random_end",jsonArray.getJSONObject(i).getInteger("random"));
-                    }else {
-                        Integer beginRandom = randomArea.getJSONObject(i+"").getInteger("random_end");
-                        randomInfo.put("random_begin",beginRandom+1);
-                        randomInfo.put("random_end",jsonArray.getJSONObject(i).getInteger("random")+beginRandom);
-                    }
-                    randomInfo.put("coin",jsonArray.getJSONObject(i).get("coin"));
-                    randomArea.put(i+1+"",randomInfo);
-                }
-                randomContent.put("random_area",randomArea);
-                random.put("ac_content",randomContent);
-                jsonObject.put("113",random);
+                setRechargeGive(map,jsonObject);
             }
         });
-        String reslitStr = jsonObject.toJSONString();
-        reslitStr = reslitStr.replaceAll(":"," = ");
-        reslitStr = reslitStr.replaceAll("\" =","] =");
-        reslitStr = reslitStr.replaceAll("\"","[");
-        result.put("activity_new.lua","return "+reslitStr);
-        return result.toJSONString();
+
+        jsonObject.put("116",getMonthConfig());
+        String resultStr = StringUtils.jsonToLua(jsonObject);
+        resultStr = "{\"activity_new.lua\" : \"return {".concat(resultStr).concat("} \" }");
+        return resultStr;
     }
 
     /**
-     * 根据type 转 名称
+     * 根据 活动 Type 转 活动名称
      */
     private String getNameByType(Integer type){
         switch (type){
@@ -131,8 +92,104 @@ public class ActivityServiceImpl implements ActivityService {
                 return "摇钱树";
             case 111:
                 return "救济金";
+           case 116:
+                return "月卡活动";
             default:
-                return "";
+                return "未知活动";
         }
+    }
+
+    /**
+     * 获取月卡 活动
+     * @return
+     */
+    private JSONObject getMonthConfig(){
+        //月卡活动信息
+        Map map = activityMapper.getMonthConfig();
+        JSONObject month = new JSONObject();
+        month.put("ac_name",getNameByType(116));
+        month.put("ac_begin_time","2021-01-01 00:00:00");//房贷开始时间
+        month.put("ac_end_time","2050-12-31 00:00:00");//房贷结束时间
+        month.put("ac_type",116);
+        month.put("sort_index",116);
+        month.put("open_state",true);
+        JSONArray monthArr = new JSONArray();
+        JSONObject monthObj = new JSONObject();//银卡
+        monthObj.put("card_id","1");
+        monthObj.put("card_name","至尊银卡");
+        Integer yprice = (int)map.get("yinRecharge")*10000;
+        Integer ypay = (int)map.get("yinRechargeGive")*10000;
+        Double yd = Double.valueOf(String.valueOf(map.get("yinRechargeGiveDay")))*10000;
+        Integer ycoin = yd.intValue();
+        Integer ytotal = (ypay+ycoin*30)/yprice*100;
+        monthObj.put("price",yprice);//充值金额
+        monthObj.put("pay_reward_coin",ypay);//立即获得
+        monthObj.put("reward_coin",ycoin);//每日赠送
+        monthObj.put("total_value",ytotal);//收益率
+
+        JSONObject monthObj2 = new JSONObject();//金卡
+        monthObj2.put("card_id","2");
+        monthObj2.put("card_name","至尊金卡");
+        Integer jprice = (int)map.get("jinRecharge")*10000;
+        Integer jpay = (int)map.get("jinRechargeGive")*10000;
+        Double jd = Double.valueOf(String.valueOf(map.get("jinRechargeGiveDay")))*10000;
+        Integer jcoin = jd.intValue();
+        Integer jtotal = (jpay+jcoin*30)/jprice*100;
+        monthObj2.put("price",jprice);//充值金额
+        monthObj2.put("pay_reward_coin",jpay);//立即获得
+        monthObj2.put("reward_coin",jcoin);//每日赠送
+        monthObj2.put("total_value",jtotal);//收益率
+
+        monthArr.add(monthObj);
+        monthArr.add(monthObj2);
+        month.put("ac_content",monthArr);
+        return month;
+    }
+
+    /**
+     * 获取 充值红包 配置
+     */
+    private void setRechargeGive(Map map ,JSONObject jsonObject){
+        JSONObject acInfo = JSONObject.parseObject(String.valueOf(map.get("ac_content")));
+        JSONObject level = new JSONObject();// 连续充值红包
+        level.put("ac_name",getNameByType(114));
+        level.put("ac_begin_time",String.valueOf(map.get("ac_begin_time")));
+        level.put("ac_end_time",String.valueOf(map.get("ac_end_time")));
+        level.put("ac_type",114);
+        level.put("sort_index",map.get("sort_index"));
+        level.put("open_state",map.get("open_state"));
+
+        JSONObject levelContent = new JSONObject();
+        levelContent.put("level",acInfo.get("level"));
+        level.put("ac_content",levelContent);
+        jsonObject.put("114",level);
+
+        JSONObject random = new JSONObject();// 每日红包奖励
+        random.put("ac_name",getNameByType(113));
+        random.put("ac_begin_time",String.valueOf(map.get("ac_begin_time")));
+        random.put("ac_end_time",String.valueOf(map.get("ac_end_time")));
+        random.put("ac_type",113);
+        random.put("sort_index",map.get("sort_index"));
+        random.put("open_state",map.get("open_state"));
+
+        JSONObject randomContent = new JSONObject();
+        JSONObject randomArea = new JSONObject();
+        JSONArray jsonArray = acInfo.getJSONArray("random_area");
+        for (int i = 0; i < jsonArray.size(); i++) {
+            JSONObject randomInfo = new JSONObject();
+            if(i==0){
+                randomInfo.put("random_begin",1);
+                randomInfo.put("random_end",jsonArray.getJSONObject(i).getInteger("random"));
+            }else {
+                Integer beginRandom = randomArea.getJSONObject(i+"").getInteger("random_end");
+                randomInfo.put("random_begin",beginRandom+1);
+                randomInfo.put("random_end",jsonArray.getJSONObject(i).getInteger("random")+beginRandom);
+            }
+            randomInfo.put("coin",jsonArray.getJSONObject(i).get("coin"));
+            randomArea.put(i+1+"",randomInfo);
+        }
+        randomContent.put("random_area",randomArea);
+        random.put("ac_content",randomContent);
+        jsonObject.put("113",random);
     }
 }

@@ -68,7 +68,7 @@ public class ApiServiceImpl implements ApiService {
             JSONObject jsonObject = new JSONObject(m);
             if(2==jsonObject.getInteger("jump_type")){
                 jsonObject.remove("url");
-                String bankValue = "["+jsonObject.getString("bank_value")+"]";
+                String bankValue = jsonObject.getString("bank_value");
                 JSONArray jsonArray = JSONArray.parseArray(bankValue);
                 int i =new Random().nextInt(100)+1;
                 for (int l = 0; l < jsonArray.size(); l++) {
