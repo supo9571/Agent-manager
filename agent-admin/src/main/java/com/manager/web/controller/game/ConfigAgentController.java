@@ -10,10 +10,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -55,7 +52,7 @@ public class ConfigAgentController extends BaseController {
     @PreAuthorize("@ss.hasPermi('system:agent:saveConfigAgent')")
     @ApiOperation(value = "全民代理新增")
     @PostMapping("/saveConfigAgent")
-    public AjaxResult saveConfigAgent(ConfigAgent configAgent){
+    public AjaxResult saveConfigAgent(@RequestBody ConfigAgent configAgent){
         int i=configAgenService.saveConfigAgent(configAgent);
         return i>0?AjaxResult.success():AjaxResult.error();
     }
@@ -67,7 +64,7 @@ public class ConfigAgentController extends BaseController {
     @PreAuthorize("@ss.hasPermi('system:agent:upConfigAgent')")
     @ApiOperation(value = "全民代理修改")
     @PostMapping("/upConfigAgent")
-    public AjaxResult upConfigAgent(ConfigAgent configAgent){
+    public AjaxResult upConfigAgent(@RequestBody ConfigAgent configAgent){
         int i=configAgenService.upConfigAgent(configAgent);
         return i>0?AjaxResult.success():AjaxResult.error();
     }
