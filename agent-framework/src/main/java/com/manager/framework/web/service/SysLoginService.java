@@ -88,13 +88,10 @@ public class SysLoginService
         }
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         //验证google验证码
-        if(StringUtils.isNotBlank(googleCode)){
-            if(loginUser.getUser().isSwitchOpen() && !GoogleAuth.isPattern(loginUser.getUser().getGoogleKey(),googleCode)){
-                throw new CustomException("google验证码错误");
-            }
-        }else{
-            throw new CustomException("google验证码不能为空");
+        if(loginUser.getUser().isSwitchOpen() && !GoogleAuth.isPattern(loginUser.getUser().getGoogleKey(),googleCode)){
+            throw new CustomException("google验证码错误");
         }
+
 
         //验证ip
         String ips = sysIpWhiteService.selectIpByUserId(loginUser.getUser().getUserId()+"");

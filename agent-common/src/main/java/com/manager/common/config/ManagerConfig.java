@@ -41,6 +41,8 @@ public class ManagerConfig {
     private Integer tid;
 
     private String tname;
+
+    private String gameDomain;
     /**
      * 获取地址开关
      */

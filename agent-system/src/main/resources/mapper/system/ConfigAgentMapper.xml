@@ -19,7 +19,7 @@
     </insert>
 
     <select id="getConfigAgentList" resultType="java.util.Map">
-        select a.id, a.lvl lvl,a.lvl_name lvlName,a.min,a.max,a.rebate rebate
+        select a.id, a.lvl lvl,a.lvl_name lvlName,a.min,a.max,a.rebate rebate,a.promotion_domain promotionDomain
         from config_agent a order by a.lvl asc
     </select>
 

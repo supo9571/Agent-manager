@@ -13,7 +13,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.beans.PropertyEditorSupport;
 import java.util.Date;
 import java.util.List;
@@ -143,5 +146,15 @@ public class BaseController
     public String redirect(String url)
     {
         return StringUtils.format("redirect:{}", url);
+    }
+
+    protected HttpServletRequest getReuest(){
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = attributes.getRequest();
+        return request;
+    }
+
+    protected String getHeader(String name){
+        return getReuest().getHeader(name);
     }
 }
