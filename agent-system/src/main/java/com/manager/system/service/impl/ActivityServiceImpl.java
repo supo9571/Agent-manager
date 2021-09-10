@@ -66,7 +66,7 @@ public class ActivityServiceImpl implements ActivityService {
 
         jsonObject.put("116",getMonthConfig());
         String resultStr = StringUtils.jsonToLua(jsonObject);
-        result.put("game_list.lua","return "+resultStr);
+        result.put("activity_new.lua","return {"+resultStr+"}");
         return result.toJSONString();
     }
 
