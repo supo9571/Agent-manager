@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 提现信息管理
@@ -20,7 +21,7 @@ public class ExchangeServiceImpl implements ExchangeService {
     private ExchangeMapper exchangeMapper;
 
     @Override
-    public List getExchangeList() {
+    public List<Map> getExchangeList() {
         return exchangeMapper.getExchangeList();
     }
 

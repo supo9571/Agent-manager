@@ -4,6 +4,7 @@ import com.manager.common.core.domain.entity.Exchange;
 import com.manager.common.core.domain.entity.Pay;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 提现信息管理
@@ -14,7 +15,7 @@ public interface ExchangeService {
     /**
      * 查询
      */
-    List getExchangeList();
+    List<Map> getExchangeList();
 
     /**
      * 编辑

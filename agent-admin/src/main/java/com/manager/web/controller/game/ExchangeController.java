@@ -7,13 +7,20 @@ import com.manager.common.core.domain.entity.Exchange;
 import com.manager.common.enums.BusinessType;
 import com.manager.system.service.ExchangeService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 提现信息管理
@@ -34,7 +41,28 @@ public class ExchangeController extends BaseController {
     @ApiOperation(value = "查询客服信息")
     @PostMapping("/listExchange")
     public AjaxResult getExchangeList() {
-        return AjaxResult.success("查询成功", exchangeService.getExchangeList());
+
+        // 账户保留金额
+        BigDecimal configKeepMoney = new BigDecimal(0);
+        // 提现次数
+        int configNum = 0;
+        // 打码倍数
+        int configAddMosaicNum = 0;
+
+        List<Map> list = exchangeService.getExchangeList();
+        if(CollectionUtils.isNotEmpty(list)){
+            configKeepMoney = (BigDecimal) list.get(0).get("keepMoney");
+            configNum = (int) list.get(0).get("num");
+            configAddMosaicNum = (int) list.get(0).get("addMosaicNum");
+        }
+
+        Map result = new HashMap();
+        result.put("list",list);
+        result.put("configKeepMoney",configKeepMoney);
+        result.put("configNum",configNum);
+        result.put("configAddMosaicNum",configAddMosaicNum);
+
+        return AjaxResult.success("查询成功", result);
     }
 
     /**
