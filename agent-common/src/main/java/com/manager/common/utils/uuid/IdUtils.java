@@ -1,5 +1,9 @@
 package com.manager.common.utils.uuid;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Random;
+
 /**
  * ID生成器工具类
  * 
@@ -45,5 +49,17 @@ public class IdUtils
     public static String fastSimpleUUID()
     {
         return UUID.fastUUID().toString(true);
+    }
+
+    /**
+     * 生成订单号
+     * @return
+     */
+    public static String getOrderId() {
+        int machineId = 2;
+        SimpleDateFormat sdf=new SimpleDateFormat("yyMMddHHmmss");
+        String newDate=sdf.format(new Date());
+        Random random=new Random();
+        return  machineId+newDate+ String.format("%06d", random.nextInt(999999));
     }
 }
