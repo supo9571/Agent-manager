@@ -1,12 +1,14 @@
 package com.manager.web.controller.game;
 
 import com.alibaba.fastjson.JSONObject;
+import com.manager.common.annotation.DataSource;
 import com.manager.common.annotation.Log;
 import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.controller.BaseController;
 import com.manager.common.core.domain.AjaxResult;
 import com.manager.common.core.domain.entity.Activity;
 import com.manager.common.enums.BusinessType;
+import com.manager.common.enums.DataSourceType;
 import com.manager.common.utils.SecurityUtils;
 import com.manager.common.utils.http.HttpUtils;
 import com.manager.system.service.ActivityService;
@@ -26,6 +28,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/game/activity")
 @Api(tags = "特殊活动配置")
+@DataSource(DataSourceType.SLAVE)
 public class ActivityController extends BaseController {
     @Autowired
     private ActivityService activityService;
@@ -40,6 +43,7 @@ public class ActivityController extends BaseController {
     @Log(title = "添加活动", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     public AjaxResult addActivity(Activity activity) {
+        activity.setTid(ManagerConfig.getTid());
         //判断活动时间是否重叠
         if(activityService.checkActivityTime(activity)>0) return AjaxResult.error("已有相同的活动");
         activity.setUpdateBy(SecurityUtils.getUsername());
@@ -55,6 +59,7 @@ public class ActivityController extends BaseController {
     @PostMapping("/list")
     public AjaxResult list(Activity activity) {
         startPage();
+        activity.setTid(ManagerConfig.getTid());
         List list = activityService.findActivity(activity);
         return AjaxResult.success(getDataTable(list));
     }
@@ -66,6 +71,7 @@ public class ActivityController extends BaseController {
     @ApiOperation(value = "编辑活动")
     @PostMapping("/edit")
     public AjaxResult edit(Activity activity) {
+        activity.setTid(ManagerConfig.getTid());
         //判断活动时间是否重叠
         if(activityService.checkActivityTime(activity)>0) return AjaxResult.error("已有相同的活动");
         activity.setUpdateBy(SecurityUtils.getUsername());

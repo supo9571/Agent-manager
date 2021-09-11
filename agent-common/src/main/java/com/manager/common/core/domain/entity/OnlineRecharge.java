@@ -13,6 +13,9 @@ public class OnlineRecharge extends BaseEntity {
     @ApiModelProperty("主键id")
     private Integer id;
 
+    @ApiModelProperty("平台id")
+    private Integer tid;
+
     @ApiModelProperty("商城页签id")
     private Integer payid;
 

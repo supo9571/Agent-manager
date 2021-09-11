@@ -1,5 +1,6 @@
 package com.manager.web.controller.game;
 import com.manager.common.annotation.Log;
+import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.controller.BaseController;
 import com.manager.common.core.domain.AjaxResult;
 import com.manager.common.core.domain.entity.Consumer;
@@ -45,6 +46,7 @@ public class ConsumerController extends BaseController {
     @Log(title = "新增客服信息", businessType = BusinessType.INSERT)
     @PostMapping("/addConsumer")
     public AjaxResult addConsumer(@RequestBody Consumer consumer) {
+        consumer.setTid(ManagerConfig.getTid());
         int i = consumerService.addConsumer(consumer);
         return i>0?AjaxResult.success():AjaxResult.error();
     }

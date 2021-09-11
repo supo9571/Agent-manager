@@ -2,6 +2,7 @@ package com.manager.system.mapper;
 
 import com.manager.common.core.domain.entity.ConfigAgent;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public interface ConfigAgentMapper {
     /**
      * 查询
      */
-    List getConfigAgentList();
+    List getConfigAgentList(@Param("tid") Integer tid);
 
     /**
      * 新增
@@ -48,5 +49,5 @@ public interface ConfigAgentMapper {
      * @param promotionDomain
      * @return
      */
-    Integer upPromotionDomainToAll(String promotionDomain);
+    Integer upPromotionDomainToAll(@Param("promotionDomain") String promotionDomain,@Param("tid") Integer tid);
 }

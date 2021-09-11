@@ -1,6 +1,9 @@
 package com.manager.system.service.impl;
 
+import com.manager.common.annotation.DataSource;
+import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.domain.entity.*;
+import com.manager.common.enums.DataSourceType;
 import com.manager.common.utils.SecurityUtils;
 import com.manager.system.mapper.RechargeMapper;
 import com.manager.system.service.RechargeService;
@@ -15,6 +18,7 @@ import java.util.List;
  * 充值 配置service
  */
 @Service
+@DataSource(DataSourceType.SLAVE)
 public class RechargeServiceImpl implements RechargeService {
 
     @Autowired
@@ -27,7 +31,7 @@ public class RechargeServiceImpl implements RechargeService {
 
     @Override
     public List findVipRecharge() {
-        return rechargeMapper.findVipRecharge();
+        return rechargeMapper.findVipRecharge(ManagerConfig.getTid());
     }
 
     @Override
@@ -41,7 +45,7 @@ public class RechargeServiceImpl implements RechargeService {
      * @return
      */
     public List getOnlinePays() {
-        return rechargeMapper.getOnlinePays();
+        return rechargeMapper.getOnlinePays(ManagerConfig.getTid());
     }
 
     /**
@@ -127,7 +131,7 @@ public class RechargeServiceImpl implements RechargeService {
 
     @Override
     public List findYsinfo() {
-        return rechargeMapper.fingYsinfo();
+        return rechargeMapper.fingYsinfo(ManagerConfig.getTid());
     }
 
     @Override
@@ -138,6 +142,6 @@ public class RechargeServiceImpl implements RechargeService {
 
     @Override
     public List getYsOption() {
-        return rechargeMapper.getYsOption();
+        return rechargeMapper.getYsOption(ManagerConfig.getTid());
     }
 }

@@ -14,13 +14,16 @@ public class Activity extends BaseEntity {
     @ApiModelProperty("ID")
     private Integer id;
 
+    @ApiModelProperty("平台ID")
+    private Integer tid;
+
     @ApiModelProperty("活动开始时间")
     private String activityBegin;
 
     @ApiModelProperty("活动结束时间")
     private String activityEnd;
 
-    @ApiModelProperty("活动类型 113114充值红包 109每日首充 3首充返利 122流水返利 115全民推广 112摇钱树 111救济金")
+    @ApiModelProperty("活动类型 113114充值红包 109每日首充 123首充返利 122流水返利 115全民推广 112摇钱树 111救济金")
     private String activityType;
 
     @ApiModelProperty("活动排序")

@@ -19,7 +19,7 @@ public interface ExchangeMapper {
     /**
      * 查询
      */
-    List<Map> getExchangeList();
+    List<Map> getExchangeList(@Param("tid") Integer tid);
 
     /**
      * 编辑
@@ -33,6 +33,7 @@ public interface ExchangeMapper {
      * @param value 值
      */
     int editSettingsExchange(@Param("settingsType") int settingsType,
-                             @Param("value") String value);
+                             @Param("value") String value,
+                             @Param("tid") Integer tid);
 
 }

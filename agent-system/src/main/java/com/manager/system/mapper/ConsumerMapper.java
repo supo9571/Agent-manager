@@ -18,7 +18,7 @@ public interface ConsumerMapper {
     /**
      * 查询
      */
-    List<Map> getConsumerList();
+    List<Map> getConsumerList(Integer tid);
 
     /**
      * 新增

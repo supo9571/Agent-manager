@@ -21,8 +21,8 @@ public interface PayMapper {
      * 查询
      */
     @Select("select id,sort,cname,recharge_give as rechargeGive,status," +
-            "pay_type as payType from config_pay ORDER BY sort ASC")
-    List<Map> getPayList();
+            "pay_type as payType from config_pay where tid = #{tid} ORDER BY sort ASC")
+    List<Map> getPayList(@Param("tid") Integer tid);
 
     /**
      * 编辑

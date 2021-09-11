@@ -19,6 +19,7 @@
             update_time as updateTime
         from
             config_exchange
+        where tid = #{tid}
         ORDER BY id
     </select>
 
@@ -32,7 +33,7 @@
             <if test="poundage!=null and poundage!=''"> poundage = #{poundage},</if>
             update_time = sysdate()
         </set>
-        where id = #{id}
+        where id = #{id} and tid = #{tid}
     </update>
 
     <update id="editSettingsExchange">
@@ -43,7 +44,7 @@
             <if test="settingsType == 3"> num = #{value},</if>
             update_time = sysdate()
         </set>
-        where 1 = 1
+        where tid = #{tid}
     </update>
 
 </mapper>

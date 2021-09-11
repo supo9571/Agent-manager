@@ -13,6 +13,9 @@ public class VipRecharge extends BaseEntity {
     @ApiModelProperty("主键id")
     private Integer id;
 
+    @ApiModelProperty("平台id")
+    private Integer tid;
+
     @ApiModelProperty(hidden = true)
     private Integer payid;
 

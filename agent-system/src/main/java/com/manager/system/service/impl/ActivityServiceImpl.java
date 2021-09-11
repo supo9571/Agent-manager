@@ -4,7 +4,10 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.manager.common.annotation.DataSource;
+import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.domain.entity.Activity;
+import com.manager.common.enums.DataSourceType;
 import com.manager.common.utils.StringUtils;
 import com.manager.system.mapper.ActivityMapper;
 import com.manager.system.service.ActivityService;
@@ -20,6 +23,7 @@ import java.util.Map;
  */
 @Service
 @Slf4j
+@DataSource(DataSourceType.SLAVE)
 public class ActivityServiceImpl implements ActivityService {
     @Autowired
     private ActivityMapper activityMapper;
@@ -50,7 +54,7 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public String getActivityConfig() {
-        List<Map> list = activityMapper.getActivityConfig();
+        List<Map> list = activityMapper.getActivityConfig(ManagerConfig.getTid());
         JSONObject result = new JSONObject();
         JSONObject jsonObject = new JSONObject();
         list.forEach(map -> {
@@ -83,7 +87,7 @@ public class ActivityServiceImpl implements ActivityService {
                 return "连续充值红包";
             case 109:
                 return "每日首充";
-            case 3:
+            case 123:
                 return "首充返利";
             case 122:
                 return "流水返利";

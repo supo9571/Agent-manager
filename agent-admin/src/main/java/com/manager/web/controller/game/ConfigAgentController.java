@@ -1,8 +1,11 @@
 package com.manager.web.controller.game;
 
+import com.manager.common.annotation.Log;
+import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.controller.BaseController;
 import com.manager.common.core.domain.AjaxResult;
 import com.manager.common.core.domain.entity.ConfigAgent;
+import com.manager.common.enums.BusinessType;
 import com.manager.system.service.ConfigAgenService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -41,7 +44,6 @@ public class ConfigAgentController extends BaseController {
     public AjaxResult getConfigAgenList(Integer page,Integer size){
         startPage();
         List list=configAgenService.getConfigAgentList();
-        System.out.println(list.size());
         return AjaxResult.success("查询成功",getDataTable(list));
     }
 
@@ -51,8 +53,10 @@ public class ConfigAgentController extends BaseController {
      */
     @PreAuthorize("@ss.hasPermi('system:agent:saveConfigAgent')")
     @ApiOperation(value = "全民代理新增")
+    @Log(title = "新增全民代理",businessType = BusinessType.INSERT)
     @PostMapping("/saveConfigAgent")
     public AjaxResult saveConfigAgent(@RequestBody ConfigAgent configAgent){
+        configAgent.setTid(ManagerConfig.getTid());
         int i=configAgenService.saveConfigAgent(configAgent);
         return i>0?AjaxResult.success():AjaxResult.error();
     }
@@ -63,6 +67,7 @@ public class ConfigAgentController extends BaseController {
      */
     @PreAuthorize("@ss.hasPermi('system:agent:upConfigAgent')")
     @ApiOperation(value = "全民代理修改")
+    @Log(title = "修改全民代理",businessType = BusinessType.UPDATE)
     @PostMapping("/upConfigAgent")
     public AjaxResult upConfigAgent(@RequestBody ConfigAgent configAgent){
         int i=configAgenService.upConfigAgent(configAgent);
@@ -75,6 +80,7 @@ public class ConfigAgentController extends BaseController {
      */
     @PreAuthorize("@ss.hasPermi('system:agent:delConfigAgent')")
     @ApiOperation(value = "全民代理删除")
+    @Log(title = "删除全民代理",businessType = BusinessType.DELETE)
     @PostMapping("/delConfigAgent")
     public AjaxResult delConfigAgent(String id){
         int i=configAgenService.delConfigAgent(Integer.valueOf(id));

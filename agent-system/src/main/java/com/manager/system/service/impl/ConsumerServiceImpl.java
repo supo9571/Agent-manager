@@ -1,7 +1,10 @@
 package com.manager.system.service.impl;
 
 
+import com.manager.common.annotation.DataSource;
+import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.domain.entity.Consumer;
+import com.manager.common.enums.DataSourceType;
 import com.manager.system.mapper.ConsumerMapper;
 import com.manager.system.service.ConsumerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,7 @@ import java.util.List;
  * @author sieGuang 2021/09/06
  */
 @Service
+@DataSource(DataSourceType.SLAVE)
 public class ConsumerServiceImpl implements ConsumerService {
 
     @Autowired
@@ -21,7 +25,7 @@ public class ConsumerServiceImpl implements ConsumerService {
 
     @Override
     public List getConsumerList() {
-        return consumerMapper.getConsumerList();
+        return consumerMapper.getConsumerList(ManagerConfig.getTid());
     }
 
     @Override

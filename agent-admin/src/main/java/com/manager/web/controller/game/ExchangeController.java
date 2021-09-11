@@ -1,6 +1,7 @@
 package com.manager.web.controller.game;
 
 import com.manager.common.annotation.Log;
+import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.controller.BaseController;
 import com.manager.common.core.domain.AjaxResult;
 import com.manager.common.core.domain.entity.Exchange;
@@ -74,6 +75,7 @@ public class ExchangeController extends BaseController {
     @Log(title = "编辑商场页签", businessType = BusinessType.UPDATE)
     @PostMapping("/editExchange")
     public AjaxResult editExchange(@RequestBody Exchange exchange) {
+        exchange.setTid(ManagerConfig.getTid());
         int i = exchangeService.editExchange(exchange);
         return i>0?AjaxResult.success():AjaxResult.error();
     }

@@ -16,6 +16,9 @@ public class ConfigAgent implements Serializable {
     @ApiModelProperty("主键id")
     private Integer id;
 
+    @ApiModelProperty("平台id")
+    private Integer tid;
+
     @ApiModelProperty("代理级别")
     private Integer lvl;
 

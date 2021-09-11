@@ -5,10 +5,10 @@
 <mapper namespace="com.manager.system.mapper.RechargeMapper">
 
     <insert id="saveVipRecharge" parameterType="com.manager.common.core.domain.entity.VipRecharge">
-        insert into config_vip_recharge (vip_name,recharge_type,recharge_other_type,open_type,img_type,
+        insert into config_vip_recharge (tid,vip_name,recharge_type,recharge_other_type,open_type,img_type,
                                         live_addr,url,qq,wechat,status,create_time,update_time,create_by,update_by,ys_id)
         values
-            (#{vipName},#{rechargeType},#{rechargeOtherType},#{openType},#{imgType},
+            (#{tid},#{vipName},#{rechargeType},#{rechargeOtherType},#{openType},#{imgType},
              #{liveAddr},#{url},#{qq},#{wechat},#{status},sysdate(),sysdate(),#{createBy},#{createBy},#{ysid})
     </insert>
 
@@ -16,6 +16,7 @@
         select id, vip_name vipName,recharge_type rechargeType,recharge_other_type rechargeOtherType,open_type openType,img_type imgType,
                live_addr liveAddr,url,qq,wechat,status,update_time updateTime,ys_id ysid
         from config_vip_recharge
+        where tid=#{tid}
     </select>
 
     <update id="updateVipRecharge">
@@ -35,15 +36,15 @@
             update_time = sysdate(),
             update_by = #{updateBy}
         </set>
-        where id = #{id}
+        where id = #{id} and tid=#{tid}
     </update>
 
     <!--添加线上充值信息-->
     <insert id="saveOnlineRecharge" parameterType="com.manager.common.core.domain.entity.OnlineRecharge">
-        insert into config_online_recharge (pay_id,pay_type,vip_list,other_name,is_diy,diy_min,
+        insert into config_online_recharge (tid,pay_id,pay_type,vip_list,other_name,is_diy,diy_min,
                                             diy_max,btn,pay_url,sort,channel_list,use_mobile,status,update_time,create_time,update_by,msg)
         values
-            (#{payid},#{payType},#{vipList},#{otherName},#{isDiy},#{diyMin},
+            (#{tid},#{payid},#{payType},#{vipList},#{otherName},#{isDiy},#{diyMin},
              #{diyMax},#{btn},#{payUrl},#{sort},#{channelList},#{useMobile},#{status},sysdate(),sysdate(),#{updateBy},#{msg})
 
     </insert>
@@ -53,6 +54,7 @@
                diy_max diyMax,btn,pay_url payUrl,sort,channel_list channelList, use_mobile useMobile,status,update_time updateTime,update_by updateBy,msg
         from config_online_recharge
         <where>
+            tid = #{tid}
             <if test="payType!=null and payType!=''"> and pay_type = #{payType} </if>
             <if test="status!=null and status!=''"> and status = #{status} </if>
             <if test="vipList!=null and vipList!=''"> and vip_list like concat('%',#{vipList},'%') </if>
@@ -79,21 +81,22 @@
             update_time = sysdate(),
             update_by = #{updateBy}
         </set>
-        where id = #{id}
+        where id = #{id} and tid=#{tid}
     </update>
 
     <!--添加银行充值 配置信息-->
     <insert id="saveBankRecharge" parameterType="com.manager.common.core.domain.entity.BankRecharge">
         insert into config_bank_recharge
-            (vip_list,open_type,btn,live_addr,bank_value,create_time,update_time,update_by,status)
+            (tid,vip_list,open_type,btn,live_addr,bank_value,create_time,update_time,update_by,status)
         values
-            (#{vipList},#{openType},#{btn},#{liveAddr},#{bankValue},sysdate(),sysdate(),#{updateBy},#{status})
+            (#{tid},#{vipList},#{openType},#{btn},#{liveAddr},#{bankValue},sysdate(),sysdate(),#{updateBy},#{status})
     </insert>
 
     <select id="findBankRecharge" resultType="java.util.Map">
         select id,vip_list vipList,open_type openType,btn,live_addr liveAddr,bank_value bankValue,update_time updateTime,update_by updateBy,status
         from config_bank_recharge
         <where>
+            tid = #{tid}
             <if test="status!=null and status!=''"> and status = #{status} </if>
             <if test="vipList!=null and vipList!=''"> and vip_list like concat('%',#{vipList},'%') </if>
         </where>
@@ -111,27 +114,27 @@
             update_time = sysdate(),
             update_by = #{updateBy}
         </set>
-        where id = #{id}
+        where id = #{id} and tid = #{tid}
     </update>
 
     <!--添加月卡 配置信息-->
     <insert id="saveMonthRecharge" parameterType="com.manager.common.core.domain.entity.MonthRecharge">
         insert into config_month_recharge
-        (jin_recharge,jin_recharge_give,jin_recharge_give_day,yin_recharge,yin_recharge_give,yin_recharge_give_day,open_type,live_addr,wechat,
+        (tid,jin_recharge,jin_recharge_give,jin_recharge_give_day,yin_recharge,yin_recharge_give,yin_recharge_give_day,open_type,live_addr,wechat,
          qq,create_time,update_time,update_by)
         values
-            (#{jinRecharge},#{jinRechargeGive},#{jinRechargeGiveDay},#{yinRecharge},#{yinRechargeGive},#{yinRechargeGiveDay},#{openType},#{liveAddr},#{wechat},
+            (#{tid},#{jinRecharge},#{jinRechargeGive},#{jinRechargeGiveDay},#{yinRecharge},#{yinRechargeGive},#{yinRechargeGiveDay},#{openType},#{liveAddr},#{wechat},
              #{qq},sysdate(),sysdate(),#{updateBy})
 
     </insert>
 
-    <select id="findMonthRecharge" resultType="java.util.Map">
+    <select id="findMonthRecharge" resultType="java.util.Map" parameterType="com.manager.common.core.domain.entity.MonthRecharge">
         select id,jin_recharge jinRecharge,jin_recharge_give jinRechargeGive,jin_recharge_give_day jinRechargeGiveDay,
                yin_recharge yinRecharge,yin_recharge_give yinRechargeGive,yin_recharge_give_day yinRechargeGiveDay,
                open_type openType,live_addr liveAddr,wechat,
                qq,create_time createTime,update_time updateTime,update_by updateBy
         from config_month_recharge
-        where status = '1'
+        where status = '1' and tid = #{tid}
     </select>
 
     <update id="updateMonthRecharge">
@@ -150,12 +153,12 @@
             update_time = sysdate(),
             update_by = #{updateBy}
         </set>
-        where id = #{id}
+        where id = #{id} and tid = #{tid}
     </update>
 
     <insert id="saveYsinfo" parameterType="com.manager.common.core.domain.entity.Ysinfo">
-        insert into config_ys(username,password,google_check,google_key,update_time,create_time)
-        values (#{username},#{password},#{googleCheck},#{googleKey},sysdate(),sysdate())
+        insert into config_ys(tid,username,password,google_check,google_key,update_time,create_time)
+        values (#{tid},#{username},#{password},#{googleCheck},#{googleKey},sysdate(),sysdate())
     </insert>
 
     <update id="updateYsinfo" parameterType="com.manager.common.core.domain.entity.Ysinfo">
@@ -169,6 +172,6 @@
             <if test="rechargeStatus!=null and rechargeStatus!=''"> recharge_status = #{rechargeStatus},</if>
             update_time = sysdate()
         </set>
-        where id = #{id}
+        where id = #{id} and tid = #{tid}
     </update>
 </mapper>

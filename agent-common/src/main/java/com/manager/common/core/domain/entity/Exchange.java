@@ -14,6 +14,9 @@ public class Exchange extends BaseEntity {
     @ApiModelProperty("主键id")
     private String id;
 
+    @ApiModelProperty("平台id")
+    private Integer tid;
+
     @ApiModelProperty("兑换方式 0支付宝 1银行卡")
     private int method;
 

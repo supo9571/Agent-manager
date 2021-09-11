@@ -14,6 +14,9 @@ public class Ysinfo extends BaseEntity {
     @ApiModelProperty("主键id")
     private Integer id;
 
+    @ApiModelProperty("平台id")
+    private Integer tid;
+
     @ApiModelProperty("用户名")
     private String username;
 

@@ -15,6 +15,7 @@
             updated_at as updatedAt
         FROM
             config_consumer
+        where tid = #{tid}
     </select>
 
     <update id="editConsumer" parameterType="com.manager.common.core.domain.entity.Consumer">
@@ -33,6 +34,7 @@
     <insert id="addConsumer" parameterType="com.manager.common.core.domain.entity.Consumer">
         insert into
             config_consumer(
+            tid,
             status,
             accord_addr,
             open_type,
@@ -41,6 +43,7 @@
             create_time
         )
         values(
+            #{tid};
             #{status},
             #{accordAddr},
             #{openType},

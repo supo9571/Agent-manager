@@ -2,6 +2,7 @@ package com.manager.system.mapper;
 
 import com.manager.common.core.domain.entity.*;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -15,14 +16,14 @@ public interface RechargeMapper {
 
     Integer saveVipRecharge(VipRecharge vipRecharge);
 
-    List findVipRecharge();
+    List findVipRecharge(@Param("tid") Integer tid);
 
     Integer updateVipRecharge(VipRecharge vipRecharge);
 
     Integer saveOnlineRecharge(OnlineRecharge onlineRecharge);
 
-    @Select("select id payId,cname payName from config_pay where pay_type = '2' ")
-    List<Map> getOnlinePays();
+    @Select("select id payId,cname payName from config_pay where pay_type = '2' and tid = #{tid} ")
+    List<Map> getOnlinePays(@Param("tid") Integer tid);
 
     List findOnlineRecharge(OnlineRecharge onlineRecharge);
 
@@ -42,11 +43,11 @@ public interface RechargeMapper {
 
     Integer saveYsinfo(Ysinfo ysinfo);
 
-    @Select("select id,username,password,amount,update_time updateTime,google_check googleCheck,google_key googleKey,recharge_status rechargeStatus from config_ys where status = '1' ")
-    List<Map> fingYsinfo();
+    @Select("select id,username,password,amount,update_time updateTime,google_check googleCheck,google_key googleKey,recharge_status rechargeStatus from config_ys where status = '1' and tid =#{tid} ")
+    List<Map> fingYsinfo(@Param("tid") Integer tid);
 
     Integer updateYsinfo(Ysinfo ysinfo);
 
-    @Select("select id,username from config_ys where status = '1' ")
-    List<Map> getYsOption();
+    @Select("select id,username from config_ys where status = '1' and tid =#{tid} ")
+    List<Map> getYsOption(@Param("tid") Integer tid);
 }

@@ -5,8 +5,8 @@
 <mapper namespace="com.manager.system.mapper.ActivityMapper">
 
     <insert id="saveActivity" parameterType="com.manager.common.core.domain.entity.Activity">
-        insert into config_activity (activity_begin,activity_end,activity_type,sort,channel_list,vip_list,`min`,activity_info,update_by,update_time,create_time)
-        values (#{activityBegin},#{activityEnd},#{activityType},#{sort},#{channelList},#{vipList},#{min},#{activityInfo},#{updateBy},sysdate(),sysdate());
+        insert into config_activity (tid,activity_begin,activity_end,activity_type,sort,channel_list,vip_list,`min`,activity_info,update_by,update_time,create_time)
+        values (#{tid},#{activityBegin},#{activityEnd},#{activityType},#{sort},#{channelList},#{vipList},#{min},#{activityInfo},#{updateBy},sysdate(),sysdate());
     </insert>
 
     <select id="checkActivityTime" resultType="java.lang.Integer" parameterType="com.manager.common.core.domain.entity.Activity">
@@ -16,7 +16,7 @@
               or (activity_begin>=#{activityBegin} and #{activityEnd}>=activity_begin)
               or (activity_end>=#{activityBegin} and #{activityEnd}>=activity_end)
             )
-        and activity_type = #{activityType}
+        and activity_type = #{activityType} and tid = #{tid}
         <if test="id!=null and id!=''"> and id!=#{id}</if>
     </select>
 
@@ -26,6 +26,7 @@
                channel_list channelList,vip_list vipList,`min`,activity_info activityInfo,update_time updateTime
         from config_activity
         <where>
+            tid = #{tid}
             <if test="activityType!=null and activityType!=''"> and activity_type = #{activityType} </if>
             <if test="status!=null and status!=1 "> and activity_begin >= SYSDATE() </if>
             <if test="status!=null and status!=2 "> and SYSDATE() >= activity_begin and activity_end >= sysdate()</if>

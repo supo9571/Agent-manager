@@ -14,6 +14,9 @@ public class Pay extends BaseEntity {
     @ApiModelProperty("主键id")
     private String id;
 
+    @ApiModelProperty("平台id")
+    private Integer tid;
+
     @ApiModelProperty("排序")
     private int sort;
 

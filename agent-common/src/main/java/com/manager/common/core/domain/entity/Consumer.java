@@ -14,6 +14,9 @@ public class Consumer extends BaseEntity {
     @ApiModelProperty("主键id")
     private String id;
 
+    @ApiModelProperty("平台id")
+    private Integer tid;
+
     @ApiModelProperty("显示地址  1 大厅页面 2 推广页面 3 注册页面")
     private String accordAddr;
 

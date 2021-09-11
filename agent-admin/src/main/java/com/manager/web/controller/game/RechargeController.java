@@ -1,6 +1,7 @@
 package com.manager.web.controller.game;
 
 import com.manager.common.annotation.Log;
+import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.controller.BaseController;
 import com.manager.common.core.domain.AjaxResult;
 import com.manager.common.core.domain.entity.*;
@@ -39,6 +40,7 @@ public class RechargeController extends BaseController {
     @PostMapping("/addvip")
     public AjaxResult addvip(VipRecharge vipRecharge) {
         vipRecharge.setCreateBy(SecurityUtils.getUsername());
+        vipRecharge.setTid(ManagerConfig.getTid());
         Integer i = rechargeService.saveVipRecharge(vipRecharge);
         return i>0?AjaxResult.success():AjaxResult.error();
     }
@@ -63,6 +65,7 @@ public class RechargeController extends BaseController {
     @Log(title = "编辑vip充值", businessType = BusinessType.UPDATE)
     @PostMapping("/editvip")
     public AjaxResult editVip(VipRecharge vipRecharge) {
+        vipRecharge.setTid(ManagerConfig.getTid());
         vipRecharge.setUpdateBy(SecurityUtils.getUsername());
         Integer i = rechargeService.updateVipRecharge(vipRecharge);
         return i>0?AjaxResult.success():AjaxResult.error();
@@ -85,6 +88,7 @@ public class RechargeController extends BaseController {
     @Log(title = "添加线上充值", businessType = BusinessType.INSERT)
     @PostMapping("/addonline")
     public AjaxResult addOnline(OnlineRecharge onlineRecharge) {
+        onlineRecharge.setTid(ManagerConfig.getTid());
         onlineRecharge.setUpdateBy(SecurityUtils.getUsername());
         Integer i = rechargeService.saveOnlineRecharge(onlineRecharge);
         return i>0?AjaxResult.success():AjaxResult.error();
@@ -98,6 +102,7 @@ public class RechargeController extends BaseController {
     @PostMapping("/onlinelist")
     public AjaxResult onlineList(OnlineRecharge onlineRecharge) {
         startPage();
+        onlineRecharge.setTid(ManagerConfig.getTid());
         List list =  rechargeService.findOnlineRecharge(onlineRecharge);
         return AjaxResult.success(getDataTable(list));
     }
@@ -109,6 +114,7 @@ public class RechargeController extends BaseController {
     @ApiOperation(value = "编辑线上充值")
     @PostMapping("/editonline")
     public AjaxResult editOnline(OnlineRecharge onlineRecharge) {
+        onlineRecharge.setTid(ManagerConfig.getTid());
         onlineRecharge.setUpdateBy(SecurityUtils.getUsername());
         Integer i = rechargeService.updateOnlineRecharge(onlineRecharge);
         return i>0?AjaxResult.success():AjaxResult.error();
@@ -122,6 +128,7 @@ public class RechargeController extends BaseController {
     @Log(title = "添加银行卡充值", businessType = BusinessType.INSERT)
     @PostMapping("/addbank")
     public AjaxResult addBank(BankRecharge bankRecharge) {
+        bankRecharge.setTid(ManagerConfig.getTid());
         bankRecharge.setUpdateBy(SecurityUtils.getUsername());
         Integer i = rechargeService.saveBankRecharge(bankRecharge);
         return i>0?AjaxResult.success():AjaxResult.error();
@@ -135,6 +142,7 @@ public class RechargeController extends BaseController {
     @PostMapping("/banklist")
     public AjaxResult bankList(BankRecharge bankRecharge) {
         startPage();
+        bankRecharge.setTid(ManagerConfig.getTid());
         List list = rechargeService.findBankRecharge(bankRecharge);
         return AjaxResult.success(getDataTable(list));
     }
@@ -146,6 +154,7 @@ public class RechargeController extends BaseController {
     @ApiOperation(value = "修改银行卡充值")
     @PostMapping("/editbank")
     public AjaxResult editBank(BankRecharge bankRecharge) {
+        bankRecharge.setTid(ManagerConfig.getTid());
         bankRecharge.setUpdateBy(SecurityUtils.getUsername());
         Integer i = rechargeService.updateBankRecharge(bankRecharge);
         return i>0?AjaxResult.success():AjaxResult.error();
@@ -160,6 +169,7 @@ public class RechargeController extends BaseController {
     @Log(title = "添加月卡配置", businessType = BusinessType.INSERT)
     @PostMapping("/addmonth")
     public AjaxResult addMonth(MonthRecharge monthRecharge) {
+        monthRecharge.setTid(ManagerConfig.getTid());
         monthRecharge.setUpdateBy(SecurityUtils.getUsername());
         Integer i = rechargeService.saveMonthRecharge(monthRecharge);
         return i>0?AjaxResult.success():AjaxResult.error();
@@ -173,6 +183,7 @@ public class RechargeController extends BaseController {
     @PostMapping("/monthlist")
     public AjaxResult monthList(MonthRecharge monthRecharge) {
         startPage();
+        monthRecharge.setTid(ManagerConfig.getTid());
         List list = rechargeService.findMonthRecharge(monthRecharge);
         return AjaxResult.success(getDataTable(list));
     }
@@ -185,6 +196,7 @@ public class RechargeController extends BaseController {
     @Log(title = "编辑月卡配置", businessType = BusinessType.UPDATE)
     @PostMapping("/editmonth")
     public AjaxResult editMonth(MonthRecharge monthRecharge) {
+        monthRecharge.setTid(ManagerConfig.getTid());
         monthRecharge.setUpdateBy(SecurityUtils.getUsername());
         Integer i = rechargeService.updateMonthRecharge(monthRecharge);
         return i>0?AjaxResult.success():AjaxResult.error();
@@ -198,6 +210,7 @@ public class RechargeController extends BaseController {
     @Log(title = "添加银商信息", businessType = BusinessType.INSERT)
     @PostMapping("/addys")
     public AjaxResult addYs(Ysinfo ysinfo) {
+        ysinfo.setTid(ManagerConfig.getTid());
         Integer i = rechargeService.saveYsinfo(ysinfo);
         return i>0?AjaxResult.success():AjaxResult.error();
     }
@@ -220,6 +233,7 @@ public class RechargeController extends BaseController {
     @ApiOperation(value = "编辑银商列表")
     @PostMapping("/editys")
     public AjaxResult editYs(Ysinfo ysinfo) {
+        ysinfo.setTid(ManagerConfig.getTid());
         Integer i = rechargeService.updateYsinfo(ysinfo);
         return i>0?AjaxResult.success():AjaxResult.error();
     }

@@ -14,7 +14,7 @@
             <if test="payType!=null and payType!=''"> pay_type = #{payType},</if>
             updated_time = sysdate()
         </set>
-        where id = #{id}
+        where id = #{id} and tid=#{tid}
     </update>
 
 </mapper>

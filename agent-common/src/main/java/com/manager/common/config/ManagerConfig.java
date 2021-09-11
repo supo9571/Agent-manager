@@ -38,11 +38,19 @@ public class ManagerConfig {
      */
     private static String profile;
 
-    private Integer tid;
+    private static Integer tid;
 
     private String tname;
 
     private String gameDomain;
+
+    public static Integer getTid() {
+        return tid;
+    }
+
+    public void setTid(Integer tid) {
+        ManagerConfig.tid = tid;
+    }
     /**
      * 获取地址开关
      */

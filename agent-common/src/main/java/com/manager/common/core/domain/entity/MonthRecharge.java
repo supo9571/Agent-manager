@@ -13,6 +13,9 @@ public class MonthRecharge extends BaseEntity {
     @ApiModelProperty("主键id")
     private Integer id;
 
+    @ApiModelProperty("平台id")
+    private Integer tid;
+
     @ApiModelProperty("金卡充值金额")
     private Integer jinRecharge;
 
