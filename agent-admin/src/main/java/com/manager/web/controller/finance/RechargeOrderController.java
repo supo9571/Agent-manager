@@ -1,0 +1,42 @@
+package com.manager.web.controller.finance;
+
+import com.manager.common.annotation.Log;
+import com.manager.common.core.controller.BaseController;
+import com.manager.common.core.domain.AjaxResult;
+import com.manager.common.core.domain.entity.Pay;
+import com.manager.common.core.domain.entity.RechargeOrder;
+import com.manager.common.enums.BusinessType;
+import com.manager.system.service.RechargeOrderService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * 充值订单查询
+ * @author sieGuang 2021/09/10
+ */
+@RestController
+@RequestMapping("/game/finance")
+@Api(tags = "充值订单")
+public class RechargeOrderController extends BaseController {
+
+    @Autowired
+    private RechargeOrderService rechargeOrderService;
+
+    /**
+     * 查询
+     */
+    @PreAuthorize("@ss.hasPermi('system:game:listRechargeOrder')")
+    @ApiOperation(value = "充值订单查询")
+    @PostMapping("/listRechargeOrder")
+    public AjaxResult getRechargeOrderList(@RequestBody RechargeOrder rechargeOrder) {
+        return AjaxResult.success("查询成功", rechargeOrderService.getRechargeOrderList(rechargeOrder));
+    }
+
+
+}

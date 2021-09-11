@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manager.system.mapper.RechargeOrderMapper">
+
+    <select id="getRechargeOrderList" parameterType="com.manager.common.core.domain.entity.RechargeOrder" resultType="com.manager.common.core.domain.entity.RechargeOrder">
+        SELECT
+            cro.id as id,
+            cro.order_number as orderNumber,
+            cro.third_party_order_number as thirdPartyOrderNumber,
+            cro.uid as uid,
+            (SELECT dr.name from data_register dr where dr.uid = cro.uid LIMIT 1) as uname,
+            cro.before_order_money as beforeOrderMoney,
+            cro.after_order_money as afterOrderMoney,
+            cro.recharge_amount as rechargeAmount,
+            cro.recharge_type as rechargeType,
+            cro.recharge_channel as rechargeChannel,
+            cro.payment_status as paymentStatus,
+            (SELECT dr.channel from data_register dr where dr.uid = cro.uid LIMIT 1) as channel,
+            cro.admin_user_id as adminUserId,
+            cro.reality_name as realityName,
+            cro.ex_coins as exCoins,
+            cro.finish_time as finishTime,
+            cro.create_time as createTime,
+            cro.update_time as updateTime,
+            cro.commodity_name as commodityName,
+            cro.transfer_way as transferWay,
+            cro.remark as remark
+        FROM
+            config_recharge_order cro
+        where 1 = 1
+        <if test="uid !=null and uid !=''">
+            and cro.uid = #{uid}
+        </if>
+        <if test="orderNumber !=null and orderNumber !=''">
+            and cro.order_number = #{orderNumber}
+        </if>
+        <if test="channel !=null and channel !=''">
+            and (SELECT dr.channel from data_register dr where dr.uid = cro.uid) = #{channel}
+        </if>
+        <if test="adminUserId !=null and adminUserId !=''">
+            and cro.admin_user_id = #{adminUserId}
+        </if>
+        <if test="rechargeType !=null and rechargeType !=''">
+            and cro.recharge_type = #{rechargeType}
+        </if>
+        <if test="rechargeChannel !=null and rechargeChannel !=''">
+            and cro.recharge_channel = #{rechargeChannel}
+        </if>
+        <if test="paymentStatus !=null and paymentStatus !=''">
+            and cro.payment_status = #{paymentStatus}
+        </if>
+
+        <choose>
+            <when test="createTime1 != null and createTime1 !=''">
+                and date_format(cro.create_time,'%Y-%m-%d') >= #{createTime1}
+            </when>
+            <otherwise>
+                and date_format(cro.create_time,'%Y-%m-%d') >= CURDATE()
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="createTime2 != null and createTime2 !=''">
+                and date_format(cro.create_time,'%Y-%m-%d') <![CDATA[<=]]>  #{finishTime2}
+            </when>
+            <otherwise>
+                and date_format(cro.create_time,'%Y-%m-%d') <![CDATA[<=]]> CURDATE()
+            </otherwise>
+        </choose>
+
+        <choose>
+            <when test="finishTime1 != null and finishTime1 !=''">
+                and date_format(cro.create_time,'%Y-%m-%d') >= #{finishTime1}
+            </when>
+            <otherwise>
+                and date_format(cro.create_time,'%Y-%m-%d') >= CURDATE()
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="finishTime2 != null and finishTime2 !=''">
+                and date_format(cro.create_time,'%Y-%m-%d') <![CDATA[<=]]>  #{finishTime2}
+            </when>
+            <otherwise>
+                and date_format(cro.create_time,'%Y-%m-%d') <![CDATA[<=]]> CURDATE()
+            </otherwise>
+        </choose>
+    </select>
+
+</mapper>
