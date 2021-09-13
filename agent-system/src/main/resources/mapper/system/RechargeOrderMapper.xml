@@ -36,20 +36,29 @@
         <if test="orderNumber !=null and orderNumber !=''">
             and cro.order_number = #{orderNumber}
         </if>
+        <if test="thirdPartyOrderNumber !=null and thirdPartyOrderNumber !=''">
+            and cro.third_party_order_number = #{thirdPartyOrderNumber}
+        </if>
         <if test="channel !=null and channel !=''">
             and (SELECT dr.channel from data_register dr where dr.uid = cro.uid) = #{channel}
         </if>
         <if test="adminUserId !=null and adminUserId !=''">
             and cro.admin_user_id = #{adminUserId}
         </if>
+        <if test="realityName !=null and realityName !=''">
+            and cro.reality_name = #{realityName}
+        </if>
         <if test="rechargeType !=null and rechargeType !=''">
-            and cro.recharge_type = #{rechargeType}
+            and cro.recharge_type in (#{rechargeType})
         </if>
         <if test="rechargeChannel !=null and rechargeChannel !=''">
             and cro.recharge_channel = #{rechargeChannel}
         </if>
         <if test="paymentStatus !=null and paymentStatus !=''">
             and cro.payment_status = #{paymentStatus}
+        </if>
+        <if test="rechargeAmount !=null">
+            and cro.recharge_amount = #{rechargeAmount}
         </if>
 
         <choose>
@@ -86,5 +95,53 @@
             </otherwise>
         </choose>
     </select>
+
+    <insert id="addRechargeOrder" parameterType="com.manager.common.core.domain.entity.RechargeOrder">
+        insert into
+            config_recharge_order(
+            tid,
+            order_number,
+            uid,
+            commodity_name,
+            recharge_amount,
+            recharge_type,
+            recharge_channel,
+            payment_status,
+            create_time,
+            finish_time,
+            remark
+        )
+        values (
+            #{tid},
+            #{orderNumber},
+            #{uid},
+            #{commodityName},
+            #{rechargeAmount},
+            #{rechargeType},
+            #{rechargeChannel},
+            '1',
+            sysdate(),
+            sysdate(),
+            #{remark}
+       )
+    </insert>
+
+    <update id="editRechargeOrder" parameterType="com.manager.common.core.domain.entity.RechargeOrder">
+        update config_recharge_order cro
+        <set>
+            <if test="rechargeAmount !=null">
+                and cro.recharge_amount = #{rechargeAmount}
+            </if>
+            <if test="thirdPartyOrderNumber!=null and thirdPartyOrderNumber!=''">
+                and cro.third_party_order_number = #{thirdPartyOrderNumber},
+            </if>
+            <if test="remark!=null and remark!=''">
+                remark = #{remark},
+            </if>
+            update_time = sysdate()
+        </set>
+        where id = #{id} and tid=#{tid}
+    </update>
+
 
 </mapper>

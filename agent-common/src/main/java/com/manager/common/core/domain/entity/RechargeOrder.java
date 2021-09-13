@@ -18,6 +18,9 @@ public class RechargeOrder extends BaseEntity {
     @ApiModelProperty("主键id")
     private String id;
 
+    @ApiModelProperty("平台id")
+    private Integer tid;
+
     @ApiModelProperty("订单号")
     private String orderNumber;
     @ApiModelProperty("第三方订单号")
@@ -35,7 +38,7 @@ public class RechargeOrder extends BaseEntity {
     @ApiModelProperty("充值金额")
     private BigDecimal rechargeAmount;
 
-    @ApiModelProperty("支付类型  1VIP充值 2银行卡充值 3月卡充值 4线上支付 5系统赠送")
+    @ApiModelProperty("支付类型  1VIP充值 2银行卡充值 3月卡充值 4线上支付 5系统赠送/人工充值 6线上支付")
     private String rechargeType;
     @ApiModelProperty("支付渠道")
     private String rechargeChannel;
@@ -74,4 +77,7 @@ public class RechargeOrder extends BaseEntity {
 
     @ApiModelProperty("操作备注")
     private String remark;
+
+    @ApiModelProperty("银行卡充值状态： 1确认充值 2取消充值")
+    private String bankCardRechargeType;
 }

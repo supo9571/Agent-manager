@@ -2,6 +2,7 @@ package com.manager.system.mapper;
 
 import com.manager.common.core.domain.entity.Pay;
 import com.manager.common.core.domain.entity.RechargeOrder;
+import com.manager.common.core.domain.entity.VipRecharge;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -19,5 +20,9 @@ public interface RechargeOrderMapper {
      * 查询
      */
     List<RechargeOrder> getRechargeOrderList(RechargeOrder rechargeOrder);
+
+    Integer addRechargeOrder(RechargeOrder rechargeOrder);
+
+    Integer editRechargeOrder(RechargeOrder rechargeOrder);
 
 }
