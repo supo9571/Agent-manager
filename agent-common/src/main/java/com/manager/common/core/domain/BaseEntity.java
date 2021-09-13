@@ -85,6 +85,9 @@ public class BaseEntity implements Serializable {
     @ApiModelProperty("排序方式 [asc：正序][desc：倒序]")
     private String isAsc;
 
+    @ApiModelProperty("排序字段 字段加排序，多个已逗号分隔")
+    private String orderByColumns;
+
     /**
      * 请求参数
      */
