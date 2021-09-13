@@ -23,7 +23,7 @@
     <select id="findActivity" parameterType="com.manager.common.core.domain.entity.Activity" resultType="java.util.Map">
         select id,activity_begin activityBegin,activity_end activityEnd,activity_type activityType,
                sort,IF(SYSDATE()>activity_begin,IF(SYSDATE()>activity_end,3,2),1) status,
-               channel_list channelList,vip_list vipList,`min`,activity_info activityInfo,update_time updateTime
+               channel_list channelList,vip_list vipList,`min`,activity_info activityInfo,update_time updateTime,update_by updateBy
         from config_activity
         <where>
             tid = #{tid}
