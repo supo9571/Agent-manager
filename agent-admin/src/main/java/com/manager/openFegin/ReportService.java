@@ -21,7 +21,7 @@ public interface ReportService {
      * @return 操作后金币数 元*10000
      */
     @PostMapping("/data/coins/edit")
-    AjaxResult editCoins(@RequestParam("cmd")String cmd,@RequestParam("value") Integer value, @RequestParam("uid")Integer uid,@RequestParam("reason") Integer reason);
+    AjaxResult editCoins(@RequestParam("cmd")String cmd,@RequestParam("value") Long value, @RequestParam("uid")Integer uid,@RequestParam("reason") Integer reason);
 
     /**
      * 给用户 发邮件

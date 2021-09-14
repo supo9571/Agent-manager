@@ -30,4 +30,9 @@ public interface RechargeOrderService {
      */
     Integer editRechargeOrder(RechargeOrder rechargeOrder);
 
+    Integer selectRechargeGive(int i);
+
+    Integer selectJinMonthGive();
+
+    Integer selectYinMonthGive();
 }

@@ -109,7 +109,8 @@
             payment_status,
             create_time,
             finish_time,
-            remark
+            remark,
+            before_order_money,after_order_money,admin_user_id
         )
         values (
             #{tid},
@@ -122,7 +123,8 @@
             '1',
             sysdate(),
             sysdate(),
-            #{remark}
+            #{remark},
+            #{beforeOrderMoney},#{afterOrderMoney},#{adminUserId}
        )
     </insert>
 

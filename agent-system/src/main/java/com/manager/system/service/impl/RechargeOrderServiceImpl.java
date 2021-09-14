@@ -117,7 +117,7 @@ public class RechargeOrderServiceImpl implements RechargeOrderService {
     @Override
     public Integer addRechargeOrder(RechargeOrder rechargeOrder) {
         rechargeOrder.setOrderNumber(IdUtils.getOrderId());
-        rechargeOrder.setCreateBy(SecurityUtils.getUsername());
+        rechargeOrder.setAdminUserId(String.valueOf(SecurityUtils.getUserId()));
         rechargeOrder.setTid(ManagerConfig.getTid());
         return rechargeOrderMapper.addRechargeOrder(rechargeOrder);
     }
@@ -125,6 +125,24 @@ public class RechargeOrderServiceImpl implements RechargeOrderService {
     @Override
     public Integer editRechargeOrder(RechargeOrder rechargeOrder) {
         return rechargeOrderMapper.editRechargeOrder(rechargeOrder);
+    }
+
+    @Override
+    public Integer selectRechargeGive(int i) {
+        if(i == 1 || i == 2){
+           return rechargeOrderMapper.selectRechargeGive(i);
+        }
+        return 0;
+    }
+
+    @Override
+    public Integer selectJinMonthGive() {
+        return rechargeOrderMapper.selectJinMonthGive();
+    }
+
+    @Override
+    public Integer selectYinMonthGive() {
+        return rechargeOrderMapper.selectYinMonthGive();
     }
 
 }
