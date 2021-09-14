@@ -4,7 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.manager.system.mapper.RechargeOrderMapper">
 
-    <select id="getRechargeOrderList" parameterType="com.manager.common.core.domain.entity.RechargeOrder" resultType="com.manager.common.core.domain.entity.RechargeOrder">
+    <select id="getRechargeOrderList" parameterType="com.manager.common.core.domain.entity.RechargeOrder"
+            resultType="com.manager.common.core.domain.entity.RechargeOrder">
         SELECT
             cro.id as id,
             cro.order_number as orderNumber,
@@ -159,6 +160,25 @@
         </set>
         where id = #{id} and tid=#{tid}
     </update>
+
+    <select id="getRechargeAmount" resultType="java.util.Map">
+        select
+            <choose>
+                <when test="monthlyCardType != null and monthlyCardType !='1'">
+                    jin_recharge as recharge,
+                    jin_recharge_give as rechargeGive
+                </when>
+                <otherwise>
+                    yin_recharge as recharge,
+                    yin_recharge_give as rechargeGive
+                </otherwise>
+            </choose>
+            yin_recharge_give
+        from
+            config_month_recharge
+        where
+            status = '1' limit 0,1
+    </select>
 
 
 </mapper>

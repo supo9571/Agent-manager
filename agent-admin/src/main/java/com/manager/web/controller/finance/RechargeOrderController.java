@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TimerTask;
 
 /**
@@ -45,7 +47,6 @@ public class RechargeOrderController extends BaseController {
     @ApiOperation(value = "充值订单查询")
     @PostMapping("/listRechargeOrder")
     public AjaxResult getRechargeOrderList(@RequestBody RechargeOrder rechargeOrder) {
-        startOrders(rechargeOrder.getOrderByColumns());
         return AjaxResult.success("查询成功", rechargeOrderService.getRechargeOrderList(rechargeOrder));
     }
 
@@ -156,6 +157,17 @@ public class RechargeOrderController extends BaseController {
         rechargeOrder.setPaymentStatus("3");
         Integer i = rechargeOrderService.editRechargeOrder(rechargeOrder);
         return i>0?AjaxResult.success():AjaxResult.error();
+    }
+
+    /**
+     * 获取月卡金额
+     * @param monthlyCardType 1金卡 2银卡
+     */
+    @PreAuthorize("@ss.hasPermi('system:finance:getRechargeAmount')")
+    @ApiOperation(value = "获取月卡金额")
+    @PostMapping("/getRechargeAmount")
+    public AjaxResult getRechargeAmount(String monthlyCardType) {
+        return AjaxResult.success("查询成功", rechargeOrderService.getRechargeAmount(monthlyCardType));
     }
 
 }

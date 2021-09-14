@@ -1,6 +1,8 @@
 package com.manager.system.service.impl;
 
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.manager.common.annotation.DataSource;
 import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.domain.entity.Pay;
@@ -8,6 +10,7 @@ import com.manager.common.core.domain.entity.RechargeOrder;
 import com.manager.common.core.domain.entity.VipRecharge;
 import com.manager.common.enums.DataSourceType;
 import com.manager.common.utils.SecurityUtils;
+import com.manager.common.utils.StringUtils;
 import com.manager.common.utils.uuid.IdUtils;
 import com.manager.system.mapper.RechargeOrderMapper;
 import com.manager.system.service.RechargeOrderService;
@@ -43,8 +46,19 @@ public class RechargeOrderServiceImpl implements RechargeOrderService {
         BigDecimal rechargeRechargeAmount = new BigDecimal(0);
         // 放回参数
         Map result = new HashMap();
+        // 设置分页数据
+        PageHelper.startPage(rechargeOrder.getPage(), rechargeOrder.getSize(),
+                rechargeOrder.getOrderByColumn()+" "+rechargeOrder.getIsAsc());
 
         List<RechargeOrder> list = rechargeOrderMapper.getRechargeOrderList(rechargeOrder);
+
+        PageInfo<RechargeOrder> pageInfo = new PageInfo<RechargeOrder>(list);
+        result.put("page",rechargeOrder.getPage());
+        result.put("size",rechargeOrder.getSize());
+        result.put("total",pageInfo.getTotal());
+
+        // 只处理分页的数据
+        list = pageInfo.getList();
 
         // 左下角的哪几个字段
         if(CollectionUtils.isNotEmpty(list)){
@@ -107,7 +121,7 @@ public class RechargeOrderServiceImpl implements RechargeOrderService {
             }
         }
 
-        result.put("list",list);
+        result.put("rows",list);
         result.put("rechargeNum",rechargeNum);
         result.put("rechargeRechargeNum",rechargeRechargeNum);
         result.put("rechargeRechargeAmount",rechargeRechargeAmount);
@@ -143,6 +157,11 @@ public class RechargeOrderServiceImpl implements RechargeOrderService {
     @Override
     public Integer selectYinMonthGive() {
         return rechargeOrderMapper.selectYinMonthGive();
+    }
+
+    @Override
+    public Map getRechargeAmount(String monthlyCardType) {
+        return rechargeOrderMapper.getRechargeAmount(monthlyCardType);
     }
 
 }

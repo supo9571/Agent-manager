@@ -39,7 +39,7 @@ public class RechargeOrder extends BaseEntity {
     private BigDecimal rechargeAmount;
 
     @ApiModelProperty("支付类型  1VIP充值 2银行卡充值 3月卡充值 " +
-            "4线上支付 5系统赠送/人工充值 6线上支付 7彩金充值 (获取对应页签的数据)")
+            "4线上支付 5系统赠送/人工充值 6彩金充值 (获取对应页签的数据)")
     private String rechargeType;
     @ApiModelProperty("支付渠道")
     private String rechargeChannel;

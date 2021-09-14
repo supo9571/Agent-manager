@@ -63,6 +63,25 @@ public class BaseController
     }
 
     /**
+     * 设置请求分页数据
+     */
+    protected void startPage(Integer page,Integer size,String orderByColumn,String isAsc) {
+        page = (page == null) ? 1 : page;
+        size = (size == null) ? 10 : size;
+        PageDomain pageDomain = new PageDomain();
+        pageDomain.setPageNum(page);
+        pageDomain.setPageSize(size);
+        pageDomain.setOrderByColumn(orderByColumn);
+        pageDomain.setIsAsc(isAsc);
+        if(StringUtils.isNotBlank(orderByColumn) && StringUtils.isNotBlank(isAsc)){
+            PageHelper.startPage(page, size, orderByColumn+" "+isAsc);
+        }else {
+            PageHelper.startPage(page, size);
+        }
+
+    }
+
+    /**
      * 设置请求排序数据
      */
     protected void startOrderBy()

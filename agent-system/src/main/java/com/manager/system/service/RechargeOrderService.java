@@ -35,4 +35,10 @@ public interface RechargeOrderService {
     Integer selectJinMonthGive();
 
     Integer selectYinMonthGive();
+
+    /**
+     * 获取月卡金额
+     * @param monthlyCardType 1金卡 2银卡
+     */
+    Map getRechargeAmount(String monthlyCardType);
 }

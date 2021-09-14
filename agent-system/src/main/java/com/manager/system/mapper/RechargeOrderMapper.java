@@ -34,4 +34,10 @@ public interface RechargeOrderMapper {
 
     @Select("select yin_recharge_give from config_month_recharge where status = '1' limit 0,1")
     Integer selectYinMonthGive();
+
+    /**
+     * 获取月卡金额
+     * @param monthlyCardType 1金卡 2银卡
+     */
+    Map getRechargeAmount(@Param("monthlyCardType") String monthlyCardType);
 }
