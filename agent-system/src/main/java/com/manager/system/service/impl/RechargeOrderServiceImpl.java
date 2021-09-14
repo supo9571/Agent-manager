@@ -45,7 +45,12 @@ public class RechargeOrderServiceImpl implements RechargeOrderService {
         Map result = new HashMap();
 
         List<RechargeOrder> list = rechargeOrderMapper.getRechargeOrderList(rechargeOrder);
+
+        // 左下角的哪几个字段
         if(CollectionUtils.isNotEmpty(list)){
+
+            rechargeNum = list.size();
+
             List<RechargeOrder> temp1 = list.stream().filter(f -> "1".equals(f.getPaymentStatus())).collect(Collectors.toList());
             if(CollectionUtils.isNotEmpty(temp1)){
                 rechargeRechargeNum = temp1.size();
@@ -55,14 +60,52 @@ public class RechargeOrderServiceImpl implements RechargeOrderService {
                 System.out.println(order.getRechargeAmount());
                 rechargeRechargeAmount.add(order.getRechargeAmount());
             }
-            rechargeNum = list.size();
+
+            // 查询系统赠送页面的多放回几个字段
+            if(rechargeOrder != null && ("5".equals(rechargeOrder.getRechargeType()))){
+
+                // 人工充值次数
+                Integer artificialRechargeNum = 0;
+                // 人工充值金额
+                BigDecimal artificialRechargeAmount = new BigDecimal(0);
+                // 充值扣值次数
+                int rechargeDeductionNum = 0;
+                // 人工充值金额
+                BigDecimal rechargeDeductionAmount = new BigDecimal(0);
+                // 彩金加款次数
+                int jackpotRechargeNum = 0;
+                // 彩金加款金额
+                BigDecimal jackpotRechargeAmount = new BigDecimal(0);
+                // 彩金扣除次数
+                int jackpotDeductionNum = 0;
+                // 彩金扣除金额
+                BigDecimal jackpotDeductionAmount = new BigDecimal(0);
+
+                for (RechargeOrder order : list) {
+                    if("1".equals(order.getOperateType())){
+                        artificialRechargeNum++;
+                        artificialRechargeAmount.add(order.getExCoins());
+                    }else if("2".equals(order.getOperateType())){
+                        rechargeDeductionNum++;
+                        rechargeDeductionAmount.add(order.getExCoins());
+                    }else if("3".equals(order.getOperateType())){
+                        jackpotRechargeNum++;
+                        jackpotRechargeAmount.add(order.getExCoins());
+                    }else if("4".equals(order.getOperateType())){
+                        jackpotDeductionNum++;
+                        jackpotDeductionAmount.add(order.getExCoins());
+                    }
+                }
+                result.put("artificialRechargeNum", artificialRechargeNum);
+                result.put("artificialRechargeAmount", artificialRechargeAmount);
+                result.put("rechargeDeductionNum", rechargeDeductionNum);
+                result.put("rechargeDeductionAmount", rechargeDeductionAmount);
+                result.put("jackpotRechargeNum", jackpotRechargeNum);
+                result.put("jackpotRechargeAmount", jackpotRechargeAmount);
+                result.put("jackpotDeductionNum", jackpotDeductionNum);
+                result.put("jackpotDeductionAmount", jackpotDeductionAmount);
+            }
         }
-
-        // 查询系统赠送页面的多放回几个字段
-        if(rechargeOrder != null && ("5".equals(rechargeOrder.getRechargeType()))){
-
-        }
-
 
         result.put("list",list);
         result.put("rechargeNum",rechargeNum);

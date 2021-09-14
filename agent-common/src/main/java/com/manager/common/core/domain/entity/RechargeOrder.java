@@ -52,9 +52,6 @@ public class RechargeOrder extends BaseEntity {
     @ApiModelProperty("真实姓名")
     private String realityName;
 
-    @ApiModelProperty("赠送金额")
-    private String exCoins;
-
     @ApiModelProperty("发起时间1")
     @JsonFormat(pattern = "yyyy-MM-dd")
     private String createTime1;
@@ -80,4 +77,12 @@ public class RechargeOrder extends BaseEntity {
 
     @ApiModelProperty("银行卡充值状态： 1确认充值 2取消充值")
     private String bankCardRechargeType;
+
+    @ApiModelProperty("赠送金额")
+    private BigDecimal exCoins;
+    @ApiModelProperty("炒作账户")
+    private String operateAccount;
+    @ApiModelProperty("炒作类型 1人工充值 2充值扣值 3彩金加款 4彩金扣除")
+    private String operateType;
+
 }
