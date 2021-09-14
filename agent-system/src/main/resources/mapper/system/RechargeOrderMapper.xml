@@ -15,6 +15,23 @@
             cro.before_order_money as beforeOrderMoney,
             cro.after_order_money as afterOrderMoney,
             cro.recharge_amount as rechargeAmount,
+            (
+            select
+                <choose>
+                    <when test="monthlyCardType != null and monthlyCardType !='1'">
+                        cmr.jin_recharge_give as rechargeGive
+                    </when>
+                    <otherwise>
+                        cmr.yin_recharge_give as rechargeGive
+                    </otherwise>
+                </choose>
+            from
+            config_month_recharge cmr
+            where
+            cmr.status = '1'
+            and (cmr.yin_recharge_give = #{rechargeAmount} or cmr.jin_recharge_give = #{rechargeAmount})
+            limit 0,1
+            ) as standAmount,
             cro.recharge_type as rechargeType,
             cro.recharge_channel as rechargeChannel,
             cro.payment_status as paymentStatus,
@@ -50,7 +67,10 @@
             and cro.reality_name = #{realityName}
         </if>
         <if test="rechargeType !=null and rechargeType !=''">
-            and cro.recharge_type in (#{rechargeType})
+            and cro.recharge_type in
+            <foreach item="item" index="index" collection="rechargeType.split(',')" open="(" separator="," close=")">
+                '${item}'
+            </foreach>
         </if>
         <if test="rechargeChannel !=null and rechargeChannel !=''">
             and cro.recharge_channel = #{rechargeChannel}
@@ -173,7 +193,6 @@
                     yin_recharge_give as rechargeGive
                 </otherwise>
             </choose>
-            yin_recharge_give
         from
             config_month_recharge
         where

@@ -37,6 +37,8 @@ public class RechargeOrder extends BaseEntity {
     private BigDecimal afterOrderMoney;
     @ApiModelProperty("充值金额")
     private BigDecimal rechargeAmount;
+    @ApiModelProperty("立得金额")
+    private BigDecimal standAmount;
 
     @ApiModelProperty("支付类型  1VIP充值 2银行卡充值 3月卡充值 " +
             "4线上支付 5系统赠送/人工充值 6彩金充值 (获取对应页签的数据)")
@@ -76,14 +78,18 @@ public class RechargeOrder extends BaseEntity {
     @ApiModelProperty("操作备注")
     private String remark;
 
+    @ApiModelProperty("月卡类型： 1金卡 2银卡")
+    private String monthlyCardType;
+
     @ApiModelProperty("银行卡充值状态： 1确认充值 2取消充值")
     private String bankCardRechargeType;
 
     @ApiModelProperty("赠送金额")
     private BigDecimal exCoins;
-    @ApiModelProperty("炒作账户")
+    @ApiModelProperty("操作账户")
     private String operateAccount;
-    @ApiModelProperty("炒作类型 1人工充值 2充值扣值 3彩金加款 4彩金扣除")
+    @ApiModelProperty("操作类型 1人工充值 2充值扣值 3彩金加款 4彩金扣除")
     private String operateType;
+
 
 }

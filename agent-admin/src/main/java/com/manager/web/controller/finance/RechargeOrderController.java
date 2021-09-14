@@ -65,6 +65,7 @@ public class RechargeOrderController extends BaseController {
         Integer reason = 0;
         Long give = 0l;// 赠送金额
         BigDecimal bigGive = new BigDecimal(0);// 赠送金额
+        String cmd = "addcoins";
         if("1".equals(rechargeOrder.getRechargeType())){// VIP充值
             //加币类型
             Integer rechargeGive = rechargeOrderService.selectRechargeGive(1);
@@ -88,11 +89,21 @@ public class RechargeOrderController extends BaseController {
                 amount = new BigDecimal(monthGive).multiply(b).longValue();
                 reason = 100072;
             }
+        }else if("4".equals(rechargeOrder.getRechargeType())){
+            if("2".equals(rechargeOrder.getOperateType()) ||
+                    "4".equals(rechargeOrder.getOperateType())){
+                cmd = "reducecoins";
+            }
+
+            Integer rechargeGive = rechargeOrderService.selectRechargeGive(2);//赠送比例
+            bigGive = rechargeOrder.getRechargeAmount().multiply(new BigDecimal(rechargeGive));
+            give = bigGive.longValue();
+            reason = 100075;
         }
         //请求 加金币
         BigDecimal currBig = new BigDecimal(0);//余额
         Long curr = 0l;
-        AjaxResult ajaxResult = reportService.editCoins("addcoins",amount+give,rechargeOrder.getUid(),reason);
+        AjaxResult ajaxResult = reportService.editCoins(cmd,amount+give,rechargeOrder.getUid(),reason);
         if("200".equals(String.valueOf(ajaxResult.get("code")))){
             curr = Long.valueOf(String.valueOf(ajaxResult.get("data")));
             currBig = new BigDecimal(curr).divide(b);
