@@ -110,7 +110,7 @@ public class RechargeOrderController extends BaseController {
                 reportService.sendEmail(cmd,2,String.valueOf(rechargeOrder.getUid()));
             }
         });
-        return i>0?success():error("充值成功，添加记录失败！");
+        return i>0?success():error("充值成功，添加记录失败");
     }
 
     /**
@@ -122,9 +122,40 @@ public class RechargeOrderController extends BaseController {
     @Log(title = "银行卡充值页签-确认充值、取消充值", businessType = BusinessType.UPDATE)
     @PostMapping("/editRechargeOrder")
     public AjaxResult editRechargeOrder(@RequestBody RechargeOrder rechargeOrder) {
+        if("1".equals(rechargeOrder.getBankCardRechargeType())){// 确认充值
+            BigDecimal b = new BigDecimal(10000);//乘以 一万
+            Long amount = rechargeOrder.getRechargeAmount().multiply(b).longValue();//充值金额
+            Integer rechargeGive = rechargeOrderService.selectRechargeGive(2);//赠送比例
+            BigDecimal bigGive = rechargeOrder.getRechargeAmount().multiply(new BigDecimal(rechargeGive));
+            Long give = bigGive.longValue();
+            //请求 加金币
+            BigDecimal currBig = new BigDecimal(0);//余额
+            Long curr = 0l;
+            AjaxResult ajaxResult = reportService.editCoins("addcoins",amount+give,rechargeOrder.getUid(),100073);
+            if("200".equals(String.valueOf(ajaxResult.get("code")))){
+                curr = Long.valueOf(String.valueOf(ajaxResult.get("data")));
+                currBig = new BigDecimal(curr).divide(b);
+            }else {
+                return error("请求游戏服失败");
+            }
+            rechargeOrder.setExCoins(bigGive.divide(b));
+            rechargeOrder.setAfterOrderMoney(currBig);
+            rechargeOrder.setBeforeOrderMoney(currBig.subtract(rechargeOrder.getRechargeAmount()).subtract(rechargeOrder.getExCoins()));
+            rechargeOrder.setPaymentStatus("1");
+            Integer i = rechargeOrderService.editRechargeOrder(rechargeOrder);
+            //发邮件 异步
+            AsyncManager.me().execute(new TimerTask() {
+                @Override
+                public void run() {
+                    String cmd = "亲爱的玩家： 您好！ 您充值的"+rechargeOrder.getRechargeAmount()+"元，已到账，请注意查收。";
+                    reportService.sendEmail(cmd,2,String.valueOf(rechargeOrder.getUid()));
+                }
+            });
+            return i>0?AjaxResult.success():AjaxResult.error("充值成功，修改记录失败");
+        }
+        rechargeOrder.setPaymentStatus("3");
         Integer i = rechargeOrderService.editRechargeOrder(rechargeOrder);
         return i>0?AjaxResult.success():AjaxResult.error();
     }
-
 
 }

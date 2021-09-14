@@ -134,6 +134,21 @@
             <if test="rechargeAmount !=null">
                 and cro.recharge_amount = #{rechargeAmount}
             </if>
+            <if test="beforeOrderMoney !=null">
+                and cro.before_order_money = #{beforeOrderMoney}
+            </if>
+            <if test="afterOrderMoney !=null">
+                and cro.after_order_money = #{afterOrderMoney}
+            </if>
+            <if test="adminUserId !=null">
+                and cro.admin_user_id = #{adminUserId}
+            </if>
+            <if test="exCoins !=null">
+                and cro.ex_coins = #{exCoins}
+            </if>
+            <if test="paymentStatus !=null">
+                and cro.payment_status = #{paymentStatus}
+            </if>
             <if test="thirdPartyOrderNumber!=null and thirdPartyOrderNumber!=''">
                 and cro.third_party_order_number = #{thirdPartyOrderNumber},
             </if>
