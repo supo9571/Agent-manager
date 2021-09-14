@@ -33,7 +33,7 @@ public class RechargeOrderController extends BaseController {
     /**
      * 查询
      */
-    @PreAuthorize("@ss.hasPermi('system:game:listRechargeOrder')")
+    @PreAuthorize("@ss.hasPermi('system:finance:listRechargeOrder')")
     @ApiOperation(value = "充值订单查询")
     @PostMapping("/listRechargeOrder")
     public AjaxResult getRechargeOrderList(@RequestBody RechargeOrder rechargeOrder) {
@@ -45,6 +45,9 @@ public class RechargeOrderController extends BaseController {
      * 手动充值
      * @param rechargeOrder 增加的字段
      */
+    @PreAuthorize("@ss.hasPermi('system:finance:addRechargeOrder')")
+    @ApiOperation(value = "新增手动充值")
+    @Log(title = "新增手动充值", businessType = BusinessType.INSERT)
     @PostMapping("/addRechargeOrder")
     public AjaxResult addRechargeOrder(@RequestBody RechargeOrder rechargeOrder) {
         Integer i = rechargeOrderService.addRechargeOrder(rechargeOrder);
@@ -55,6 +58,9 @@ public class RechargeOrderController extends BaseController {
      * 确认充值、取消充值
      * @param rechargeOrder
      */
+    @PreAuthorize("@ss.hasPermi('system:finance:editRechargeOrder')")
+    @ApiOperation(value = "银行卡充值页签-确认充值、取消充值")
+    @Log(title = "银行卡充值页签-确认充值、取消充值", businessType = BusinessType.UPDATE)
     @PostMapping("/editRechargeOrder")
     public AjaxResult editRechargeOrder(@RequestBody RechargeOrder rechargeOrder) {
         Integer i = rechargeOrderService.editRechargeOrder(rechargeOrder);
