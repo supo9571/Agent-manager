@@ -62,6 +62,9 @@ public class RechargeOrder extends BaseEntity {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private String createTime2;
 
+    @ApiModelProperty("完成时间")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private String finishTime;
     @ApiModelProperty("完成时间1")
     @JsonFormat(pattern = "yyyy-MM-dd")
     private String finishTime1;
