@@ -110,7 +110,7 @@
             create_time,
             finish_time,
             remark,
-            before_order_money,after_order_money,admin_user_id
+            before_order_money,after_order_money,admin_user_id,ex_coins
         )
         values (
             #{tid},
@@ -124,7 +124,7 @@
             sysdate(),
             sysdate(),
             #{remark},
-            #{beforeOrderMoney},#{afterOrderMoney},#{adminUserId}
+            #{beforeOrderMoney},#{afterOrderMoney},#{adminUserId},#{exCoins}
        )
     </insert>
 
