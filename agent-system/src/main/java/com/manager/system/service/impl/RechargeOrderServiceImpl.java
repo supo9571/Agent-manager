@@ -164,4 +164,10 @@ public class RechargeOrderServiceImpl implements RechargeOrderService {
         return rechargeOrderMapper.getRechargeAmount(monthlyCardType);
     }
 
+    @Override
+    public List<RechargeOrder> export(RechargeOrder rechargeOrder) {
+        List<RechargeOrder> list = rechargeOrderMapper.getRechargeOrderList(rechargeOrder);
+        return list;
+    }
+
 }

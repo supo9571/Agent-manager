@@ -1,28 +1,25 @@
 package com.manager.web.controller.finance;
 
 import com.manager.common.annotation.Log;
-import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.controller.BaseController;
 import com.manager.common.core.domain.AjaxResult;
-import com.manager.common.core.domain.entity.Pay;
-import com.manager.common.core.domain.entity.RechargeOrder;
+import com.manager.common.core.domain.entity.*;
 import com.manager.common.enums.BusinessType;
-import com.manager.common.utils.SecurityUtils;
+import com.manager.common.utils.poi.ExcelUtil;
 import com.manager.framework.manager.AsyncManager;
 import com.manager.openFegin.ReportService;
 import com.manager.system.service.RechargeOrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.TimerTask;
 
 /**
@@ -181,4 +178,83 @@ public class RechargeOrderController extends BaseController {
         return AjaxResult.success("查询成功", rechargeOrderService.getRechargeAmount(monthlyCardType));
     }
 
+    @Log(title = "导出充值", businessType = BusinessType.EXPORT)
+    @ApiIgnore
+    @PreAuthorize("@ss.hasPermi('system:finance:exportRechargeOrder')")
+    @GetMapping("/export")
+    public AjaxResult export(@RequestBody RechargeOrder rechargeOrder) {
+        List<RechargeOrder> list = rechargeOrderService.export(rechargeOrder);
+
+        List<RechargeOrderExcel> rechargeOrderExcelList = new ArrayList<RechargeOrderExcel>();
+        RechargeOrderExcel rechargeOrderExcel;
+
+        List<VipRechargeExcel> vipRechargeExcelList = new ArrayList<VipRechargeExcel>();
+        VipRechargeExcel vipRechargeExcel;
+
+        List<BankCardRechargeExcel> bankCardRechargeExcelList = new ArrayList<BankCardRechargeExcel>();
+        BankCardRechargeExcel bankCardRechargeExcel;
+
+        List<MonthlyCardRechargeExcel> monthlyCardRechargeExcelList = new ArrayList<MonthlyCardRechargeExcel>();
+        MonthlyCardRechargeExcel monthlyCardRechargeExcel;
+
+        List<SendRechargeExcel> sendRechargeExcelList = new ArrayList<SendRechargeExcel>();
+        SendRechargeExcel sendRechargeExcel;
+
+        for (RechargeOrder order : list) {
+            // 处理导出数据  1充值订单查询 2VIP充值 3银行卡充值 4月卡充值 5系统赠送
+            if("1".equals(rechargeOrder.getExcelType())){
+
+                rechargeOrderExcel = new RechargeOrderExcel();
+                BeanUtils.copyProperties(order, rechargeOrderExcel);
+                rechargeOrderExcelList.add(rechargeOrderExcel);
+            } else if("2".equals(rechargeOrder.getExcelType())){
+
+                vipRechargeExcel = new VipRechargeExcel();
+                BeanUtils.copyProperties(order, vipRechargeExcel);
+                vipRechargeExcelList.add(vipRechargeExcel);
+            } else if("3".equals(rechargeOrder.getExcelType())){
+
+                bankCardRechargeExcel = new BankCardRechargeExcel();
+                BeanUtils.copyProperties(order, bankCardRechargeExcel);
+                bankCardRechargeExcelList.add(bankCardRechargeExcel);
+            } else if("4".equals(rechargeOrder.getExcelType())){
+
+                monthlyCardRechargeExcel = new MonthlyCardRechargeExcel();
+                BeanUtils.copyProperties(order, monthlyCardRechargeExcel);
+                monthlyCardRechargeExcelList.add(monthlyCardRechargeExcel);
+            } else if("5".equals(rechargeOrder.getExcelType())){
+
+                sendRechargeExcel = new SendRechargeExcel();
+                BeanUtils.copyProperties(order, sendRechargeExcel);
+                sendRechargeExcelList.add(sendRechargeExcel);
+            }
+        }
+
+        // 处理导出模板  1充值订单查询 2VIP充值 3银行卡充值 4月卡充值 5系统赠送
+        if("1".equals(rechargeOrder.getExcelType())){
+            ExcelUtil<RechargeOrderExcel> util =
+                    new ExcelUtil<RechargeOrderExcel>(RechargeOrderExcel.class);
+            return util.exportExcel(rechargeOrderExcelList, "充值查询导出");
+        } else if("2".equals(rechargeOrder.getExcelType())){
+            ExcelUtil<VipRechargeExcel> util =
+                    new ExcelUtil<VipRechargeExcel>(VipRechargeExcel.class);
+            return util.exportExcel(vipRechargeExcelList, "VIP充值导出");
+        } else if("3".equals(rechargeOrder.getExcelType())){
+            ExcelUtil<BankCardRechargeExcel> util =
+                    new ExcelUtil<BankCardRechargeExcel>(BankCardRechargeExcel.class);
+            return util.exportExcel(bankCardRechargeExcelList, "VIP充值导出");
+        } else if("4".equals(rechargeOrder.getExcelType())){
+            ExcelUtil<MonthlyCardRechargeExcel> util =
+                    new ExcelUtil<MonthlyCardRechargeExcel>(MonthlyCardRechargeExcel.class);
+            return util.exportExcel(monthlyCardRechargeExcelList, "银行卡充值导出");
+        } else if("5".equals(rechargeOrder.getExcelType())){
+            ExcelUtil<SendRechargeExcel> util =
+                    new ExcelUtil<SendRechargeExcel>(SendRechargeExcel.class);
+            return util.exportExcel(sendRechargeExcelList, "系统赠送导出");
+        }else{
+            ExcelUtil<RechargeOrderExcel> util =
+                    new ExcelUtil<RechargeOrderExcel>(RechargeOrderExcel.class);
+            return util.exportExcel(rechargeOrderExcelList, "充值查询导出");
+        }
+    }
 }

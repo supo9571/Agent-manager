@@ -41,4 +41,9 @@ public interface RechargeOrderService {
      * @param monthlyCardType 1金卡 2银卡
      */
     Map getRechargeAmount(String monthlyCardType);
+
+    /**
+     * 导出
+     */
+    List<RechargeOrder> export(RechargeOrder rechargeOrder);
 }
