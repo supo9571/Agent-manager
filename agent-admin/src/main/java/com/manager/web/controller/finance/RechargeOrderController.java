@@ -179,9 +179,9 @@ public class RechargeOrderController extends BaseController {
         return AjaxResult.success("查询成功", rechargeOrderService.getRechargeAmount(monthlyCardType));
     }
 
-    @Log(title = "导出充值", businessType = BusinessType.EXPORT)
-    @ApiIgnore(value = "导出充值")
     @PreAuthorize("@ss.hasPermi('system:finance:exportRechargeOrder')")
+    @ApiOperation(value = "导出充值")
+    @Log(title = "导出充值", businessType = BusinessType.EXPORT)
     @GetMapping("/export")
     public AjaxResult export(@RequestBody RechargeOrder rechargeOrder) {
         List<RechargeOrder> list = rechargeOrderService.export(rechargeOrder);
