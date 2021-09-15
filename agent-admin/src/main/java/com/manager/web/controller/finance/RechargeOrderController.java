@@ -56,7 +56,7 @@ public class RechargeOrderController extends BaseController {
     @Log(title = "新增手动充值", businessType = BusinessType.INSERT)
     @PostMapping("/addRechargeOrder")
     public AjaxResult addRechargeOrder(@RequestBody RechargeOrder rechargeOrder) {
-        //支付类型  1VIP充值 2银行卡充值 3月卡充值 4线上支付 5系统赠送/人工充值 6线上支付
+        //支付类型 1VIP充值 2银行卡充值 3月卡充值 4线上支付 5系统赠送/人工充值 6彩金充值
         BigDecimal b = new BigDecimal(10000);//乘以 一万
         Long amount = rechargeOrder.getRechargeAmount().multiply(b).longValue();//充值金额
         Integer reason = 0;
@@ -86,7 +86,7 @@ public class RechargeOrderController extends BaseController {
                 amount = new BigDecimal(monthGive).multiply(b).longValue();
                 reason = 100072;
             }
-        }else if("4".equals(rechargeOrder.getRechargeType())){
+        }else if("5".equals(rechargeOrder.getRechargeType())){
             if("2".equals(rechargeOrder.getOperateType()) ||
                     "4".equals(rechargeOrder.getOperateType())){
                 cmd = "reducecoins";
@@ -101,6 +101,7 @@ public class RechargeOrderController extends BaseController {
         BigDecimal currBig = new BigDecimal(0);//余额
         Long curr = 0l;
         AjaxResult ajaxResult = reportService.editCoins(cmd,amount+give,rechargeOrder.getUid(),reason);
+
         if("200".equals(String.valueOf(ajaxResult.get("code")))){
             curr = Long.valueOf(String.valueOf(ajaxResult.get("data")));
             currBig = new BigDecimal(curr).divide(b);
@@ -179,7 +180,7 @@ public class RechargeOrderController extends BaseController {
     }
 
     @Log(title = "导出充值", businessType = BusinessType.EXPORT)
-    @ApiIgnore
+    @ApiIgnore(value = "导出充值")
     @PreAuthorize("@ss.hasPermi('system:finance:exportRechargeOrder')")
     @GetMapping("/export")
     public AjaxResult export(@RequestBody RechargeOrder rechargeOrder) {
