@@ -1,10 +1,12 @@
 package com.manager.web.controller.finance;
 
 import com.manager.common.annotation.Log;
+import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.controller.BaseController;
 import com.manager.common.core.domain.AjaxResult;
 import com.manager.common.core.domain.entity.*;
 import com.manager.common.enums.BusinessType;
+import com.manager.common.utils.file.FileUtils;
 import com.manager.common.utils.poi.ExcelUtil;
 import com.manager.framework.manager.AsyncManager;
 import com.manager.openFegin.ReportService;
@@ -13,10 +15,15 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -185,7 +192,7 @@ public class RechargeOrderController extends BaseController {
     @ApiOperation(value = "导出充值")
     @Log(title = "导出充值", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public AjaxResult export(@RequestBody RechargeOrder rechargeOrder) {
+    public void export(@RequestBody RechargeOrder rechargeOrder,HttpServletResponse response) throws IOException {
         List<RechargeOrder> list = rechargeOrderService.export(rechargeOrder);
 
         List<RechargeOrderExcel> rechargeOrderExcelList = new ArrayList<RechargeOrderExcel>();
@@ -205,27 +212,27 @@ public class RechargeOrderController extends BaseController {
 
         for (RechargeOrder order : list) {
             // 处理导出数据  1充值订单查询 2VIP充值 3银行卡充值 4月卡充值 5系统赠送
-            if("1".equals(rechargeOrder.getExcelType())){
+            if ("1".equals(rechargeOrder.getExcelType())) {
 
                 rechargeOrderExcel = new RechargeOrderExcel();
                 BeanUtils.copyProperties(order, rechargeOrderExcel);
                 rechargeOrderExcelList.add(rechargeOrderExcel);
-            } else if("2".equals(rechargeOrder.getExcelType())){
+            } else if ("2".equals(rechargeOrder.getExcelType())) {
 
                 vipRechargeExcel = new VipRechargeExcel();
                 BeanUtils.copyProperties(order, vipRechargeExcel);
                 vipRechargeExcelList.add(vipRechargeExcel);
-            } else if("3".equals(rechargeOrder.getExcelType())){
+            } else if ("3".equals(rechargeOrder.getExcelType())) {
 
                 bankCardRechargeExcel = new BankCardRechargeExcel();
                 BeanUtils.copyProperties(order, bankCardRechargeExcel);
                 bankCardRechargeExcelList.add(bankCardRechargeExcel);
-            } else if("4".equals(rechargeOrder.getExcelType())){
+            } else if ("4".equals(rechargeOrder.getExcelType())) {
 
                 monthlyCardRechargeExcel = new MonthlyCardRechargeExcel();
                 BeanUtils.copyProperties(order, monthlyCardRechargeExcel);
                 monthlyCardRechargeExcelList.add(monthlyCardRechargeExcel);
-            } else if("5".equals(rechargeOrder.getExcelType())){
+            } else if ("5".equals(rechargeOrder.getExcelType())) {
 
                 sendRechargeExcel = new SendRechargeExcel();
                 BeanUtils.copyProperties(order, sendRechargeExcel);
@@ -234,30 +241,29 @@ public class RechargeOrderController extends BaseController {
         }
 
         // 处理导出模板  1充值订单查询 2VIP充值 3银行卡充值 4月卡充值 5系统赠送
+        ExcelUtil util;
+        String fileName;
         if("1".equals(rechargeOrder.getExcelType())){
-            ExcelUtil<RechargeOrderExcel> util =
-                    new ExcelUtil<RechargeOrderExcel>(RechargeOrderExcel.class);
-            return util.exportExcel(rechargeOrderExcelList, "充值查询导出");
+            util = new ExcelUtil<RechargeOrderExcel>(RechargeOrderExcel.class);
+            fileName = "充值查询导出";
         } else if("2".equals(rechargeOrder.getExcelType())){
-            ExcelUtil<VipRechargeExcel> util =
-                    new ExcelUtil<VipRechargeExcel>(VipRechargeExcel.class);
-            return util.exportExcel(vipRechargeExcelList, "VIP充值导出");
+            util = new ExcelUtil<VipRechargeExcel>(VipRechargeExcel.class);
+            fileName = "VIP充值导出";
         } else if("3".equals(rechargeOrder.getExcelType())){
-            ExcelUtil<BankCardRechargeExcel> util =
-                    new ExcelUtil<BankCardRechargeExcel>(BankCardRechargeExcel.class);
-            return util.exportExcel(bankCardRechargeExcelList, "VIP充值导出");
+            util = new ExcelUtil<BankCardRechargeExcel>(BankCardRechargeExcel.class);
+            fileName = "VIP充值导出";
         } else if("4".equals(rechargeOrder.getExcelType())){
-            ExcelUtil<MonthlyCardRechargeExcel> util =
-                    new ExcelUtil<MonthlyCardRechargeExcel>(MonthlyCardRechargeExcel.class);
-            return util.exportExcel(monthlyCardRechargeExcelList, "银行卡充值导出");
+            util = new ExcelUtil<MonthlyCardRechargeExcel>(MonthlyCardRechargeExcel.class);
+            fileName = "银行卡充值导出";
         } else if("5".equals(rechargeOrder.getExcelType())){
-            ExcelUtil<SendRechargeExcel> util =
-                    new ExcelUtil<SendRechargeExcel>(SendRechargeExcel.class);
-            return util.exportExcel(sendRechargeExcelList, "系统赠送导出");
+            util = new ExcelUtil<SendRechargeExcel>(SendRechargeExcel.class);
+            fileName = "系统赠送导出";
         }else{
-            ExcelUtil<RechargeOrderExcel> util =
-                    new ExcelUtil<RechargeOrderExcel>(RechargeOrderExcel.class);
-            return util.exportExcel(rechargeOrderExcelList, "充值查询导出");
+            util = new ExcelUtil<RechargeOrderExcel>(RechargeOrderExcel.class);
+            fileName = "充值查询导出";
         }
+        response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+        FileUtils.setAttachmentResponseHeader(response, fileName+".xlsx");
+        util.downloadExcel(rechargeOrderExcelList, fileName,response.getOutputStream());
     }
 }
