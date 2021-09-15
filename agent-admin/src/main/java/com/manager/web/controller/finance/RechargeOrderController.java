@@ -102,6 +102,8 @@ public class RechargeOrderController extends BaseController {
         Long curr = 0l;
         AjaxResult ajaxResult = reportService.editCoins(cmd,amount+give,rechargeOrder.getUid(),reason);
 
+
+
         if("200".equals(String.valueOf(ajaxResult.get("code")))){
             curr = Long.valueOf(String.valueOf(ajaxResult.get("data")));
             currBig = new BigDecimal(curr).divide(b);
@@ -182,7 +184,7 @@ public class RechargeOrderController extends BaseController {
     @PreAuthorize("@ss.hasPermi('system:finance:exportRechargeOrder')")
     @ApiOperation(value = "导出充值")
     @Log(title = "导出充值", businessType = BusinessType.EXPORT)
-    @GetMapping("/export")
+    @PostMapping("/export")
     public AjaxResult export(@RequestBody RechargeOrder rechargeOrder) {
         List<RechargeOrder> list = rechargeOrderService.export(rechargeOrder);
 
