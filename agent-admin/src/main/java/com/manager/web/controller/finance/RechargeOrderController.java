@@ -107,36 +107,42 @@ public class RechargeOrderController extends BaseController {
         //请求 加金币
         BigDecimal currBig = new BigDecimal(0);//余额
         Long curr = 0l;
+        Integer i = 0;
         AjaxResult ajaxResult = new AjaxResult();
         // 处理系统赠送多uid的情况
-        String[] arrayUid = rechargeOrder.getUids().split(",");
-        if("5".equals(rechargeOrder.getRechargeType())){
+        if("5".equals(rechargeOrder.getRechargeType()) && rechargeOrder.getUids() != null){
+            String[] arrayUid = rechargeOrder.getUids().split(",");
             for (String uid : arrayUid) {
                 ajaxResult = reportService.editCoins(cmd,amount+give,Integer.parseInt(uid),reason);
-            }
-        }else{
-            ajaxResult = reportService.editCoins(cmd,amount+give,rechargeOrder.getUid(),reason);
-        }
 
-        if("200".equals(String.valueOf(ajaxResult.get("code")))){
-            curr = Long.valueOf(String.valueOf(ajaxResult.get("data")));
-            currBig = new BigDecimal(curr).divide(b);
-        }else {
-            return error("请求游戏服失败");
-        }
-        rechargeOrder.setExCoins(bigGive.divide(b));
-        rechargeOrder.setAfterOrderMoney(currBig);
-        rechargeOrder.setBeforeOrderMoney(currBig.subtract(rechargeOrder.getRechargeAmount()).subtract(rechargeOrder.getExCoins()));
-        // 处理系统赠送多uid的情况
-        Integer i = 1;
-        if("5".equals(rechargeOrder.getRechargeType())){
-            for (String uid : arrayUid) {
+                if("200".equals(String.valueOf(ajaxResult.get("code")))){
+                    curr = Long.valueOf(String.valueOf(ajaxResult.get("data")));
+                    currBig = new BigDecimal(curr).divide(b);
+                }else {
+                    return error("请求游戏服失败");
+                }
+                rechargeOrder.setExCoins(bigGive.divide(b));
+                rechargeOrder.setAfterOrderMoney(currBig);
+                rechargeOrder.setBeforeOrderMoney(currBig.subtract(rechargeOrder.getRechargeAmount()).subtract(rechargeOrder.getExCoins()));
                 rechargeOrder.setUid(Integer.parseInt(uid));
+
                 i = rechargeOrderService.addRechargeOrder(rechargeOrder);
             }
         }else{
+            ajaxResult = reportService.editCoins(cmd,amount+give,rechargeOrder.getUid(),reason);
+
+            if("200".equals(String.valueOf(ajaxResult.get("code")))){
+                curr = Long.valueOf(String.valueOf(ajaxResult.get("data")));
+                currBig = new BigDecimal(curr).divide(b);
+            }else {
+                return error("请求游戏服失败");
+            }
+            rechargeOrder.setExCoins(bigGive.divide(b));
+            rechargeOrder.setAfterOrderMoney(currBig);
+            rechargeOrder.setBeforeOrderMoney(currBig.subtract(rechargeOrder.getRechargeAmount()).subtract(rechargeOrder.getExCoins()));
             i = rechargeOrderService.addRechargeOrder(rechargeOrder);
         }
+
         //发邮件 异步
         AsyncManager.me().execute(new TimerTask() {
             @Override
@@ -214,6 +220,7 @@ public class RechargeOrderController extends BaseController {
     @Log(title = "导出充值", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(@RequestBody RechargeOrder rechargeOrder,HttpServletResponse response) throws IOException {
+        startOrder(rechargeOrder.getOrderByColumn(),rechargeOrder.getIsAsc());
         List<RechargeOrder> list = rechargeOrderService.export(rechargeOrder);
 
         List<RechargeOrderExcel> rechargeOrderExcelList = new ArrayList<RechargeOrderExcel>();
