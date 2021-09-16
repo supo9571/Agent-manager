@@ -6,7 +6,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  * 充值订单查询
@@ -26,6 +25,8 @@ public class RechargeOrder extends BaseEntity {
     @ApiModelProperty("第三方订单号")
     private String thirdPartyOrderNumber;
 
+    @ApiModelProperty("玩家ids 赠送页面玩家id多值")
+    private String uids;
     @ApiModelProperty("玩家id")
     private int uid;
     @ApiModelProperty("玩家名称")
