@@ -15,7 +15,7 @@ public class Coins extends BaseEntity {
     private String key;
 
     @ApiModelProperty("账变类型")
-    private Long r; //加钱原因
+    private String r; //加钱原因
 
     @ApiModelProperty("玩家id")
     private String uid;
