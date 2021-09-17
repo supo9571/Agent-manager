@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manager.system.mapper.ExchangeEaaMapper">
+
+    <select id="getExchangeEaaList" parameterType="com.manager.common.core.domain.entity.ExchangeEaa"
+            resultType="com.manager.common.core.domain.entity.ExchangeEaa">
+        SELECT
+            ceo.id as id,
+            ceo.tid as tid,
+            ceo.uid as uid,
+            ceo.uname as uname,
+            ceo.withdraw_order_number as withdrawOrderNumber,
+            ceo.third_party_order_number as thirdPartyOrderNumber,
+            ceo.channel as channel,
+            ceo.withdraw_money as withdrawMoney,
+            ceo.transfer_amount as transferAmount,
+            ceo.poundage as poundage,
+            ceo.withdraw_number as withdrawNumber,
+            ceo.history_withdraw_money as historyWithdrawMoney,
+            ceo.accumulate_water as accumulateWater,
+            ceo.accumulate_recharge as accumulateRecharge,
+            ceo.accumulate_excoins as accumulateExcoins,
+            ceo.recharge_excoins as rechargeExcoins,
+            ceo.activity_rewards as activityRewards,
+            ceo.off_line_excoins as offLineExcoins,
+            ceo.register_ip as registerIp,
+            ceo.withdraw_ip as withdrawIp,
+            ceo.withdraw_type as withdrawType,
+            ceo.transfer_type as transferType,
+            ceo.exaa_status as exaaStatus,
+            ceo.remark as remark,
+            ceo.update_by as updateBy,
+            ue.account as withdrawAccount,
+            ue.name as withdrawName
+        from
+            config_exchange_order ceo left join user_exchange ue
+        on (ceo.uid = ue.uid and ceo.withdraw_type = ue.type)
+        where 1 = 1
+        <if test="exaaStatus !=null and exaaStatus !=''">
+            and ceo.exaa_status = #{exaaStatus}
+        </if>
+        <if test="withdrawType !=null and withdrawType !=''">
+            and ceo.withdraw_type = #{withdrawType}
+        </if>
+        <if test="transferType !=null and transferType !=''">
+            and ceo.transfer_type = #{transferType}
+        </if>
+        <if test="createTime1 !=null and createTime1 !=''">
+            and date_format(ceo.create_time,'%Y-%m-%d') >= #{createTime1}
+        </if>
+        <if test="createTime2 !=null and createTime2 !=''">
+            and date_format(cro.create_time,'%Y-%m-%d') <![CDATA[<=]]>  #{finishTime2}
+        </if>
+    </select>
+
+
+    <select id="getAddMosaicPlayerList" resultType="java.util.Map">
+        SELECT
+            dr.uid as uid,
+            dr.total_water as accumulateWater,
+            total_give as accumulateExcoins
+        FROM
+            data_register dr
+        where 1 = 1
+        <if test="uid !=null and uid !=''">
+            dr.uid = #{uid}
+        </if>
+        <if test="tid !=null and tid !=''">
+            dr.tid = #{tid}
+        </if>
+    </select>
+
+</mapper>
