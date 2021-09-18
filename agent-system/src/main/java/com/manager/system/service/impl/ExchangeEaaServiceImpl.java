@@ -35,6 +35,7 @@ public class ExchangeEaaServiceImpl implements ExchangeEaaService {
 
     @Override
     public Map getExchangeEaaList(ExchangeEaa exchangeEaa) {
+        exchangeEaa.setTid(ManagerConfig.getTid());
 
         // 放回参数
         Map result = new HashMap();
@@ -77,10 +78,10 @@ public class ExchangeEaaServiceImpl implements ExchangeEaaService {
             for (ExchangeEaa eaa : list) {
                 if("1".equals(eaa.getExaaStatus())){
                     exchangeNum1++;
-                    exchangeMoney1.add(eaa.getTransferAmount());
+                    exchangeMoney1.add(eaa.getWithdrawMoney());
                 }else if("2".equals(eaa.getExaaStatus())){
                     exchangeNum2++;
-                    exchangeMoney2.add(eaa.getTransferAmount());
+                    exchangeMoney2.add(eaa.getWithdrawMoney());
                 }else if("3".equals(eaa.getExaaStatus())){
                     exchangeNum3++;
                     exchangeMoney3.add(eaa.getWithdrawMoney());
@@ -88,16 +89,16 @@ public class ExchangeEaaServiceImpl implements ExchangeEaaService {
                     exchangeMoney33.add(eaa.getPoundage());
                 }else if("4".equals(eaa.getExaaStatus())){
                     exchangeNum4++;
-                    exchangeMoney4.add(eaa.getTransferAmount());
+                    exchangeMoney4.add(eaa.getWithdrawMoney());
                 }else if("5".equals(eaa.getExaaStatus())){
                     exchangeNum5++;
-                    exchangeMoney5.add(eaa.getTransferAmount());
+                    exchangeMoney5.add(eaa.getWithdrawMoney());
                 }else if("6".equals(eaa.getExaaStatus())){
                     exchangeNum6++;
-                    exchangeMoney6.add(eaa.getTransferAmount());
+                    exchangeMoney6.add(eaa.getWithdrawMoney());
                 }else if("7".equals(eaa.getExaaStatus())){
                     exchangeNum7++;
-                    exchangeMoney7.add(eaa.getTransferAmount());
+                    exchangeMoney7.add(eaa.getWithdrawMoney());
                 }
             }
         }
@@ -125,13 +126,15 @@ public class ExchangeEaaServiceImpl implements ExchangeEaaService {
     }
 
     @Override
-    public List getAddMosaicPlayerList(String uid,String tid) {
+    public List getAddMosaicPlayerList(String uid) {
+        String tid = String.valueOf(ManagerConfig.getTid());
         List list = exchangeEaaMapper.getAddMosaicPlayerList(uid,tid);
         return list;
     }
 
     @Override
     public List export(ExchangeEaa exchangeEaa) {
+        exchangeEaa.setTid(ManagerConfig.getTid());
         List list = exchangeEaaMapper.getExchangeEaaList(exchangeEaa);
         return list;
     }

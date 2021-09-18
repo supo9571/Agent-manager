@@ -51,8 +51,8 @@ public class ExchangeEaaController extends BaseController {
      */
     @ApiOperation(value = "玩家打码信息查询")
     @PostMapping("/getAddMosaicPlayerList")
-    public AjaxResult getAddMosaicPlayerList(String uid,String tid) {
-        return AjaxResult.success("查询成功", exchangeEaaService.getAddMosaicPlayerList(uid,tid));
+    public AjaxResult getAddMosaicPlayerList(String uid) {
+        return AjaxResult.success("查询成功", exchangeEaaService.getAddMosaicPlayerList(uid));
     }
 
     @PreAuthorize("@ss.hasPermi('system:finance:exportRechargeOrder')")
