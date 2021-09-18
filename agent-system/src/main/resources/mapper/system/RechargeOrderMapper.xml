@@ -29,7 +29,7 @@
             config_month_recharge cmr
             where
             cmr.status = '1'
-            and (cmr.yin_recharge_give = #{rechargeAmount} or cmr.jin_recharge_give = #{rechargeAmount})
+            and (cmr.yin_recharge_give = cro.recharge_amount or cmr.jin_recharge_give = cro.recharge_amount)
             limit 0,1
             ) as standAmount,
             cro.recharge_type as rechargeType,
@@ -99,22 +99,12 @@
             </otherwise>
         </choose>
 
-        <choose>
-            <when test="finishTime1 != null and finishTime1 !=''">
-                and date_format(cro.create_time,'%Y-%m-%d') >= #{finishTime1}
-            </when>
-            <otherwise>
-                and date_format(cro.create_time,'%Y-%m-%d') >= CURDATE()
-            </otherwise>
-        </choose>
-        <choose>
-            <when test="finishTime2 != null and finishTime2 !=''">
-                and date_format(cro.create_time,'%Y-%m-%d') <![CDATA[<=]]>  #{finishTime2}
-            </when>
-            <otherwise>
-                and date_format(cro.create_time,'%Y-%m-%d') <![CDATA[<=]]> CURDATE()
-            </otherwise>
-        </choose>
+        <if test="finishTime1 !=null and finishTime1 !=''">
+            and date_format(cro.create_time,'%Y-%m-%d') >= #{finishTime1}
+        </if>
+        <if test="finishTime2 !=null and finishTime2 !=''">
+            and date_format(cro.create_time,'%Y-%m-%d') <![CDATA[<=]]>  #{finishTime2}
+        </if>
     </select>
 
     <insert id="addRechargeOrder" parameterType="com.manager.common.core.domain.entity.RechargeOrder">

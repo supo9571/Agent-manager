@@ -41,7 +41,7 @@
         on (ceo.uid = ue.uid and ceo.withdraw_type = ue.type)
         where 1 = 1
         <if test="tid !=null and tid !=''">
-            and ceo.exaa_status = #{tid}
+            and ceo.tid = #{tid}
         </if>
         <if test="exaaStatus !=null and exaaStatus !=''">
             and ceo.exaa_status = #{exaaStatus}
