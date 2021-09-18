@@ -22,6 +22,14 @@ public interface ExchangeEaaService {
      */
     List getAddMosaicPlayerList(String uid,String tid);
 
+    /**
+     * 导出
+     */
     List export(ExchangeEaa exchangeEaa);
+
+    /**
+     * 修改
+     */
+    int editExchangeEaaList(ExchangeEaa exchangeEaa);
 
 }

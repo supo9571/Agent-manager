@@ -4,7 +4,9 @@ package com.manager.system.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.manager.common.annotation.DataSource;
+import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.domain.entity.ExchangeEaa;
+import com.manager.common.core.domain.entity.Pay;
 import com.manager.common.core.domain.entity.RechargeOrder;
 import com.manager.common.enums.DataSourceType;
 import com.manager.system.mapper.ExchangeEaaMapper;
@@ -132,6 +134,11 @@ public class ExchangeEaaServiceImpl implements ExchangeEaaService {
     public List export(ExchangeEaa exchangeEaa) {
         List list = exchangeEaaMapper.getExchangeEaaList(exchangeEaa);
         return list;
+    }
+
+    @Override
+    public int editExchangeEaaList(ExchangeEaa exchangeEaa) {
+        return exchangeEaaMapper.editExchangeEaaList(exchangeEaa);
     }
 
 }

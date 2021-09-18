@@ -26,4 +26,6 @@ public interface ExchangeEaaMapper {
      */
     List<Map> getAddMosaicPlayerList(@Param("uid") String uid,@Param("tid") String tid);
 
+    int editExchangeEaaList(ExchangeEaa exchangeEaa);
+
 }

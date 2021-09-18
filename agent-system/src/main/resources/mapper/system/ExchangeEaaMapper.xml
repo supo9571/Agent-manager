@@ -31,6 +31,8 @@
             ceo.transfer_type as transferType,
             ceo.exaa_status as exaaStatus,
             ceo.remark as remark,
+            ceo.create_time as createTime,
+            ceo.update_time as updateTime,
             ceo.update_by as updateBy,
             ue.account as withdrawAccount,
             ue.name as withdrawName
@@ -71,5 +73,15 @@
             dr.tid = #{tid}
         </if>
     </select>
+
+    <update id="editExchangeEaaList" parameterType="com.manager.common.core.domain.entity.ExchangeEaa">
+        update config_exchange_order
+        <set>
+            <if test="remark!=null and remark!=''"> remark = #{remark},</if>
+            <if test="exaaStatus!=null and exaaStatus!=''"> exaa_status = #{exaaStatus},</if>
+            update_time = sysdate()
+        </set>
+        where id = #{id} and tid=#{tid}
+    </update>
 
 </mapper>

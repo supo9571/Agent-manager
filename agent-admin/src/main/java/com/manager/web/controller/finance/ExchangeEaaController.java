@@ -1,6 +1,7 @@
 package com.manager.web.controller.finance;
 
 import com.manager.common.annotation.Log;
+import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.controller.BaseController;
 import com.manager.common.core.domain.AjaxResult;
 import com.manager.common.core.domain.entity.*;
@@ -68,6 +69,15 @@ public class ExchangeEaaController extends BaseController {
         response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
         FileUtils.setAttachmentResponseHeader(response, fileName+".xlsx");
         util.downloadExcel(list, fileName,response.getOutputStream());
+    }
+
+    @PreAuthorize("@ss.hasPermi('system:game:editExchange')")
+    @ApiOperation(value = "编辑商场页签")
+    @Log(title = "编辑商场页签", businessType = BusinessType.UPDATE)
+    @PostMapping("/editExchangeEaaList")
+    public AjaxResult editExchangeEaaList(@RequestBody ExchangeEaa exchangeEaa) {
+        int i = exchangeEaaService.editExchangeEaaList(exchangeEaa);
+        return i>0?AjaxResult.success():AjaxResult.error();
     }
 
 }
