@@ -82,28 +82,18 @@
             and cro.recharge_amount = #{rechargeAmount}
         </if>
 
-        <choose>
-            <when test="createTime1 != null and createTime1 !=''">
-                and date_format(cro.create_time,'%Y-%m-%d') >= #{createTime1}
-            </when>
-            <otherwise>
-                and date_format(cro.create_time,'%Y-%m-%d') >= CURDATE()
-            </otherwise>
-        </choose>
-        <choose>
-            <when test="createTime2 != null and createTime2 !=''">
-                and date_format(cro.create_time,'%Y-%m-%d') <![CDATA[<=]]>  #{finishTime2}
-            </when>
-            <otherwise>
-                and date_format(cro.create_time,'%Y-%m-%d') <![CDATA[<=]]> CURDATE()
-            </otherwise>
-        </choose>
-
-        <if test="finishTime1 !=null and finishTime1 !=''">
-            and date_format(cro.create_time,'%Y-%m-%d') >= #{finishTime1}
+        <if test="createTime1 !=null and createTime1 !=''">
+            and date_format(cro.create_time,'%Y-%m-%d') >= #{createTime1}
         </if>
         <if test="finishTime2 !=null and finishTime2 !=''">
             and date_format(cro.create_time,'%Y-%m-%d') <![CDATA[<=]]>  #{finishTime2}
+        </if>
+
+        <if test="finishTime1 !=null and finishTime1 !=''">
+            and date_format(cro.finish_time,'%Y-%m-%d') >= #{finishTime1}
+        </if>
+        <if test="finishTime2 !=null and finishTime2 !=''">
+            and date_format(cro.finish_time,'%Y-%m-%d') <![CDATA[<=]]>  #{finishTime2}
         </if>
     </select>
 
