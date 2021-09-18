@@ -20,7 +20,7 @@ public interface ExchangeEaaService {
     /**
      * 玩家打码信息查询
      */
-    List getAddMosaicPlayerList(String uid);
+    List getAddMosaicPlayerList(int uid);
 
     /**
      * 导出

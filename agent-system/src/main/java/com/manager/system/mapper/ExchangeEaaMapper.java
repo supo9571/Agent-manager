@@ -24,7 +24,7 @@ public interface ExchangeEaaMapper {
     /**
      * 玩家打码信息查询
      */
-    List<Map> getAddMosaicPlayerList(@Param("uid") String uid,@Param("tid") String tid);
+    List<Map> getAddMosaicPlayerList(@Param("uid") int uid);
 
     int editExchangeEaaList(ExchangeEaa exchangeEaa);
 

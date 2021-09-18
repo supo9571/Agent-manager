@@ -43,6 +43,12 @@
         <if test="tid !=null and tid !=''">
             and ceo.tid = #{tid}
         </if>
+        <if test="withdrawOrderNumber !=null and withdrawOrderNumber !=''">
+            and ceo.withdraw_order_number = #{withdrawOrderNumber}
+        </if>
+        <if test="thirdPartyOrderNumber !=null and thirdPartyOrderNumber !=''">
+            and ceo.third_party_order_number = #{thirdPartyOrderNumber}
+        </if>
         <if test="exaaStatus !=null and exaaStatus !=''">
             and ceo.exaa_status = #{exaaStatus}
         </if>
@@ -65,15 +71,12 @@
         SELECT
             dr.uid as uid,
             dr.total_water as accumulateWater,
-            total_give as accumulateExcoins
+            dr.total_give as accumulateExcoins
         FROM
             data_register dr
         where 1 = 1
-        <if test="uid !=null and uid !=''">
-            dr.uid = #{uid}
-        </if>
-        <if test="tid !=null and tid !=''">
-            dr.tid = #{tid}
+        <if test="uid !=null and uid !=0">
+            and dr.uid = #{uid}
         </if>
     </select>
 

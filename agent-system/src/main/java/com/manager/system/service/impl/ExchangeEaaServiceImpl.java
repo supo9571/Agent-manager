@@ -126,9 +126,8 @@ public class ExchangeEaaServiceImpl implements ExchangeEaaService {
     }
 
     @Override
-    public List getAddMosaicPlayerList(String uid) {
-        String tid = String.valueOf(ManagerConfig.getTid());
-        List list = exchangeEaaMapper.getAddMosaicPlayerList(uid,tid);
+    public List getAddMosaicPlayerList(int uid) {
+        List list = exchangeEaaMapper.getAddMosaicPlayerList(uid);
         return list;
     }
 

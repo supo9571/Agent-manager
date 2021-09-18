@@ -51,7 +51,7 @@ public class ExchangeEaaController extends BaseController {
      */
     @ApiOperation(value = "玩家打码信息查询")
     @PostMapping("/getAddMosaicPlayerList")
-    public AjaxResult getAddMosaicPlayerList(String uid) {
+    public AjaxResult getAddMosaicPlayerList(int uid) {
         return AjaxResult.success("查询成功", exchangeEaaService.getAddMosaicPlayerList(uid));
     }
 
