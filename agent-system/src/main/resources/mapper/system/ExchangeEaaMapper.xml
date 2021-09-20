@@ -40,9 +40,7 @@
             config_exchange_order ceo left join user_exchange ue
         on (ceo.uid = ue.uid and ceo.withdraw_type = ue.type)
         where 1 = 1
-        <if test="tid !=null and tid !=''">
-            and ceo.tid = #{tid}
-        </if>
+        and ceo.tid = #{tid}
         <if test="withdrawOrderNumber !=null and withdrawOrderNumber !=''">
             and ceo.withdraw_order_number = #{withdrawOrderNumber}
         </if>
@@ -89,5 +87,14 @@
         </set>
         where id = #{id} and tid=#{tid}
     </update>
+
+    <select id="getTransferMode" resultType="java.util.Map">
+        SELECT
+            stm.id as id,
+            stm.transfer_name as transferName,
+            stm.transfer_code as transferCode
+        from
+            sys_transfer_mode stm
+    </select>
 
 </mapper>

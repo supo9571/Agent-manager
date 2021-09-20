@@ -1,10 +1,8 @@
 package com.manager.system.mapper;
 
 import com.manager.common.core.domain.entity.ExchangeEaa;
-import com.manager.common.core.domain.entity.RechargeOrder;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 import java.util.Map;
@@ -27,5 +25,7 @@ public interface ExchangeEaaMapper {
     List<Map> getAddMosaicPlayerList(@Param("uid") int uid);
 
     int editExchangeEaaList(ExchangeEaa exchangeEaa);
+
+    List<Map> getTransferMode();
 
 }

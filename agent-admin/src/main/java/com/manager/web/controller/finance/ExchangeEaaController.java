@@ -1,28 +1,22 @@
 package com.manager.web.controller.finance;
 
 import com.manager.common.annotation.Log;
-import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.controller.BaseController;
 import com.manager.common.core.domain.AjaxResult;
-import com.manager.common.core.domain.entity.*;
+import com.manager.common.core.domain.entity.ExchangeEaa;
 import com.manager.common.enums.BusinessType;
 import com.manager.common.utils.file.FileUtils;
 import com.manager.common.utils.poi.ExcelUtil;
 import com.manager.system.service.ExchangeEaaService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -72,12 +66,21 @@ public class ExchangeEaaController extends BaseController {
     }
 
     @PreAuthorize("@ss.hasPermi('system:game:editExchange')")
-    @ApiOperation(value = "编辑商场页签")
-    @Log(title = "编辑商场页签", businessType = BusinessType.UPDATE)
+    @ApiOperation(value = "编辑提现审批")
+    @Log(title = "编辑提现审批", businessType = BusinessType.UPDATE)
     @PostMapping("/editExchangeEaaList")
     public AjaxResult editExchangeEaaList(@RequestBody ExchangeEaa exchangeEaa) {
         int i = exchangeEaaService.editExchangeEaaList(exchangeEaa);
         return i>0?AjaxResult.success():AjaxResult.error();
+    }
+
+    /**
+     * 获取打款方式下拉框
+     */
+    @ApiOperation(value = "获取银商下拉列表")
+    @GetMapping("/getTransferMode")
+    public AjaxResult getTransferMode() {
+        return AjaxResult.success(exchangeEaaService.getTransferMode());
     }
 
 }

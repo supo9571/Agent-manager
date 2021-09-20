@@ -1,7 +1,6 @@
 package com.manager.system.service;
 
 import com.manager.common.core.domain.entity.ExchangeEaa;
-import com.manager.common.core.domain.entity.RechargeOrder;
 
 import java.util.List;
 import java.util.Map;
@@ -32,4 +31,8 @@ public interface ExchangeEaaService {
      */
     int editExchangeEaaList(ExchangeEaa exchangeEaa);
 
+    /**
+     * 获取打款方式下拉框
+     */
+    List getTransferMode();
 }

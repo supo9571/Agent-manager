@@ -6,8 +6,6 @@ import com.github.pagehelper.PageInfo;
 import com.manager.common.annotation.DataSource;
 import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.domain.entity.ExchangeEaa;
-import com.manager.common.core.domain.entity.Pay;
-import com.manager.common.core.domain.entity.RechargeOrder;
 import com.manager.common.enums.DataSourceType;
 import com.manager.system.mapper.ExchangeEaaMapper;
 import com.manager.system.service.ExchangeEaaService;
@@ -16,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.sql.Array;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -141,6 +137,11 @@ public class ExchangeEaaServiceImpl implements ExchangeEaaService {
     @Override
     public int editExchangeEaaList(ExchangeEaa exchangeEaa) {
         return exchangeEaaMapper.editExchangeEaaList(exchangeEaa);
+    }
+
+    @Override
+    public List getTransferMode() {
+        return exchangeEaaMapper.getTransferMode();
     }
 
 }
