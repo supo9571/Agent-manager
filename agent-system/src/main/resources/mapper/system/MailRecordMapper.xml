@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manager.system.mapper.MailRecordMapper">
+
+    <select id="listMailRecord" resultType="com.manager.common.core.domain.entity.MailRecord">
+        SELECT
+            smr.id as id,
+            smr.tid as tid,
+            smr.sort as sort,
+            smr.signature as signature,
+            smr.addressee as addressee,
+            smr.mail_title as mailTitle,
+            smr.mail_content as mailContent,
+            smr.mail_state as mailState,
+            smr.mail_prop as mailProp,
+            smr.create_time as createTime,
+            smr.update_time as updateTime,
+            smr.create_by as createBy
+        from
+            sys_mail_record smr
+        where tid = #{tid}
+        <if test="id !=null">
+            and smr.id = #{id}
+        </if>
+        <if test="addressee !=null and addressee !=''">
+            and smr.addressee = #{addressee}
+        </if>
+        <if test="mailTitle !=null and mailTitle !=''">
+            and smr.mail_title = #{mailTitle}
+        </if>
+        <if test="mailState !=null and mailState !=''">
+            and smr.mail_state = #{mailState}
+        </if>
+    </select>
+
+</mapper>

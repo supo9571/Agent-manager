@@ -141,7 +141,8 @@ public class ExchangeEaaServiceImpl implements ExchangeEaaService {
 
     @Override
     public List getTransferMode() {
-        return exchangeEaaMapper.getTransferMode();
+        List list = exchangeEaaMapper.getTransferMode();
+        return list;
     }
 
 }

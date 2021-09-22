@@ -1,6 +1,5 @@
 package com.manager.system.service.impl;
 
-import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.domain.entity.SystemNotice;
 import com.manager.system.mapper.SystemNoticeMapper;
 import com.manager.system.service.SystemNoticeService;
@@ -26,7 +25,6 @@ public class SystemNoticeServiceImpl implements SystemNoticeService {
 
     @Override
     public List listSystemNotice(SystemNotice systemNotice) {
-        systemNotice.setTid(ManagerConfig.getTid());
         return systemNoticeMapper.listSystemNotice(systemNotice);
     }
 

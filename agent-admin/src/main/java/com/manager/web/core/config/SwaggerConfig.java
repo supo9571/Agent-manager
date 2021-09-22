@@ -55,7 +55,8 @@ public class SwaggerConfig {
                 .apis(Predicates.or(
 //                        RequestHandlerSelectors.basePackage("com.manager.web.controller.system"),
                         RequestHandlerSelectors.basePackage("com.manager.web.controller.game"),
-                        RequestHandlerSelectors.basePackage("com.manager.web.controller.finance")
+                        RequestHandlerSelectors.basePackage("com.manager.web.controller.finance"),
+                        RequestHandlerSelectors.basePackage("com.manager.web.controller.news")
 //                        RequestHandlerSelectors.basePackage("com.manager.web.controller.common")
                 ))
                 .paths(PathSelectors.any())

@@ -13,6 +13,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,7 +38,7 @@ public class SystemNoticeController extends BaseController {
     @ApiOperation(value = "添加系统公告")
     @Log(title = "添加系统公告", businessType = BusinessType.INSERT)
     @PostMapping("/addSystemNotice")
-    public AjaxResult addSystemNotice(SystemNotice systemNotice) {
+    public AjaxResult addSystemNotice(@RequestBody SystemNotice systemNotice) {
         systemNotice.setCreateBy(SecurityUtils.getUsername());
         systemNotice.setTid(ManagerConfig.getTid());
         Integer i = systemNoticeService.addSystemNotice(systemNotice);
@@ -50,7 +51,7 @@ public class SystemNoticeController extends BaseController {
     @PreAuthorize("@ss.hasPermi('system:recharge:listSystemNotice')")
     @ApiOperation(value = "查询系统公告列表")
     @PostMapping("/listSystemNotice")
-    public AjaxResult listSystemNotice(SystemNotice systemNotice) {
+    public AjaxResult listSystemNotice(@RequestBody SystemNotice systemNotice) {
         startPage();
         systemNotice.setTid(ManagerConfig.getTid());
         List list = systemNoticeService.listSystemNotice(systemNotice);
@@ -64,7 +65,7 @@ public class SystemNoticeController extends BaseController {
     @ApiOperation(value = "编辑系统公告")
     @Log(title = "编辑系统公告", businessType = BusinessType.UPDATE)
     @PostMapping("/editSystemNotice")
-    public AjaxResult editSystemNotice(SystemNotice systemNotice) {
+    public AjaxResult editSystemNotice(@RequestBody SystemNotice systemNotice) {
         systemNotice.setTid(ManagerConfig.getTid());
         systemNotice.setUpdateBy(SecurityUtils.getUsername());
         Integer i = systemNoticeService.editSystemNotice(systemNotice);

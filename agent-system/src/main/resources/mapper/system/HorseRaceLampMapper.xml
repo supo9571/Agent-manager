@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manager.system.mapper.HorseRaceLampMapper">
+
+    <insert id="addHorseRaceLamp" parameterType="com.manager.common.core.domain.entity.HorseRaceLamp">
+        insert into sys_horse_race_lamp(
+            tid,
+            content,
+            interval_title,
+            state,
+            horse_race_grade,
+            begin_time,
+            end_time,
+            create_time,update_time,create_by,update_by
+        )
+        values (
+           #{tid},
+           #{content},
+           #{intervalTitle},
+           #{state},
+           #{horseRaceGrade},
+           #{beginTime},
+           #{endTime},
+           sysdate(),sysdate(),#{createBy},#{createBy}
+       )
+    </insert>
+
+    <select id="listHorseRaceLamp" resultType="com.manager.common.core.domain.entity.HorseRaceLamp">
+        SELECT
+            shrl.id as id,
+            shrl.tid as tid,
+            shrl.content as content,
+            shrl.interval_title as intervalTitle,
+            shrl.state as state,
+            shrl.horse_race_grade as horseRaceGrade,
+            shrl.begin_time as beginTime,
+            shrl.end_time as endTime,
+            shrl.create_time as createTime,
+            shrl.update_time as updateTime,
+            shrl.create_by as createBy
+        from
+            sys_horse_race_lamp shrl
+        where tid = #{tid}
+        <if test="id !=null and id !=''">
+            and shrl.id = #{id}
+        </if>
+        <if test="state !=null and state !=''">
+            and shrl.state = #{state}
+        </if>
+        <if test="createTime1 !=null and createTime1 !=''">
+            and date_format(ssn.create_time,'%Y-%m-%d') >= #{createTime1}
+        </if>
+        <if test="createTime2 !=null and createTime2 !=''">
+            and date_format(ssn.create_time,'%Y-%m-%d') <![CDATA[<=]]>  #{finishTime2}
+        </if>
+    </select>
+
+    <update id="editHorseRaceLamp"  parameterType="com.manager.common.core.domain.entity.HorseRaceLamp">
+        update sys_horse_race_lamp
+        <set>
+            <if test="content!=null and content!=''"> content = #{content},</if>
+            <if test="intervalTitle!=null and intervalTitle!=''"> interval_title = #{intervalTitle},</if>
+            <if test="state!=null and state!=''"> state = #{state},</if>
+            <if test="horseRaceGrade!=null and horseRaceGrade!=''"> horse_race_grade = #{horseRaceGrade},</if>
+            <if test="beginTime!=null and beginTime!=''"> begin_time = #{beginTime},</if>
+            <if test="endTime!=null and endTime!=''"> end_time = #{endTime},</if>
+            update_time = sysdate(),
+            update_by = #{updateBy}
+        </set>
+        where id = #{id} and tid=#{tid}
+    </update>
+
+</mapper>

@@ -8,11 +8,11 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * 系统公告配置
+ * 个人邮箱配置
  * @author sieGuang 2021/9/20
  */
 @Data
-public class SystemNotice extends BaseEntity {
+public class PersonalMail extends BaseEntity {
 
     @ApiModelProperty("主键id")
     private Integer id;
@@ -35,11 +35,11 @@ public class SystemNotice extends BaseEntity {
     @ApiModelProperty("正文署名")
     private String noticeSignature;
 
+    @ApiModelProperty("发送金币")
+    private String sendOutGold;
+
     @ApiModelProperty("状态 1待发送 2在线 3已下线")
     private String state;
-
-    @ApiModelProperty("推送设置 1推送 2不推送")
-    private String push;
 
     @ApiModelProperty("发送时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

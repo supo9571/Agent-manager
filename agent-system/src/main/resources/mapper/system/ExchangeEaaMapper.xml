@@ -90,11 +90,11 @@
 
     <select id="getTransferMode" resultType="java.util.Map">
         SELECT
-            stm.id as id,
-            stm.transfer_name as transferName,
-            stm.transfer_code as transferCode
+            ctm.id as id,
+            ctm.transfer_name as transferName,
+            ctm.transfer_code as transferCode
         from
-            sys_transfer_mode stm
+            config_transfer_mode ctm
     </select>
 
 </mapper>
