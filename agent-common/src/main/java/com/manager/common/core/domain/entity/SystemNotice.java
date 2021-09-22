@@ -5,8 +5,6 @@ import com.manager.common.core.domain.BaseEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import java.util.Date;
-
 /**
  * 系统公告配置
  * @author sieGuang 2021/9/20
@@ -22,6 +20,9 @@ public class SystemNotice extends BaseEntity {
 
     @ApiModelProperty("收件人")
     private String addressee;
+
+    @ApiModelProperty("收件人类型 1所有玩家 2指定渠道 3指定代理")
+    private String addresseeType;
 
     @ApiModelProperty("类型 1文本公告 2图片公告")
     private String type;
@@ -41,16 +42,18 @@ public class SystemNotice extends BaseEntity {
     @ApiModelProperty("推送设置 1推送 2不推送")
     private String push;
 
-    @ApiModelProperty("发送时间")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date sendOutTime;
+    private String sendOutTime;
 
-    @ApiModelProperty("创建时间")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date createTime1;
+    @ApiModelProperty("发送时间类型 1立即发送 2定时发送")
+    private String sendOutTimeType;
 
-    @ApiModelProperty("创建时间")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date createTime2;
+    @ApiModelProperty("创建时间1")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private String createTime1;
+
+    @ApiModelProperty("创建时间2")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private String createTime2;
+
 
 }

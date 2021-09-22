@@ -23,6 +23,9 @@ public class PersonalMail extends BaseEntity {
     @ApiModelProperty("收件人")
     private String addressee;
 
+    @ApiModelProperty("收件人类型 1所有玩家 2指定渠道 3指定代理 4新注册玩家")
+    private String addresseeType;
+
     @ApiModelProperty("类型 1文本公告 2图片公告")
     private String type;
 
@@ -47,10 +50,10 @@ public class PersonalMail extends BaseEntity {
 
     @ApiModelProperty("创建时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date createTime1;
+    private String createTime1;
 
     @ApiModelProperty("创建时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date createTime2;
+    private String createTime2;
 
 }

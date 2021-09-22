@@ -36,6 +36,7 @@
             spm.id as id,
             spm.tid as tid,
             spm.addressee as addressee,
+            spm.addressee_type as addresseeType,
             spm.notice_title as noticeTitle,
             spm.notice_content as noticeContent,
             spm.notice_signature as noticeSignature,
@@ -55,7 +56,7 @@
             and date_format(spm.create_time,'%Y-%m-%d') >= #{createTime1}
         </if>
         <if test="createTime2 !=null and createTime2 !=''">
-            and date_format(spm.create_time,'%Y-%m-%d') <![CDATA[<=]]>  #{finishTime2}
+            and date_format(spm.create_time,'%Y-%m-%d') <![CDATA[<=]]>  #{createTime2}
         </if>
     </select>
 
