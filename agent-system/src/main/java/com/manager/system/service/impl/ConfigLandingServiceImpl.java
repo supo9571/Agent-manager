@@ -6,6 +6,7 @@ import com.manager.common.enums.DataSourceType;
 import com.manager.system.mapper.ConfigLandingMapper;
 import com.manager.system.mapper.ConsumerMapper;
 import com.manager.system.service.ConfigLandingService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -20,7 +21,7 @@ import java.util.Map;
 @DataSource(DataSourceType.SLAVE)
 public class ConfigLandingServiceImpl implements ConfigLandingService {
 
-    @Resource
+    @Autowired
     private ConfigLandingMapper configLandingMapper;
 
     @Override

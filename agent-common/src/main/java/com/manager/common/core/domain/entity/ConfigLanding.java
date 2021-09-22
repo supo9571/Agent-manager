@@ -23,19 +23,19 @@ public class ConfigLanding extends BaseEntity {
     @ApiModelProperty("超级签地址")
     private String superSignUrl;
 
-    @ApiModelProperty("超级签状态：[0:禁用][1启用]")
+    @ApiModelProperty("超级签状态：[1启用][2:禁用]")
     private Integer superSignStatus;
 
     @ApiModelProperty("企业签地址")
     private String enterpriseSignUrl;
 
-    @ApiModelProperty("企业签状态：[0:禁用][1启用]")
+    @ApiModelProperty("企业签状态：[1启用][2:禁用]")
     private Integer enterpriseSignStatus;
 
     @ApiModelProperty("TF签地址")
     private String tfSignUrl;
 
-    @ApiModelProperty("TF签状态：[0:禁用][1启用]")
+    @ApiModelProperty("TF签状态：[1启用][2:禁用]")
     private Integer tfSignStatus;
 
     @ApiModelProperty("客服链接地址")

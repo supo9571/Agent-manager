@@ -2,7 +2,6 @@ package com.manager.system.service;
 
 import com.manager.common.core.domain.entity.ConfigLanding;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
 
 import java.util.Map;
 

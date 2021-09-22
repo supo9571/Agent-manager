@@ -15,7 +15,6 @@ import java.util.Map;
 @Mapper
 public interface ConfigLandingMapper {
 
-    //@Select("SELECT id as id, android_url as androidUrl, super_sign_url as superSignUrl,super_sign_status as superSignStatus, enterprise_sign_url as enterpriseSignUrl, enterprise_sign_status as enterpriseSignStatus, tf_sign_url as tfSignUrl, tf_sign_status as tfSignStatus, customer_url as customerUrl FROM config_landing where tid = #{tid}")
     Map getConfigLandingInfo(@Param("tid")Integer tid);
 
     @Select("select id,tid from config_landing where id = #{id}")
