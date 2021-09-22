@@ -15,7 +15,7 @@
             notice_signature,
             push,
             addressee_type,
-            send_out_time_type
+            send_out_time_type,
             create_time,update_time,create_by,update_by
         )
         values (

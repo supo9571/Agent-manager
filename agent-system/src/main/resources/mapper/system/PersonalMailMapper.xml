@@ -15,6 +15,7 @@
             notice_content,
             notice_signature,
             send_out_gold,
+            addressee_type,
             create_time,update_time,create_by,update_by
         )
         values (
@@ -27,6 +28,7 @@
            #{noticeContent},
            #{noticeSignature},
            #{sendOutGold},
+           #{addresseeType},
            sysdate(),sysdate(),#{createBy},#{createBy}
        )
     </insert>
@@ -70,6 +72,7 @@
             <if test="noticeContent!=null and noticeContent!=''"> notice_content = #{noticeContent},</if>
             <if test="noticeSignature!=null and noticeSignature!=''"> notice_signature = #{noticeSignature},</if>
             <if test="sendOutGold!=null and sendOutGold!=''"> send_out_gold = #{sendOutGold},</if>
+            <if test="addresseeType!=null and addresseeType!=''"> addressee_type = #{addresseeType},</if>
             update_time = sysdate(),
             update_by = #{updateBy}
         </set>
