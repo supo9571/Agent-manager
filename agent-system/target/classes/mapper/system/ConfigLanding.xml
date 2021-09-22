@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manager.system.mapper.ConfigLandingMapper">
+
+    <resultMap type="com.manager.common.core.domain.entity.ConfigLanding" id="ConfigLandingResult">
+        <result property="id"     column="id"      />
+        <result property="tid"     column="tid"      />
+        <result property="androidUrl" column="android_url" />
+        <result property="superSignUrl" column="super_sign_url" />
+        <result property="superSignStatus" column="super_sign_status" />
+        <result property="enterpriseSignUrl" column="enterprise_sign_url" />
+        <result property="enterpriseSignStatus" column="enterprise_sign_status" />
+        <result property="tfSignUrl" column="tf_sign_url" />
+        <result property="tfSignUrl" column="tf_sign_status" />
+        <result property="tfSignStatus" column="tf_sign_status" />
+        <result property="customerUrl" column="customer_url" />
+    </resultMap>
+
+<!--    <select id="getConfigLandingInfo" resultType="java.util.Map" >-->
+<!--        SELECT id as id, android_url as androidUrl, super_sign_url as superSignUrl,super_sign_status as superSignStatus, enterprise_sign_url as enterpriseSignUrl, enterprise_sign_status as enterpriseSignStatus, tf_sign_url as tfSignUrl, tf_sign_status as tfSignStatus, customer_url as customerUrl FROM config_landing where tid = #{tid}-->
+<!--    </select>-->
+
+    <update id="editConfigLanding" parameterType="com.manager.common.core.domain.entity.ConfigLanding">
+        update config_landing
+        <set>
+            <if test="androidUrl!=null and androidUrl!=''"> android_url = #{androidUrl},</if>
+            <if test="superSignUrl!=null and superSignUrl!=''"> super_sign_url = #{superSignUrl},</if>
+            <if test="superSignStatus!=null and superSignStatus!=''"> status = #{superSignStatus},</if>
+            <if test="enterprise_sign_url!=null and enterprise_sign_url!=''"> enterprise_sign_url = #{enterpriseSignUrl},</if>
+            <if test="enterprise_sign_status!=null and enterprise_sign_status!=''"> enterprise_sign_status = #{enterpriseSignStatus},</if>
+            <if test="tf_sign_url!=null and tf_sign_url!=''"> tf_sign_url = #{tfSignUrl},</if>
+            <if test="tf_sign_status!=null and tf_sign_status!=''"> tf_sign_status = #{tfSignStatus},</if>
+            <if test="customer_url!=null and customer_url!=''"> customer_url = #{customerUrl},</if>
+            updated_at = sysdate()
+        </set>
+        where id = #{id} and tid= #{tid}
+    </update>
+
+    <insert id="addConfigLanding" parameterType="com.manager.common.core.domain.entity.ConfigLanding">
+        insert into
+            config_landing(
+            tid,
+            android_url,
+            super_sign_url,
+            super_sign_status,
+            enterprise_sign_url,
+            enterprise_sign_status,
+            tf_sign_url,
+            tf_sign_status,
+            customer_url,
+            create_time
+        )
+        values(
+            #{tid};
+            #{androidUrl},
+            #{superSignUrl},
+            #{superSignStatus},
+            #{enterpriseSignUrl},
+            #{enterpriseSignStatus},
+            #{tfSignUrl},
+            #{tfSignStatus},
+            #{customerUrl},
+            sysdate()
+        )
+    </insert>
+</mapper>
