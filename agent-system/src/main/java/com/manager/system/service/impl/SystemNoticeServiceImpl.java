@@ -14,7 +14,7 @@ import java.util.List;
  * @author sieGuang 2021/09/18
  */
 @Service
-public class SystemNoticeServiceImpl<mian> implements SystemNoticeService {
+public class SystemNoticeServiceImpl implements SystemNoticeService {
 
     @Autowired
     private SystemNoticeMapper systemNoticeMapper;

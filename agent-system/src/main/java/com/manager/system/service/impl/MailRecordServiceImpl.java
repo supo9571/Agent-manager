@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * 系统公告配置
- * @author sieGuang 2021/09/18
+ * 邮箱记录
+ * @author sieGuang 2021/09/20
  */
 @Service
 public class MailRecordServiceImpl implements MailRecordService {
