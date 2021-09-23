@@ -118,8 +118,18 @@ public class BaseController
     @SuppressWarnings({ "rawtypes", "unchecked" })
     protected TableDataInfo getDataTable(List<?> list)
     {
+        PageDomain pageDomain = TableSupport.buildPageRequest();
+        Integer pageNum = pageDomain.getPageNum();
+        Integer pageSize = pageDomain.getPageSize();
+
         PageInfo pageInfo = new PageInfo(list);
-        TableDataInfo rspData = new TableDataInfo(pageInfo.getTotal(),list,pageInfo.getPageSize(),pageInfo.getPageNum());
+        TableDataInfo rspData;
+
+        if (StringUtils.isNotNull(pageNum) && StringUtils.isNotNull(pageSize)){
+            rspData = new TableDataInfo(pageInfo.getTotal(),list,pageSize,pageNum);
+        }else{
+            rspData = new TableDataInfo(pageInfo.getTotal(),list,pageInfo.getPageSize(),pageInfo.getPageNum());
+        }
         return rspData;
     }
 
