@@ -1,11 +1,14 @@
 package com.manager.common.utils;
 
+import org.apache.commons.lang3.time.DateFormatUtils;
+
 import java.lang.management.ManagementFactory;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
-import org.apache.commons.lang3.time.DateFormatUtils;
 
 /**
  * 时间工具类
@@ -84,6 +87,31 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils
         {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * 判断当前时间是否大于某个时间
+     * @param time yyyy-MM-dd HH:mm:ss
+     * @return
+     */
+    public static boolean dateCompare(String time){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime localTime=LocalDateTime.parse(time,dtf);
+        return LocalDateTime.now().isAfter(localTime);
+    }
+
+    /**
+     * 判断当前时间是否大于某个时间
+     * @param time yyyy-MM-dd HH:mm:ss
+     * @return
+     */
+    public static boolean dateCompare(Date time){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String strTime = sdf.format(time);
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime localTime=LocalDateTime.parse(strTime,dtf);
+        return LocalDateTime.now().isAfter(localTime);
     }
 
     /**
