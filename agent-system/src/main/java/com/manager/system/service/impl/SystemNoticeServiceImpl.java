@@ -38,9 +38,12 @@ public class SystemNoticeServiceImpl implements SystemNoticeService {
     @Override
     public Integer editSystemNotice(SystemNotice systemNotice) {
         // 发送状态等于定时发送 且 判断当前时间是否大于发送时间
+        // 立即发送的时候状态也是 2（在线）
         if("2".equals(systemNotice.getSendOutTimeType()) && DateUtils.dateCompare(systemNotice.getSendOutTime())){
             systemNotice.setState("2");
-        }else{
+        }else if("1".equals(systemNotice.getSendOutTimeType())){
+            systemNotice.setState("2");
+        } else{
             systemNotice.setState("1");
         }
         return systemNoticeMapper.editSystemNotice(systemNotice);
