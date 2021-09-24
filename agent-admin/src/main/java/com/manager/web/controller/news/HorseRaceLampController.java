@@ -34,7 +34,7 @@ public class HorseRaceLampController extends BaseController {
     /**
      * 添加
      */
-    @PreAuthorize("@ss.hasPermi('system:recharge:addHorseRaceLamp')")
+    @PreAuthorize("@ss.hasPermi('system:news:addHorseRaceLamp')")
     @ApiOperation(value = "添加跑马灯配置")
     @Log(title = "添加跑马灯配置", businessType = BusinessType.INSERT)
     @PostMapping("/addHorseRaceLamp")
@@ -48,20 +48,20 @@ public class HorseRaceLampController extends BaseController {
     /**
      * 查询
      */
-    @PreAuthorize("@ss.hasPermi('system:recharge:listHorseRaceLamp')")
+    @PreAuthorize("@ss.hasPermi('system:news:listHorseRaceLamp')")
     @ApiOperation(value = "查询跑马灯配置列表")
     @PostMapping("/listHorseRaceLamp")
     public AjaxResult listHorseRaceLamp(@RequestBody HorseRaceLamp horseRaceLamp) {
-        startPage();
+        startPage(horseRaceLamp.getPage(),horseRaceLamp.getSize(),horseRaceLamp.getOrderByColumn(),horseRaceLamp.getIsAsc());
         horseRaceLamp.setTid(ManagerConfig.getTid());
         List list = horseRaceLampService.listHorseRaceLamp(horseRaceLamp);
-        return AjaxResult.success(getDataTable(list));
+        return AjaxResult.success(getDataTable(list,horseRaceLamp.getPage(),horseRaceLamp.getSize()));
     }
 
     /**
      * 编辑
      */
-    @PreAuthorize("@ss.hasPermi('system:recharge:editHorseRaceLamp')")
+    @PreAuthorize("@ss.hasPermi('system:news:editHorseRaceLamp')")
     @ApiOperation(value = "编辑跑马灯配置")
     @Log(title = "编辑跑马灯配置", businessType = BusinessType.UPDATE)
     @PostMapping("/editHorseRaceLamp")
@@ -75,7 +75,7 @@ public class HorseRaceLampController extends BaseController {
     /**
      * 通过id删除当前数据
      */
-    @PreAuthorize("@ss.hasPermi('system:recharge:delHorseRaceLamp')")
+    @PreAuthorize("@ss.hasPermi('system:news:delHorseRaceLamp')")
     @ApiOperation(value = "删除跑马灯配置")
     @Log(title = "删除跑马灯配置", businessType = BusinessType.DELETE)
     @PostMapping("/delHorseRaceLamp")

@@ -1,6 +1,7 @@
 package com.manager.system.service.impl;
 
 import com.manager.common.core.domain.entity.HorseRaceLamp;
+import com.manager.common.utils.DateUtils;
 import com.manager.system.mapper.HorseRaceLampMapper;
 import com.manager.system.service.HorseRaceLampService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,19 @@ public class HorseRaceLampServiceImpl implements HorseRaceLampService {
 
     @Override
     public Integer addHorseRaceLamp(HorseRaceLamp horseRaceLamp) {
+        // 开始时间 < 当前时间
+        if(!DateUtils.dateCompare(horseRaceLamp.getBeginTime())){
+            // 结束数据 > 当前时间  = 在线
+            // 结束数据 < 当前时间  = 下线（else）
+            if(DateUtils.dateCompare(horseRaceLamp.getEndTime())){
+                horseRaceLamp.setState("2");
+            }else{
+                horseRaceLamp.setState("1");
+            }
+        }else{
+            // 其它 = 待发送
+            horseRaceLamp.setState("1");
+        }
         return horseRaceLampMapper.addHorseRaceLamp(horseRaceLamp);
     }
 
@@ -30,6 +44,19 @@ public class HorseRaceLampServiceImpl implements HorseRaceLampService {
 
     @Override
     public Integer editHorseRaceLamp(HorseRaceLamp horseRaceLamp) {
+        // 开始时间 < 当前时间
+        if(!DateUtils.dateCompare(horseRaceLamp.getBeginTime())){
+            // 结束数据 > 当前时间  = 在线
+            // 结束数据 < 当前时间  = 下线（else）
+            if(DateUtils.dateCompare(horseRaceLamp.getEndTime())){
+                horseRaceLamp.setState("2");
+            }else{
+                horseRaceLamp.setState("1");
+            }
+        }else{
+            // 其它 = 待发送
+            horseRaceLamp.setState("1");
+        }
         return horseRaceLampMapper.editHorseRaceLamp(horseRaceLamp);
     }
 

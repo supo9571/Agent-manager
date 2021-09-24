@@ -118,17 +118,22 @@ public class BaseController
     @SuppressWarnings({ "rawtypes", "unchecked" })
     protected TableDataInfo getDataTable(List<?> list)
     {
-        PageDomain pageDomain = TableSupport.buildPageRequest();
-        Integer pageNum = pageDomain.getPageNum();
-        Integer pageSize = pageDomain.getPageSize();
-
         PageInfo pageInfo = new PageInfo(list);
+        TableDataInfo rspData = new TableDataInfo(pageInfo.getTotal(),list,pageInfo.getPageSize(),pageInfo.getPageNum());
+        return rspData;
+    }
+
+    /**
+     * 响应请求分页数据
+     */
+    protected TableDataInfo getDataTable(List<?> list,Integer pageNum,Integer pageSize){
+        PageInfo pageInfo2 = new PageInfo(list);
         TableDataInfo rspData;
 
         if (StringUtils.isNotNull(pageNum) && StringUtils.isNotNull(pageSize)){
-            rspData = new TableDataInfo(pageInfo.getTotal(),list,pageSize,pageNum);
+            rspData = new TableDataInfo(pageInfo2.getTotal(),list,pageSize,pageNum);
         }else{
-            rspData = new TableDataInfo(pageInfo.getTotal(),list,pageInfo.getPageSize(),pageInfo.getPageNum());
+            rspData = new TableDataInfo(pageInfo2.getTotal(),list,pageInfo2.getPageSize(),pageInfo2.getPageNum());
         }
         return rspData;
     }

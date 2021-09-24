@@ -27,6 +27,11 @@ public interface SystemNoticeService {
     Integer editSystemNotice(SystemNotice systemNotice);
 
     /**
+     * 下线
+     */
+    Integer offlineSystemNotice(SystemNotice systemNotice);
+
+    /**
      * 通过id删除当前数据
      */
     Integer delSystemNotice(String id);

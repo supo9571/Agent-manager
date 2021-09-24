@@ -31,14 +31,14 @@ public class MailRecordController extends BaseController {
     /**
      * 查询
      */
-    @PreAuthorize("@ss.hasPermi('system:recharge:listMailRecord')")
+    @PreAuthorize("@ss.hasPermi('system:news:listMailRecord')")
     @ApiOperation(value = "查询邮箱记录列表")
     @PostMapping("/listMailRecord")
     public AjaxResult listMailRecord(@RequestBody MailRecord mailRecord) {
-        startPage();
+        startPage(mailRecord.getPage(),mailRecord.getSize(),mailRecord.getOrderByColumn(),mailRecord.getIsAsc());
         mailRecord.setTid(ManagerConfig.getTid());
         List list = mailRecordService.listMailRecord(mailRecord);
-        return AjaxResult.success(getDataTable(list));
+        return AjaxResult.success(getDataTable(list,mailRecord.getPage(),mailRecord.getSize()));
     }
 
 }

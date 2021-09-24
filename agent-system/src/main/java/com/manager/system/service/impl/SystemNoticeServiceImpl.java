@@ -23,9 +23,9 @@ public class SystemNoticeServiceImpl implements SystemNoticeService {
     public Integer addSystemNotice(SystemNotice systemNotice) {
         // 发送状态等于定时发送 且 判断当前时间是否大于发送时间
         if("2".equals(systemNotice.getSendOutTimeType()) && DateUtils.dateCompare(systemNotice.getSendOutTime())){
-            systemNotice.setState("1");
-        }else{
             systemNotice.setState("2");
+        }else{
+            systemNotice.setState("1");
         }
         return systemNoticeMapper.addSystemNotice(systemNotice);
     }
@@ -39,10 +39,15 @@ public class SystemNoticeServiceImpl implements SystemNoticeService {
     public Integer editSystemNotice(SystemNotice systemNotice) {
         // 发送状态等于定时发送 且 判断当前时间是否大于发送时间
         if("2".equals(systemNotice.getSendOutTimeType()) && DateUtils.dateCompare(systemNotice.getSendOutTime())){
-            systemNotice.setState("1");
-        }else{
             systemNotice.setState("2");
+        }else{
+            systemNotice.setState("1");
         }
+        return systemNoticeMapper.editSystemNotice(systemNotice);
+    }
+
+    @Override
+    public Integer offlineSystemNotice(SystemNotice systemNotice) {
         return systemNoticeMapper.editSystemNotice(systemNotice);
     }
 

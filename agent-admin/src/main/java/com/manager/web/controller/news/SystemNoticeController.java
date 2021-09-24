@@ -36,7 +36,7 @@ public class SystemNoticeController extends BaseController {
     /**
      * 添加
      */
-    @PreAuthorize("@ss.hasPermi('system:recharge:addSystemNotice')")
+    @PreAuthorize("@ss.hasPermi('system:news:addSystemNotice')")
     @ApiOperation(value = "添加系统公告")
     @Log(title = "添加系统公告", businessType = BusinessType.INSERT)
     @PostMapping("/addSystemNotice")
@@ -50,20 +50,20 @@ public class SystemNoticeController extends BaseController {
     /**
      * 查询
      */
-    @PreAuthorize("@ss.hasPermi('system:recharge:listSystemNotice')")
+    @PreAuthorize("@ss.hasPermi('system:news:listSystemNotice')")
     @ApiOperation(value = "查询系统公告列表")
     @PostMapping("/listSystemNotice")
     public AjaxResult listSystemNotice(@RequestBody SystemNotice systemNotice) {
-        startPage();
+        startPage(systemNotice.getPage(),systemNotice.getSize(),systemNotice.getOrderByColumn(),systemNotice.getIsAsc());
         systemNotice.setTid(ManagerConfig.getTid());
         List list = systemNoticeService.listSystemNotice(systemNotice);
-        return AjaxResult.success(getDataTable(list));
+        return AjaxResult.success(getDataTable(list,systemNotice.getPage(),systemNotice.getSize()));
     }
 
     /**
      * 编辑
      */
-    @PreAuthorize("@ss.hasPermi('system:recharge:editSystemNotice')")
+    @PreAuthorize("@ss.hasPermi('system:news:editSystemNotice')")
     @ApiOperation(value = "编辑系统公告")
     @Log(title = "编辑系统公告", businessType = BusinessType.UPDATE)
     @PostMapping("/editSystemNotice")
@@ -75,9 +75,26 @@ public class SystemNoticeController extends BaseController {
     }
 
     /**
+     * 下线 通过id 把当前数据状态改成 线下状态
+     */
+    @PreAuthorize("@ss.hasPermi('system:news:offlineSystemNotice')")
+    @ApiOperation(value = "下线")
+    @Log(title = "下线", businessType = BusinessType.UPDATE)
+    @PostMapping("/offlineSystemNotice")
+    public AjaxResult offlineSystemNotice(Integer id) {
+        SystemNotice systemNotice = new SystemNotice();
+        systemNotice.setId(id);
+        systemNotice.setState("3");
+        systemNotice.setTid(ManagerConfig.getTid());
+        systemNotice.setUpdateBy(SecurityUtils.getUsername());
+        Integer i = systemNoticeService.offlineSystemNotice(systemNotice);
+        return i>0?AjaxResult.success():AjaxResult.error();
+    }
+
+    /**
      * 通过id删除当前数据
      */
-    @PreAuthorize("@ss.hasPermi('system:recharge:delSystemNotice')")
+    @PreAuthorize("@ss.hasPermi('system:news:delSystemNotice')")
     @ApiOperation(value = "删除系统公告")
     @Log(title = "删除系统公告", businessType = BusinessType.DELETE)
     @PostMapping("/delSystemNotice")
@@ -90,6 +107,7 @@ public class SystemNoticeController extends BaseController {
      * 上传图片
      */
     @Log(title = "上传图片", businessType = BusinessType.UPDATE)
+    @ApiOperation(value = "上传图片")
     @PostMapping("/uploadPicture")
     public AjaxResult uploadPicture(@RequestParam("file") MultipartFile file) throws IOException {
         if (!file.isEmpty()) {

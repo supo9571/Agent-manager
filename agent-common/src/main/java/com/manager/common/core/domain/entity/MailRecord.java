@@ -32,7 +32,7 @@ public class MailRecord extends BaseEntity {
     @ApiModelProperty("邮件内容")
     private String mailContent;
 
-    @ApiModelProperty("邮件状态 1已读 2未读 3已经领取 4未领取 5待发送")
+    @ApiModelProperty("邮件状态 1已读 2未读 3已经领取 4未领取 5待发送 6测回")
     private String mailState;
 
     @ApiModelProperty("邮件道具(金币)")

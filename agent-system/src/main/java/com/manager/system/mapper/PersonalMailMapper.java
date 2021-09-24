@@ -25,9 +25,15 @@ public interface PersonalMailMapper {
     List<PersonalMail> listPersonalMail(PersonalMail personalMail);
 
     /**
-     * 编辑
+     * 更新 个人邮箱配置表状态
      */
     Integer editPersonalMail(PersonalMail personalMail);
+
+    /**
+     * 更新 邮箱记录状态
+     * @param id
+     */
+    Integer editMailRecord(@Param("id") Integer id,@Param("tid") Integer tid);
 
     /**
      * 通过id删除当前数据
