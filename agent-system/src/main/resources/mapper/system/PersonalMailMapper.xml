@@ -87,7 +87,7 @@
     <update id="editMailRecord">
         update sys_mail_record
         <set>
-            mail_state = 6,
+            mail_state = '6',
             update_time = sysdate(),
             update_by = #{updateBy}
         </set>

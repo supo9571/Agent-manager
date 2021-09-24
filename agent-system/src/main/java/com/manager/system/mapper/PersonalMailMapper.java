@@ -8,8 +8,8 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
- * 系统公告配置
- * @author sieGuang 2021/09/18
+ * 个人邮箱配置
+ * @author sieGuang 2021/09/20
  */
 @Mapper
 public interface PersonalMailMapper {
@@ -33,7 +33,7 @@ public interface PersonalMailMapper {
      * 更新 邮箱记录状态
      * @param id
      */
-    Integer editMailRecord(@Param("id") Integer id,@Param("tid") Integer tid);
+    Integer editMailRecord(@Param("id") Integer id,@Param("tid") Integer tid,@Param("updateBy") String updateBy);
 
     /**
      * 通过id删除当前数据

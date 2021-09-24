@@ -1,7 +1,9 @@
 package com.manager.system.service.impl;
 
+import com.manager.common.annotation.DataSource;
 import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.domain.entity.PersonalMail;
+import com.manager.common.enums.DataSourceType;
 import com.manager.common.utils.DateUtils;
 import com.manager.common.utils.SecurityUtils;
 import com.manager.system.mapper.PersonalMailMapper;
@@ -16,6 +18,7 @@ import java.util.List;
  * @author sieGuang 2021/09/20
  */
 @Service
+@DataSource(DataSourceType.SLAVE)
 public class PersonalMailServiceImpl implements PersonalMailService {
 
     @Autowired
@@ -70,7 +73,7 @@ public class PersonalMailServiceImpl implements PersonalMailService {
                 return i;
             }
             // 更新 邮箱记录状态
-            i = personalMailMapper.editMailRecord(id,ManagerConfig.getTid());
+            i = personalMailMapper.editMailRecord(id,ManagerConfig.getTid(),SecurityUtils.getUsername());
         }
         return i;
     }
