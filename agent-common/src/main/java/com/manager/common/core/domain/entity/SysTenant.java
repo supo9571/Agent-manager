@@ -52,6 +52,6 @@ public class SysTenant extends BaseEntity {
     private Long tenant;
 
     @ApiModelProperty(value = "备注")
-    private String remark;
+    private String description;
 
 }
