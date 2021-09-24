@@ -73,7 +73,7 @@ public class PersonalMailServiceImpl implements PersonalMailService {
                 return i;
             }
             // 更新 邮箱记录状态
-            i = personalMailMapper.editMailRecord(id,ManagerConfig.getTid(),SecurityUtils.getUsername());
+            personalMailMapper.editMailRecord(id,ManagerConfig.getTid(),SecurityUtils.getUsername());
         }
         return i;
     }
