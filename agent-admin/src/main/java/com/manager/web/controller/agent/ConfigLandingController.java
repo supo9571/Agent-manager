@@ -1,4 +1,4 @@
-package com.manager.web.controller.game;
+package com.manager.web.controller.agent;
 
 import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.controller.BaseController;

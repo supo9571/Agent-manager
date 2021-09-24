@@ -1,6 +1,7 @@
 package com.manager.system.service.impl;
 
 import com.manager.common.core.domain.entity.SysDept;
+import com.manager.common.core.domain.entity.SysTenant;
 import com.manager.common.utils.StringUtils;
 import com.manager.system.mapper.SysTenantMapper;
 import com.manager.system.service.SysTenantService;
@@ -17,6 +18,12 @@ public class SysTenantServiceImpl implements SysTenantService {
 
     @Autowired
     private SysTenantMapper sysTenantMapper;
+
+    @Override
+    public List list(SysTenant sysTenant) {
+        List list = sysTenantMapper.list(sysTenant);
+        return list;
+    }
 
     @Override
     public List selectTenants(String tid, String tType) {
@@ -43,6 +50,16 @@ public class SysTenantServiceImpl implements SysTenantService {
             }
         }
         return returnList;
+    }
+
+    @Override
+    public int insertSelective(SysTenant record) {
+        return sysTenantMapper.insertSelective(record);
+    }
+
+    @Override
+    public int updateByPrimaryKeySelective(SysTenant record) {
+        return sysTenantMapper.updateByPrimaryKeySelective(record);
     }
 
     /**
@@ -80,4 +97,6 @@ public class SysTenantServiceImpl implements SysTenantService {
     private boolean hasChild(List list, Map t) {
         return getChildList(list, t).size() > 0 ? true : false;
     }
+
+
 }
