@@ -32,11 +32,11 @@
   </select>
 
   <select id="list" parameterType="com.manager.common.core.domain.entity.SysTenant" resultType="java.util.Map">
-    select t_id tid,t_name tName,remark remark,create_time createTime
+    select t_id tId,t_name tName,remark,create_time createTime
     from sys_tenant
     <where>
-      <if test="tid != null" >
-        tid = #{tid}
+      <if test="tId != null" >
+        t_id = #{tId}
       </if>
       <if test="tType != null" >
         and t_type = #{tType}
@@ -48,7 +48,7 @@
         and date_format(create_time,'%Y-%m-%d %H:%i-%s') &lt;= date_format(#{endTime},'%Y-%m-%d %H:%i-%s')
       </if>
     </where>
-    order by id desc
+    order by t_id desc
   </select>
 
   <sql id="Base_Column_List" >
