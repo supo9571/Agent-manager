@@ -15,7 +15,7 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="t_type" property="tType" jdbcType="SMALLINT" />
     <result column="tenant" property="tenant" jdbcType="BIGINT" />
-    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
   </resultMap>
 
   <select id="selectTenants" resultType="java.util.Map">
@@ -27,16 +27,22 @@
   </select>
 
 
+
+
   <select id="selectAllTenant" resultType="java.util.Map">
         SELECT t_id tid,t_name tName,parent_id parentId FROM sys_tenant
   </select>
 
+  <select id="selectUserList" resultType="java.util.Map">
+        SELECT nick_name nickName,user_name userName FROM sys_user where t_id = #{tid} limit 5
+  </select>
+
   <select id="list" parameterType="com.manager.common.core.domain.entity.SysTenant" resultType="java.util.Map">
-    select *
+    select  t_id tid,t_name tName,remark,create_time as createTime
     from sys_tenant
     <where>
-      <if test="tId != null" >
-        t_id = #{tId}
+      <if test="agentId != null  and agentId != ''" >
+        t_id = #{agentId}
       </if>
       <if test="tType != null" >
         and t_type = #{tType}
@@ -48,12 +54,12 @@
         and date_format(create_time,'%Y-%m-%d %H:%i-%s') &lt;= date_format(#{endTime},'%Y-%m-%d %H:%i-%s')
       </if>
     </where>
-    order by t_id desc
+    order by create_time desc
   </select>
 
   <sql id="Base_Column_List" >
     t_id, parent_id, ancestors, t_name, status, del_flag, create_by, create_time, update_by,
-    update_time, t_type, tenant, description
+    update_time, t_type, tenant, remark
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
@@ -69,12 +75,12 @@
     insert into sys_tenant (t_id, parent_id, ancestors,
       t_name, status, del_flag, create_by,
       create_time, update_by, update_time,
-      t_type, tenant, description
+      t_type, tenant, remark
       )
     values (#{tId,jdbcType=VARCHAR}, #{parentId,jdbcType=BIGINT}, #{ancestors,jdbcType=VARCHAR},
       #{tName,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{delFlag,jdbcType=CHAR}, #{createBy,jdbcType=VARCHAR},
       #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP},
-      #{tType,jdbcType=SMALLINT}, #{tenant,jdbcType=BIGINT}, #{description,jdbcType=VARCHAR}
+      #{tType,jdbcType=SMALLINT}, #{tenant,jdbcType=BIGINT}, #{remark,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.manager.common.core.domain.entity.SysTenant" >
@@ -116,8 +122,8 @@
       <if test="tenant != null" >
         tenant,
       </if>
-      <if test="description != null" >
-        description,
+      <if test="remark != null" >
+        remark,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -157,8 +163,8 @@
       <if test="tenant != null" >
         #{tenant,jdbcType=BIGINT},
       </if>
-      <if test="description != null" >
-        #{description,jdbcType=VARCHAR},
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -198,8 +204,8 @@
       <if test="tenant != null" >
         tenant = #{tenant,jdbcType=BIGINT},
       </if>
-      <if test="description != null" >
-        description = #{description,jdbcType=VARCHAR},
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
       </if>
     </set>
     where t_id = #{tId,jdbcType=VARCHAR}
@@ -217,7 +223,7 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       t_type = #{tType,jdbcType=SMALLINT},
       tenant = #{tenant,jdbcType=BIGINT},
-      description = #{description,jdbcType=VARCHAR}
+      remark = #{remark,jdbcType=VARCHAR}
     where t_id = #{tId,jdbcType=VARCHAR}
   </update>
 </mapper>
