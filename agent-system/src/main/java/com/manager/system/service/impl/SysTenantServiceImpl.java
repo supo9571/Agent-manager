@@ -1,7 +1,6 @@
 package com.manager.system.service.impl;
 
 import com.manager.common.annotation.DataSource;
-import com.manager.common.core.domain.entity.SysDept;
 import com.manager.common.core.domain.entity.SysTenant;
 import com.manager.common.enums.DataSourceType;
 import com.manager.common.utils.StringUtils;
@@ -56,8 +55,8 @@ public class SysTenantServiceImpl implements SysTenantService {
     @Override
     public List buildTree(List list) {
         List returnList = new ArrayList();
-        List<Long> tempList = new ArrayList();
-        list.forEach(l -> tempList.add((Long) ((Map) l).get("tid")));
+        List<String> tempList = new ArrayList();
+        list.forEach(l -> tempList.add((String) ((Map) l).get("tid")));
 
         for (Iterator iterator = list.iterator(); iterator.hasNext(); ) {
             Map map = (Map) iterator.next();
@@ -97,12 +96,12 @@ public class SysTenantServiceImpl implements SysTenantService {
     /**
      * 得到子节点列表
      */
-    private List getChildList(List<SysDept> list, Map t) {
-        List tlist = new ArrayList<SysDept>();
+    private List getChildList(List list, Map t) {
+        List tlist = new ArrayList();
         Iterator it = list.iterator();
         while (it.hasNext()) {
             Map n = (Map) it.next();
-            if (StringUtils.isNotNull(n.get("parentId")) && (Long) n.get("parentId") == (Long) t.get("tid")) {
+            if (StringUtils.isNotNull(n.get("parentId")) && n.get("parentId").equals(t.get("tid"))) {
                 tlist.add(n);
             }
         }
