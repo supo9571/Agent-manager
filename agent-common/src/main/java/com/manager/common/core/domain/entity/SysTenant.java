@@ -15,8 +15,11 @@ public class SysTenant extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "总代号")
+    @ApiModelProperty(value = "tid")
     private String tId;
+
+    @ApiModelProperty(value = "总代号")
+    private String agentId;
 
     @ApiModelProperty(value = "父平台id")
     private Integer parentId;
@@ -52,6 +55,6 @@ public class SysTenant extends BaseEntity {
     private Long tenant;
 
     @ApiModelProperty(value = "备注")
-    private String description;
+    private String remark;
 
 }

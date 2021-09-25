@@ -1,27 +1,45 @@
 package com.manager.system.service.impl;
 
+import com.manager.common.annotation.DataSource;
 import com.manager.common.core.domain.entity.SysDept;
 import com.manager.common.core.domain.entity.SysTenant;
+import com.manager.common.enums.DataSourceType;
 import com.manager.common.utils.StringUtils;
 import com.manager.system.mapper.SysTenantMapper;
 import com.manager.system.service.SysTenantService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 @Service
+@DataSource(DataSourceType.SLAVE)
 public class SysTenantServiceImpl implements SysTenantService {
 
-    @Autowired
+    @Resource
     private SysTenantMapper sysTenantMapper;
 
     @Override
     public List list(SysTenant sysTenant) {
-        List list = sysTenantMapper.list(sysTenant);
+        List<Map> list = sysTenantMapper.list(sysTenant);
+        if (!CollectionUtils.isEmpty(list)) {
+            String pName = sysTenantMapper.getPlatformName();
+            list.forEach(map -> {
+                map.put("pName", pName);
+                List<Map> userList = sysTenantMapper.selectUserList(String.valueOf(map.get("tid")));
+                if (!CollectionUtils.isEmpty(list)) {
+                    for (int i = 0; i < userList.size(); i++) {
+                        Map userMap = userList.get(i);
+                        String account = userMap.get("nickName") + "(" + userMap.get("userName") + ")";
+                        map.put("account" + (i + 1), account);
+                    }
+                }
+            });
+        }
         return list;
     }
 

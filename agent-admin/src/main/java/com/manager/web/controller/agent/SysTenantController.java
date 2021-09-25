@@ -1,16 +1,18 @@
 package com.manager.web.controller.agent;
 
 import com.manager.common.config.ManagerConfig;
+import com.manager.common.core.controller.BaseController;
 import com.manager.common.core.domain.AjaxResult;
 import com.manager.common.core.domain.entity.SysTenant;
 import com.manager.common.utils.SecurityUtils;
 import com.manager.system.service.SysTenantService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author jason
@@ -19,15 +21,18 @@ import java.util.Date;
 @RestController
 @RequestMapping("/system/tenant")
 @Api(tags = "总代渠道管理")
-public class SysTenantController {
+public class SysTenantController extends BaseController {
 
-    @Autowired
+    @Resource
     private SysTenantService sysTenantService;
 
     @ApiOperation(value = "总代列表")
     @GetMapping("/list")
     public AjaxResult selectTenants(SysTenant sysTenant) {
-        return AjaxResult.success(sysTenantService.list(sysTenant));
+        startPage();
+        sysTenant.setTType(1);
+        List list = sysTenantService.list(sysTenant);
+        return AjaxResult.success(getDataTable(list));
     }
 
     @ApiOperation(value = "总代新增")
@@ -36,6 +41,7 @@ public class SysTenantController {
         sysTenant.setCreateTime(new Date());
         sysTenant.setCreateBy(SecurityUtils.getUsername());
         sysTenant.setParentId(ManagerConfig.getTid());
+        sysTenant.setTType(1);
         return AjaxResult.success(sysTenantService.insertSelective(sysTenant));
     }
 
