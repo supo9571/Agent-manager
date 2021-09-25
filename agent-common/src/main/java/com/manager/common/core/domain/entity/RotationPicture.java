@@ -1,5 +1,6 @@
 package com.manager.common.core.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.manager.common.core.domain.BaseEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -37,5 +38,13 @@ public class RotationPicture extends BaseEntity {
 
     @ApiModelProperty("扩展信息")
     private String extendInformation;
+
+    @ApiModelProperty("创建时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private String createTime1;
+
+    @ApiModelProperty("创建时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private String createTime2;
 
 }

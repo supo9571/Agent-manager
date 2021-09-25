@@ -62,10 +62,10 @@ public class RotationPictureController extends BaseController {
     /**
      * 编辑
      */
-    @PreAuthorize("@ss.hasPermi('system:news:editSystemNotice')")
+    @PreAuthorize("@ss.hasPermi('system:news:editRotationPicture')")
     @ApiOperation(value = "编辑轮播图")
     @Log(title = "编辑轮播图", businessType = BusinessType.UPDATE)
-    @PostMapping("/editSystemNotice")
+    @PostMapping("/editRotationPicture")
     public AjaxResult editRotationPicture(@RequestBody RotationPicture rotationPicture) {
         rotationPicture.setTid(ManagerConfig.getTid());
         rotationPicture.setUpdateBy(SecurityUtils.getUsername());

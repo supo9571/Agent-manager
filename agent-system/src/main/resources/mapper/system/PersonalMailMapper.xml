@@ -6,7 +6,6 @@
 
     <insert id="addPersonalMail" parameterType="com.manager.common.core.domain.entity.PersonalMail">
         insert into sys_personal_mail(
-            id,
             tid,
             send_out_time,
             addressee,
@@ -20,7 +19,6 @@
             create_time,update_time,create_by,update_by
         )
         values (
-           #{id},
            #{tid},
            #{sendOutTime},
            #{addressee},

@@ -17,9 +17,6 @@ public class MailRecord extends BaseEntity {
     @ApiModelProperty("平台id")
     private Integer tid;
 
-    @ApiModelProperty("日记排序")
-    private Integer sort;
-
     @ApiModelProperty("署名")
     private String signature;
 

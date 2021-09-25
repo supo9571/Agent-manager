@@ -31,7 +31,7 @@ public class HorseRaceLampServiceImpl implements HorseRaceLampService {
             if(DateUtils.dateCompare(horseRaceLamp.getEndTime())){
                 horseRaceLamp.setState("2");
             }else{
-                horseRaceLamp.setState("1");
+                horseRaceLamp.setState("3");
             }
         }else{
             // 其它 = 待发送
@@ -54,7 +54,7 @@ public class HorseRaceLampServiceImpl implements HorseRaceLampService {
             if(DateUtils.dateCompare(horseRaceLamp.getEndTime())){
                 horseRaceLamp.setState("2");
             }else{
-                horseRaceLamp.setState("1");
+                horseRaceLamp.setState("3");
             }
         }else{
             // 其它 = 待发送
