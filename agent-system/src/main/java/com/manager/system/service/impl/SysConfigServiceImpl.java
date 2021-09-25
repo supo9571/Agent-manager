@@ -35,7 +35,7 @@ public class SysConfigServiceImpl implements ISysConfigService
     /**
      * 项目启动时，初始化参数到缓存
      */
-    @PostConstruct
+//    @PostConstruct
     public void init()
     {
         loadingConfigCache();
