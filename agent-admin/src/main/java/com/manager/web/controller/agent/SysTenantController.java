@@ -40,7 +40,7 @@ public class SysTenantController extends BaseController {
     public AjaxResult add(@RequestBody SysTenant sysTenant) {
         sysTenant.setCreateTime(new Date());
         sysTenant.setCreateBy(SecurityUtils.getUsername());
-        sysTenant.setParentId(ManagerConfig.getTid());
+        sysTenant.setParentId(ManagerConfig.getTid()+"");
         sysTenant.setTType(1);
         return AjaxResult.success(sysTenantService.insertSelective(sysTenant));
     }

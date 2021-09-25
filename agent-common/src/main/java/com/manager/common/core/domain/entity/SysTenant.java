@@ -22,7 +22,7 @@ public class SysTenant extends BaseEntity {
     private String agentId;
 
     @ApiModelProperty(value = "父平台id")
-    private Integer parentId;
+    private String parentId;
 
     @ApiModelProperty(value = "祖籍列表")
     private String ancestors;
