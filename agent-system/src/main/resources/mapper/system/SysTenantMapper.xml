@@ -64,11 +64,14 @@
       <if test="agentId != null  and agentId != ''" >
         t_id = #{agentId}
       </if>
+      <if test="parentId != null  and parentId != ''" >
+        parent_id in (SELECT t_id FROM sys_tenant WHERE  t_type=1 and parent_id =#{parentId} )
+      </if>
       <if test="tType != null" >
-        and t_type like concat('%',#{tType},'%')
+        and t_type = #{tType}
       </if>
       <if test="tName != null and tName != ''" >
-        and t_name = #{tName}
+        and t_name like concat('%',#{tType},'%')
       </if>
       <if test="beginTime != null and beginTime != ''"><!-- 开始时间检索 -->
         and date_format(create_time,'%Y-%m-%d %H:%i-%s') &gt;= date_format(#{beginTime},'%Y-%m-%d %H:%i-%s')

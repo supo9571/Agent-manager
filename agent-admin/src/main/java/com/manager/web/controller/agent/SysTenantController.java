@@ -1,18 +1,18 @@
 package com.manager.web.controller.agent;
 
-        import com.manager.common.config.ManagerConfig;
-        import com.manager.common.core.controller.BaseController;
-        import com.manager.common.core.domain.AjaxResult;
-        import com.manager.common.core.domain.entity.SysTenant;
-        import com.manager.common.utils.SecurityUtils;
-        import com.manager.system.service.SysTenantService;
-        import io.swagger.annotations.Api;
-        import io.swagger.annotations.ApiOperation;
-        import org.springframework.web.bind.annotation.*;
+import com.manager.common.config.ManagerConfig;
+import com.manager.common.core.controller.BaseController;
+import com.manager.common.core.domain.AjaxResult;
+import com.manager.common.core.domain.entity.SysTenant;
+import com.manager.common.utils.SecurityUtils;
+import com.manager.system.service.SysTenantService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.web.bind.annotation.*;
 
-        import javax.annotation.Resource;
-        import java.util.Date;
-        import java.util.List;
+import javax.annotation.Resource;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author jason
