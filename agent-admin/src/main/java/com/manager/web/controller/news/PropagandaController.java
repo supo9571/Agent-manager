@@ -7,17 +7,16 @@ import com.manager.common.core.domain.AjaxResult;
 import com.manager.common.core.domain.entity.Propaganda;
 import com.manager.common.enums.BusinessType;
 import com.manager.common.utils.SecurityUtils;
-import com.manager.common.utils.file.FileUploadUtils;
 import com.manager.system.service.PropagandaService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -25,9 +24,8 @@ import java.util.List;
  * @author sieGuang 2021/09/25
  */
 @RestController
-@RequestMapping("/news/systemNotice")
-@Api(tags = "系统公告配置")
-@Slf4j
+@RequestMapping("/news/propaganda")
+@Api(tags = "宣传活动配置")
 public class PropagandaController extends BaseController {
 
     @Autowired
