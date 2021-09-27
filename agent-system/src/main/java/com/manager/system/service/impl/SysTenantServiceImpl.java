@@ -10,10 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @DataSource(DataSourceType.SLAVE)
@@ -30,7 +28,42 @@ public class SysTenantServiceImpl implements SysTenantService {
             list.forEach(map -> {
                 map.put("pName", pName);
                 List<Map> userList = sysTenantMapper.selectUserList(String.valueOf(map.get("tid")));
-                if (!CollectionUtils.isEmpty(list)) {
+                if (!CollectionUtils.isEmpty(userList)) {
+                    for (int i = 0; i < userList.size(); i++) {
+                        Map userMap = userList.get(i);
+                        String account = userMap.get("nickName") + "(" + userMap.get("userName") + ")";
+                        map.put("account" + (i + 1), account);
+                    }
+                }
+            });
+        }
+        return list;
+    }
+
+    /**
+     * 获取所有平台list转map
+     *
+     * @return
+     */
+    private Map<String, String> getTenantMap() {
+        List<SysTenant> list = sysTenantMapper.allList();
+        if(CollectionUtils.isEmpty(list)){
+            return new HashMap<>();
+        }
+        return list.stream().collect(Collectors.toMap(SysTenant::getTId, SysTenant::getTName));
+    }
+
+    @Override
+    public List channelList(SysTenant sysTenant) {
+        List<Map> list = sysTenantMapper.channelList(sysTenant);
+        if (!CollectionUtils.isEmpty(list)) {
+            Map<String, String> tenantMap = getTenantMap();
+            list.forEach(map -> {
+                if (tenantMap.get(map.get("parentId")) != null) {
+                    map.put("pName", tenantMap.get(map.get("parentId")) + "(" + map.get("parentId") + ")");
+                }
+                List<Map> userList = sysTenantMapper.selectUserList(String.valueOf(map.get("tid")));
+                if (!CollectionUtils.isEmpty(userList)) {
                     for (int i = 0; i < userList.size(); i++) {
                         Map userMap = userList.get(i);
                         String account = userMap.get("nickName") + "(" + userMap.get("userName") + ")";

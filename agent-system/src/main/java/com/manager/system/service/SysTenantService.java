@@ -8,6 +8,8 @@ public interface SysTenantService {
 
     List list(SysTenant sysTenant);
 
+    List channelList(SysTenant sysTenant);
+
     List selectTenants(String tid, String type);
 
     List selectAllTenant();

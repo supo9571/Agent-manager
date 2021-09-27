@@ -52,7 +52,13 @@ public class SysTenant extends BaseEntity {
     private Integer tType;
 
     @ApiModelProperty(value = "所属平台")
-    private Long tenant;
+    private Integer tenant;
+
+    @ApiModelProperty(value = "友盟统计")
+    private String umengUrl;
+
+    @ApiModelProperty(value = "渠道url逗号分隔:url1,url2")
+    private String channelUrl;
 
     @ApiModelProperty(value = "备注")
     private String remark;

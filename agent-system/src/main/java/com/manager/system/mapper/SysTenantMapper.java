@@ -13,11 +13,16 @@ public interface SysTenantMapper {
     @Select("select t_name from sys_tenant where parent_id = 0")
     String getPlatformName();
 
+    @Select("SELECT t_id as tid,t_name as tName from sys_tenant ")
+    List<SysTenant> allList();
+
     List selectTenants(@Param("tid") String tId,@Param("tType") String tType);
 
     List selectAllTenant();
 
     List list(SysTenant record);
+
+    List channelList(SysTenant record);
 
     List selectUserList(@Param("tid") String tId);
 

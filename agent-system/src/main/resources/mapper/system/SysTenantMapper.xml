@@ -4,7 +4,7 @@
 
   <resultMap id="BaseResultMap" type="com.manager.common.core.domain.entity.SysTenant" >
     <id column="t_id" property="tId" jdbcType="VARCHAR" />
-    <result column="parent_id" property="parentId" jdbcType="BIGINT" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
     <result column="ancestors" property="ancestors" jdbcType="VARCHAR" />
     <result column="t_name" property="tName" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="CHAR" />
@@ -15,6 +15,8 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="t_type" property="tType" jdbcType="SMALLINT" />
     <result column="tenant" property="tenant" jdbcType="BIGINT" />
+    <result column="umeng_url" jdbcType="VARCHAR" property="umengUrl" />
+    <result column="channel_url" jdbcType="VARCHAR" property="channelUrl" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
   </resultMap>
 
@@ -25,9 +27,6 @@
       and parent_id = #{tid}
     </if>
   </select>
-
-
-
 
   <select id="selectAllTenant" resultType="java.util.Map">
         SELECT t_id tid,t_name tName,parent_id parentId FROM sys_tenant
@@ -47,6 +46,30 @@
       <if test="tType != null" >
         and t_type = #{tType}
       </if>
+
+      <if test="beginTime != null and beginTime != ''"><!-- 开始时间检索 -->
+        and date_format(create_time,'%Y-%m-%d %H:%i-%s') &gt;= date_format(#{beginTime},'%Y-%m-%d %H:%i-%s')
+      </if>
+      <if test="endTime != null and endTime != ''"><!-- 结束时间检索 -->
+        and date_format(create_time,'%Y-%m-%d %H:%i-%s') &lt;= date_format(#{endTime},'%Y-%m-%d %H:%i-%s')
+      </if>
+    </where>
+    order by create_time desc
+  </select>
+
+  <select id="channelList" parameterType="com.manager.common.core.domain.entity.SysTenant" resultType="java.util.Map">
+    select  t_id tid,parent_id as parentId,t_name tName,umeng_url as umengUrl, channel_url as channelUrl, remark,create_time as createTime
+    from sys_tenant
+    <where>
+      <if test="agentId != null  and agentId != ''" >
+        t_id = #{agentId}
+      </if>
+      <if test="tType != null" >
+        and t_type like concat('%',#{tType},'%')
+      </if>
+      <if test="tName != null and tName != ''" >
+        and t_name = #{tName}
+      </if>
       <if test="beginTime != null and beginTime != ''"><!-- 开始时间检索 -->
         and date_format(create_time,'%Y-%m-%d %H:%i-%s') &gt;= date_format(#{beginTime},'%Y-%m-%d %H:%i-%s')
       </if>
@@ -58,8 +81,8 @@
   </select>
 
   <sql id="Base_Column_List" >
-    t_id, parent_id, ancestors, t_name, status, del_flag, create_by, create_time, update_by,
-    update_time, t_type, tenant, remark
+    t_id, parent_id, ancestors, t_name, status, del_flag, create_by, create_time, update_by, 
+    update_time, t_type, tenant, umeng_url, channel_url, remark
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
@@ -72,16 +95,16 @@
     where t_id = #{tId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.manager.common.core.domain.entity.SysTenant" >
-    insert into sys_tenant (t_id, parent_id, ancestors,
-      t_name, status, del_flag, create_by,
-      create_time, update_by, update_time,
-      t_type, tenant, remark
-      )
-    values (#{tId,jdbcType=VARCHAR}, #{parentId,jdbcType=BIGINT}, #{ancestors,jdbcType=VARCHAR},
-      #{tName,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{delFlag,jdbcType=CHAR}, #{createBy,jdbcType=VARCHAR},
-      #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP},
-      #{tType,jdbcType=SMALLINT}, #{tenant,jdbcType=BIGINT}, #{remark,jdbcType=VARCHAR}
-      )
+    insert into sys_tenant (t_id, parent_id, ancestors, 
+      t_name, status, del_flag, create_by, 
+      create_time, update_by, update_time, 
+      t_type, tenant, umeng_url, 
+      channel_url, remark)
+    values (#{tId,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{ancestors,jdbcType=VARCHAR}, 
+      #{tName,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{delFlag,jdbcType=CHAR}, #{createBy,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{tType,jdbcType=SMALLINT}, #{tenant,jdbcType=BIGINT}, #{umengUrl,jdbcType=VARCHAR},
+      #{channelUrl,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.manager.common.core.domain.entity.SysTenant" >
     insert into sys_tenant
@@ -122,6 +145,12 @@
       <if test="tenant != null" >
         tenant,
       </if>
+      <if test="umengUrl != null" >
+        umeng_url,
+      </if>
+      <if test="channelUrl != null" >
+        channel_url,
+      </if>
       <if test="remark != null" >
         remark,
       </if>
@@ -131,7 +160,7 @@
         #{tId,jdbcType=VARCHAR},
       </if>
       <if test="parentId != null" >
-        #{parentId,jdbcType=BIGINT},
+        #{parentId,jdbcType=VARCHAR},
       </if>
       <if test="ancestors != null" >
         #{ancestors,jdbcType=VARCHAR},
@@ -163,6 +192,12 @@
       <if test="tenant != null" >
         #{tenant,jdbcType=BIGINT},
       </if>
+      <if test="umengUrl != null" >
+        #{umengUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="channelUrl != null" >
+        #{channelUrl,jdbcType=VARCHAR},
+      </if>
       <if test="remark != null" >
         #{remark,jdbcType=VARCHAR},
       </if>
@@ -172,7 +207,7 @@
     update sys_tenant
     <set >
       <if test="parentId != null" >
-        parent_id = #{parentId,jdbcType=BIGINT},
+        parent_id = #{parentId,jdbcType=VARCHAR},
       </if>
       <if test="ancestors != null" >
         ancestors = #{ancestors,jdbcType=VARCHAR},
@@ -204,6 +239,12 @@
       <if test="tenant != null" >
         tenant = #{tenant,jdbcType=BIGINT},
       </if>
+      <if test="umengUrl != null" >
+        umeng_url = #{umengUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="channelUrl != null" >
+        channel_url = #{channelUrl,jdbcType=VARCHAR},
+      </if>
       <if test="remark != null" >
         remark = #{remark,jdbcType=VARCHAR},
       </if>
@@ -212,7 +253,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.manager.common.core.domain.entity.SysTenant" >
     update sys_tenant
-    set parent_id = #{parentId,jdbcType=BIGINT},
+    set parent_id = #{parentId,jdbcType=VARCHAR},
       ancestors = #{ancestors,jdbcType=VARCHAR},
       t_name = #{tName,jdbcType=VARCHAR},
       status = #{status,jdbcType=CHAR},
@@ -223,7 +264,10 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       t_type = #{tType,jdbcType=SMALLINT},
       tenant = #{tenant,jdbcType=BIGINT},
+      umeng_url = #{umengUrl,jdbcType=VARCHAR},
+      channel_url = #{channelUrl,jdbcType=VARCHAR},
       remark = #{remark,jdbcType=VARCHAR}
     where t_id = #{tId,jdbcType=VARCHAR}
   </update>
+  
 </mapper>
