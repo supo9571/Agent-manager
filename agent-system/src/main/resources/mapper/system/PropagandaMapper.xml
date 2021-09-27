@@ -7,6 +7,7 @@
     <insert id="addPropaganda" parameterType="com.manager.common.core.domain.entity.Propaganda">
        insert into sys_propaganda(
             tid,
+            sort,
             addressee,
             title,
             state,
@@ -20,6 +21,7 @@
         )
         values (
            #{tid},
+           #{sort},
            #{addressee},
            #{title},
            #{state},
@@ -37,6 +39,7 @@
         SELECT
             sp.id AS id,
             sp.tid AS tid,
+            sp.sort AS sort,
             sp.addressee AS addressee,
             sp.addressee_type AS addresseeType,
             sp.type AS type,
@@ -48,7 +51,8 @@
             sp.end_time AS endTime,
             sp.create_time AS createTime,
             sp.update_time AS updateTime,
-            sp.create_by AS createBy
+            sp.create_by AS createBy,
+            sp.update_by as updateBy
         FROM
             sys_propaganda sp
         WHERE tid = #{tid}
@@ -67,6 +71,7 @@
         update sys_propaganda
         <set>
             <if test="addressee!=null and addressee!=''"> addressee = #{addressee},</if>
+            <if test="sort!=null and sort!=''"> sort = #{sort},</if>
             <if test="title!=null and title!=''"> title = #{title},</if>
             <if test="state!=null and state!=''"> state = #{state},</if>
             <if test="type!=null and type!=''"> type = #{type},</if>

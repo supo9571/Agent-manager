@@ -18,6 +18,9 @@ public class Propaganda extends BaseEntity {
     @ApiModelProperty("平台id")
     private Integer tid;
 
+    @ApiModelProperty("排序")
+    private int sort;
+
     @ApiModelProperty("收件人")
     private String addressee;
 

@@ -39,7 +39,8 @@
             shrl.end_time as endTime,
             shrl.create_time as createTime,
             shrl.update_time as updateTime,
-            shrl.create_by as createBy
+            shrl.create_by as createBy,
+            shrl.update_by as updateBy
         from
             sys_horse_race_lamp shrl
         where tid = #{tid}

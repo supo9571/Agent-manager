@@ -42,7 +42,8 @@
             srp.extend_information as extendInformation,
             srp.create_time as createTime,
             srp.update_time as updateTime,
-            srp.create_by as createBy
+            srp.create_by as createBy,
+            srp.update_by as updateBy
         from
             sys_rotation_picture srp
         where

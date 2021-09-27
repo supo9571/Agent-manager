@@ -51,7 +51,8 @@
             ssn.send_out_time as sendOutTime,
             ssn.create_time as createTime,
             ssn.update_time as updateTime,
-            ssn.create_by as createBy
+            ssn.create_by as createBy,
+            ssn.update_by as updateBy
         from
             sys_system_notice ssn
         where tid=#{tid}

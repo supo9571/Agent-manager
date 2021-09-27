@@ -39,7 +39,8 @@
             sstn.end_time as endTime,
             sstn.create_time AS createTime,
             sstn.update_time AS updateTime,
-            sstn.create_by AS createBy
+            sstn.create_by AS createBy,
+            sstn.update_by as updateBy
         from
             sys_stop_taking_notice sstn
         WHERE tid = #{tid}
