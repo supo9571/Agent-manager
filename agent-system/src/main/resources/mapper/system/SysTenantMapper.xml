@@ -65,7 +65,7 @@
         t_id = #{agentId}
       </if>
       <if test="parentId != null  and parentId != ''" >
-        and parent_id in (SELECT t_id FROM sys_tenant WHERE parent_id =#{parentId} )
+        and parent_id = #{parentId}
       </if>
       <if test="tType != null" >
         and t_type = #{tType}
