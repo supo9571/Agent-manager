@@ -81,7 +81,7 @@
             </if>
             <if test="addresseeType!=null and addresseeType!=''"> addressee_type = #{addresseeType},</if>
             <if test="beginTime!=null and beginTime!=''"> begin_time = #{beginTime},</if>
-            <if test="endTime!=null and endTime!=''"> update_time = #{endTime},</if>
+            <if test="endTime!=null and endTime!=''"> end_time = #{endTime},</if>
             update_time = sysdate(),
             update_by = #{updateBy}
         </set>

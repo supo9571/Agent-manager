@@ -24,11 +24,11 @@ public class PropagandaServiceImpl implements PropagandaService {
 
     @Override
     public Integer addPropaganda(Propaganda propaganda) {
-        // 开始时间 < 当前时间
-        if(!DateUtils.dateCompare(propaganda.getBeginTime())){
-            // 结束数据 > 当前时间  = 在线
-            // 结束数据 < 当前时间  = 下线（else）
-            if(DateUtils.dateCompare(propaganda.getEndTime())){
+        // 当前时间 > 开始时间
+        if(DateUtils.dateCompare(propaganda.getBeginTime())){
+            // 当前时间 < 结束数据  = 在线
+            // 当前时间 > 结束数据  = 下线（else）
+            if(!(DateUtils.dateCompare(propaganda.getEndTime()))){
                 propaganda.setState("2");
             }else{
                 propaganda.setState("3");
@@ -47,11 +47,11 @@ public class PropagandaServiceImpl implements PropagandaService {
 
     @Override
     public Integer editPropaganda(Propaganda propaganda) {
-        // 开始时间 < 当前时间
-        if(!DateUtils.dateCompare(propaganda.getBeginTime())){
-            // 结束数据 > 当前时间  = 在线
-            // 结束数据 < 当前时间  = 下线（else）
-            if(DateUtils.dateCompare(propaganda.getEndTime())){
+        // 当前时间 > 开始时间
+        if(DateUtils.dateCompare(propaganda.getBeginTime())){
+            // 当前时间 < 结束数据  = 在线
+            // 当前时间 > 结束数据  = 下线（else）
+            if(!(DateUtils.dateCompare(propaganda.getEndTime()))){
                 propaganda.setState("2");
             }else{
                 propaganda.setState("3");

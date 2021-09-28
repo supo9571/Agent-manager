@@ -24,11 +24,11 @@ public class HorseRaceLampServiceImpl implements HorseRaceLampService {
 
     @Override
     public Integer addHorseRaceLamp(HorseRaceLamp horseRaceLamp) {
-        // 开始时间 < 当前时间
-        if(!DateUtils.dateCompare(horseRaceLamp.getBeginTime())){
-            // 结束数据 > 当前时间  = 在线
-            // 结束数据 < 当前时间  = 下线（else）
-            if(DateUtils.dateCompare(horseRaceLamp.getEndTime())){
+        // 当前时间 > 开始时间
+        if(DateUtils.dateCompare(horseRaceLamp.getBeginTime())){
+            // 当前时间 < 结束数据  = 在线
+            // 当前时间 > 结束数据  = 下线（else）
+            if(!(DateUtils.dateCompare(horseRaceLamp.getEndTime()))){
                 horseRaceLamp.setState("2");
             }else{
                 horseRaceLamp.setState("3");
@@ -47,11 +47,11 @@ public class HorseRaceLampServiceImpl implements HorseRaceLampService {
 
     @Override
     public Integer editHorseRaceLamp(HorseRaceLamp horseRaceLamp) {
-        // 开始时间 < 当前时间
-        if(!DateUtils.dateCompare(horseRaceLamp.getBeginTime())){
-            // 结束数据 > 当前时间  = 在线
-            // 结束数据 < 当前时间  = 下线（else）
-            if(DateUtils.dateCompare(horseRaceLamp.getEndTime())){
+        // 当前时间 > 开始时间
+        if(DateUtils.dateCompare(horseRaceLamp.getBeginTime())){
+            // 当前时间 < 结束数据  = 在线
+            // 当前时间 > 结束数据  = 下线（else）
+            if(!(DateUtils.dateCompare(horseRaceLamp.getEndTime()))){
                 horseRaceLamp.setState("2");
             }else{
                 horseRaceLamp.setState("3");
