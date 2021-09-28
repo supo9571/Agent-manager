@@ -51,10 +51,10 @@
             and shrl.state = #{state}
         </if>
         <if test="createTime1 !=null and createTime1 !=''">
-            and date_format(ssn.create_time,'%Y-%m-%d') >= #{createTime1}
+            and date_format(shrl.create_time,'%Y-%m-%d') >= #{createTime1}
         </if>
         <if test="createTime2 !=null and createTime2 !=''">
-            and date_format(ssn.create_time,'%Y-%m-%d') <![CDATA[<=]]>  #{createTime2}
+            and date_format(shrl.create_time,'%Y-%m-%d') <![CDATA[<=]]>  #{createTime2}
         </if>
     </select>
 
