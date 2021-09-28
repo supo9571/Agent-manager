@@ -24,7 +24,7 @@ import java.util.List;
  * @author sieGuang 2021/09/21
  */
 @RestController
-@RequestMapping("/news/systemNotice")
+@RequestMapping("/news/horseRaceLamp")
 @Api(tags = "跑马灯配置")
 public class HorseRaceLampController extends BaseController {
 
