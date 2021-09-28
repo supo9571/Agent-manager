@@ -21,7 +21,14 @@
         )
         values (
            #{tid},
-           #{sendOutTime},
+            <choose>
+                <when test="sendOutTime != null">
+                    #{sendOutTime},
+                </when>
+                <otherwise>
+                    sysdate(),
+                </otherwise>
+            </choose>
            #{addressee},
            #{noticeTitle},
            #{state},
@@ -70,7 +77,14 @@
     <update id="editSystemNotice"  parameterType="com.manager.common.core.domain.entity.SystemNotice">
         update sys_system_notice
         <set>
-            <if test="sendOutTime!=null"> send_out_time = #{sendOutTime},</if>
+            <choose>
+                <when test="sendOutTime != null">
+                    send_out_time = #{sendOutTime},
+                </when>
+                <otherwise>
+                    send_out_time = sysdate(),
+                </otherwise>
+            </choose>
             <if test="addressee!=null and addressee!=''"> addressee = #{addressee},</if>
             <if test="noticeTitle!=null and noticeTitle!=''"> notice_title = #{noticeTitle},</if>
             <if test="state!=null and state!=''"> state = #{state},</if>

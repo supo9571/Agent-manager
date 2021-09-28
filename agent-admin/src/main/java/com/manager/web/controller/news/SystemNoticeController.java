@@ -111,7 +111,7 @@ public class SystemNoticeController extends BaseController {
     @PostMapping("/uploadPicture")
     public AjaxResult uploadPicture(@RequestParam("file") MultipartFile file) throws IOException {
         if (!file.isEmpty()) {
-            String avatar = FileUploadUtils.upload(ManagerConfig.getAvatarPath(), file);
+            String avatar = FileUploadUtils.upload(ManagerConfig.getUploadPath(), file);
 
             AjaxResult ajax = AjaxResult.success();
             ajax.put("imgUrl", avatar);

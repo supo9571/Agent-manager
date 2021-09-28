@@ -42,6 +42,7 @@ public class SystemNotice extends BaseEntity {
     @ApiModelProperty("推送设置 1推送 2不推送")
     private String push;
 
+    @ApiModelProperty("发送时间")
     private String sendOutTime;
 
     @ApiModelProperty("发送时间类型 1立即发送 2定时发送")
