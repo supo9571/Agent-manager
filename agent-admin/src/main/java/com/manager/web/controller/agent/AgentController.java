@@ -1,5 +1,6 @@
 package com.manager.web.controller.agent;
 
+import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.domain.AjaxResult;
 import com.manager.openFegin.AgentService;
 import io.swagger.annotations.Api;
@@ -26,7 +27,7 @@ public class AgentController {
     @PreAuthorize("@ss.hasPermi('data:agent:list')")
     @ApiOperation(value = "查询牌局记录列表")
     @GetMapping("/list")
-    public AjaxResult list(Integer tid,String uid,Integer page,Integer size,String orderByColumn,String isAsc) {
-        return agentService.getAgents(tid, uid, page, size, orderByColumn, isAsc);
+    public AjaxResult list(String uid,Integer page,Integer size,String orderByColumn,String isAsc) {
+        return agentService.getAgents(ManagerConfig.getTid(), uid, page, size, orderByColumn, isAsc);
     }
 }
