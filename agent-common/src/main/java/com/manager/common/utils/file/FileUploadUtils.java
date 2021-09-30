@@ -124,7 +124,7 @@ public class FileUploadUtils {
         return fileName;
     }
 
-    private static final File getAbsoluteFile(String uploadDir, String fileName){
+    private static final File getAbsoluteFile(String uploadDir, String fileName) {
         File desc = new File(uploadDir + File.separator + fileName);
 
         if (!desc.exists()) {
@@ -135,10 +135,10 @@ public class FileUploadUtils {
         return desc;
     }
 
-    private static final String getPathFileName(String uploadDir, String fileName){
+    private static final String getPathFileName(String uploadDir, String fileName) {
         int dirLastIndex = ManagerConfig.getProfile().length() + 1;
         String currentDir = StringUtils.substring(uploadDir, dirLastIndex);
-        String pathFileName = currentDir=="" ? Constants.RESOURCE_PREFIX + "/"+ fileName : Constants.RESOURCE_PREFIX + "/"+currentDir+"/"+ fileName;
+        String pathFileName = currentDir == "" ? Constants.RESOURCE_PREFIX + "/" + fileName : Constants.RESOURCE_PREFIX + "/" + currentDir + "/" + fileName;
         return pathFileName;
     }
 
@@ -221,18 +221,18 @@ public class FileUploadUtils {
         file.transferTo(desc);
         String pathFileName = getPathFileName(baseDir, fileName);
         //解压文件
-        JSONObject gameInfo = unZipFiles(new File(baseDir+"/"+fileName), baseDir,pathFileName);
+        JSONObject gameInfo = unZipFiles(new File(baseDir + "/" + fileName), baseDir, pathFileName);
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("apk_update_url",pathFileName);
-        jsonObject.put("size",file.getSize()/1024);
-        jsonObject.put("gameInfo",gameInfo);
+        jsonObject.put("apk_update_url", pathFileName);
+        jsonObject.put("size", file.getSize() / 1024);
+        jsonObject.put("gameInfo", gameInfo);
         return jsonObject;
     }
 
     /**
      * 解压文件到指定目录
      */
-    private static JSONObject unZipFiles(File zipFile, String descDir,String pathName) throws IOException {
+    private static JSONObject unZipFiles(File zipFile, String descDir, String pathName) throws IOException {
         JSONObject relust = new JSONObject();
         File pathFile = new File(descDir);
         if (!pathFile.exists()) {
@@ -249,36 +249,36 @@ public class FileUploadUtils {
                 continue;
             }
 
-            if(outPath.endsWith("NDQyMjY1/Mjk1YjM5")){// 路径 lobby/version.manifest
+            if (outPath.endsWith("NDQyMjY1/Mjk1YjM5")) {// 路径 lobby/version.manifest
                 JSONObject lobby = new JSONObject();
-                lobby.put("gameCode","lobby");
-                lobby.put("manifest_res","N2ZjOTdj/NDQyMjY1/Mjk1YjM5");
-                lobby.put("resources_url",pathName);
-                relust.put("lobby",lobby);
+                lobby.put("gameCode", "lobby");
+                lobby.put("manifest_res", "N2ZjOTdj/NDQyMjY1/Mjk1YjM5");
+                lobby.put("resources_url", pathName);
+                relust.put("lobby", lobby);
             }
-            if(outPath.endsWith("YzMzN2Qx/Mjk1YjM5")){// 路径 update/version.manifest
+            if (outPath.endsWith("YzMzN2Qx/Mjk1YjM5")) {// 路径 update/version.manifest
                 JSONObject update = new JSONObject();
-                update.put("gameCode","update");
-                update.put("manifest_res","N2ZjOTdj/YzMzN2Qx/Mjk1YjM5");
-                update.put("resources_url",pathName);
-                relust.put("update",update);
+                update.put("gameCode", "update");
+                update.put("manifest_res", "N2ZjOTdj/YzMzN2Qx/Mjk1YjM5");
+                update.put("resources_url", pathName);
+                relust.put("update", update);
             }
-            if(outPath.contains("N2ZjOTdj/NmNiOTJm")){// 路径 src/game
-                if(outPath.endsWith("Mjk1YjM5")){
+            if (outPath.contains("N2ZjOTdj/NmNiOTJm")) {// 路径 src/game
+                if (outPath.endsWith("Mjk1YjM5")) {
                     String gameCode = outPath.split("NmNiOTJm/")[1].split("/Mjk1YjM5")[0];
                     String gameDecode = DecodeMap.decodeMap().get(gameCode);
                     JSONObject game = new JSONObject();
-                    game.put("gameCode",gameDecode);
-                    game.put("manifest_res","/N2ZjOTdj/NmNiOTJm/"+gameDecode+"/Mjk1YjM5");
-                    game.put("resources_url",pathName);
-                    relust.put(gameDecode,game);
+                    game.put("gameCode", gameDecode);
+                    game.put("manifest_res", "/N2ZjOTdj/NmNiOTJm/" + gameDecode + "/Mjk1YjM5");
+                    game.put("resources_url", pathName);
+                    relust.put(gameDecode, game);
                 }
             }
         }
         JSONObject gameInfo = new JSONObject();
-        gameInfo.put("android",relust);
-        gameInfo.put("ios",relust);
-        gameInfo.put("windows",relust);
+        gameInfo.put("android", relust);
+        gameInfo.put("ios", relust);
+        gameInfo.put("windows", relust);
         return gameInfo;
     }
 }

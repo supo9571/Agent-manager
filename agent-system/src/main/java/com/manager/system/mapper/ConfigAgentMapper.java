@@ -18,6 +18,7 @@ public interface ConfigAgentMapper {
 
     /**
      * 新增
+     *
      * @param configAgent
      * @return
      */
@@ -25,6 +26,7 @@ public interface ConfigAgentMapper {
 
     /**
      * 修改
+     *
      * @param configAgent
      * @return
      */
@@ -32,6 +34,7 @@ public interface ConfigAgentMapper {
 
     /**
      * 删除
+     *
      * @param id
      * @return
      */
@@ -39,6 +42,7 @@ public interface ConfigAgentMapper {
 
     /**
      * 根据主键查对象
+     *
      * @param id
      * @return
      */
@@ -46,8 +50,9 @@ public interface ConfigAgentMapper {
 
     /**
      * 推广链接域名配置
+     *
      * @param promotionDomain
      * @return
      */
-    Integer upPromotionDomainToAll(@Param("promotionDomain") String promotionDomain,@Param("tid") Integer tid);
+    Integer upPromotionDomainToAll(@Param("promotionDomain") String promotionDomain, @Param("tid") Integer tid);
 }

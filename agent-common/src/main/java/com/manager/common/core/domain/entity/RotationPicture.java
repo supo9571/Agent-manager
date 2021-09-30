@@ -7,6 +7,7 @@ import lombok.Data;
 
 /**
  * 轮播图配置
+ *
  * @author sieGuang 2021/09/23
  */
 @Data

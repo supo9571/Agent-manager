@@ -5,33 +5,37 @@
 <mapper namespace="com.manager.system.mapper.ActivityMapper">
 
     <insert id="saveActivity" parameterType="com.manager.common.core.domain.entity.Activity">
-        insert into config_activity (tid,activity_begin,activity_end,activity_type,sort,channel_list,vip_list,`min`,activity_info,update_by,update_time,create_time)
-        values (#{tid},#{activityBegin},#{activityEnd},#{activityType},#{sort},#{channelList},#{vipList},#{min},#{activityInfo},#{updateBy},sysdate(),sysdate());
+        insert into config_activity (tid, activity_begin, activity_end, activity_type, sort, channel_list, vip_list,
+                                     `min`, activity_info, update_by, update_time, create_time)
+        values (#{tid}, #{activityBegin}, #{activityEnd}, #{activityType}, #{sort}, #{channelList}, #{vipList}, #{min},
+                #{activityInfo}, #{updateBy}, sysdate(), sysdate());
     </insert>
 
-    <select id="checkActivityTime" resultType="java.lang.Integer" parameterType="com.manager.common.core.domain.entity.Activity">
+    <select id="checkActivityTime" resultType="java.lang.Integer"
+            parameterType="com.manager.common.core.domain.entity.Activity">
         select count(0) from config_activity
         where ( (#{activityBegin}>=activity_begin and activity_end>=#{activityBegin})
-              or (#{activityEnd}>=activity_begin and activity_end>=#{activityEnd})
-              or (activity_begin>=#{activityBegin} and #{activityEnd}>=activity_begin)
-              or (activity_end>=#{activityBegin} and #{activityEnd}>=activity_end)
-            )
+        or (#{activityEnd}>=activity_begin and activity_end>=#{activityEnd})
+        or (activity_begin>=#{activityBegin} and #{activityEnd}>=activity_begin)
+        or (activity_end>=#{activityBegin} and #{activityEnd}>=activity_end)
+        )
         and activity_type = #{activityType} and tid = #{tid}
-        <if test="id!=null and id!=''"> and id!=#{id}</if>
+        <if test="id!=null and id!=''">and id!=#{id}</if>
     </select>
 
     <select id="findActivity" parameterType="com.manager.common.core.domain.entity.Activity" resultType="java.util.Map">
         select id,activity_begin activityBegin,activity_end activityEnd,activity_type activityType,
-               sort,IF(SYSDATE()>activity_begin,IF(SYSDATE()>activity_end,3,2),1) status,
-               channel_list channelList,vip_list vipList,`min`,activity_info activityInfo,update_time updateTime,update_by updateBy
+        sort,IF(SYSDATE()>activity_begin,IF(SYSDATE()>activity_end,3,2),1) status,
+        channel_list channelList,vip_list vipList,`min`,activity_info activityInfo,update_time updateTime,update_by
+        updateBy
         from config_activity
         <where>
             tid = #{tid}
-            <if test="activityType!=null and activityType!=''"> and activity_type = #{activityType} </if>
-            <if test="status!=null and status!=1 "> and activity_begin >= SYSDATE() </if>
-            <if test="status!=null and status!=2 "> and SYSDATE() >= activity_begin and activity_end >= sysdate()</if>
-            <if test="status!=null and status!=3 "> and SYSDATE() >= activity_end </if>
-            <if test="channelList!=null and channelList!=''"> and channel_list like concat('%',#{channelList},'%') </if>
+            <if test="activityType!=null and activityType!=''">and activity_type = #{activityType}</if>
+            <if test="status!=null and status!=1 ">and activity_begin >= SYSDATE()</if>
+            <if test="status!=null and status!=2 ">and SYSDATE() >= activity_begin and activity_end >= sysdate()</if>
+            <if test="status!=null and status!=3 ">and SYSDATE() >= activity_end</if>
+            <if test="channelList!=null and channelList!=''">and channel_list like concat('%',#{channelList},'%')</if>
         </where>
         order by id desc
     </select>
@@ -39,14 +43,14 @@
     <update id="updateActivity" parameterType="com.manager.common.core.domain.entity.Activity">
         update config_activity
         <set>
-            <if test="activityBegin!=null and activityBegin!=''"> activity_begin = #{activityBegin},</if>
-            <if test="activityEnd!=null and activityEnd!=''"> activity_end = #{activityEnd}, </if>
-            <if test="activityType!=null and activityType!=''"> activity_type = #{activityType}, </if>
-            <if test="sort!=null and sort!=''"> sort = #{sort}, </if>
-            <if test="channelList!=null and channelList!=''"> channel_list = #{channelList}, </if>
-            <if test="vipList!=null and vipList!=''"> vip_list = #{vipList}, </if>
-            <if test="min!=null and min!=''"> `min` = #{min}, </if>
-            <if test="activityInfo!=null and activityInfo!=''"> activity_info = #{activityInfo}, </if>
+            <if test="activityBegin!=null and activityBegin!=''">activity_begin = #{activityBegin},</if>
+            <if test="activityEnd!=null and activityEnd!=''">activity_end = #{activityEnd},</if>
+            <if test="activityType!=null and activityType!=''">activity_type = #{activityType},</if>
+            <if test="sort!=null and sort!=''">sort = #{sort},</if>
+            <if test="channelList!=null and channelList!=''">channel_list = #{channelList},</if>
+            <if test="vipList!=null and vipList!=''">vip_list = #{vipList},</if>
+            <if test="min!=null and min!=''">`min` = #{min},</if>
+            <if test="activityInfo!=null and activityInfo!=''">activity_info = #{activityInfo},</if>
             update_time = sysdate(),
             update_by = #{updateBy}
         </set>

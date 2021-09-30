@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * 轮播图配置
+ *
  * @author sieGuang 2021/09/23
  */
 public interface RotationPictureService {

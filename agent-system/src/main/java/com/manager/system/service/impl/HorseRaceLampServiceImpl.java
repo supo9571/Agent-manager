@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * 跑马灯配置
+ *
  * @author sieGuang 2021/09/21
  */
 @Service
@@ -22,15 +23,15 @@ public class HorseRaceLampServiceImpl implements HorseRaceLampService {
     @Override
     public Integer addHorseRaceLamp(HorseRaceLamp horseRaceLamp) {
         // 当前时间 > 开始时间
-        if(DateUtils.dateCompare(horseRaceLamp.getBeginTime())){
+        if (DateUtils.dateCompare(horseRaceLamp.getBeginTime())) {
             // 当前时间 < 结束数据  = 在线
             // 当前时间 > 结束数据  = 下线（else）
-            if(!(DateUtils.dateCompare(horseRaceLamp.getEndTime()))){
+            if (!(DateUtils.dateCompare(horseRaceLamp.getEndTime()))) {
                 horseRaceLamp.setState("2");
-            }else{
+            } else {
                 horseRaceLamp.setState("3");
             }
-        }else{
+        } else {
             // 其它 = 待发送
             horseRaceLamp.setState("1");
         }
@@ -45,15 +46,15 @@ public class HorseRaceLampServiceImpl implements HorseRaceLampService {
     @Override
     public Integer editHorseRaceLamp(HorseRaceLamp horseRaceLamp) {
         // 当前时间 > 开始时间
-        if(DateUtils.dateCompare(horseRaceLamp.getBeginTime())){
+        if (DateUtils.dateCompare(horseRaceLamp.getBeginTime())) {
             // 当前时间 < 结束数据  = 在线
             // 当前时间 > 结束数据  = 下线（else）
-            if(!(DateUtils.dateCompare(horseRaceLamp.getEndTime()))){
+            if (!(DateUtils.dateCompare(horseRaceLamp.getEndTime()))) {
                 horseRaceLamp.setState("2");
-            }else{
+            } else {
                 horseRaceLamp.setState("3");
             }
-        }else{
+        } else {
             // 其它 = 待发送
             horseRaceLamp.setState("1");
         }

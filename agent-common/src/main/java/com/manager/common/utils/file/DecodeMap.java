@@ -10,7 +10,7 @@ import java.util.Map;
  */
 public class DecodeMap {
 
-    private static Map<String,String> decodeMap;
+    private static Map<String, String> decodeMap;
 
 
     private static String decodeStr = "{\"N2ZjOTdj\":\"src\",\"NmNiOTJm\":\"game\",\"NDQyMjY1\":\"lobby\",\"YzMzN2Qx\":\"update\"," +
@@ -20,11 +20,12 @@ public class DecodeMap {
             "\"MmVmYmY1\":\"mssj\",\"NWM1MDBk\":\"pdsgj\",\"MTAyZGFh\":\"psz\",\"NDQ1MTkw\":\"rummy\",\"ZjhiODA2\":\"sgj\",\"YzhkOGIz\":\"shjx\"," +
             "\"YTE1YWQ1\":\"teen_patti\",\"ZDliMGM3\":\"wrzjh\",\"MDhhODQ1\":\"wzry\",\"M2ZhMWIz\":\"res\",\"Nzk1ZTc1\":\"animation\",\"NjVhM2Rk\":" +
             "\"labelatlas\",\"MTI3MjY3\":\"sound\",\"Mjk1YjM5\":\"version.manifest\",\"ZWIwZGU2\":\"game_versions\"}";
+
     /**
      * 获取下载路径
      */
-    public static Map<String,String> decodeMap() {
-        if(decodeMap==null){
+    public static Map<String, String> decodeMap() {
+        if (decodeMap == null) {
             JSONObject jsonObject = JSONObject.parseObject(decodeStr);
             decodeMap = jsonObject.toJavaObject(Map.class);
         }

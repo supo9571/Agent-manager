@@ -31,6 +31,7 @@ import java.util.TimerTask;
 
 /**
  * 充值订单查询
+ *
  * @author sieGuang 2021/09/10
  */
 @RestController
@@ -56,6 +57,7 @@ public class RechargeOrderController extends BaseController {
 
     /**
      * 手动充值
+     *
      * @param rechargeOrder 增加的字段
      */
     @PreAuthorize("@ss.hasPermi('system:finance:addRechargeOrder')")
@@ -70,32 +72,32 @@ public class RechargeOrderController extends BaseController {
         Long give = 0l;// 赠送金额
         BigDecimal bigGive = new BigDecimal(0);// 赠送金额
         String cmd = "addcoins";
-        if("1".equals(rechargeOrder.getRechargeType())){// VIP充值
+        if ("1".equals(rechargeOrder.getRechargeType())) {// VIP充值
             //加币类型
             Integer rechargeGive = rechargeOrderService.selectRechargeGive(1);
             bigGive = rechargeOrder.getRechargeAmount().multiply(new BigDecimal(rechargeGive)).multiply(new BigDecimal(100));
             give = bigGive.longValue();
             reason = 100070;
-        }else if("2".equals(rechargeOrder.getRechargeType())){// 银行卡充值
+        } else if ("2".equals(rechargeOrder.getRechargeType())) {// 银行卡充值
             Integer rechargeGive = rechargeOrderService.selectRechargeGive(2);
             bigGive = rechargeOrder.getRechargeAmount().multiply(new BigDecimal(rechargeGive));
             give = bigGive.longValue();
             reason = 100073;
-        }else if("3".equals(rechargeOrder.getRechargeType())){// 月卡充值
-            if("金卡".equals(rechargeOrder.getCommodityName())){
+        } else if ("3".equals(rechargeOrder.getRechargeType())) {// 月卡充值
+            if ("金卡".equals(rechargeOrder.getCommodityName())) {
                 //获取月卡 到账金额
                 Integer monthGive = rechargeOrderService.selectJinMonthGive();
                 amount = new BigDecimal(monthGive).multiply(b).longValue();
                 reason = 100071;
             }
-            if("银卡".equals(rechargeOrder.getCommodityName())){
+            if ("银卡".equals(rechargeOrder.getCommodityName())) {
                 Integer monthGive = rechargeOrderService.selectYinMonthGive();
                 amount = new BigDecimal(monthGive).multiply(b).longValue();
                 reason = 100072;
             }
-        }else if("5".equals(rechargeOrder.getRechargeType())){
-            if("2".equals(rechargeOrder.getOperateType()) ||
-                    "4".equals(rechargeOrder.getOperateType())){
+        } else if ("5".equals(rechargeOrder.getRechargeType())) {
+            if ("2".equals(rechargeOrder.getOperateType()) ||
+                    "4".equals(rechargeOrder.getOperateType())) {
                 cmd = "reducecoins";
             }
 
@@ -110,15 +112,15 @@ public class RechargeOrderController extends BaseController {
         Integer i = 0;
         AjaxResult ajaxResult = new AjaxResult();
         // 处理系统赠送多uid的情况
-        if("5".equals(rechargeOrder.getRechargeType()) && rechargeOrder.getUids() != null){
+        if ("5".equals(rechargeOrder.getRechargeType()) && rechargeOrder.getUids() != null) {
             String[] arrayUid = rechargeOrder.getUids().split(",");
             for (String uid : arrayUid) {
-                ajaxResult = reportService.editCoins(cmd,amount+give,Integer.parseInt(uid),reason);
+                ajaxResult = reportService.editCoins(cmd, amount + give, Integer.parseInt(uid), reason);
 
-                if("200".equals(String.valueOf(ajaxResult.get("code")))){
+                if ("200".equals(String.valueOf(ajaxResult.get("code")))) {
                     curr = Long.valueOf(String.valueOf(ajaxResult.get("data")));
                     currBig = new BigDecimal(curr).divide(b);
-                }else {
+                } else {
                     return error("请求游戏服失败");
                 }
                 rechargeOrder.setExCoins(bigGive.divide(b));
@@ -128,13 +130,13 @@ public class RechargeOrderController extends BaseController {
 
                 i = rechargeOrderService.addRechargeOrder(rechargeOrder);
             }
-        }else{
-            ajaxResult = reportService.editCoins(cmd,amount+give,rechargeOrder.getUid(),reason);
+        } else {
+            ajaxResult = reportService.editCoins(cmd, amount + give, rechargeOrder.getUid(), reason);
 
-            if("200".equals(String.valueOf(ajaxResult.get("code")))){
+            if ("200".equals(String.valueOf(ajaxResult.get("code")))) {
                 curr = Long.valueOf(String.valueOf(ajaxResult.get("data")));
                 currBig = new BigDecimal(curr).divide(b);
-            }else {
+            } else {
                 return error("请求游戏服失败");
             }
             rechargeOrder.setExCoins(bigGive.divide(b));
@@ -147,20 +149,21 @@ public class RechargeOrderController extends BaseController {
         AsyncManager.me().execute(new TimerTask() {
             @Override
             public void run() {
-                String cmd = "亲爱的玩家： 您好！ 您充值的"+rechargeOrder.getRechargeAmount()+"元，已到账，请注意查收。";
+                String cmd = "亲爱的玩家： 您好！ 您充值的" + rechargeOrder.getRechargeAmount() + "元，已到账，请注意查收。";
                 // 处理系统赠送多uid的情况
-                if("5".equals(rechargeOrder.getRechargeType())){
-                    reportService.sendEmail(cmd,2,rechargeOrder.getUids());
-                }else{
-                    reportService.sendEmail(cmd,2,String.valueOf(rechargeOrder.getUid()));
+                if ("5".equals(rechargeOrder.getRechargeType())) {
+                    reportService.sendEmail(cmd, 2, rechargeOrder.getUids());
+                } else {
+                    reportService.sendEmail(cmd, 2, String.valueOf(rechargeOrder.getUid()));
                 }
             }
         });
-        return i>0?success():error("充值成功，添加记录失败");
+        return i > 0 ? success() : error("充值成功，添加记录失败");
     }
 
     /**
      * 确认充值、取消充值
+     *
      * @param rechargeOrder
      */
     @PreAuthorize("@ss.hasPermi('system:finance:editRechargeOrder')")
@@ -168,7 +171,7 @@ public class RechargeOrderController extends BaseController {
     @Log(title = "银行卡充值页签-确认充值、取消充值", businessType = BusinessType.UPDATE)
     @PostMapping("/editRechargeOrder")
     public AjaxResult editRechargeOrder(@RequestBody RechargeOrder rechargeOrder) {
-        if("1".equals(rechargeOrder.getBankCardRechargeType())){// 确认充值
+        if ("1".equals(rechargeOrder.getBankCardRechargeType())) {// 确认充值
             BigDecimal b = new BigDecimal(10000);//乘以 一万
             Long amount = rechargeOrder.getRechargeAmount().multiply(b).longValue();//充值金额
             Integer rechargeGive = rechargeOrderService.selectRechargeGive(2);//赠送比例
@@ -177,11 +180,11 @@ public class RechargeOrderController extends BaseController {
             //请求 加金币
             BigDecimal currBig = new BigDecimal(0);//余额
             Long curr = 0l;
-            AjaxResult ajaxResult = reportService.editCoins("addcoins",amount+give,rechargeOrder.getUid(),100073);
-            if("200".equals(String.valueOf(ajaxResult.get("code")))){
+            AjaxResult ajaxResult = reportService.editCoins("addcoins", amount + give, rechargeOrder.getUid(), 100073);
+            if ("200".equals(String.valueOf(ajaxResult.get("code")))) {
                 curr = Long.valueOf(String.valueOf(ajaxResult.get("data")));
                 currBig = new BigDecimal(curr).divide(b);
-            }else {
+            } else {
                 return error("请求游戏服失败");
             }
             rechargeOrder.setExCoins(bigGive.divide(b));
@@ -193,19 +196,20 @@ public class RechargeOrderController extends BaseController {
             AsyncManager.me().execute(new TimerTask() {
                 @Override
                 public void run() {
-                    String cmd = "亲爱的玩家： 您好！ 您充值的"+rechargeOrder.getRechargeAmount()+"元，已到账，请注意查收。";
-                    reportService.sendEmail(cmd,2,String.valueOf(rechargeOrder.getUid()));
+                    String cmd = "亲爱的玩家： 您好！ 您充值的" + rechargeOrder.getRechargeAmount() + "元，已到账，请注意查收。";
+                    reportService.sendEmail(cmd, 2, String.valueOf(rechargeOrder.getUid()));
                 }
             });
-            return i>0?AjaxResult.success():AjaxResult.error("充值成功，修改记录失败");
+            return i > 0 ? AjaxResult.success() : AjaxResult.error("充值成功，修改记录失败");
         }
         rechargeOrder.setPaymentStatus("3");
         Integer i = rechargeOrderService.editRechargeOrder(rechargeOrder);
-        return i>0?AjaxResult.success():AjaxResult.error();
+        return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
     /**
      * 获取月卡金额
+     *
      * @param monthlyCardType 1金卡 2银卡
      */
     @PreAuthorize("@ss.hasPermi('system:finance:getRechargeAmount')")
@@ -219,8 +223,8 @@ public class RechargeOrderController extends BaseController {
     @ApiOperation(value = "导出充值")
     @Log(title = "导出充值", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(@RequestBody RechargeOrder rechargeOrder,HttpServletResponse response) throws IOException {
-        startOrder(rechargeOrder.getOrderByColumn(),rechargeOrder.getIsAsc());
+    public void export(@RequestBody RechargeOrder rechargeOrder, HttpServletResponse response) throws IOException {
+        startOrder(rechargeOrder.getOrderByColumn(), rechargeOrder.getIsAsc());
         List<RechargeOrder> list = rechargeOrderService.export(rechargeOrder);
 
         List<RechargeOrderExcel> rechargeOrderExcelList = new ArrayList<RechargeOrderExcel>();
@@ -271,48 +275,48 @@ public class RechargeOrderController extends BaseController {
         // 处理导出模板  1充值订单查询 2VIP充值 3银行卡充值 4月卡充值 5系统赠送
         ExcelUtil util;
         String fileName;
-        if("1".equals(rechargeOrder.getExcelType())){
+        if ("1".equals(rechargeOrder.getExcelType())) {
             util = new ExcelUtil<RechargeOrderExcel>(RechargeOrderExcel.class);
             fileName = "充值查询导出";
 
             response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
-            FileUtils.setAttachmentResponseHeader(response, fileName+".xlsx");
-            util.downloadExcel(rechargeOrderExcelList, fileName,response.getOutputStream());
-        } else if("2".equals(rechargeOrder.getExcelType())){
+            FileUtils.setAttachmentResponseHeader(response, fileName + ".xlsx");
+            util.downloadExcel(rechargeOrderExcelList, fileName, response.getOutputStream());
+        } else if ("2".equals(rechargeOrder.getExcelType())) {
             util = new ExcelUtil<VipRechargeExcel>(VipRechargeExcel.class);
             fileName = "VIP充值导出";
 
             response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
-            FileUtils.setAttachmentResponseHeader(response, fileName+".xlsx");
-            util.downloadExcel(vipRechargeExcelList, fileName,response.getOutputStream());
-        } else if("3".equals(rechargeOrder.getExcelType())){
+            FileUtils.setAttachmentResponseHeader(response, fileName + ".xlsx");
+            util.downloadExcel(vipRechargeExcelList, fileName, response.getOutputStream());
+        } else if ("3".equals(rechargeOrder.getExcelType())) {
             util = new ExcelUtil<BankCardRechargeExcel>(BankCardRechargeExcel.class);
             fileName = "银行卡充值导出";
 
             response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
-            FileUtils.setAttachmentResponseHeader(response, fileName+".xlsx");
-            util.downloadExcel(bankCardRechargeExcelList, fileName,response.getOutputStream());
-        } else if("4".equals(rechargeOrder.getExcelType())){
+            FileUtils.setAttachmentResponseHeader(response, fileName + ".xlsx");
+            util.downloadExcel(bankCardRechargeExcelList, fileName, response.getOutputStream());
+        } else if ("4".equals(rechargeOrder.getExcelType())) {
             util = new ExcelUtil<MonthlyCardRechargeExcel>(MonthlyCardRechargeExcel.class);
             fileName = "月卡充值充值导出";
 
             response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
-            FileUtils.setAttachmentResponseHeader(response, fileName+".xlsx");
-            util.downloadExcel(monthlyCardRechargeExcelList, fileName,response.getOutputStream());
-        } else if("5".equals(rechargeOrder.getExcelType())){
+            FileUtils.setAttachmentResponseHeader(response, fileName + ".xlsx");
+            util.downloadExcel(monthlyCardRechargeExcelList, fileName, response.getOutputStream());
+        } else if ("5".equals(rechargeOrder.getExcelType())) {
             util = new ExcelUtil<SendRechargeExcel>(SendRechargeExcel.class);
             fileName = "系统赠送导出";
 
             response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
-            FileUtils.setAttachmentResponseHeader(response, fileName+".xlsx");
-            util.downloadExcel(sendRechargeExcelList, fileName,response.getOutputStream());
-        }else{
+            FileUtils.setAttachmentResponseHeader(response, fileName + ".xlsx");
+            util.downloadExcel(sendRechargeExcelList, fileName, response.getOutputStream());
+        } else {
             util = new ExcelUtil<RechargeOrderExcel>(RechargeOrderExcel.class);
             fileName = "充值查询导出";
 
             response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
-            FileUtils.setAttachmentResponseHeader(response, fileName+".xlsx");
-            util.downloadExcel(rechargeOrderExcelList, fileName,response.getOutputStream());
+            FileUtils.setAttachmentResponseHeader(response, fileName + ".xlsx");
+            util.downloadExcel(rechargeOrderExcelList, fileName, response.getOutputStream());
         }
     }
 }

@@ -21,6 +21,7 @@ import java.util.List;
 
 /**
  * 跑马灯配置
+ *
  * @author sieGuang 2021/09/21
  */
 @RestController
@@ -42,7 +43,7 @@ public class HorseRaceLampController extends BaseController {
         horseRaceLamp.setCreateBy(SecurityUtils.getUsername());
         horseRaceLamp.setTid(ManagerConfig.getTid());
         Integer i = horseRaceLampService.addHorseRaceLamp(horseRaceLamp);
-        return i>0?AjaxResult.success():AjaxResult.error();
+        return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
     /**
@@ -52,10 +53,10 @@ public class HorseRaceLampController extends BaseController {
     @ApiOperation(value = "查询跑马灯配置列表")
     @PostMapping("/listHorseRaceLamp")
     public AjaxResult listHorseRaceLamp(@RequestBody HorseRaceLamp horseRaceLamp) {
-        startPage(horseRaceLamp.getPage(),horseRaceLamp.getSize(),horseRaceLamp.getOrderByColumn(),horseRaceLamp.getIsAsc());
+        startPage(horseRaceLamp.getPage(), horseRaceLamp.getSize(), horseRaceLamp.getOrderByColumn(), horseRaceLamp.getIsAsc());
         horseRaceLamp.setTid(ManagerConfig.getTid());
         List list = horseRaceLampService.listHorseRaceLamp(horseRaceLamp);
-        return AjaxResult.success(getDataTable(list,horseRaceLamp.getPage(),horseRaceLamp.getSize()));
+        return AjaxResult.success(getDataTable(list, horseRaceLamp.getPage(), horseRaceLamp.getSize()));
     }
 
     /**
@@ -69,7 +70,7 @@ public class HorseRaceLampController extends BaseController {
         horseRaceLamp.setTid(ManagerConfig.getTid());
         horseRaceLamp.setUpdateBy(SecurityUtils.getUsername());
         Integer i = horseRaceLampService.editHorseRaceLamp(horseRaceLamp);
-        return i>0?AjaxResult.success():AjaxResult.error();
+        return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
     /**
@@ -81,7 +82,7 @@ public class HorseRaceLampController extends BaseController {
     @PostMapping("/delHorseRaceLamp")
     public AjaxResult delHorseRaceLamp(String id) {
         Integer i = horseRaceLampService.delHorseRaceLamp(id);
-        return i>0?AjaxResult.success():AjaxResult.error();
+        return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
 }

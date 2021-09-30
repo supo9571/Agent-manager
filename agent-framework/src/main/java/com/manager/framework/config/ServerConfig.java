@@ -10,12 +10,11 @@ import java.net.UnknownHostException;
 
 /**
  * 服务相关配置
- * 
+ *
  * @author marvin
  */
 @Component
-public class ServerConfig
-{
+public class ServerConfig {
 
     @Value("${server.port}")
     private int serverPort;
@@ -27,23 +26,21 @@ public class ServerConfig
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
-        return address.getHostAddress() +":"+this.serverPort;
+        return address.getHostAddress() + ":" + this.serverPort;
     }
 
 
     /**
      * 获取完整的请求路径，包括：域名，端口，上下文访问路径
-     * 
+     *
      * @return 服务地址
      */
-    public String getUrl()
-    {
+    public String getUrl() {
         HttpServletRequest request = ServletUtils.getRequest();
         return getDomain(request);
     }
 
-    public static String getDomain(HttpServletRequest request)
-    {
+    public static String getDomain(HttpServletRequest request) {
         StringBuffer url = request.getRequestURL();
         String contextPath = request.getServletContext().getContextPath();
         return url.delete(url.length() - request.getRequestURI().length(), url.length()).append(contextPath).toString();

@@ -7,37 +7,37 @@
     <select id="getExchangeEaaList" parameterType="com.manager.common.core.domain.entity.ExchangeEaa"
             resultType="com.manager.common.core.domain.entity.ExchangeEaa">
         SELECT
-            ceo.id as id,
-            ceo.tid as tid,
-            ceo.uid as uid,
-            ceo.uname as uname,
-            ceo.withdraw_order_number as withdrawOrderNumber,
-            ceo.third_party_order_number as thirdPartyOrderNumber,
-            ceo.channel as channel,
-            ceo.withdraw_money as withdrawMoney,
-            ceo.transfer_amount as transferAmount,
-            ceo.poundage as poundage,
-            ceo.withdraw_number as withdrawNumber,
-            ceo.history_withdraw_money as historyWithdrawMoney,
-            ceo.accumulate_water as accumulateWater,
-            ceo.accumulate_recharge as accumulateRecharge,
-            ceo.accumulate_excoins as accumulateExcoins,
-            ceo.recharge_excoins as rechargeExcoins,
-            ceo.activity_rewards as activityRewards,
-            ceo.off_line_excoins as offLineExcoins,
-            ceo.register_ip as registerIp,
-            ceo.withdraw_ip as withdrawIp,
-            ceo.withdraw_type as withdrawType,
-            ceo.transfer_type as transferType,
-            ceo.exaa_status as exaaStatus,
-            ceo.remark as remark,
-            ceo.create_time as createTime,
-            ceo.update_time as updateTime,
-            ceo.update_by as updateBy,
-            ue.account as withdrawAccount,
-            ue.name as withdrawName
+        ceo.id as id,
+        ceo.tid as tid,
+        ceo.uid as uid,
+        ceo.uname as uname,
+        ceo.withdraw_order_number as withdrawOrderNumber,
+        ceo.third_party_order_number as thirdPartyOrderNumber,
+        ceo.channel as channel,
+        ceo.withdraw_money as withdrawMoney,
+        ceo.transfer_amount as transferAmount,
+        ceo.poundage as poundage,
+        ceo.withdraw_number as withdrawNumber,
+        ceo.history_withdraw_money as historyWithdrawMoney,
+        ceo.accumulate_water as accumulateWater,
+        ceo.accumulate_recharge as accumulateRecharge,
+        ceo.accumulate_excoins as accumulateExcoins,
+        ceo.recharge_excoins as rechargeExcoins,
+        ceo.activity_rewards as activityRewards,
+        ceo.off_line_excoins as offLineExcoins,
+        ceo.register_ip as registerIp,
+        ceo.withdraw_ip as withdrawIp,
+        ceo.withdraw_type as withdrawType,
+        ceo.transfer_type as transferType,
+        ceo.exaa_status as exaaStatus,
+        ceo.remark as remark,
+        ceo.create_time as createTime,
+        ceo.update_time as updateTime,
+        ceo.update_by as updateBy,
+        ue.account as withdrawAccount,
+        ue.name as withdrawName
         from
-            config_exchange_order ceo left join user_exchange ue
+        config_exchange_order ceo left join user_exchange ue
         on (ceo.uid = ue.uid and ceo.withdraw_type = ue.type)
         where 1 = 1
         and ceo.tid = #{tid}
@@ -67,11 +67,11 @@
 
     <select id="getAddMosaicPlayerList" resultType="java.util.Map">
         SELECT
-            dr.uid as uid,
-            dr.total_water as accumulateWater,
-            dr.total_give as accumulateExcoins
+        dr.uid as uid,
+        dr.total_water as accumulateWater,
+        dr.total_give as accumulateExcoins
         FROM
-            data_register dr
+        data_register dr
         where 1 = 1
         <if test="uid !=null and uid !=0">
             and dr.uid = #{uid}
@@ -81,20 +81,18 @@
     <update id="editExchangeEaaList" parameterType="com.manager.common.core.domain.entity.ExchangeEaa">
         update config_exchange_order
         <set>
-            <if test="remark!=null and remark!=''"> remark = #{remark},</if>
-            <if test="exaaStatus!=null and exaaStatus!=''"> exaa_status = #{exaaStatus},</if>
+            <if test="remark!=null and remark!=''">remark = #{remark},</if>
+            <if test="exaaStatus!=null and exaaStatus!=''">exaa_status = #{exaaStatus},</if>
             update_time = sysdate()
         </set>
         where id = #{id} and tid=#{tid}
     </update>
 
     <select id="getTransferMode" resultType="java.util.Map">
-        SELECT
-            ctm.id as id,
-            ctm.transfer_name as transferName,
-            ctm.transfer_code as transferCode
-        from
-            config_transfer_mode ctm
+        SELECT ctm.id            as id,
+               ctm.transfer_name as transferName,
+               ctm.transfer_code as transferCode
+        from config_transfer_mode ctm
     </select>
 
 </mapper>

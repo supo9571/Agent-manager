@@ -12,6 +12,7 @@ import java.util.Date;
 
 /**
  * 提现审批
+ *
  * @author sieGuang 2021/09/16
  */
 @Data
@@ -98,10 +99,10 @@ public class ExchangeEaa extends BaseEntity {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
-    @Excel(name = "提现类型",readConverterExp = "0=支付宝,1=银行卡")
+    @Excel(name = "提现类型", readConverterExp = "0=支付宝,1=银行卡")
     @ApiModelProperty("提现类型 0支付宝 1银行卡")
     private String withdrawType;
-    @Excel(name = "打款方式",readConverterExp = "1=财务打款,2=讯宝,3=NP,4=聚赢")
+    @Excel(name = "打款方式", readConverterExp = "1=财务打款,2=讯宝,3=NP,4=聚赢")
     @ApiModelProperty("打款方式 1财务打款 2讯宝 3NP 4聚赢")
     private String transferType;
 

@@ -106,8 +106,8 @@ public class BaseEntity implements Serializable {
     @ApiModelProperty(hidden = true)
     private String endms;
 
-    public String getBeginms(){
-        if(StringUtils.isNotBlank(this.beginTime)) {
+    public String getBeginms() {
+        if (StringUtils.isNotBlank(this.beginTime)) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             try {
                 return sdf.parse(this.beginTime).getTime() + "";
@@ -118,8 +118,8 @@ public class BaseEntity implements Serializable {
         return beginms;
     }
 
-    public String getEndms(){
-        if(StringUtils.isNotBlank(this.endTime)) {
+    public String getEndms() {
+        if (StringUtils.isNotBlank(this.endTime)) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             try {
                 return sdf.parse(this.endTime).getTime() + "";

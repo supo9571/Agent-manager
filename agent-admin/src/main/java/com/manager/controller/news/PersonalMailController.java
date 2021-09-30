@@ -21,6 +21,7 @@ import java.util.List;
 
 /**
  * 个人邮箱配置
+ *
  * @author sieGuang 2021/09/20
  */
 @RestController
@@ -42,7 +43,7 @@ public class PersonalMailController extends BaseController {
         personalMail.setCreateBy(SecurityUtils.getUsername());
         personalMail.setTid(ManagerConfig.getTid());
         Integer i = personalMailService.addPersonalMail(personalMail);
-        return i>0?AjaxResult.success():AjaxResult.error();
+        return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
     /**
@@ -52,10 +53,10 @@ public class PersonalMailController extends BaseController {
     @ApiOperation(value = "查询个人邮箱列表")
     @PostMapping("/listPersonalMail")
     public AjaxResult listPersonalMail(@RequestBody PersonalMail personalMail) {
-        startPage(personalMail.getPage(),personalMail.getSize(),personalMail.getOrderByColumn(),personalMail.getIsAsc());
+        startPage(personalMail.getPage(), personalMail.getSize(), personalMail.getOrderByColumn(), personalMail.getIsAsc());
         personalMail.setTid(ManagerConfig.getTid());
         List list = personalMailService.listPersonalMail(personalMail);
-        return AjaxResult.success(getDataTable(list,personalMail.getPage(),personalMail.getSize()));
+        return AjaxResult.success(getDataTable(list, personalMail.getPage(), personalMail.getSize()));
     }
 
     /**
@@ -69,7 +70,7 @@ public class PersonalMailController extends BaseController {
         personalMail.setTid(ManagerConfig.getTid());
         personalMail.setUpdateBy(SecurityUtils.getUsername());
         Integer i = personalMailService.editPersonalMail(personalMail);
-        return i>0?AjaxResult.success():AjaxResult.error();
+        return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
     /**
@@ -80,9 +81,9 @@ public class PersonalMailController extends BaseController {
     @ApiOperation(value = "下线或撤回(type 1下线 2测回)")
     @Log(title = "下线或撤回(type 1下线 2测回)", businessType = BusinessType.UPDATE)
     @PostMapping("/offlinePersonalMail")
-    public AjaxResult offlinePersonalMail(Integer id,Integer type) {
-        Integer i = personalMailService.offlinePersonalMail(id,type);
-        return i>0?AjaxResult.success():AjaxResult.error();
+    public AjaxResult offlinePersonalMail(Integer id, Integer type) {
+        Integer i = personalMailService.offlinePersonalMail(id, type);
+        return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
     /**
@@ -94,7 +95,7 @@ public class PersonalMailController extends BaseController {
     @PostMapping("/delPersonalMail")
     public AjaxResult delPersonalMail(String id) {
         Integer i = personalMailService.delPersonalMail(id);
-        return i>0?AjaxResult.success():AjaxResult.error();
+        return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
 }

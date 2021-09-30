@@ -8,5 +8,4 @@ package com.manager.system.service;
 public interface AgentGeneralChannelService {
 
 
-
 }

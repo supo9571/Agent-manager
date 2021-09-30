@@ -1,276 +1,283 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.manager.system.mapper.SysTenantMapper" >
+<mapper namespace="com.manager.system.mapper.SysTenantMapper">
 
-  <resultMap id="BaseResultMap" type="com.manager.common.core.domain.entity.SysTenant" >
-    <id column="t_id" property="tId" jdbcType="VARCHAR" />
-    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
-    <result column="ancestors" property="ancestors" jdbcType="VARCHAR" />
-    <result column="t_name" property="tName" jdbcType="VARCHAR" />
-    <result column="status" property="status" jdbcType="CHAR" />
-    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
-    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-    <result column="t_type" property="tType" jdbcType="SMALLINT" />
-    <result column="tenant" property="tenant" jdbcType="BIGINT" />
-    <result column="umeng_url" jdbcType="VARCHAR" property="umengUrl" />
-    <result column="channel_url" jdbcType="VARCHAR" property="channelUrl" />
-    <result column="remark" jdbcType="VARCHAR" property="remark" />
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.manager.common.core.domain.entity.SysTenant">
+        <id column="t_id" property="tId" jdbcType="VARCHAR"/>
+        <result column="parent_id" property="parentId" jdbcType="VARCHAR"/>
+        <result column="ancestors" property="ancestors" jdbcType="VARCHAR"/>
+        <result column="t_name" property="tName" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="CHAR"/>
+        <result column="del_flag" property="delFlag" jdbcType="CHAR"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="t_type" property="tType" jdbcType="SMALLINT"/>
+        <result column="tenant" property="tenant" jdbcType="BIGINT"/>
+        <result column="umeng_url" jdbcType="VARCHAR" property="umengUrl"/>
+        <result column="channel_url" jdbcType="VARCHAR" property="channelUrl"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+    </resultMap>
 
-  <select id="selectTenants" resultType="java.util.Map">
-    SELECT t_id tid,t_name tName FROM sys_tenant
-    WHERE t_type = #{tType}
-    <if test="tid!=null and tid != '' ">
-      and parent_id = #{tid}
-    </if>
-  </select>
+    <select id="selectTenants" resultType="java.util.Map">
+        SELECT t_id tid,t_name tName FROM sys_tenant
+        WHERE t_type = #{tType}
+        <if test="tid!=null and tid != '' ">
+            and parent_id = #{tid}
+        </if>
+    </select>
 
-  <select id="selectAllTenant" resultType="java.util.Map">
-        SELECT t_id tid,t_name tName,parent_id parentId FROM sys_tenant
-  </select>
+    <select id="selectAllTenant" resultType="java.util.Map">
+        SELECT t_id tid, t_name tName, parent_id parentId
+        FROM sys_tenant
+    </select>
 
-  <select id="selectUserList" resultType="java.util.Map">
-        SELECT nick_name nickName,user_name userName FROM sys_user where t_id = #{tid} limit 5
-  </select>
+    <select id="selectUserList" resultType="java.util.Map">
+        SELECT nick_name nickName, user_name userName
+        FROM sys_user
+        where t_id = #{tid} limit 5
+    </select>
 
-  <select id="list" parameterType="com.manager.common.core.domain.entity.SysTenant" resultType="java.util.Map">
-    select  t_id tid,t_name tName,remark,create_time as createTime
-    from sys_tenant
-    <where>
-      <if test="agentId != null  and agentId != ''" >
-        t_id = #{agentId}
-      </if>
-      <if test="tType != null" >
-        and t_type = #{tType}
-      </if>
+    <select id="list" parameterType="com.manager.common.core.domain.entity.SysTenant" resultType="java.util.Map">
+        select t_id tid,t_name tName,remark,create_time as createTime
+        from sys_tenant
+        <where>
+            <if test="agentId != null  and agentId != ''">
+                t_id = #{agentId}
+            </if>
+            <if test="tType != null">
+                and t_type = #{tType}
+            </if>
 
-      <if test="beginTime != null and beginTime != ''"><!-- 开始时间检索 -->
-        and date_format(create_time,'%Y-%m-%d %H:%i-%s') &gt;= date_format(#{beginTime},'%Y-%m-%d %H:%i-%s')
-      </if>
-      <if test="endTime != null and endTime != ''"><!-- 结束时间检索 -->
-        and date_format(create_time,'%Y-%m-%d %H:%i-%s') &lt;= date_format(#{endTime},'%Y-%m-%d %H:%i-%s')
-      </if>
-    </where>
-    order by create_time desc
-  </select>
+            <if test="beginTime != null and beginTime != ''"><!-- 开始时间检索 -->
+                and date_format(create_time,'%Y-%m-%d %H:%i-%s') &gt;= date_format(#{beginTime},'%Y-%m-%d %H:%i-%s')
+            </if>
+            <if test="endTime != null and endTime != ''"><!-- 结束时间检索 -->
+                and date_format(create_time,'%Y-%m-%d %H:%i-%s') &lt;= date_format(#{endTime},'%Y-%m-%d %H:%i-%s')
+            </if>
+        </where>
+        order by create_time desc
+    </select>
 
-  <select id="channelList" parameterType="com.manager.common.core.domain.entity.SysTenant" resultType="java.util.Map">
-    select  t_id tid,parent_id as parentId,t_name tName,umeng_url as umengUrl, channel_url as channelUrl, remark,create_time as createTime
-    from sys_tenant
-    <where>
-      <if test="agentId != null  and agentId != ''" >
-        t_id = #{agentId}
-      </if>
-      <if test="parentId != null  and parentId != ''" >
-        and parent_id = #{parentId}
-      </if>
-      <if test="tType != null" >
-        and t_type = #{tType}
-      </if>
-      <if test="tName != null and tName != ''" >
-        and t_name like concat('%',#{tName},'%')
-      </if>
-      <if test="beginTime != null and beginTime != ''"><!-- 开始时间检索 -->
-        and date_format(create_time,'%Y-%m-%d %H:%i-%s') &gt;= date_format(#{beginTime},'%Y-%m-%d %H:%i-%s')
-      </if>
-      <if test="endTime != null and endTime != ''"><!-- 结束时间检索 -->
-        and date_format(create_time,'%Y-%m-%d %H:%i-%s') &lt;= date_format(#{endTime},'%Y-%m-%d %H:%i-%s')
-      </if>
-    </where>
-    order by create_time desc
-  </select>
+    <select id="channelList" parameterType="com.manager.common.core.domain.entity.SysTenant" resultType="java.util.Map">
+        select t_id tid,parent_id as parentId,t_name tName,umeng_url as umengUrl, channel_url as channelUrl,
+        remark,create_time as createTime
+        from sys_tenant
+        <where>
+            <if test="agentId != null  and agentId != ''">
+                t_id = #{agentId}
+            </if>
+            <if test="parentId != null  and parentId != ''">
+                and parent_id = #{parentId}
+            </if>
+            <if test="tType != null">
+                and t_type = #{tType}
+            </if>
+            <if test="tName != null and tName != ''">
+                and t_name like concat('%',#{tName},'%')
+            </if>
+            <if test="beginTime != null and beginTime != ''"><!-- 开始时间检索 -->
+                and date_format(create_time,'%Y-%m-%d %H:%i-%s') &gt;= date_format(#{beginTime},'%Y-%m-%d %H:%i-%s')
+            </if>
+            <if test="endTime != null and endTime != ''"><!-- 结束时间检索 -->
+                and date_format(create_time,'%Y-%m-%d %H:%i-%s') &lt;= date_format(#{endTime},'%Y-%m-%d %H:%i-%s')
+            </if>
+        </where>
+        order by create_time desc
+    </select>
 
-  <sql id="Base_Column_List" >
-    t_id, parent_id, ancestors, t_name, status, del_flag, create_by, create_time, update_by, 
+    <sql id="Base_Column_List">
+        t_id
+        , parent_id, ancestors, t_name, status, del_flag, create_by, create_time, update_by,
     update_time, t_type, tenant, umeng_url, channel_url, remark
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select
-    <include refid="Base_Column_List" />
-    from sys_tenant
-    where t_id = #{tId,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from sys_tenant
-    where t_id = #{tId,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="com.manager.common.core.domain.entity.SysTenant" >
-    insert into sys_tenant (t_id, parent_id, ancestors, 
-      t_name, status, del_flag, create_by, 
-      create_time, update_by, update_time, 
-      t_type, tenant, umeng_url, 
-      channel_url, remark)
-    values (#{tId,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{ancestors,jdbcType=VARCHAR}, 
-      #{tName,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{delFlag,jdbcType=CHAR}, #{createBy,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{tType,jdbcType=SMALLINT}, #{tenant,jdbcType=BIGINT}, #{umengUrl,jdbcType=VARCHAR},
-      #{channelUrl,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.manager.common.core.domain.entity.SysTenant" >
-    insert into sys_tenant
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="tId != null" >
-        t_id,
-      </if>
-      <if test="parentId != null" >
-        parent_id,
-      </if>
-      <if test="ancestors != null" >
-        ancestors,
-      </if>
-      <if test="tName != null" >
-        t_name,
-      </if>
-      <if test="status != null" >
-        status,
-      </if>
-      <if test="delFlag != null" >
-        del_flag,
-      </if>
-      <if test="createBy != null" >
-        create_by,
-      </if>
-      <if test="createTime != null" >
-        create_time,
-      </if>
-      <if test="updateBy != null" >
-        update_by,
-      </if>
-      <if test="updateTime != null" >
-        update_time,
-      </if>
-      <if test="tType != null" >
-        t_type,
-      </if>
-      <if test="tenant != null" >
-        tenant,
-      </if>
-      <if test="umengUrl != null" >
-        umeng_url,
-      </if>
-      <if test="channelUrl != null" >
-        channel_url,
-      </if>
-      <if test="remark != null" >
-        remark,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="tId != null" >
-        #{tId,jdbcType=VARCHAR},
-      </if>
-      <if test="parentId != null" >
-        #{parentId,jdbcType=VARCHAR},
-      </if>
-      <if test="ancestors != null" >
-        #{ancestors,jdbcType=VARCHAR},
-      </if>
-      <if test="tName != null" >
-        #{tName,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null" >
-        #{status,jdbcType=CHAR},
-      </if>
-      <if test="delFlag != null" >
-        #{delFlag,jdbcType=CHAR},
-      </if>
-      <if test="createBy != null" >
-        #{createBy,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateBy != null" >
-        #{updateBy,jdbcType=VARCHAR},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="tType != null" >
-        #{tType,jdbcType=SMALLINT},
-      </if>
-      <if test="tenant != null" >
-        #{tenant,jdbcType=BIGINT},
-      </if>
-      <if test="umengUrl != null" >
-        #{umengUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="channelUrl != null" >
-        #{channelUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="remark != null" >
-        #{remark,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.manager.common.core.domain.entity.SysTenant" >
-    update sys_tenant
-    <set >
-      <if test="parentId != null" >
-        parent_id = #{parentId,jdbcType=VARCHAR},
-      </if>
-      <if test="ancestors != null" >
-        ancestors = #{ancestors,jdbcType=VARCHAR},
-      </if>
-      <if test="tName != null" >
-        t_name = #{tName,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null" >
-        status = #{status,jdbcType=CHAR},
-      </if>
-      <if test="delFlag != null" >
-        del_flag = #{delFlag,jdbcType=CHAR},
-      </if>
-      <if test="createBy != null" >
-        create_by = #{createBy,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateBy != null" >
-        update_by = #{updateBy,jdbcType=VARCHAR},
-      </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="tType != null" >
-        t_type = #{tType,jdbcType=SMALLINT},
-      </if>
-      <if test="tenant != null" >
-        tenant = #{tenant,jdbcType=BIGINT},
-      </if>
-      <if test="umengUrl != null" >
-        umeng_url = #{umengUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="channelUrl != null" >
-        channel_url = #{channelUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="remark != null" >
-        remark = #{remark,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where t_id = #{tId,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.manager.common.core.domain.entity.SysTenant" >
-    update sys_tenant
-    set parent_id = #{parentId,jdbcType=VARCHAR},
-      ancestors = #{ancestors,jdbcType=VARCHAR},
-      t_name = #{tName,jdbcType=VARCHAR},
-      status = #{status,jdbcType=CHAR},
-      del_flag = #{delFlag,jdbcType=CHAR},
-      create_by = #{createBy,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_by = #{updateBy,jdbcType=VARCHAR},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      t_type = #{tType,jdbcType=SMALLINT},
-      tenant = #{tenant,jdbcType=BIGINT},
-      umeng_url = #{umengUrl,jdbcType=VARCHAR},
-      channel_url = #{channelUrl,jdbcType=VARCHAR},
-      remark = #{remark,jdbcType=VARCHAR}
-    where t_id = #{tId,jdbcType=VARCHAR}
-  </update>
-  
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_tenant
+        where t_id = #{tId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete
+        from sys_tenant
+        where t_id = #{tId,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.manager.common.core.domain.entity.SysTenant">
+        insert into sys_tenant (t_id, parent_id, ancestors,
+                                t_name, status, del_flag, create_by,
+                                create_time, update_by, update_time,
+                                t_type, tenant, umeng_url,
+                                channel_url, remark)
+        values (#{tId,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{ancestors,jdbcType=VARCHAR},
+                #{tName,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{delFlag,jdbcType=CHAR},
+                #{createBy,jdbcType=VARCHAR},
+                #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP},
+                #{tType,jdbcType=SMALLINT}, #{tenant,jdbcType=BIGINT}, #{umengUrl,jdbcType=VARCHAR},
+                #{channelUrl,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.manager.common.core.domain.entity.SysTenant">
+        insert into sys_tenant
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="tId != null">
+                t_id,
+            </if>
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="ancestors != null">
+                ancestors,
+            </if>
+            <if test="tName != null">
+                t_name,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="tType != null">
+                t_type,
+            </if>
+            <if test="tenant != null">
+                tenant,
+            </if>
+            <if test="umengUrl != null">
+                umeng_url,
+            </if>
+            <if test="channelUrl != null">
+                channel_url,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="tId != null">
+                #{tId,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=VARCHAR},
+            </if>
+            <if test="ancestors != null">
+                #{ancestors,jdbcType=VARCHAR},
+            </if>
+            <if test="tName != null">
+                #{tName,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=CHAR},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=CHAR},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="tType != null">
+                #{tType,jdbcType=SMALLINT},
+            </if>
+            <if test="tenant != null">
+                #{tenant,jdbcType=BIGINT},
+            </if>
+            <if test="umengUrl != null">
+                #{umengUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="channelUrl != null">
+                #{channelUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.manager.common.core.domain.entity.SysTenant">
+        update sys_tenant
+        <set>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=VARCHAR},
+            </if>
+            <if test="ancestors != null">
+                ancestors = #{ancestors,jdbcType=VARCHAR},
+            </if>
+            <if test="tName != null">
+                t_name = #{tName,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=CHAR},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=CHAR},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="tType != null">
+                t_type = #{tType,jdbcType=SMALLINT},
+            </if>
+            <if test="tenant != null">
+                tenant = #{tenant,jdbcType=BIGINT},
+            </if>
+            <if test="umengUrl != null">
+                umeng_url = #{umengUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="channelUrl != null">
+                channel_url = #{channelUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where t_id = #{tId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.manager.common.core.domain.entity.SysTenant">
+        update sys_tenant
+        set parent_id   = #{parentId,jdbcType=VARCHAR},
+            ancestors   = #{ancestors,jdbcType=VARCHAR},
+            t_name      = #{tName,jdbcType=VARCHAR},
+            status      = #{status,jdbcType=CHAR},
+            del_flag    = #{delFlag,jdbcType=CHAR},
+            create_by   = #{createBy,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_by   = #{updateBy,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            t_type      = #{tType,jdbcType=SMALLINT},
+            tenant      = #{tenant,jdbcType=BIGINT},
+            umeng_url   = #{umengUrl,jdbcType=VARCHAR},
+            channel_url = #{channelUrl,jdbcType=VARCHAR},
+            remark      = #{remark,jdbcType=VARCHAR}
+        where t_id = #{tId,jdbcType=VARCHAR}
+    </update>
+
 </mapper>

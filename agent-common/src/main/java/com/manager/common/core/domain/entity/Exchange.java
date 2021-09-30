@@ -6,6 +6,7 @@ import lombok.Data;
 
 /**
  * 提现信息管理
+ *
  * @author sieGuang 2021/09/07
  */
 @Data

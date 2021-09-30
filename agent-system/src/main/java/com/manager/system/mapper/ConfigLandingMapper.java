@@ -15,7 +15,7 @@ import java.util.Map;
 @Mapper
 public interface ConfigLandingMapper {
 
-    Map getConfigLandingInfo(@Param("tid")Integer tid);
+    Map getConfigLandingInfo(@Param("tid") Integer tid);
 
     @Select("select id,tid from config_landing where id = #{id}")
     ConfigLanding getById(@Param("id") Integer id);

@@ -5,51 +5,48 @@
 <mapper namespace="com.manager.system.mapper.ConsumerMapper">
 
     <select id="getConsumerList" resultType="java.util.Map">
-        SELECT
-            id as id,
-            accord_addr as accordAddr,
-            status as status,
-            open_type as openType,
-            live_url as liveUrl,
-            info as info,
-            updated_at as updatedAt
-        FROM
-            config_consumer
+        SELECT id          as id,
+               accord_addr as accordAddr,
+               status      as status,
+               open_type   as openType,
+               live_url    as liveUrl,
+               info        as info,
+               updated_at  as updatedAt
+        FROM config_consumer
         where tid = #{tid}
     </select>
 
     <update id="editConsumer" parameterType="com.manager.common.core.domain.entity.Consumer">
         update config_consumer
         <set>
-            <if test="accordAddr!=null and accordAddr!=''"> accord_addr = #{accordAddr},</if>
-            <if test="status!=null and status!=''"> status = #{status},</if>
-            <if test="openType!=null and openType!=''"> open_type = #{openType},</if>
-            <if test="liveUrl!=null and liveUrl!=''"> live_url = #{liveUrl},</if>
-            <if test="info!=null and info!=''"> info = #{info},</if>
+            <if test="accordAddr!=null and accordAddr!=''">accord_addr = #{accordAddr},</if>
+            <if test="status!=null and status!=''">status = #{status},</if>
+            <if test="openType!=null and openType!=''">open_type = #{openType},</if>
+            <if test="liveUrl!=null and liveUrl!=''">live_url = #{liveUrl},</if>
+            <if test="info!=null and info!=''">info = #{info},</if>
             updated_at = sysdate()
         </set>
         where id = #{id}
     </update>
 
     <insert id="addConsumer" parameterType="com.manager.common.core.domain.entity.Consumer">
-        insert into
-            config_consumer(
-            tid,
-            status,
-            accord_addr,
-            open_type,
-            live_url,
-            info,
-            create_time
+        insert into config_consumer(tid,
+                                    status,
+                                    accord_addr,
+                                    open_type,
+                                    live_url,
+                                    info,
+                                    create_time)
+        values (#{tid};
+        #{status}
+        ,
+        #{accordAddr},
+        #{openType},
+        #{liveUrl},
+        #{info},
+        sysdate
+        (
         )
-        values(
-            #{tid};
-            #{status},
-            #{accordAddr},
-            #{openType},
-            #{liveUrl},
-            #{info},
-            sysdate()
         )
     </insert>
 

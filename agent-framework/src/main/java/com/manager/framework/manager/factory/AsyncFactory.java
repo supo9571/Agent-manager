@@ -63,7 +63,7 @@ public class AsyncFactory {
                 logininfor.setBrowser(browser);
                 logininfor.setOs(os);
                 logininfor.setMsg(message);
-                logininfor.setTid(ManagerConfig.getTid()+"");
+                logininfor.setTid(ManagerConfig.getTid() + "");
                 // 日志状态
                 if (StringUtils.equalsAny(status, Constants.LOGIN_SUCCESS, Constants.LOGOUT, Constants.REGISTER)) {
                     logininfor.setStatus(Constants.SUCCESS);

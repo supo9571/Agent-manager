@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 
 /**
  * 充值订单查询
+ *
  * @author sieGuang 2021/09/10
  */
 @Service
@@ -41,25 +42,25 @@ public class RechargeOrderServiceImpl implements RechargeOrderService {
         Map result = new HashMap();
         // 设置分页数据
         PageHelper.startPage(rechargeOrder.getPage(), rechargeOrder.getSize(),
-                rechargeOrder.getOrderByColumn()+" "+rechargeOrder.getIsAsc());
+                rechargeOrder.getOrderByColumn() + " " + rechargeOrder.getIsAsc());
 
         List<RechargeOrder> list = rechargeOrderMapper.getRechargeOrderList(rechargeOrder);
 
         PageInfo<RechargeOrder> pageInfo = new PageInfo<RechargeOrder>(list);
-        result.put("page",rechargeOrder.getPage());
-        result.put("size",rechargeOrder.getSize());
-        result.put("total",pageInfo.getTotal());
+        result.put("page", rechargeOrder.getPage());
+        result.put("size", rechargeOrder.getSize());
+        result.put("total", pageInfo.getTotal());
 
         // 只处理分页的数据
         list = pageInfo.getList();
 
         // 左下角的哪几个字段
-        if(CollectionUtils.isNotEmpty(list)){
+        if (CollectionUtils.isNotEmpty(list)) {
 
             rechargeNum = list.size();
 
             List<RechargeOrder> temp1 = list.stream().filter(f -> "1".equals(f.getPaymentStatus())).collect(Collectors.toList());
-            if(CollectionUtils.isNotEmpty(temp1)){
+            if (CollectionUtils.isNotEmpty(temp1)) {
                 rechargeRechargeNum = temp1.size();
             }
 
@@ -69,7 +70,7 @@ public class RechargeOrderServiceImpl implements RechargeOrderService {
             }
 
             // 查询系统赠送页面的多放回几个字段
-            if(rechargeOrder != null && ("5".equals(rechargeOrder.getRechargeType()))){
+            if (rechargeOrder != null && ("5".equals(rechargeOrder.getRechargeType()))) {
 
                 // 人工充值次数
                 Integer artificialRechargeNum = 0;
@@ -89,16 +90,16 @@ public class RechargeOrderServiceImpl implements RechargeOrderService {
                 BigDecimal jackpotDeductionAmount = new BigDecimal(0);
 
                 for (RechargeOrder order : list) {
-                    if("1".equals(order.getOperateType())){
+                    if ("1".equals(order.getOperateType())) {
                         artificialRechargeNum++;
                         artificialRechargeAmount.add(order.getExCoins());
-                    }else if("2".equals(order.getOperateType())){
+                    } else if ("2".equals(order.getOperateType())) {
                         rechargeDeductionNum++;
                         rechargeDeductionAmount.add(order.getExCoins());
-                    }else if("3".equals(order.getOperateType())){
+                    } else if ("3".equals(order.getOperateType())) {
                         jackpotRechargeNum++;
                         jackpotRechargeAmount.add(order.getExCoins());
-                    }else if("4".equals(order.getOperateType())){
+                    } else if ("4".equals(order.getOperateType())) {
                         jackpotDeductionNum++;
                         jackpotDeductionAmount.add(order.getExCoins());
                     }
@@ -114,10 +115,10 @@ public class RechargeOrderServiceImpl implements RechargeOrderService {
             }
         }
 
-        result.put("rows",list);
-        result.put("rechargeNum",rechargeNum);
-        result.put("rechargeRechargeNum",rechargeRechargeNum);
-        result.put("rechargeRechargeAmount",rechargeRechargeAmount);
+        result.put("rows", list);
+        result.put("rechargeNum", rechargeNum);
+        result.put("rechargeRechargeNum", rechargeRechargeNum);
+        result.put("rechargeRechargeAmount", rechargeRechargeAmount);
         return result;
     }
 
@@ -136,8 +137,8 @@ public class RechargeOrderServiceImpl implements RechargeOrderService {
 
     @Override
     public Integer selectRechargeGive(int i) {
-        if(i == 1 || i == 2){
-           return rechargeOrderMapper.selectRechargeGive(i);
+        if (i == 1 || i == 2) {
+            return rechargeOrderMapper.selectRechargeGive(i);
         }
         return 0;
     }

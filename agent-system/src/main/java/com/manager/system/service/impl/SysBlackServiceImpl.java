@@ -15,6 +15,7 @@ import java.util.List;
 public class SysBlackServiceImpl implements SysBlackService {
     @Autowired
     private SysBlackMapper sysBlackMapper;
+
     @Override
     public int insertBlack(SysBlack sysBlack) {
         return sysBlackMapper.insertBlack(sysBlack);

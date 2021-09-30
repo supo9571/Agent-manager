@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * 邮箱记录
+ *
  * @author sieGuang 2021/09/20
  */
 public interface MailRecordService {

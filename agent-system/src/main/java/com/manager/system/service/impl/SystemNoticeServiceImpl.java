@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * 系统公告配置
+ *
  * @author sieGuang 2021/09/18
  */
 @Service
@@ -22,9 +23,9 @@ public class SystemNoticeServiceImpl implements SystemNoticeService {
     @Override
     public Integer addSystemNotice(SystemNotice systemNotice) {
         // 发送状态等于定时发送 且 判断当前时间是否大于发送时间
-        if("2".equals(systemNotice.getSendOutTimeType()) && DateUtils.dateCompare(systemNotice.getSendOutTime())){
+        if ("2".equals(systemNotice.getSendOutTimeType()) && DateUtils.dateCompare(systemNotice.getSendOutTime())) {
             systemNotice.setState("2");
-        }else{
+        } else {
             systemNotice.setState("1");
         }
         return systemNoticeMapper.addSystemNotice(systemNotice);
@@ -39,11 +40,11 @@ public class SystemNoticeServiceImpl implements SystemNoticeService {
     public Integer editSystemNotice(SystemNotice systemNotice) {
         // 发送状态等于定时发送 且 判断当前时间是否大于发送时间
         // 立即发送的时候状态也是 2（在线）
-        if("2".equals(systemNotice.getSendOutTimeType()) && DateUtils.dateCompare(systemNotice.getSendOutTime())){
+        if ("2".equals(systemNotice.getSendOutTimeType()) && DateUtils.dateCompare(systemNotice.getSendOutTime())) {
             systemNotice.setState("2");
-        }else if("1".equals(systemNotice.getSendOutTimeType())){
+        } else if ("1".equals(systemNotice.getSendOutTimeType())) {
             systemNotice.setState("2");
-        } else{
+        } else {
             systemNotice.setState("1");
         }
         return systemNoticeMapper.editSystemNotice(systemNotice);

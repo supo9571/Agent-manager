@@ -25,6 +25,7 @@ import java.util.Map;
 
 /**
  * 提现信息管理
+ *
  * @author sieGuang 2021/09/07
  */
 @RestController
@@ -51,23 +52,24 @@ public class ExchangeController extends BaseController {
         int configAddMosaicNum = 0;
 
         List<Map> list = exchangeService.getExchangeList();
-        if(CollectionUtils.isNotEmpty(list)){
+        if (CollectionUtils.isNotEmpty(list)) {
             configKeepMoney = (BigDecimal) list.get(0).get("keepMoney");
             configNum = (int) list.get(0).get("num");
             configAddMosaicNum = (int) list.get(0).get("addMosaicNum");
         }
 
         Map result = new HashMap();
-        result.put("list",list);
-        result.put("configKeepMoney",configKeepMoney);
-        result.put("configNum",configNum);
-        result.put("configAddMosaicNum",configAddMosaicNum);
+        result.put("list", list);
+        result.put("configKeepMoney", configKeepMoney);
+        result.put("configNum", configNum);
+        result.put("configAddMosaicNum", configAddMosaicNum);
 
         return AjaxResult.success("查询成功", result);
     }
 
     /**
      * 编辑
+     *
      * @param exchange 需要修改的内容
      */
     @PreAuthorize("@ss.hasPermi('system:game:editExchange')")
@@ -77,16 +79,16 @@ public class ExchangeController extends BaseController {
     public AjaxResult editExchange(@RequestBody Exchange exchange) {
         exchange.setTid(ManagerConfig.getTid());
         int i = exchangeService.editExchange(exchange);
-        return i>0?AjaxResult.success():AjaxResult.error();
+        return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
     @PreAuthorize("@ss.hasPermi('system:game:editSettingsExchange')")
     @ApiOperation(value = "编辑基础设置")
     @Log(title = "编辑基础设置", businessType = BusinessType.UPDATE)
     @PostMapping("/editSettingsExchange")
-    public AjaxResult editSettingsExchange(int settingsType,String value) {
-        int i = exchangeService.editSettingsExchange(settingsType,value);
-        return i>0?AjaxResult.success():AjaxResult.error();
+    public AjaxResult editSettingsExchange(int settingsType, String value) {
+        int i = exchangeService.editSettingsExchange(settingsType, value);
+        return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
 }

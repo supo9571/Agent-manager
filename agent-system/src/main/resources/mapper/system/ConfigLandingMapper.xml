@@ -5,64 +5,77 @@
 <mapper namespace="com.manager.system.mapper.ConfigLandingMapper">
 
     <resultMap type="com.manager.common.core.domain.entity.ConfigLanding" id="ConfigLandingResult">
-        <result property="id"     column="id"      />
-        <result property="tid"     column="tid"      />
-        <result property="androidUrl" column="android_url" />
-        <result property="superSignUrl" column="super_sign_url" />
-        <result property="superSignStatus" column="super_sign_status" />
-        <result property="enterpriseSignUrl" column="enterprise_sign_url" />
-        <result property="enterpriseSignStatus" column="enterprise_sign_status" />
-        <result property="tfSignUrl" column="tf_sign_url" />
-        <result property="tfSignUrl" column="tf_sign_status" />
-        <result property="tfSignStatus" column="tf_sign_status" />
-        <result property="customerUrl" column="customer_url" />
+        <result property="id" column="id"/>
+        <result property="tid" column="tid"/>
+        <result property="androidUrl" column="android_url"/>
+        <result property="superSignUrl" column="super_sign_url"/>
+        <result property="superSignStatus" column="super_sign_status"/>
+        <result property="enterpriseSignUrl" column="enterprise_sign_url"/>
+        <result property="enterpriseSignStatus" column="enterprise_sign_status"/>
+        <result property="tfSignUrl" column="tf_sign_url"/>
+        <result property="tfSignUrl" column="tf_sign_status"/>
+        <result property="tfSignStatus" column="tf_sign_status"/>
+        <result property="customerUrl" column="customer_url"/>
     </resultMap>
 
-    <select id="getConfigLandingInfo" resultType="java.util.Map" >
-        SELECT id as id, tid as tid, android_url as androidUrl, super_sign_url as superSignUrl,super_sign_status as superSignStatus, enterprise_sign_url as enterpriseSignUrl, enterprise_sign_status as enterpriseSignStatus, tf_sign_url as tfSignUrl, tf_sign_status as tfSignStatus, customer_url as customerUrl FROM config_landing where tid = #{tid}
+    <select id="getConfigLandingInfo" resultType="java.util.Map">
+        SELECT id                     as id,
+               tid                    as tid,
+               android_url            as androidUrl,
+               super_sign_url         as superSignUrl,
+               super_sign_status      as superSignStatus,
+               enterprise_sign_url    as enterpriseSignUrl,
+               enterprise_sign_status as enterpriseSignStatus,
+               tf_sign_url            as tfSignUrl,
+               tf_sign_status         as tfSignStatus,
+               customer_url           as customerUrl
+        FROM config_landing
+        where tid = #{tid}
     </select>
 
     <update id="editConfigLanding" parameterType="com.manager.common.core.domain.entity.ConfigLanding">
         update config_landing
         <set>
-            <if test="androidUrl!=null and androidUrl!=''"> android_url = #{androidUrl},</if>
-            <if test="superSignUrl!=null and superSignUrl!=''"> super_sign_url = #{superSignUrl},</if>
-            <if test="superSignStatus!=null and superSignStatus!=''"> super_sign_status = #{superSignStatus},</if>
-            <if test="enterpriseSignUrl!=null and enterpriseSignUrl!=''"> enterprise_sign_url = #{enterpriseSignUrl},</if>
-            <if test="enterpriseSignStatus!=null and enterpriseSignStatus!=''"> enterprise_sign_status = #{enterpriseSignStatus},</if>
-            <if test="tfSignUrl!=null and tfSignUrl!=''"> tf_sign_url = #{tfSignUrl},</if>
-            <if test="tfSignStatus!=null and tfSignStatus!=''"> tf_sign_status = #{tfSignStatus},</if>
-            <if test="customerUrl!=null and customerUrl!=''"> customer_url = #{customerUrl},</if>
+            <if test="androidUrl!=null and androidUrl!=''">android_url = #{androidUrl},</if>
+            <if test="superSignUrl!=null and superSignUrl!=''">super_sign_url = #{superSignUrl},</if>
+            <if test="superSignStatus!=null and superSignStatus!=''">super_sign_status = #{superSignStatus},</if>
+            <if test="enterpriseSignUrl!=null and enterpriseSignUrl!=''">enterprise_sign_url = #{enterpriseSignUrl},
+            </if>
+            <if test="enterpriseSignStatus!=null and enterpriseSignStatus!=''">enterprise_sign_status =
+                #{enterpriseSignStatus},
+            </if>
+            <if test="tfSignUrl!=null and tfSignUrl!=''">tf_sign_url = #{tfSignUrl},</if>
+            <if test="tfSignStatus!=null and tfSignStatus!=''">tf_sign_status = #{tfSignStatus},</if>
+            <if test="customerUrl!=null and customerUrl!=''">customer_url = #{customerUrl},</if>
             updated_time = sysdate()
         </set>
         where id = #{id}
     </update>
 
     <insert id="addConfigLanding" parameterType="com.manager.common.core.domain.entity.ConfigLanding">
-        insert into
-            config_landing(
-            tid,
-            android_url,
-            super_sign_url,
-            super_sign_status,
-            enterprise_sign_url,
-            enterprise_sign_status,
-            tf_sign_url,
-            tf_sign_status,
-            customer_url,
-            create_time
+        insert into config_landing(tid,
+                                   android_url,
+                                   super_sign_url,
+                                   super_sign_status,
+                                   enterprise_sign_url,
+                                   enterprise_sign_status,
+                                   tf_sign_url,
+                                   tf_sign_status,
+                                   customer_url,
+                                   create_time)
+        values (#{tid};
+        #{androidUrl}
+        ,
+        #{superSignUrl},
+        #{superSignStatus},
+        #{enterpriseSignUrl},
+        #{enterpriseSignStatus},
+        #{tfSignUrl},
+        #{tfSignStatus},
+        #{customerUrl},
+        sysdate
+        (
         )
-        values(
-            #{tid};
-            #{androidUrl},
-            #{superSignUrl},
-            #{superSignStatus},
-            #{enterpriseSignUrl},
-            #{enterpriseSignStatus},
-            #{tfSignUrl},
-            #{tfSignStatus},
-            #{customerUrl},
-            sysdate()
         )
     </insert>
 </mapper>

@@ -12,6 +12,7 @@ import java.util.Map;
 
 /**
  * 商城页签管理
+ *
  * @author sieGuang 2021/09/07
  */
 @Mapper
@@ -26,6 +27,7 @@ public interface PayMapper {
 
     /**
      * 编辑
+     *
      * @param pay 需要修改的内容
      */
     int editPay(Pay pay);

@@ -5,34 +5,47 @@
 <mapper namespace="com.manager.system.mapper.RechargeMapper">
 
     <insert id="saveVipRecharge" parameterType="com.manager.common.core.domain.entity.VipRecharge">
-        insert into config_vip_recharge (tid,vip_name,recharge_type,recharge_other_type,open_type,img_type,
-                                        live_addr,url,qq,wechat,status,create_time,update_time,create_by,update_by,ys_id)
-        values
-            (#{tid},#{vipName},#{rechargeType},#{rechargeOtherType},#{openType},#{imgType},
-             #{liveAddr},#{url},#{qq},#{wechat},#{status},sysdate(),sysdate(),#{createBy},#{createBy},#{ysid})
+        insert into config_vip_recharge (tid, vip_name, recharge_type, recharge_other_type, open_type, img_type,
+                                         live_addr, url, qq, wechat, status, create_time, update_time, create_by,
+                                         update_by, ys_id)
+        values (#{tid}, #{vipName}, #{rechargeType}, #{rechargeOtherType}, #{openType}, #{imgType},
+                #{liveAddr}, #{url}, #{qq}, #{wechat}, #{status}, sysdate(), sysdate(), #{createBy}, #{createBy},
+                #{ysid})
     </insert>
 
     <select id="findVipRecharge" resultType="java.util.Map">
-        select id, vip_name vipName,recharge_type rechargeType,recharge_other_type rechargeOtherType,open_type openType,img_type imgType,
-               live_addr liveAddr,url,qq,wechat,status,update_time updateTime,ys_id ysid
+        select id,
+               vip_name            vipName,
+               recharge_type       rechargeType,
+               recharge_other_type rechargeOtherType,
+               open_type           openType,
+               img_type            imgType,
+               live_addr           liveAddr,
+               url,
+               qq,
+               wechat,
+               status,
+               update_time         updateTime,
+               ys_id               ysid
         from config_vip_recharge
-        where tid=#{tid}
+        where tid = #{tid}
     </select>
 
     <update id="updateVipRecharge">
         update config_vip_recharge
         <set>
-            <if test="status!=null and status!=''"> status = #{status},</if>
-            <if test="openType!=null and openType!=''"> open_type = #{openType},</if>
-            <if test="vipName!=null and vipName!=''"> vip_name = #{vipName},</if>
-            <if test="imgType!=null and imgType!=''"> img_type = #{imgType},</if>
-            <if test="rechargeType!=null and rechargeType!=''"> recharge_type = #{rechargeType},</if>
-            <if test="rechargeOtherType!=null and rechargeOtherType!=''"> recharge_other_type = #{rechargeOtherType},</if>
-            <if test="ysid!=null and ysid!=''"> ys_id = #{ysid},</if>
-            <if test="liveAddr!=null and liveAddr!=''"> live_addr = #{liveAddr},</if>
-            <if test="url!=null and url!=''"> url = #{url},</if>
-            <if test="qq!=null and qq!=''"> qq = #{qq},</if>
-            <if test="wechat!=null and wechat!=''"> wechat = #{wechat},</if>
+            <if test="status!=null and status!=''">status = #{status},</if>
+            <if test="openType!=null and openType!=''">open_type = #{openType},</if>
+            <if test="vipName!=null and vipName!=''">vip_name = #{vipName},</if>
+            <if test="imgType!=null and imgType!=''">img_type = #{imgType},</if>
+            <if test="rechargeType!=null and rechargeType!=''">recharge_type = #{rechargeType},</if>
+            <if test="rechargeOtherType!=null and rechargeOtherType!=''">recharge_other_type = #{rechargeOtherType},
+            </if>
+            <if test="ysid!=null and ysid!=''">ys_id = #{ysid},</if>
+            <if test="liveAddr!=null and liveAddr!=''">live_addr = #{liveAddr},</if>
+            <if test="url!=null and url!=''">url = #{url},</if>
+            <if test="qq!=null and qq!=''">qq = #{qq},</if>
+            <if test="wechat!=null and wechat!=''">wechat = #{wechat},</if>
             update_time = sysdate(),
             update_by = #{updateBy}
         </set>
@@ -41,43 +54,45 @@
 
     <!--添加线上充值信息-->
     <insert id="saveOnlineRecharge" parameterType="com.manager.common.core.domain.entity.OnlineRecharge">
-        insert into config_online_recharge (tid,pay_id,pay_type,vip_list,other_name,is_diy,diy_min,
-                                            diy_max,btn,pay_url,sort,channel_list,use_mobile,status,update_time,create_time,update_by,msg)
-        values
-            (#{tid},#{payid},#{payType},#{vipList},#{otherName},#{isDiy},#{diyMin},
-             #{diyMax},#{btn},#{payUrl},#{sort},#{channelList},#{useMobile},#{status},sysdate(),sysdate(),#{updateBy},#{msg})
+        insert into config_online_recharge (tid, pay_id, pay_type, vip_list, other_name, is_diy, diy_min,
+                                            diy_max, btn, pay_url, sort, channel_list, use_mobile, status, update_time,
+                                            create_time, update_by, msg)
+        values (#{tid}, #{payid}, #{payType}, #{vipList}, #{otherName}, #{isDiy}, #{diyMin},
+                #{diyMax}, #{btn}, #{payUrl}, #{sort}, #{channelList}, #{useMobile}, #{status}, sysdate(), sysdate(),
+                #{updateBy}, #{msg})
 
     </insert>
 
     <select id="findOnlineRecharge" resultType="java.util.Map">
         select id, pay_id payid,pay_type payType,vip_list vipList,other_name otherName,is_diy isDiy,diy_min diyMin,
-               diy_max diyMax,btn,pay_url payUrl,sort,channel_list channelList, use_mobile useMobile,status,update_time updateTime,update_by updateBy,msg
+        diy_max diyMax,btn,pay_url payUrl,sort,channel_list channelList, use_mobile useMobile,status,update_time
+        updateTime,update_by updateBy,msg
         from config_online_recharge
         <where>
             tid = #{tid}
-            <if test="payType!=null and payType!=''"> and pay_type = #{payType} </if>
-            <if test="status!=null and status!=''"> and status = #{status} </if>
-            <if test="vipList!=null and vipList!=''"> and vip_list like concat('%',#{vipList},'%') </if>
+            <if test="payType!=null and payType!=''">and pay_type = #{payType}</if>
+            <if test="status!=null and status!=''">and status = #{status}</if>
+            <if test="vipList!=null and vipList!=''">and vip_list like concat('%',#{vipList},'%')</if>
         </where>
     </select>
 
     <update id="updateOnlineRecharge">
         update config_online_recharge
         <set>
-            <if test="payid!=null and payid!=''"> pay_id = #{payid},</if>
-            <if test="payType!=null and payType!=''"> pay_type = #{payType},</if>
-            <if test="vipList!=null and vipList!=''"> vip_list = #{vipList},</if>
-            <if test="otherName!=null and otherName!=''"> other_name = #{otherName},</if>
-            <if test="isDiy!=null and isDiy!=''"> is_diy = #{isDiy},</if>
-            <if test="diyMin!=null and diyMin!=''"> diy_min = #{diyMin},</if>
-            <if test="diyMax!=null and diyMax!=''"> diy_max = #{diyMax},</if>
-            <if test="btn!=null and btn!=''"> btn = #{btn},</if>
-            <if test="payUrl!=null and payUrl!=''"> pay_url = #{payUrl},</if>
-            <if test="sort!=null and sort!=''"> sort = #{sort},</if>
-            <if test="channelList!=null and channelList!=''"> channel_list = #{channelList},</if>
-            <if test="useMobile!=null and useMobile!=''"> use_mobile = #{useMobile},</if>
-            <if test="status!=null and status!=''"> status = #{status},</if>
-            <if test="msg!=null and msg!=''"> msg = #{msg},</if>
+            <if test="payid!=null and payid!=''">pay_id = #{payid},</if>
+            <if test="payType!=null and payType!=''">pay_type = #{payType},</if>
+            <if test="vipList!=null and vipList!=''">vip_list = #{vipList},</if>
+            <if test="otherName!=null and otherName!=''">other_name = #{otherName},</if>
+            <if test="isDiy!=null and isDiy!=''">is_diy = #{isDiy},</if>
+            <if test="diyMin!=null and diyMin!=''">diy_min = #{diyMin},</if>
+            <if test="diyMax!=null and diyMax!=''">diy_max = #{diyMax},</if>
+            <if test="btn!=null and btn!=''">btn = #{btn},</if>
+            <if test="payUrl!=null and payUrl!=''">pay_url = #{payUrl},</if>
+            <if test="sort!=null and sort!=''">sort = #{sort},</if>
+            <if test="channelList!=null and channelList!=''">channel_list = #{channelList},</if>
+            <if test="useMobile!=null and useMobile!=''">use_mobile = #{useMobile},</if>
+            <if test="status!=null and status!=''">status = #{status},</if>
+            <if test="msg!=null and msg!=''">msg = #{msg},</if>
             update_time = sysdate(),
             update_by = #{updateBy}
         </set>
@@ -87,30 +102,31 @@
     <!--添加银行充值 配置信息-->
     <insert id="saveBankRecharge" parameterType="com.manager.common.core.domain.entity.BankRecharge">
         insert into config_bank_recharge
-            (tid,vip_list,open_type,btn,live_addr,bank_value,create_time,update_time,update_by,status)
-        values
-            (#{tid},#{vipList},#{openType},#{btn},#{liveAddr},#{bankValue},sysdate(),sysdate(),#{updateBy},#{status})
+        (tid, vip_list, open_type, btn, live_addr, bank_value, create_time, update_time, update_by, status)
+        values (#{tid}, #{vipList}, #{openType}, #{btn}, #{liveAddr}, #{bankValue}, sysdate(), sysdate(), #{updateBy},
+                #{status})
     </insert>
 
     <select id="findBankRecharge" resultType="java.util.Map">
-        select id,vip_list vipList,open_type openType,btn,live_addr liveAddr,bank_value bankValue,update_time updateTime,update_by updateBy,status
+        select id,vip_list vipList,open_type openType,btn,live_addr liveAddr,bank_value bankValue,update_time
+        updateTime,update_by updateBy,status
         from config_bank_recharge
         <where>
             tid = #{tid}
-            <if test="status!=null and status!=''"> and status = #{status} </if>
-            <if test="vipList!=null and vipList!=''"> and vip_list like concat('%',#{vipList},'%') </if>
+            <if test="status!=null and status!=''">and status = #{status}</if>
+            <if test="vipList!=null and vipList!=''">and vip_list like concat('%',#{vipList},'%')</if>
         </where>
     </select>
 
     <update id="updateBankRecharge">
         update config_bank_recharge
         <set>
-            <if test="vipList!=null and vipList!=''"> vip_list = #{vipList},</if>
-            <if test="openType!=null and openType!=''"> open_type = #{openType},</if>
-            <if test="btn!=null and btn!=''"> btn = #{btn},</if>
-            <if test="liveAddr!=null and liveAddr!=''"> live_addr = #{liveAddr},</if>
-            <if test="bankValue!=null and bankValue!=''"> bank_value = #{bankValue},</if>
-            <if test="status!=null and status!=''"> status = #{status},</if>
+            <if test="vipList!=null and vipList!=''">vip_list = #{vipList},</if>
+            <if test="openType!=null and openType!=''">open_type = #{openType},</if>
+            <if test="btn!=null and btn!=''">btn = #{btn},</if>
+            <if test="liveAddr!=null and liveAddr!=''">live_addr = #{liveAddr},</if>
+            <if test="bankValue!=null and bankValue!=''">bank_value = #{bankValue},</if>
+            <if test="status!=null and status!=''">status = #{status},</if>
             update_time = sysdate(),
             update_by = #{updateBy}
         </set>
@@ -120,36 +136,53 @@
     <!--添加月卡 配置信息-->
     <insert id="saveMonthRecharge" parameterType="com.manager.common.core.domain.entity.MonthRecharge">
         insert into config_month_recharge
-        (tid,jin_recharge,jin_recharge_give,jin_recharge_give_day,yin_recharge,yin_recharge_give,yin_recharge_give_day,open_type,live_addr,wechat,
-         qq,create_time,update_time,update_by)
-        values
-            (#{tid},#{jinRecharge},#{jinRechargeGive},#{jinRechargeGiveDay},#{yinRecharge},#{yinRechargeGive},#{yinRechargeGiveDay},#{openType},#{liveAddr},#{wechat},
-             #{qq},sysdate(),sysdate(),#{updateBy})
+        (tid, jin_recharge, jin_recharge_give, jin_recharge_give_day, yin_recharge, yin_recharge_give,
+         yin_recharge_give_day, open_type, live_addr, wechat,
+         qq, create_time, update_time, update_by)
+        values (#{tid}, #{jinRecharge}, #{jinRechargeGive}, #{jinRechargeGiveDay}, #{yinRecharge}, #{yinRechargeGive},
+                #{yinRechargeGiveDay}, #{openType}, #{liveAddr}, #{wechat},
+                #{qq}, sysdate(), sysdate(), #{updateBy})
 
     </insert>
 
-    <select id="findMonthRecharge" resultType="java.util.Map" parameterType="com.manager.common.core.domain.entity.MonthRecharge">
-        select id,jin_recharge jinRecharge,jin_recharge_give jinRechargeGive,jin_recharge_give_day jinRechargeGiveDay,
-               yin_recharge yinRecharge,yin_recharge_give yinRechargeGive,yin_recharge_give_day yinRechargeGiveDay,
-               open_type openType,live_addr liveAddr,wechat,
-               qq,create_time createTime,update_time updateTime,update_by updateBy
+    <select id="findMonthRecharge" resultType="java.util.Map"
+            parameterType="com.manager.common.core.domain.entity.MonthRecharge">
+        select id,
+               jin_recharge          jinRecharge,
+               jin_recharge_give     jinRechargeGive,
+               jin_recharge_give_day jinRechargeGiveDay,
+               yin_recharge          yinRecharge,
+               yin_recharge_give     yinRechargeGive,
+               yin_recharge_give_day yinRechargeGiveDay,
+               open_type             openType,
+               live_addr             liveAddr,
+               wechat,
+               qq,
+               create_time           createTime,
+               update_time           updateTime,
+               update_by             updateBy
         from config_month_recharge
-        where status = '1' and tid = #{tid}
+        where status = '1'
+          and tid = #{tid}
     </select>
 
     <update id="updateMonthRecharge">
         update config_month_recharge
         <set>
-            <if test="jinRecharge!=null and jinRecharge!=''"> jin_recharge = #{jinRecharge},</if>
-            <if test="jinRechargeGive!=null and jinRechargeGive!=''"> jin_recharge_give = #{jinRechargeGive},</if>
-            <if test="jinRechargeGiveDay!=null and jinRechargeGiveDay!=''"> jin_recharge_give_day = #{jinRechargeGiveDay},</if>
+            <if test="jinRecharge!=null and jinRecharge!=''">jin_recharge = #{jinRecharge},</if>
+            <if test="jinRechargeGive!=null and jinRechargeGive!=''">jin_recharge_give = #{jinRechargeGive},</if>
+            <if test="jinRechargeGiveDay!=null and jinRechargeGiveDay!=''">jin_recharge_give_day =
+                #{jinRechargeGiveDay},
+            </if>
             <if test="yinRecharge!=null and yinRecharge!=''">yin_recharge = #{yinRecharge},</if>
-            <if test="yinRechargeGive!=null and yinRechargeGive!=''"> yin_recharge_give = #{yinRechargeGive},</if>
-            <if test="yinRechargeGiveDay!=null and yinRechargeGiveDay!=''"> yin_recharge_give_day = #{yinRechargeGiveDay},</if>
-            <if test="openType!=null and openType!=''"> open_type = #{openType},</if>
-            <if test="liveAddr!=null and liveAddr!=''"> live_addr = #{liveAddr},</if>
-            <if test="wechat!=null and wechat!=''"> wechat = #{wechat},</if>
-            <if test="qq!=null and qq!=''"> qq = #{qq},</if>
+            <if test="yinRechargeGive!=null and yinRechargeGive!=''">yin_recharge_give = #{yinRechargeGive},</if>
+            <if test="yinRechargeGiveDay!=null and yinRechargeGiveDay!=''">yin_recharge_give_day =
+                #{yinRechargeGiveDay},
+            </if>
+            <if test="openType!=null and openType!=''">open_type = #{openType},</if>
+            <if test="liveAddr!=null and liveAddr!=''">live_addr = #{liveAddr},</if>
+            <if test="wechat!=null and wechat!=''">wechat = #{wechat},</if>
+            <if test="qq!=null and qq!=''">qq = #{qq},</if>
             update_time = sysdate(),
             update_by = #{updateBy}
         </set>
@@ -157,19 +190,19 @@
     </update>
 
     <insert id="saveYsinfo" parameterType="com.manager.common.core.domain.entity.Ysinfo">
-        insert into config_ys(tid,username,password,google_check,google_key,update_time,create_time)
-        values (#{tid},#{username},#{password},#{googleCheck},#{googleKey},sysdate(),sysdate())
+        insert into config_ys(tid, username, password, google_check, google_key, update_time, create_time)
+        values (#{tid}, #{username}, #{password}, #{googleCheck}, #{googleKey}, sysdate(), sysdate())
     </insert>
 
     <update id="updateYsinfo" parameterType="com.manager.common.core.domain.entity.Ysinfo">
         update config_ys
         <set>
-            <if test="username!=null and username!=''"> username = #{username},</if>
-            <if test="password!=null and password!=''"> password = #{password},</if>
-            <if test="googleCheck!=null and googleCheck!=''"> google_check = #{googleCheck},</if>
-            <if test="googleKey!=null and googleKey!=''"> google_key = #{googleKey},</if>
-            <if test="googleKey!=null and googleKey!=''"> google_key = #{googleKey},</if>
-            <if test="rechargeStatus!=null and rechargeStatus!=''"> recharge_status = #{rechargeStatus},</if>
+            <if test="username!=null and username!=''">username = #{username},</if>
+            <if test="password!=null and password!=''">password = #{password},</if>
+            <if test="googleCheck!=null and googleCheck!=''">google_check = #{googleCheck},</if>
+            <if test="googleKey!=null and googleKey!=''">google_key = #{googleKey},</if>
+            <if test="googleKey!=null and googleKey!=''">google_key = #{googleKey},</if>
+            <if test="rechargeStatus!=null and rechargeStatus!=''">recharge_status = #{rechargeStatus},</if>
             update_time = sysdate()
         </set>
         where id = #{id} and tid = #{tid}

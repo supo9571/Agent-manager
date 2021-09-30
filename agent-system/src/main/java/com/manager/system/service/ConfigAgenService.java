@@ -8,12 +8,14 @@ public interface ConfigAgenService {
 
     /**
      * 查询
+     *
      * @return
      */
     List getConfigAgentList();
 
     /**
      * 新增
+     *
      * @param configAgent
      * @return
      */
@@ -21,6 +23,7 @@ public interface ConfigAgenService {
 
     /**
      * 修改
+     *
      * @param configAgent
      * @return
      */
@@ -28,6 +31,7 @@ public interface ConfigAgenService {
 
     /**
      * 删除
+     *
      * @param id
      * @return
      */
@@ -35,12 +39,15 @@ public interface ConfigAgenService {
 
     /**
      * 根据主键查对象
+     *
      * @param id
      * @return
      */
     ConfigAgent getConfigAgentById(long id);
+
     /**
      * 推广链接域名配置
+     *
      * @param promotionDomain
      * @return
      */

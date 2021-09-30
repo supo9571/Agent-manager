@@ -42,7 +42,7 @@ public class RechargeController extends BaseController {
         vipRecharge.setCreateBy(SecurityUtils.getUsername());
         vipRecharge.setTid(ManagerConfig.getTid());
         Integer i = rechargeService.saveVipRecharge(vipRecharge);
-        return i>0?AjaxResult.success():AjaxResult.error();
+        return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
     /**
@@ -68,7 +68,7 @@ public class RechargeController extends BaseController {
         vipRecharge.setTid(ManagerConfig.getTid());
         vipRecharge.setUpdateBy(SecurityUtils.getUsername());
         Integer i = rechargeService.updateVipRecharge(vipRecharge);
-        return i>0?AjaxResult.success():AjaxResult.error();
+        return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
     /**
@@ -91,7 +91,7 @@ public class RechargeController extends BaseController {
         onlineRecharge.setTid(ManagerConfig.getTid());
         onlineRecharge.setUpdateBy(SecurityUtils.getUsername());
         Integer i = rechargeService.saveOnlineRecharge(onlineRecharge);
-        return i>0?AjaxResult.success():AjaxResult.error();
+        return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
     /**
@@ -103,7 +103,7 @@ public class RechargeController extends BaseController {
     public AjaxResult onlineList(OnlineRecharge onlineRecharge) {
         startPage();
         onlineRecharge.setTid(ManagerConfig.getTid());
-        List list =  rechargeService.findOnlineRecharge(onlineRecharge);
+        List list = rechargeService.findOnlineRecharge(onlineRecharge);
         return AjaxResult.success(getDataTable(list));
     }
 
@@ -117,7 +117,7 @@ public class RechargeController extends BaseController {
         onlineRecharge.setTid(ManagerConfig.getTid());
         onlineRecharge.setUpdateBy(SecurityUtils.getUsername());
         Integer i = rechargeService.updateOnlineRecharge(onlineRecharge);
-        return i>0?AjaxResult.success():AjaxResult.error();
+        return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
     /**
@@ -131,7 +131,7 @@ public class RechargeController extends BaseController {
         bankRecharge.setTid(ManagerConfig.getTid());
         bankRecharge.setUpdateBy(SecurityUtils.getUsername());
         Integer i = rechargeService.saveBankRecharge(bankRecharge);
-        return i>0?AjaxResult.success():AjaxResult.error();
+        return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
     /**
@@ -157,7 +157,7 @@ public class RechargeController extends BaseController {
         bankRecharge.setTid(ManagerConfig.getTid());
         bankRecharge.setUpdateBy(SecurityUtils.getUsername());
         Integer i = rechargeService.updateBankRecharge(bankRecharge);
-        return i>0?AjaxResult.success():AjaxResult.error();
+        return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
     /**
@@ -172,7 +172,7 @@ public class RechargeController extends BaseController {
         monthRecharge.setTid(ManagerConfig.getTid());
         monthRecharge.setUpdateBy(SecurityUtils.getUsername());
         Integer i = rechargeService.saveMonthRecharge(monthRecharge);
-        return i>0?AjaxResult.success():AjaxResult.error();
+        return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
     /**
@@ -199,7 +199,7 @@ public class RechargeController extends BaseController {
         monthRecharge.setTid(ManagerConfig.getTid());
         monthRecharge.setUpdateBy(SecurityUtils.getUsername());
         Integer i = rechargeService.updateMonthRecharge(monthRecharge);
-        return i>0?AjaxResult.success():AjaxResult.error();
+        return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
     /**
@@ -212,7 +212,7 @@ public class RechargeController extends BaseController {
     public AjaxResult addYs(Ysinfo ysinfo) {
         ysinfo.setTid(ManagerConfig.getTid());
         Integer i = rechargeService.saveYsinfo(ysinfo);
-        return i>0?AjaxResult.success():AjaxResult.error();
+        return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
     /**
@@ -235,7 +235,7 @@ public class RechargeController extends BaseController {
     public AjaxResult editYs(Ysinfo ysinfo) {
         ysinfo.setTid(ManagerConfig.getTid());
         Integer i = rechargeService.updateYsinfo(ysinfo);
-        return i>0?AjaxResult.success():AjaxResult.error();
+        return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
     /**

@@ -18,6 +18,7 @@ import java.util.Map;
 
 /**
  * 提现审批
+ *
  * @author sieGuang 2021/09/16
  */
 @Service
@@ -53,68 +54,68 @@ public class ExchangeEaaServiceImpl implements ExchangeEaaService {
 
         // 设置分页数据
         PageHelper.startPage(exchangeEaa.getPage(), exchangeEaa.getSize(),
-                exchangeEaa.getOrderByColumn()+" "+exchangeEaa.getIsAsc());
+                exchangeEaa.getOrderByColumn() + " " + exchangeEaa.getIsAsc());
 
         List<ExchangeEaa> list = exchangeEaaMapper.getExchangeEaaList(exchangeEaa);
 
         PageInfo<ExchangeEaa> pageInfo = new PageInfo<ExchangeEaa>(list);
-        result.put("page",exchangeEaa.getPage());
-        result.put("size",exchangeEaa.getSize());
-        result.put("total",pageInfo.getTotal());
+        result.put("page", exchangeEaa.getPage());
+        result.put("size", exchangeEaa.getSize());
+        result.put("total", pageInfo.getTotal());
 
         // 只处理分页的数据
         list = pageInfo.getList();
 
         // 左下角的哪几个字段
-        if(CollectionUtils.isNotEmpty(list)){
+        if (CollectionUtils.isNotEmpty(list)) {
 
             for (ExchangeEaa eaa : list) {
-                if("1".equals(eaa.getExaaStatus())){
+                if ("1".equals(eaa.getExaaStatus())) {
                     exchangeNum1++;
                     exchangeMoney1.add(eaa.getWithdrawMoney());
-                }else if("2".equals(eaa.getExaaStatus())){
+                } else if ("2".equals(eaa.getExaaStatus())) {
                     exchangeNum2++;
                     exchangeMoney2.add(eaa.getWithdrawMoney());
-                }else if("3".equals(eaa.getExaaStatus())){
+                } else if ("3".equals(eaa.getExaaStatus())) {
                     exchangeNum3++;
                     exchangeMoney3.add(eaa.getWithdrawMoney());
                     exchangeMoney32.add(eaa.getTransferAmount());
                     exchangeMoney33.add(eaa.getPoundage());
-                }else if("4".equals(eaa.getExaaStatus())){
+                } else if ("4".equals(eaa.getExaaStatus())) {
                     exchangeNum4++;
                     exchangeMoney4.add(eaa.getWithdrawMoney());
-                }else if("5".equals(eaa.getExaaStatus())){
+                } else if ("5".equals(eaa.getExaaStatus())) {
                     exchangeNum5++;
                     exchangeMoney5.add(eaa.getWithdrawMoney());
-                }else if("6".equals(eaa.getExaaStatus())){
+                } else if ("6".equals(eaa.getExaaStatus())) {
                     exchangeNum6++;
                     exchangeMoney6.add(eaa.getWithdrawMoney());
-                }else if("7".equals(eaa.getExaaStatus())){
+                } else if ("7".equals(eaa.getExaaStatus())) {
                     exchangeNum7++;
                     exchangeMoney7.add(eaa.getWithdrawMoney());
                 }
             }
         }
 
-        result.put("exchangeNum1",exchangeNum1);
-        result.put("exchangeNum2",exchangeNum2);
-        result.put("exchangeNum3",exchangeNum3);
-        result.put("exchangeNum4",exchangeNum4);
-        result.put("exchangeNum5",exchangeNum5);
-        result.put("exchangeNum6",exchangeNum6);
-        result.put("exchangeNum7",exchangeNum7);
+        result.put("exchangeNum1", exchangeNum1);
+        result.put("exchangeNum2", exchangeNum2);
+        result.put("exchangeNum3", exchangeNum3);
+        result.put("exchangeNum4", exchangeNum4);
+        result.put("exchangeNum5", exchangeNum5);
+        result.put("exchangeNum6", exchangeNum6);
+        result.put("exchangeNum7", exchangeNum7);
 
-        result.put("exchangeMoney1",exchangeMoney1);
-        result.put("exchangeMoney2",exchangeMoney2);
-        result.put("exchangeMoney3",exchangeMoney3);
-        result.put("exchangeMoney32",exchangeMoney32);
-        result.put("exchangeMoney33",exchangeMoney33);
-        result.put("exchangeMoney4",exchangeMoney4);
-        result.put("exchangeMoney5",exchangeMoney5);
-        result.put("exchangeMoney6",exchangeMoney6);
-        result.put("exchangeMoney7",exchangeMoney7);
+        result.put("exchangeMoney1", exchangeMoney1);
+        result.put("exchangeMoney2", exchangeMoney2);
+        result.put("exchangeMoney3", exchangeMoney3);
+        result.put("exchangeMoney32", exchangeMoney32);
+        result.put("exchangeMoney33", exchangeMoney33);
+        result.put("exchangeMoney4", exchangeMoney4);
+        result.put("exchangeMoney5", exchangeMoney5);
+        result.put("exchangeMoney6", exchangeMoney6);
+        result.put("exchangeMoney7", exchangeMoney7);
 
-        result.put("rows",list);
+        result.put("rows", list);
         return result;
     }
 

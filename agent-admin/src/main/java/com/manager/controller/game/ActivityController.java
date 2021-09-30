@@ -35,6 +35,7 @@ public class ActivityController extends BaseController {
 
     @Autowired
     private ManagerConfig managerConfig;
+
     /**
      * 添加 活动
      */
@@ -45,10 +46,10 @@ public class ActivityController extends BaseController {
     public AjaxResult addActivity(Activity activity) {
         activity.setTid(ManagerConfig.getTid());
         //判断活动时间是否重叠
-        if(activityService.checkActivityTime(activity)>0) return AjaxResult.error("已有相同的活动");
+        if (activityService.checkActivityTime(activity) > 0) return AjaxResult.error("已有相同的活动");
         activity.setUpdateBy(SecurityUtils.getUsername());
         Integer i = activityService.saveActivity(activity);
-        return i>0?AjaxResult.success():AjaxResult.error();
+        return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
     /**
@@ -73,10 +74,10 @@ public class ActivityController extends BaseController {
     public AjaxResult edit(Activity activity) {
         activity.setTid(ManagerConfig.getTid());
         //判断活动时间是否重叠
-        if(activityService.checkActivityTime(activity)>0) return AjaxResult.error("已有相同的活动");
+        if (activityService.checkActivityTime(activity) > 0) return AjaxResult.error("已有相同的活动");
         activity.setUpdateBy(SecurityUtils.getUsername());
         Integer i = activityService.updateActivity(activity);
-        return i>0?AjaxResult.success():AjaxResult.error();
+        return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
     /**
@@ -90,7 +91,7 @@ public class ActivityController extends BaseController {
         //查询 活动配置
         String param = activityService.getActivityConfig();
         //发送 活动配置
-        String result = HttpUtils.sendPost(managerConfig.getGameDomain(), "data="+param);
+        String result = HttpUtils.sendPost(managerConfig.getGameDomain(), "data=" + param);
         if (!"scuess".equals(result)) {
             return AjaxResult.error(result);
         }

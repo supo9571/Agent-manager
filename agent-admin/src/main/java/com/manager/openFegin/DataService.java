@@ -38,17 +38,17 @@ public interface DataService {
     AjaxResult getCards(@RequestBody Card card);
 
     @PostMapping(value = "/data/card/info")
-    AjaxResult findCardInfo(@RequestParam("tableGid")String tableGid);
+    AjaxResult findCardInfo(@RequestParam("tableGid") String tableGid);
 
     @PostMapping(value = "/data/game/option")
     AjaxResult getGames();
 
     @PostMapping(value = "/data/game/addIp")
-    AjaxResult addIp(@RequestParam("ip")String ip, @RequestParam("createBy")String createBy);
+    AjaxResult addIp(@RequestParam("ip") String ip, @RequestParam("createBy") String createBy);
 
     @PostMapping(value = "/data/game/findIp")
-    AjaxResult findIp(@RequestParam("ip")String ip, @RequestParam("createBy")String createBy,
-                      @RequestParam("beginTime")String beginTime, @RequestParam("endTime")String endTime);
+    AjaxResult findIp(@RequestParam("ip") String ip, @RequestParam("createBy") String createBy,
+                      @RequestParam("beginTime") String beginTime, @RequestParam("endTime") String endTime);
 
     @PostMapping(value = "/data/game/delIp")
     AjaxResult delIp(@RequestParam("id") Integer id);

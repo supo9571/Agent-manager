@@ -44,7 +44,7 @@ public class SysTenantServiceImpl implements SysTenantService {
      */
     private Map<String, String> getTenantMap() {
         List<SysTenant> list = sysTenantMapper.allList();
-        if(CollectionUtils.isEmpty(list)){
+        if (CollectionUtils.isEmpty(list)) {
             return new HashMap<>();
         }
         return list.stream().collect(Collectors.toMap(SysTenant::getTId, SysTenant::getTName));

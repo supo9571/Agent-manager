@@ -24,6 +24,7 @@ public class PlayerController extends BaseController {
 
     @Autowired
     private DataService dataService;
+
     /**
      * 获取用户列表
      */

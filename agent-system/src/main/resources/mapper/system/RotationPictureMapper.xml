@@ -5,49 +5,45 @@
 <mapper namespace="com.manager.system.mapper.RotationPictureMapper">
 
     <insert id="addRotationPicture" parameterType="com.manager.common.core.domain.entity.RotationPicture">
-        insert into sys_rotation_picture(
-            tid,
-            sort,
-            ident,
-            describes,
-            jump_state,
-            jump_url,
-            state,
-            extend_information,
-            create_time,update_time,create_by,update_by
-        )
-        values (
-           #{tid},
-           #{sort},
-           #{ident},
-           #{describes},
-           #{jumpState},
-           #{jumpUrl},
-           #{state},
-           #{extendInformation},
-           sysdate(),sysdate(),#{createBy},#{createBy}
-       )
+        insert into sys_rotation_picture(tid,
+                                         sort,
+                                         ident,
+                                         describes,
+                                         jump_state,
+                                         jump_url,
+                                         state,
+                                         extend_information,
+                                         create_time, update_time, create_by, update_by)
+        values (#{tid},
+                #{sort},
+                #{ident},
+                #{describes},
+                #{jumpState},
+                #{jumpUrl},
+                #{state},
+                #{extendInformation},
+                sysdate(), sysdate(), #{createBy}, #{createBy})
     </insert>
 
     <select id="listRotationPicture" resultType="com.manager.common.core.domain.entity.RotationPicture">
         select
-            srp.id as id,
-            srp.tid as tid,
-            srp.sort as sort,
-            srp.ident as ident,
-            srp.describes as describes,
-            srp.jump_state as jumpState,
-            srp.jump_url as jumpUrl,
-            srp.state as state,
-            srp.extend_information as extendInformation,
-            srp.create_time as createTime,
-            srp.update_time as updateTime,
-            srp.create_by as createBy,
-            srp.update_by as updateBy
+        srp.id as id,
+        srp.tid as tid,
+        srp.sort as sort,
+        srp.ident as ident,
+        srp.describes as describes,
+        srp.jump_state as jumpState,
+        srp.jump_url as jumpUrl,
+        srp.state as state,
+        srp.extend_information as extendInformation,
+        srp.create_time as createTime,
+        srp.update_time as updateTime,
+        srp.create_by as createBy,
+        srp.update_by as updateBy
         from
-            sys_rotation_picture srp
+        sys_rotation_picture srp
         where
-            tid = #{tid}
+        tid = #{tid}
         <if test="state !=null and state !=''">
             and srp.state = #{state}
         </if>
@@ -59,16 +55,16 @@
         </if>
     </select>
 
-    <update id="editRotationPicture"  parameterType="com.manager.common.core.domain.entity.RotationPicture">
+    <update id="editRotationPicture" parameterType="com.manager.common.core.domain.entity.RotationPicture">
         update sys_rotation_picture
         <set>
-            <if test="sort!=null and sort!=''"> sort = #{sort},</if>
-            <if test="ident!=null and ident!=''"> ident = #{ident},</if>
-            <if test="describes!=null and describes!=''"> describes = #{describes},</if>
-            <if test="jumpState!=null and jumpState!=''"> jump_state = #{jumpState},</if>
-            <if test="jumpUrl!=null and jumpUrl!=''"> jump_url = #{jumpUrl},</if>
-            <if test="state!=null and state!=''"> state = #{state},</if>
-            <if test="extendInformation!=null and extendInformation!=''"> extend_information = #{extendInformation},</if>
+            <if test="sort!=null and sort!=''">sort = #{sort},</if>
+            <if test="ident!=null and ident!=''">ident = #{ident},</if>
+            <if test="describes!=null and describes!=''">describes = #{describes},</if>
+            <if test="jumpState!=null and jumpState!=''">jump_state = #{jumpState},</if>
+            <if test="jumpUrl!=null and jumpUrl!=''">jump_url = #{jumpUrl},</if>
+            <if test="state!=null and state!=''">state = #{state},</if>
+            <if test="extendInformation!=null and extendInformation!=''">extend_information = #{extendInformation},</if>
             update_time = sysdate(),
             update_by = #{updateBy}
         </set>

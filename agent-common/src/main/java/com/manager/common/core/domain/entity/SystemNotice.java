@@ -7,6 +7,7 @@ import lombok.Data;
 
 /**
  * 系统公告配置
+ *
  * @author sieGuang 2021/9/20
  */
 @Data

@@ -7,6 +7,7 @@ import lombok.Data;
 
 /**
  * 跑马灯配置
+ *
  * @author sieGuang 2021/9/21
  */
 @Data

@@ -15,18 +15,16 @@ import com.manager.common.constant.Constants;
 
 /**
  * 通用配置
- * 
+ *
  * @author marvin
  */
 @Configuration
-public class ResourcesConfig implements WebMvcConfigurer
-{
+public class ResourcesConfig implements WebMvcConfigurer {
     @Autowired
     private RepeatSubmitInterceptor repeatSubmitInterceptor;
 
     @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry)
-    {
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
         /** 本地文件上传路径 */
         registry.addResourceHandler(Constants.RESOURCE_PREFIX + "/**").addResourceLocations("file:" + ManagerConfig.getProfile() + "/");
 
@@ -38,8 +36,7 @@ public class ResourcesConfig implements WebMvcConfigurer
      * 自定义拦截规则
      */
     @Override
-    public void addInterceptors(InterceptorRegistry registry)
-    {
+    public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(repeatSubmitInterceptor).addPathPatterns("/**");
     }
 
@@ -47,8 +44,7 @@ public class ResourcesConfig implements WebMvcConfigurer
      * 跨域配置
      */
     @Bean
-    public CorsFilter corsFilter()
-    {
+    public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);

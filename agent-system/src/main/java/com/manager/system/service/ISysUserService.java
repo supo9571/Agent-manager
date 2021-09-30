@@ -9,8 +9,7 @@ import com.manager.common.core.domain.entity.SysUser;
  *
  * @author marvin
  */
-public interface ISysUserService
-{
+public interface ISysUserService {
     /**
      * 根据条件分页查询用户列表
      *
@@ -108,7 +107,6 @@ public interface ISysUserService
     public void checkUserAllowed(SysUser user);
 
 
-
     /**
      * 修改用户信息
      *
@@ -120,7 +118,7 @@ public interface ISysUserService
     /**
      * 用户授权角色
      *
-     * @param userId 用户ID
+     * @param userId  用户ID
      * @param roleIds 角色组
      */
     public void insertUserAuth(Long userId, Long[] roleIds);
@@ -145,7 +143,7 @@ public interface ISysUserService
      * 修改用户头像
      *
      * @param userName 用户名
-     * @param avatar 头像地址
+     * @param avatar   头像地址
      * @return 结果
      */
     public boolean updateUserAvatar(String userName, String avatar);

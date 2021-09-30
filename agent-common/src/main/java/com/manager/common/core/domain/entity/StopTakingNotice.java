@@ -6,6 +6,7 @@ import lombok.Data;
 
 /**
  * 停服公告
+ *
  * @author sieGuang 2021/09/27
  */
 @Data

@@ -2,11 +2,10 @@ package com.manager.common.enums;
 
 /**
  * 操作人类别
- * 
+ *
  * @author marvin
  */
-public enum OperatorType
-{
+public enum OperatorType {
     /**
      * 其它
      */

@@ -51,6 +51,7 @@ public class ManagerConfig {
     public void setTid(Integer tid) {
         ManagerConfig.tid = tid;
     }
+
     /**
      * 获取地址开关
      */

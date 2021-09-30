@@ -16,7 +16,7 @@ public interface SysTenantMapper {
     @Select("SELECT t_id as tid,t_name as tName from sys_tenant ")
     List<SysTenant> allList();
 
-    List selectTenants(@Param("tid") String tId,@Param("tType") String tType);
+    List selectTenants(@Param("tid") String tId, @Param("tType") String tType);
 
     List selectAllTenant();
 

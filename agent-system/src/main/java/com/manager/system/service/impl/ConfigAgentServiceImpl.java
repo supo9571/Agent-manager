@@ -48,7 +48,7 @@ public class ConfigAgentServiceImpl implements ConfigAgenService {
 
     @Override
     public Integer upPromotionDomainToAll(String promotionDomain) {
-        return configAgentMapper.upPromotionDomainToAll(promotionDomain,ManagerConfig.getTid());
+        return configAgentMapper.upPromotionDomainToAll(promotionDomain, ManagerConfig.getTid());
     }
 
 

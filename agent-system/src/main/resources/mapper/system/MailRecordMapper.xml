@@ -6,18 +6,18 @@
 
     <select id="listMailRecord" resultType="com.manager.common.core.domain.entity.MailRecord">
         SELECT
-            smr.id as id,
-            smr.tid as tid,
-            smr.signature as signature,
-            smr.addressee as addressee,
-            smr.mail_title as mailTitle,
-            smr.mail_content as mailContent,
-            smr.mail_state as mailState,
-            smr.mail_prop as mailProp,
-            smr.create_time as createTime,
-            smr.update_time as updateTime
+        smr.id as id,
+        smr.tid as tid,
+        smr.signature as signature,
+        smr.addressee as addressee,
+        smr.mail_title as mailTitle,
+        smr.mail_content as mailContent,
+        smr.mail_state as mailState,
+        smr.mail_prop as mailProp,
+        smr.create_time as createTime,
+        smr.update_time as updateTime
         from
-            sys_mail_record smr
+        sys_mail_record smr
         where tid = #{tid}
         <if test="id !=null">
             and smr.id = #{id}

@@ -55,7 +55,7 @@ public class UpdateController extends BaseController {
         JSONObject jsonObject = new JSONObject();
         String url = "";
         try {
-            url = FileUploadUtils.upload(ManagerConfig.getProfile(),file, MimeTypeUtils.APK);
+            url = FileUploadUtils.upload(ManagerConfig.getProfile(), file, MimeTypeUtils.APK);
         } catch (Exception e) {
             return AjaxResult.error(e.getMessage());
         }
@@ -169,9 +169,9 @@ public class UpdateController extends BaseController {
     public AjaxResult hotUpload(MultipartFile file) {
         JSONObject jsonObject;
         try {
-            jsonObject = FileUploadUtils.uploadUnzip(ManagerConfig.getProfile()+"/hotpackage",file);
+            jsonObject = FileUploadUtils.uploadUnzip(ManagerConfig.getProfile() + "/hotpackage", file);
         } catch (Exception e) {
-            log.error("热更新文件上传出错:{}",e.getMessage());
+            log.error("热更新文件上传出错:{}", e.getMessage());
             return AjaxResult.error(e.getMessage());
         }
         return AjaxResult.success(jsonObject);

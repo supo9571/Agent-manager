@@ -21,6 +21,7 @@ import java.util.List;
 
 /**
  * 宣传活动配置
+ *
  * @author sieGuang 2021/09/25
  */
 @RestController
@@ -42,7 +43,7 @@ public class PropagandaController extends BaseController {
         propaganda.setCreateBy(SecurityUtils.getUsername());
         propaganda.setTid(ManagerConfig.getTid());
         Integer i = propagandaService.addPropaganda(propaganda);
-        return i>0?AjaxResult.success():AjaxResult.error();
+        return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
     /**
@@ -52,10 +53,10 @@ public class PropagandaController extends BaseController {
     @ApiOperation(value = "查询宣传活动列表")
     @PostMapping("/listPropaganda")
     public AjaxResult listPropaganda(@RequestBody Propaganda propaganda) {
-        startPage(propaganda.getPage(),propaganda.getSize(),propaganda.getOrderByColumn(),propaganda.getIsAsc());
+        startPage(propaganda.getPage(), propaganda.getSize(), propaganda.getOrderByColumn(), propaganda.getIsAsc());
         propaganda.setTid(ManagerConfig.getTid());
         List list = propagandaService.listPropaganda(propaganda);
-        return AjaxResult.success(getDataTable(list,propaganda.getPage(),propaganda.getSize()));
+        return AjaxResult.success(getDataTable(list, propaganda.getPage(), propaganda.getSize()));
     }
 
     /**
@@ -69,7 +70,7 @@ public class PropagandaController extends BaseController {
         propaganda.setTid(ManagerConfig.getTid());
         propaganda.setUpdateBy(SecurityUtils.getUsername());
         Integer i = propagandaService.editPropaganda(propaganda);
-        return i>0?AjaxResult.success():AjaxResult.error();
+        return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
 
@@ -82,7 +83,7 @@ public class PropagandaController extends BaseController {
     @PostMapping("/delPropaganda")
     public AjaxResult delPropaganda(String id) {
         Integer i = propagandaService.delPropaganda(id);
-        return i>0?AjaxResult.success():AjaxResult.error();
+        return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
 }

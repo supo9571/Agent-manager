@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 商城页签管理
+ *
  * @author sieGuang 2021/09/07
  */
 @RestController
@@ -39,6 +40,7 @@ public class PayController extends BaseController {
 
     /**
      * 编辑
+     *
      * @param pay 需要修改的内容
      */
     @PreAuthorize("@ss.hasPermi('system:game:editPay')")
@@ -47,7 +49,7 @@ public class PayController extends BaseController {
     @PostMapping("/editPay")
     public AjaxResult editPay(@RequestBody Pay pay) {
         int i = payService.editPay(pay);
-        return i>0?AjaxResult.success():AjaxResult.error();
+        return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
 }

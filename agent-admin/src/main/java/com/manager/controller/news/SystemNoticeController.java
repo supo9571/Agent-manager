@@ -22,6 +22,7 @@ import java.util.List;
 
 /**
  * 系统公告配置
+ *
  * @author sieGuang 2021/09/18
  */
 @RestController
@@ -44,7 +45,7 @@ public class SystemNoticeController extends BaseController {
         systemNotice.setCreateBy(SecurityUtils.getUsername());
         systemNotice.setTid(ManagerConfig.getTid());
         Integer i = systemNoticeService.addSystemNotice(systemNotice);
-        return i>0?AjaxResult.success():AjaxResult.error();
+        return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
     /**
@@ -54,10 +55,10 @@ public class SystemNoticeController extends BaseController {
     @ApiOperation(value = "查询系统公告列表")
     @PostMapping("/listSystemNotice")
     public AjaxResult listSystemNotice(@RequestBody SystemNotice systemNotice) {
-        startPage(systemNotice.getPage(),systemNotice.getSize(),systemNotice.getOrderByColumn(),systemNotice.getIsAsc());
+        startPage(systemNotice.getPage(), systemNotice.getSize(), systemNotice.getOrderByColumn(), systemNotice.getIsAsc());
         systemNotice.setTid(ManagerConfig.getTid());
         List list = systemNoticeService.listSystemNotice(systemNotice);
-        return AjaxResult.success(getDataTable(list,systemNotice.getPage(),systemNotice.getSize()));
+        return AjaxResult.success(getDataTable(list, systemNotice.getPage(), systemNotice.getSize()));
     }
 
     /**
@@ -71,7 +72,7 @@ public class SystemNoticeController extends BaseController {
         systemNotice.setTid(ManagerConfig.getTid());
         systemNotice.setUpdateBy(SecurityUtils.getUsername());
         Integer i = systemNoticeService.editSystemNotice(systemNotice);
-        return i>0?AjaxResult.success():AjaxResult.error();
+        return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
     /**
@@ -88,7 +89,7 @@ public class SystemNoticeController extends BaseController {
         systemNotice.setTid(ManagerConfig.getTid());
         systemNotice.setUpdateBy(SecurityUtils.getUsername());
         Integer i = systemNoticeService.offlineSystemNotice(systemNotice);
-        return i>0?AjaxResult.success():AjaxResult.error();
+        return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
     /**
@@ -100,7 +101,7 @@ public class SystemNoticeController extends BaseController {
     @PostMapping("/delSystemNotice")
     public AjaxResult delSystemNotice(String id) {
         Integer i = systemNoticeService.delSystemNotice(id);
-        return i>0?AjaxResult.success():AjaxResult.error();
+        return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
     /**

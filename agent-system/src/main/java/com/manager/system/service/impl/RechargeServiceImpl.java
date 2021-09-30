@@ -39,6 +39,7 @@ public class RechargeServiceImpl implements RechargeService {
 
     /**
      * 获取在线充值 下拉列表
+     *
      * @return
      */
     public List getOnlinePays() {
@@ -47,16 +48,18 @@ public class RechargeServiceImpl implements RechargeService {
 
     /**
      * 添加 线上充值 配置信息
+     *
      * @param onlineRecharge
      * @return
      */
     @Override
     public Integer saveOnlineRecharge(OnlineRecharge onlineRecharge) {
-        return  rechargeMapper.saveOnlineRecharge(onlineRecharge);
+        return rechargeMapper.saveOnlineRecharge(onlineRecharge);
     }
 
     /**
      * 查询线上充值 配置
+     *
      * @param onlineRecharge
      * @return
      */
@@ -67,6 +70,7 @@ public class RechargeServiceImpl implements RechargeService {
 
     /**
      * 修改线上充值 配置
+     *
      * @param onlineRecharge
      * @return
      */
@@ -77,6 +81,7 @@ public class RechargeServiceImpl implements RechargeService {
 
     /**
      * 添加 银行卡充值 配置
+     *
      * @param bankRecharge
      * @return
      */
@@ -97,6 +102,7 @@ public class RechargeServiceImpl implements RechargeService {
 
     /**
      * 添加月卡
+     *
      * @param monthRecharge
      * @return
      */
@@ -117,6 +123,7 @@ public class RechargeServiceImpl implements RechargeService {
 
     /**
      * 添加 银商
+     *
      * @param ysinfo
      * @return
      */
@@ -133,7 +140,8 @@ public class RechargeServiceImpl implements RechargeService {
 
     @Override
     public Integer updateYsinfo(Ysinfo ysinfo) {
-        if (StringUtils.isNotBlank(ysinfo.getPassword())) ysinfo.setPassword(SecurityUtils.encryptPassword(ysinfo.getPassword()));
+        if (StringUtils.isNotBlank(ysinfo.getPassword()))
+            ysinfo.setPassword(SecurityUtils.encryptPassword(ysinfo.getPassword()));
         return rechargeMapper.updateYsinfo(ysinfo);
     }
 

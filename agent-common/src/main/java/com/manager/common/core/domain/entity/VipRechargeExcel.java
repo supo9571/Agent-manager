@@ -12,6 +12,7 @@ import java.util.Date;
 
 /**
  * vip充值导出
+ *
  * @author sieGuang 2021/09/15
  */
 @Data
@@ -45,7 +46,7 @@ public class VipRechargeExcel extends BaseEntity {
     @ApiModelProperty("支付渠道")
     private String rechargeChannel;
 
-    @Excel(name = "支付状态" ,readConverterExp = "1=支付成功,2=等待支付,3=取消支付")
+    @Excel(name = "支付状态", readConverterExp = "1=支付成功,2=等待支付,3=取消支付")
     @ApiModelProperty("支付状态 1支付成功 2等待支付 3取消支付")
     private String paymentStatus;
 

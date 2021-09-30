@@ -1,4 +1,5 @@
 package com.manager.controller.game;
+
 import com.manager.common.annotation.Log;
 import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.controller.BaseController;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 客服信息管理
+ *
  * @author sieGuang 2021/09/06
  */
 @RestController
@@ -48,7 +50,7 @@ public class ConsumerController extends BaseController {
     public AjaxResult addConsumer(@RequestBody Consumer consumer) {
         consumer.setTid(ManagerConfig.getTid());
         int i = consumerService.addConsumer(consumer);
-        return i>0?AjaxResult.success():AjaxResult.error();
+        return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
     /**
@@ -60,11 +62,12 @@ public class ConsumerController extends BaseController {
     @PostMapping("/delConsumer")
     public AjaxResult delConsumer(String id) {
         Integer i = consumerService.delConsumer(id);
-        return i>0?AjaxResult.success():AjaxResult.error();
+        return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
     /**
      * 编辑
+     *
      * @param consumer 需要修改的内容
      */
     @PreAuthorize("@ss.hasPermi('system:game:editConsumer')")
@@ -73,7 +76,7 @@ public class ConsumerController extends BaseController {
     @PostMapping("/editConsumer")
     public AjaxResult editConsumer(@RequestBody Consumer consumer) {
         int i = consumerService.editConsumer(consumer);
-        return i>0?AjaxResult.success():AjaxResult.error();
+        return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
 }

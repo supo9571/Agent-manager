@@ -2,11 +2,10 @@ package com.manager.common.constant;
 
 /**
  * 返回状态码
- * 
+ *
  * @author marvin
  */
-public class HttpStatus
-{
+public class HttpStatus {
     /**
      * 操作成功
      */

@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 
 /**
  * 启动程序
+ *
  * @author marvin
  */
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
@@ -23,7 +24,7 @@ public class AdminApplication {
     @Bean
     public ConfigurableServletWebServerFactory webServerFactory() {
         TomcatServletWebServerFactory servletWebServerFactory = new TomcatServletWebServerFactory();
-        servletWebServerFactory.addConnectorCustomizers(connector -> connector.setProperty("relaxedQueryChars","|{}[]"));
+        servletWebServerFactory.addConnectorCustomizers(connector -> connector.setProperty("relaxedQueryChars", "|{}[]"));
         return servletWebServerFactory;
     }
 }

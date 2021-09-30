@@ -18,6 +18,7 @@ import java.util.List;
 
 /**
  * 邮箱记录
+ *
  * @author sieGuang 2021/09/20
  */
 @RestController
@@ -35,10 +36,10 @@ public class MailRecordController extends BaseController {
     @ApiOperation(value = "查询邮箱记录列表")
     @PostMapping("/listMailRecord")
     public AjaxResult listMailRecord(@RequestBody MailRecord mailRecord) {
-        startPage(mailRecord.getPage(),mailRecord.getSize(),mailRecord.getOrderByColumn(),mailRecord.getIsAsc());
+        startPage(mailRecord.getPage(), mailRecord.getSize(), mailRecord.getOrderByColumn(), mailRecord.getIsAsc());
         mailRecord.setTid(ManagerConfig.getTid());
         List list = mailRecordService.listMailRecord(mailRecord);
-        return AjaxResult.success(getDataTable(list,mailRecord.getPage(),mailRecord.getSize()));
+        return AjaxResult.success(getDataTable(list, mailRecord.getPage(), mailRecord.getSize()));
     }
 
 }

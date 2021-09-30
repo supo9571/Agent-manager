@@ -36,7 +36,7 @@ public class SysBlackController extends BaseController {
     public AjaxResult add(SysBlack sysBlack) {
         sysBlack.setCreateBy(SecurityUtils.getUsername());
         int i = sysBlackService.insertBlack(sysBlack);
-        if(i>0)return AjaxResult.success();
+        if (i > 0) return AjaxResult.success();
         return AjaxResult.error();
     }
 

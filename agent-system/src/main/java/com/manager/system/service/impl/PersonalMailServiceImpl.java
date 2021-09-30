@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * 个人邮箱配置
+ *
  * @author sieGuang 2021/09/20
  */
 @Service
@@ -24,9 +25,9 @@ public class PersonalMailServiceImpl implements PersonalMailService {
     @Override
     public Integer addPersonalMail(PersonalMail personalMail) {
         // 判断当前时间是否大于发送时间
-        if(DateUtils.dateCompare(personalMail.getSendOutTime())){
+        if (DateUtils.dateCompare(personalMail.getSendOutTime())) {
             personalMail.setState("2");
-        }else{
+        } else {
             personalMail.setState("1");
         }
         return personalMailMapper.addPersonalMail(personalMail);
@@ -40,16 +41,16 @@ public class PersonalMailServiceImpl implements PersonalMailService {
     @Override
     public Integer editPersonalMail(PersonalMail personalMail) {
         // 判断当前时间是否大于发送时间
-        if(DateUtils.dateCompare(personalMail.getSendOutTime())){
+        if (DateUtils.dateCompare(personalMail.getSendOutTime())) {
             personalMail.setState("2");
-        }else{
+        } else {
             personalMail.setState("1");
         }
         return personalMailMapper.editPersonalMail(personalMail);
     }
 
     @Override
-    public Integer offlinePersonalMail(Integer id,Integer type) {
+    public Integer offlinePersonalMail(Integer id, Integer type) {
         PersonalMail personalMail = new PersonalMail();
         personalMail.setId(id);
         personalMail.setState("3");
@@ -59,22 +60,21 @@ public class PersonalMailServiceImpl implements PersonalMailService {
         Integer i = 0;
 
         // 1下线 2测回
-        if(type == 1){
+        if (type == 1) {
             i = personalMailMapper.editPersonalMail(personalMail);
-        }else{
+        } else {
             // 更新 个人邮箱配置表状态
             i = personalMailMapper.editPersonalMail(personalMail);
 
             // 防止异常
-            if(i <= 0){
+            if (i <= 0) {
                 return i;
             }
             // 更新 邮箱记录状态
-            personalMailMapper.editMailRecord(id,ManagerConfig.getTid(),SecurityUtils.getUsername());
+            personalMailMapper.editMailRecord(id, ManagerConfig.getTid(), SecurityUtils.getUsername());
         }
         return i;
     }
-
 
 
     @Override

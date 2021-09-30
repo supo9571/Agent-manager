@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * 跑马灯配置
+ *
  * @author sieGuang 2021/09/21
  */
 @Mapper

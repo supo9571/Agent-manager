@@ -2,12 +2,10 @@ package com.manager.common.enums;
 
 /**
  * 操作状态
- * 
- * @author marvin
  *
+ * @author marvin
  */
-public enum BusinessStatus
-{
+public enum BusinessStatus {
     /**
      * 成功
      */

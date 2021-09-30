@@ -5,58 +5,52 @@
 <mapper namespace="com.manager.system.mapper.StopTakingNoticeMapper">
 
     <insert id="addStopTakingNotice" parameterType="com.manager.common.core.domain.entity.StopTakingNotice">
-       insert into sys_stop_taking_notice(
-            tid,
-            title,
-            content,
-            signature,
-            notice_time,
-            begin_time,
-            end_time,
-            create_time,update_time,create_by,update_by
-        )
-        values (
-           #{tid},
-           #{title},
-           #{content},
-           #{signature},
-           #{beginTime},
-           #{beginTime},
-           #{endTime},
-           sysdate(),sysdate(),#{createBy},#{createBy}
-       )
+        insert into sys_stop_taking_notice(tid,
+                                           title,
+                                           content,
+                                           signature,
+                                           notice_time,
+                                           begin_time,
+                                           end_time,
+                                           create_time, update_time, create_by, update_by)
+        values (#{tid},
+                #{title},
+                #{content},
+                #{signature},
+                #{beginTime},
+                #{beginTime},
+                #{endTime},
+                sysdate(), sysdate(), #{createBy}, #{createBy})
     </insert>
 
     <select id="listStopTakingNotice" resultType="com.manager.common.core.domain.entity.StopTakingNotice">
-        SELECT
-            sstn.id AS id,
-            sstn.tid AS tid,
-            sstn.title as title,
-            sstn.content as content,
-            sstn.signature as signature,
-            sstn.notice_time as noticeTime,
-            sstn.begin_time as beginTime,
-            sstn.end_time as endTime,
-            sstn.create_time AS createTime,
-            sstn.update_time AS updateTime,
-            sstn.create_by AS createBy,
-            sstn.update_by as updateBy
-        from
-            sys_stop_taking_notice sstn
+        SELECT sstn.id          AS id,
+               sstn.tid         AS tid,
+               sstn.title       as title,
+               sstn.content     as content,
+               sstn.signature   as signature,
+               sstn.notice_time as noticeTime,
+               sstn.begin_time  as beginTime,
+               sstn.end_time    as endTime,
+               sstn.create_time AS createTime,
+               sstn.update_time AS updateTime,
+               sstn.create_by   AS createBy,
+               sstn.update_by   as updateBy
+        from sys_stop_taking_notice sstn
         WHERE tid = #{tid}
     </select>
 
-    <update id="editStopTakingNotice"  parameterType="com.manager.common.core.domain.entity.StopTakingNotice">
+    <update id="editStopTakingNotice" parameterType="com.manager.common.core.domain.entity.StopTakingNotice">
         update sys_stop_taking_notice
         <set>
-            <if test="title!=null and title!=''"> title = #{title},</if>
-            <if test="content!=null and content!=''"> content = #{content},</if>
+            <if test="title!=null and title!=''">title = #{title},</if>
+            <if test="content!=null and content!=''">content = #{content},</if>
             <if test="signature!=null and signature!=''">
                 signature = #{signature},
             </if>
-            <if test="noticeTime!=null"> notice_time = #{noticeTime},</if>
-            <if test="beginTime!=null and beginTime!=''"> begin_time = #{beginTime},</if>
-            <if test="endTime!=null and endTime!=''"> update_time = #{endTime},</if>
+            <if test="noticeTime!=null">notice_time = #{noticeTime},</if>
+            <if test="beginTime!=null and beginTime!=''">begin_time = #{beginTime},</if>
+            <if test="endTime!=null and endTime!=''">update_time = #{endTime},</if>
             update_time = sysdate(),
             update_by = #{updateBy}
         </set>

@@ -6,6 +6,7 @@ import lombok.Data;
 
 /**
  * 邮箱记录
+ *
  * @author sieGuang 2021/9/20
  */
 @Data

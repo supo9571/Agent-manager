@@ -21,6 +21,7 @@ import java.util.List;
 
 /**
  * 停服公告
+ *
  * @author sieGuang 2021/09/27
  */
 @RestController
@@ -42,7 +43,7 @@ public class StopTakingNoticeController extends BaseController {
         stopTakingNotice.setCreateBy(SecurityUtils.getUsername());
         stopTakingNotice.setTid(ManagerConfig.getTid());
         Integer i = stopTakingNoticeService.addStopTakingNotice(stopTakingNotice);
-        return i>0?AjaxResult.success():AjaxResult.error();
+        return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
     /**
@@ -52,11 +53,11 @@ public class StopTakingNoticeController extends BaseController {
     @ApiOperation(value = "查询停服公告列表")
     @PostMapping("/listStopTakingNotice")
     public AjaxResult listStopTakingNotice(@RequestBody StopTakingNotice stopTakingNotice) {
-        startPage(stopTakingNotice.getPage(),stopTakingNotice.getSize(),
-                stopTakingNotice.getOrderByColumn(),stopTakingNotice.getIsAsc());
+        startPage(stopTakingNotice.getPage(), stopTakingNotice.getSize(),
+                stopTakingNotice.getOrderByColumn(), stopTakingNotice.getIsAsc());
         stopTakingNotice.setTid(ManagerConfig.getTid());
         List list = stopTakingNoticeService.listStopTakingNotice(stopTakingNotice);
-        return AjaxResult.success(getDataTable(list,stopTakingNotice.getPage(),stopTakingNotice.getSize()));
+        return AjaxResult.success(getDataTable(list, stopTakingNotice.getPage(), stopTakingNotice.getSize()));
     }
 
     /**
@@ -70,7 +71,7 @@ public class StopTakingNoticeController extends BaseController {
         stopTakingNotice.setTid(ManagerConfig.getTid());
         stopTakingNotice.setUpdateBy(SecurityUtils.getUsername());
         Integer i = stopTakingNoticeService.editStopTakingNotice(stopTakingNotice);
-        return i>0?AjaxResult.success():AjaxResult.error();
+        return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
 
@@ -83,7 +84,7 @@ public class StopTakingNoticeController extends BaseController {
     @PostMapping("/delStopTakingNotice")
     public AjaxResult delStopTakingNotice(String id) {
         Integer i = stopTakingNoticeService.delStopTakingNotice(id);
-        return i>0?AjaxResult.success():AjaxResult.error();
+        return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
 }

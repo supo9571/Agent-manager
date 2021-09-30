@@ -5,48 +5,48 @@
 <mapper namespace="com.manager.system.mapper.ConfigAgentMapper">
 
     <insert id="saveConfigAgent" parameterType="com.manager.common.core.domain.entity.ConfigAgent">
-        insert into config_agent(tid,lvl,lvl_name,min,max,rebate,create_time,update_time)
-            values
-            (
-                #{tid},
+        insert into config_agent(tid, lvl, lvl_name, min, max, rebate, create_time, update_time)
+        values (#{tid},
                 #{lvl},
                 #{lvlName},
                 #{min},
                 #{max},
                 #{rebate},
                 sysdate(),
-                sysdate()
-             )
+                sysdate())
     </insert>
 
     <select id="getConfigAgentList" resultType="java.util.Map">
-        select a.id, a.lvl lvl,a.lvl_name lvlName,a.min,a.max,a.rebate rebate,a.promotion_domain promotionDomain
+        select a.id, a.lvl lvl, a.lvl_name lvlName, a.min, a.max, a.rebate rebate, a.promotion_domain promotionDomain
         from config_agent a
         where a.tid = #{tid}
         order by a.lvl asc
     </select>
 
     <delete id="delConfigAgent" parameterType="Long">
-        delete from config_agent where id = #{id}
+        delete
+        from config_agent
+        where id = #{id}
     </delete>
 
     <update id="upConfigAgent" parameterType="com.manager.common.core.domain.entity.ConfigAgent">
         update config_agent
         <set>
-            <if test="lvl!=null and lvl!=''"> lvl = #{lvl},</if>
-            <if test="lvlName!=null and lvlName!=''"> lvl_name = #{lvlName},</if>
-            <if test="min!=null and min!=''"> min = #{min},</if>
-            <if test="max!=null and max!=''"> max = #{max},</if>
-            <if test="rebate!=null and rebate!=''"> rebate = #{rebate},</if>
-            <if test="promotionDomain!=null and promotionDomain!=''"> promotion_domain = #{promotionDomain},</if>
+            <if test="lvl!=null and lvl!=''">lvl = #{lvl},</if>
+            <if test="lvlName!=null and lvlName!=''">lvl_name = #{lvlName},</if>
+            <if test="min!=null and min!=''">min = #{min},</if>
+            <if test="max!=null and max!=''">max = #{max},</if>
+            <if test="rebate!=null and rebate!=''">rebate = #{rebate},</if>
+            <if test="promotionDomain!=null and promotionDomain!=''">promotion_domain = #{promotionDomain},</if>
             update_time = sysdate()
         </set>
         where id = #{id}
     </update>
 
     <select id="getConfigAgentById" resultType="com.manager.common.core.domain.entity.ConfigAgent" parameterType="Long">
-        select a.id, a.lvl lvl,a.lvl_name lvlName,a.min,a.max,a.rebate rebate,a.promotion_domain promotionDomain
-        from config_agent a where a.id= #{id}
+        select a.id, a.lvl lvl, a.lvl_name lvlName, a.min, a.max, a.rebate rebate, a.promotion_domain promotionDomain
+        from config_agent a
+        where a.id = #{id}
     </select>
 
 

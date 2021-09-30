@@ -21,6 +21,7 @@ import java.util.List;
 
 /**
  * 提现审批
+ *
  * @author sieGuang 2021/09/16
  */
 @RestController
@@ -54,15 +55,15 @@ public class ExchangeEaaController extends BaseController {
     @Log(title = "提现审批导出", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(@RequestBody ExchangeEaa exchangeEaa, HttpServletResponse response) throws IOException {
-        startOrder(exchangeEaa.getOrderByColumn(),exchangeEaa.getIsAsc());
+        startOrder(exchangeEaa.getOrderByColumn(), exchangeEaa.getIsAsc());
         List<ExchangeEaa> list = exchangeEaaService.export(exchangeEaa);
 
         ExcelUtil util = new ExcelUtil<ExchangeEaa>(ExchangeEaa.class);
         String fileName = "充值查询导出";
 
         response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
-        FileUtils.setAttachmentResponseHeader(response, fileName+".xlsx");
-        util.downloadExcel(list, fileName,response.getOutputStream());
+        FileUtils.setAttachmentResponseHeader(response, fileName + ".xlsx");
+        util.downloadExcel(list, fileName, response.getOutputStream());
     }
 
     @PreAuthorize("@ss.hasPermi('system:game:editExchange')")
@@ -71,7 +72,7 @@ public class ExchangeEaaController extends BaseController {
     @PostMapping("/editExchangeEaaList")
     public AjaxResult editExchangeEaaList(@RequestBody ExchangeEaa exchangeEaa) {
         int i = exchangeEaaService.editExchangeEaaList(exchangeEaa);
-        return i>0?AjaxResult.success():AjaxResult.error();
+        return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
     /**

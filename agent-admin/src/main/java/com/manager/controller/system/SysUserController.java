@@ -47,6 +47,7 @@ public class SysUserController extends BaseController {
 
     @Autowired
     private ISysPostService postService;
+
     /**
      * 获取用户列表
      */
@@ -55,7 +56,7 @@ public class SysUserController extends BaseController {
     @GetMapping("/list")
     public AjaxResult list(SysUser user) {
         startPage();
-        if(SecurityUtils.getLoginUser().getUser().isAdmin()){
+        if (SecurityUtils.getLoginUser().getUser().isAdmin()) {
             user.setIsLoginAdmin("admin");
         }
         List list = userService.selectUserList(user);
@@ -108,7 +109,7 @@ public class SysUserController extends BaseController {
     public AjaxResult edit(@Validated @RequestBody SysUser user) {
         userService.checkUserAllowed(user);
         user.setUpdateBy(SecurityUtils.getUsername());
-        if(StringUtils.isNotEmpty(user.getPassword())){
+        if (StringUtils.isNotEmpty(user.getPassword())) {
             user.setPassword(SecurityUtils.encryptPassword(user.getPassword()));
         }
         return toAjax(userService.updateUser(user));
@@ -207,12 +208,13 @@ public class SysUserController extends BaseController {
     @PreAuthorize("@ss.hasPermi('system:google:save')")
     @ApiOperation(value = "保存用户google密钥")
     @GetMapping("/saveGoogleKey")
-    public AjaxResult saveGoogleKey(Long userId,String googleKey) {
-        return AjaxResult.success("保存google密钥成功", userService.saveGoogleKey(userId,googleKey));
+    public AjaxResult saveGoogleKey(Long userId, String googleKey) {
+        return AjaxResult.success("保存google密钥成功", userService.saveGoogleKey(userId, googleKey));
     }
 
     @Autowired
     private ISysMenuService menuService;
+
     /**
      * 获取用户菜单下拉树列表
      */

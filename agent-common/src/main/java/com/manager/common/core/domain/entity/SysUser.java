@@ -54,18 +54,22 @@ public class SysUser extends BaseEntity {
     @ApiModelProperty(value = "删除标识")
     private String delFlag;
 
-    /** 角色对象 */
+    /**
+     * 角色对象
+     */
     private List<SysRole> roles;
 
-    /** 角色对象 */
+    /**
+     * 角色对象
+     */
     private String isLoginAdmin;
 
     public boolean isAdmin() {
-        return userId==1;
+        return userId == 1;
     }
 
     public static boolean isAdmin(Long userId) {
-        return userId==1;
+        return userId == 1;
     }
 
     public boolean isSwitchOpen() {

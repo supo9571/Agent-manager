@@ -13,6 +13,7 @@ import java.util.Map;
 
 /**
  * 提现信息管理
+ *
  * @author sieGuang 2021/09/07
  */
 @Service
@@ -32,8 +33,8 @@ public class ExchangeServiceImpl implements ExchangeService {
     }
 
     @Override
-    public int editSettingsExchange(int settingsType,String value){
-        return exchangeMapper.editSettingsExchange(settingsType,value,ManagerConfig.getTid());
+    public int editSettingsExchange(int settingsType, String value) {
+        return exchangeMapper.editSettingsExchange(settingsType, value, ManagerConfig.getTid());
     }
 
 }

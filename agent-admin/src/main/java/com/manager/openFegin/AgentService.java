@@ -31,8 +31,8 @@ public interface AgentService {
 
     @PostMapping(value = "/data/agent/popularize")
     AjaxResult getPopularizes(@RequestParam("uid") String uid,
-                        @RequestParam("page") Integer page,
-                        @RequestParam("size") Integer size,
-                        @RequestParam("orderByColumn") String orderByColumn,
-                        @RequestParam("isAsc") String isAsc);
+                              @RequestParam("page") Integer page,
+                              @RequestParam("size") Integer size,
+                              @RequestParam("orderByColumn") String orderByColumn,
+                              @RequestParam("isAsc") String isAsc);
 }

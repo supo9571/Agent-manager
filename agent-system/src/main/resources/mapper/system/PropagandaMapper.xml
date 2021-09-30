@@ -5,56 +5,52 @@
 <mapper namespace="com.manager.system.mapper.PropagandaMapper">
 
     <insert id="addPropaganda" parameterType="com.manager.common.core.domain.entity.Propaganda">
-       insert into sys_propaganda(
-            tid,
-            sort,
-            addressee,
-            title,
-            state,
-            type,
-            content,
-            signature,
-            addressee_type,
-            begin_time,
-            end_time,
-            create_time,update_time,create_by,update_by
-        )
-        values (
-           #{tid},
-           #{sort},
-           #{addressee},
-           #{title},
-           #{state},
-           #{type},
-           #{content},
-           #{signature},
-           #{addresseeType},
-           #{beginTime},
-           #{endTime},
-           sysdate(),sysdate(),#{createBy},#{createBy}
-       )
+        insert into sys_propaganda(tid,
+                                   sort,
+                                   addressee,
+                                   title,
+                                   state,
+                                   type,
+                                   content,
+                                   signature,
+                                   addressee_type,
+                                   begin_time,
+                                   end_time,
+                                   create_time, update_time, create_by, update_by)
+        values (#{tid},
+                #{sort},
+                #{addressee},
+                #{title},
+                #{state},
+                #{type},
+                #{content},
+                #{signature},
+                #{addresseeType},
+                #{beginTime},
+                #{endTime},
+                sysdate(), sysdate(), #{createBy}, #{createBy})
     </insert>
 
     <select id="listPropaganda" resultType="com.manager.common.core.domain.entity.Propaganda">
         SELECT
-            sp.id AS id,
-            sp.tid AS tid,
-            sp.sort AS sort,
-            sp.addressee AS addressee,
-            sp.addressee_type AS addresseeType,
-            sp.type AS type,
-            sp.title AS title,
-            sp.content AS content,
-            sp.signature AS signature,
-            sp.state AS state,
-            sp.begin_time AS beginTime,
-            sp.end_time AS endTime,
-            sp.create_time AS createTime,
-            sp.update_time AS updateTime,
-            sp.create_by AS createBy,
-            sp.update_by as updateBy
+        sp.id AS id,
+        sp.tid AS tid,
+        sp.sort AS sort,
+        sp.addressee AS addressee,
+        sp.addressee_type AS addresseeType,
+        sp.type AS type,
+        sp.title AS title,
+        sp.content AS content,
+        sp.signature AS signature,
+        sp.state AS state,
+        sp.begin_time AS beginTime,
+        sp.end_time AS endTime,
+        sp.create_time AS createTime,
+        sp.update_time AS updateTime,
+        sp.create_by AS createBy,
+        sp.update_by as updateBy
         FROM
-            sys_propaganda sp
+        sys_propaganda sp
         WHERE tid = #{tid}
         <if test="state !=null and state !=''">
             and sp.state = #{state}
@@ -67,21 +63,21 @@
         </if>
     </select>
 
-    <update id="editPropaganda"  parameterType="com.manager.common.core.domain.entity.Propaganda">
+    <update id="editPropaganda" parameterType="com.manager.common.core.domain.entity.Propaganda">
         update sys_propaganda
         <set>
-            <if test="addressee!=null and addressee!=''"> addressee = #{addressee},</if>
-            <if test="sort!=null and sort!=''"> sort = #{sort},</if>
-            <if test="title!=null and title!=''"> title = #{title},</if>
-            <if test="state!=null and state!=''"> state = #{state},</if>
-            <if test="type!=null and type!=''"> type = #{type},</if>
-            <if test="content!=null and content!=''"> content = #{content},</if>
+            <if test="addressee!=null and addressee!=''">addressee = #{addressee},</if>
+            <if test="sort!=null and sort!=''">sort = #{sort},</if>
+            <if test="title!=null and title!=''">title = #{title},</if>
+            <if test="state!=null and state!=''">state = #{state},</if>
+            <if test="type!=null and type!=''">type = #{type},</if>
+            <if test="content!=null and content!=''">content = #{content},</if>
             <if test="signature!=null and signature!=''">
                 signature = #{signature},
             </if>
-            <if test="addresseeType!=null and addresseeType!=''"> addressee_type = #{addresseeType},</if>
-            <if test="beginTime!=null and beginTime!=''"> begin_time = #{beginTime},</if>
-            <if test="endTime!=null and endTime!=''"> end_time = #{endTime},</if>
+            <if test="addresseeType!=null and addresseeType!=''">addressee_type = #{addresseeType},</if>
+            <if test="beginTime!=null and beginTime!=''">begin_time = #{beginTime},</if>
+            <if test="endTime!=null and endTime!=''">end_time = #{endTime},</if>
             update_time = sysdate(),
             update_by = #{updateBy}
         </set>

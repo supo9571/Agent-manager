@@ -11,8 +11,7 @@ import org.apache.ibatis.annotations.Update;
  *
  * @author marvin
  */
-public interface SysUserMapper
-{
+public interface SysUserMapper {
 
     /**
      * 根据条件分页查询未已配用户角色列表
@@ -59,7 +58,7 @@ public interface SysUserMapper
      * 修改用户头像
      *
      * @param userName 用户名
-     * @param avatar 头像地址
+     * @param avatar   头像地址
      * @return 结果
      */
     public int updateUserAvatar(@Param("userName") String userName, @Param("avatar") String avatar);
@@ -127,7 +126,7 @@ public interface SysUserMapper
     /**
      * 新增用户与角色关联
      */
-    void insertUserRole(@Param("userId") long userId,@Param("roleId") String roleId);
+    void insertUserRole(@Param("userId") long userId, @Param("roleId") String roleId);
 
     /**
      * 查询google密钥

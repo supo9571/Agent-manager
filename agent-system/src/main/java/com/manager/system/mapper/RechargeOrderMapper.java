@@ -12,6 +12,7 @@ import java.util.Map;
 
 /**
  * 充值订单查询
+ *
  * @author sieGuang 2021/09/10
  */
 @Mapper
@@ -37,6 +38,7 @@ public interface RechargeOrderMapper {
 
     /**
      * 获取月卡金额
+     *
      * @param monthlyCardType 1金卡 2银卡
      */
     Map getRechargeAmount(@Param("monthlyCardType") String monthlyCardType);

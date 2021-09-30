@@ -469,48 +469,48 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      */
     public static String jsonToLua(Object object) {
         StringBuilder sb = new StringBuilder();
-        if(object instanceof JSONObject){
+        if (object instanceof JSONObject) {
             JSONObject jsonObject = (JSONObject) object;
-            for (Map.Entry<String,Object> entry:jsonObject.entrySet()){
+            for (Map.Entry<String, Object> entry : jsonObject.entrySet()) {
                 Object v = entry.getValue();
                 String k = entry.getKey();
-                if(v instanceof String || v instanceof Integer || v instanceof Boolean ){
-                    if(StringUtils.isNumeric(k)){
+                if (v instanceof String || v instanceof Integer || v instanceof Boolean) {
+                    if (StringUtils.isNumeric(k)) {
                         sb.append("[".concat(entry.getKey()).concat("]"));
-                    }else {
+                    } else {
                         sb.append("[\"".concat(entry.getKey()).concat("\"]"));
                     }
-                    if(v instanceof String){
+                    if (v instanceof String) {
                         sb.append(" = \"").append(v).append("\", ");
-                    }else{
+                    } else {
                         sb.append(" = ").append(v).append(", ");
                     }
 
                 } else {
-                    if(StringUtils.isNumeric(k)){
+                    if (StringUtils.isNumeric(k)) {
                         sb.append("[".concat(entry.getKey()).concat("]"));
-                    }else {
+                    } else {
                         sb.append("[\"".concat(entry.getKey()).concat("\"]"));
                     }
                     sb.append(" = {").append(jsonToLua(v)).append("}, ");
                 }
             }
         }
-        if(object instanceof JSONArray){
+        if (object instanceof JSONArray) {
             JSONArray jsonArray = (JSONArray) object;
             for (int i = 0; i < jsonArray.size(); i++) {
                 Object v = jsonArray.get(i);
-                sb.append("[".concat(i+1+"").concat("] = "));
-                if(v instanceof String){
+                sb.append("[".concat(i + 1 + "").concat("] = "));
+                if (v instanceof String) {
                     sb.append("\"").append(v).append("\", ");
-                }else if( v instanceof Integer || v instanceof Boolean){
+                } else if (v instanceof Integer || v instanceof Boolean) {
                     sb.append(v).append(", ");
                 } else {
                     sb.append("{").append(jsonToLua(v)).append("}, ");
                 }
             }
         }
-        if(sb.toString().endsWith(", ")) sb = new StringBuilder(sb.substring(0,sb.length()-2));
+        if (sb.toString().endsWith(", ")) sb = new StringBuilder(sb.substring(0, sb.length() - 2));
         return sb.toString();
     }
 

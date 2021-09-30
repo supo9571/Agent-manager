@@ -25,17 +25,17 @@ public class SysIpWhiteServiceImpl implements SysIpWhiteService {
     private SysUserMapper sysUserMapper;
 
     @Override
-    public void addIpWhite(long tid, Long userId, String ips,long createUserId,String userName) {
-        if(userId==null || userId ==0){
+    public void addIpWhite(long tid, Long userId, String ips, long createUserId, String userName) {
+        if (userId == null || userId == 0) {
             //根据userName 查询id
             userId = sysUserMapper.selectUserIdByUserName(userName);
-            if(userId==null || userId ==0) throw new CustomException("用户名错误！");
+            if (userId == null || userId == 0) throw new CustomException("用户名错误！");
         }
         List<SysIpWhite> list = new ArrayList<>();
         List<String> ipList = Arrays.asList(ips.split(","));
         Long finalUserId = userId;
-        ipList.forEach(ip->{
-            list.add(new SysIpWhite(tid, finalUserId,createUserId,ip));
+        ipList.forEach(ip -> {
+            list.add(new SysIpWhite(tid, finalUserId, createUserId, ip));
         });
         sysIpWhiteMapper.insertIpWhite(list);
     }
@@ -47,14 +47,14 @@ public class SysIpWhiteServiceImpl implements SysIpWhiteService {
 
     @Override
     public List selectIpWhiteList(String tid, String userId, String ip, String userName) {
-        return sysIpWhiteMapper.selectIpWhiteList(tid,userId,ip,userName);
+        return sysIpWhiteMapper.selectIpWhiteList(tid, userId, ip, userName);
     }
 
     @Override
     public String selectIpByUserId(String userId) {
         StringBuffer userIp = new StringBuffer();
         List ips = sysIpWhiteMapper.selectIpByUserId(userId);
-        ips.forEach(ip -> userIp.append(((Map)ip).get("ip")+","));
-        return userIp.length()>1?userIp.substring(0,userIp.length()-1):"";
+        ips.forEach(ip -> userIp.append(((Map) ip).get("ip") + ","));
+        return userIp.length() > 1 ? userIp.substring(0, userIp.length() - 1) : "";
     }
 }

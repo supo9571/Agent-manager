@@ -4,6 +4,7 @@ import com.manager.common.utils.StringUtils;
 
 /**
  * 分页数据
+ *
  * @author marvin
  */
 public class PageDomain {

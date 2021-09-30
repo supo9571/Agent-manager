@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * 宣传活动配置
+ *
  * @author sieGuang 2021/09/25
  */
 @Service
@@ -22,15 +23,15 @@ public class PropagandaServiceImpl implements PropagandaService {
     @Override
     public Integer addPropaganda(Propaganda propaganda) {
         // 当前时间 > 开始时间
-        if(DateUtils.dateCompare(propaganda.getBeginTime())){
+        if (DateUtils.dateCompare(propaganda.getBeginTime())) {
             // 当前时间 < 结束数据  = 在线
             // 当前时间 > 结束数据  = 下线（else）
-            if(!(DateUtils.dateCompare(propaganda.getEndTime()))){
+            if (!(DateUtils.dateCompare(propaganda.getEndTime()))) {
                 propaganda.setState("2");
-            }else{
+            } else {
                 propaganda.setState("3");
             }
-        }else{
+        } else {
             // 其它 = 待发送
             propaganda.setState("1");
         }
@@ -45,15 +46,15 @@ public class PropagandaServiceImpl implements PropagandaService {
     @Override
     public Integer editPropaganda(Propaganda propaganda) {
         // 当前时间 > 开始时间
-        if(DateUtils.dateCompare(propaganda.getBeginTime())){
+        if (DateUtils.dateCompare(propaganda.getBeginTime())) {
             // 当前时间 < 结束数据  = 在线
             // 当前时间 > 结束数据  = 下线（else）
-            if(!(DateUtils.dateCompare(propaganda.getEndTime()))){
+            if (!(DateUtils.dateCompare(propaganda.getEndTime()))) {
                 propaganda.setState("2");
-            }else{
+            } else {
                 propaganda.setState("3");
             }
-        }else{
+        } else {
             // 其它 = 待发送
             propaganda.setState("1");
         }

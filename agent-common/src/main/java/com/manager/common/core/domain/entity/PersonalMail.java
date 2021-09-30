@@ -9,6 +9,7 @@ import java.util.Date;
 
 /**
  * 个人邮箱配置
+ *
  * @author sieGuang 2021/9/20
  */
 @Data

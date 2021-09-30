@@ -7,11 +7,11 @@
     <update id="editPay" parameterType="com.manager.common.core.domain.entity.Pay">
         update config_pay
         <set>
-            <if test="sort!=null and sort!=''"> sort = #{sort},</if>
-            <if test="cname!=null and cname!=''"> cname = #{cname},</if>
-            <if test="rechargeGive!=null and rechargeGive!=''"> recharge_give = #{rechargeGive},</if>
-            <if test="status!=null and status!=''"> status = #{status},</if>
-            <if test="payType!=null and payType!=''"> pay_type = #{payType},</if>
+            <if test="sort!=null and sort!=''">sort = #{sort},</if>
+            <if test="cname!=null and cname!=''">cname = #{cname},</if>
+            <if test="rechargeGive!=null and rechargeGive!=''">recharge_give = #{rechargeGive},</if>
+            <if test="status!=null and status!=''">status = #{status},</if>
+            <if test="payType!=null and payType!=''">pay_type = #{payType},</if>
             updated_time = sysdate()
         </set>
         where id = #{id} and tid=#{tid}

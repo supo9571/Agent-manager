@@ -9,6 +9,7 @@ import java.util.Map;
 
 /**
  * 充值订单查询
+ *
  * @author sieGuang 2021/09/10
  */
 public interface RechargeOrderService {
@@ -20,12 +21,14 @@ public interface RechargeOrderService {
 
     /**
      * 增加充值数据
+     *
      * @param rechargeOrder 参数
      */
     Integer addRechargeOrder(RechargeOrder rechargeOrder);
 
     /**
      * 确认充值、取消充值
+     *
      * @param rechargeOrder
      */
     Integer editRechargeOrder(RechargeOrder rechargeOrder);
@@ -38,6 +41,7 @@ public interface RechargeOrderService {
 
     /**
      * 获取月卡金额
+     *
      * @param monthlyCardType 1金卡 2银卡
      */
     Map getRechargeAmount(String monthlyCardType);

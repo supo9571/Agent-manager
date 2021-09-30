@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * 宣传活动配置
+ *
  * @author sieGuang 2021/09/25
  */
 @Mapper

@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * 系统公告配置
+ *
  * @author sieGuang 2021/09/18
  */
 @Mapper
