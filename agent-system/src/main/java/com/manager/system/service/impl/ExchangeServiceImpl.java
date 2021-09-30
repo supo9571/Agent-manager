@@ -1,10 +1,8 @@
 package com.manager.system.service.impl;
 
 
-import com.manager.common.annotation.DataSource;
 import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.domain.entity.Exchange;
-import com.manager.common.enums.DataSourceType;
 import com.manager.system.mapper.ExchangeMapper;
 import com.manager.system.service.ExchangeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +16,6 @@ import java.util.Map;
  * @author sieGuang 2021/09/07
  */
 @Service
-@DataSource(DataSourceType.SLAVE)
 public class ExchangeServiceImpl implements ExchangeService {
 
     @Autowired

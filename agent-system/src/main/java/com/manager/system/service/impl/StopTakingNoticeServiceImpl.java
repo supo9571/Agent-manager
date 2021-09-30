@@ -1,8 +1,6 @@
 package com.manager.system.service.impl;
 
-import com.manager.common.annotation.DataSource;
 import com.manager.common.core.domain.entity.StopTakingNotice;
-import com.manager.common.enums.DataSourceType;
 import com.manager.system.mapper.StopTakingNoticeMapper;
 import com.manager.system.service.StopTakingNoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +13,6 @@ import java.util.List;
  * @author sieGuang 2021/09/27
  */
 @Service
-@DataSource(DataSourceType.SLAVE)
 public class StopTakingNoticeServiceImpl implements StopTakingNoticeService {
 
     @Autowired

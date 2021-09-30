@@ -4,10 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.manager.common.annotation.DataSource;
 import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.domain.entity.Activity;
-import com.manager.common.enums.DataSourceType;
 import com.manager.common.utils.StringUtils;
 import com.manager.system.mapper.ActivityMapper;
 import com.manager.system.service.ActivityService;
@@ -23,7 +21,6 @@ import java.util.Map;
  */
 @Service
 @Slf4j
-@DataSource(DataSourceType.SLAVE)
 public class ActivityServiceImpl implements ActivityService {
     @Autowired
     private ActivityMapper activityMapper;

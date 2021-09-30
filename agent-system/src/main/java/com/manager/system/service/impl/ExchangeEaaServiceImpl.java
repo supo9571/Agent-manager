@@ -3,10 +3,8 @@ package com.manager.system.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.manager.common.annotation.DataSource;
 import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.domain.entity.ExchangeEaa;
-import com.manager.common.enums.DataSourceType;
 import com.manager.system.mapper.ExchangeEaaMapper;
 import com.manager.system.service.ExchangeEaaService;
 import org.apache.commons.collections4.CollectionUtils;
@@ -23,7 +21,6 @@ import java.util.Map;
  * @author sieGuang 2021/09/16
  */
 @Service
-@DataSource(DataSourceType.SLAVE)
 public class ExchangeEaaServiceImpl implements ExchangeEaaService {
 
     @Autowired

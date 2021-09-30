@@ -17,7 +17,6 @@ import java.util.List;
  * @author sieGuang 2021/09/07
  */
 @Service
-@DataSource(DataSourceType.SLAVE)
 public class PayServiceImpl implements PayService {
 
     @Autowired

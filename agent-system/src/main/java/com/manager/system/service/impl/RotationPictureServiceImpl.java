@@ -1,8 +1,6 @@
 package com.manager.system.service.impl;
 
-import com.manager.common.annotation.DataSource;
 import com.manager.common.core.domain.entity.RotationPicture;
-import com.manager.common.enums.DataSourceType;
 import com.manager.system.mapper.RotationPictureMapper;
 import com.manager.system.service.RotationPictureService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +13,6 @@ import java.util.List;
  * @author sieGuang 2021/09/23
  */
 @Service
-@DataSource(DataSourceType.SLAVE)
 public class RotationPictureServiceImpl implements RotationPictureService {
 
     @Autowired

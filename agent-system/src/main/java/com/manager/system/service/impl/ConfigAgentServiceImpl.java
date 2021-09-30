@@ -1,9 +1,7 @@
 package com.manager.system.service.impl;
 
-import com.manager.common.annotation.DataSource;
 import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.domain.entity.ConfigAgent;
-import com.manager.common.enums.DataSourceType;
 import com.manager.system.mapper.ConfigAgentMapper;
 import com.manager.system.service.ConfigAgenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +15,6 @@ import java.util.List;
  * @return
  **/
 @Service
-@DataSource(DataSourceType.SLAVE)
 public class ConfigAgentServiceImpl implements ConfigAgenService {
 
     @Autowired

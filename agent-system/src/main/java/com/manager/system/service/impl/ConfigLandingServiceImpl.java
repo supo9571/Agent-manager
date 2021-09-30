@@ -1,8 +1,6 @@
 package com.manager.system.service.impl;
 
-import com.manager.common.annotation.DataSource;
 import com.manager.common.core.domain.entity.ConfigLanding;
-import com.manager.common.enums.DataSourceType;
 import com.manager.system.mapper.ConfigLandingMapper;
 import com.manager.system.service.ConfigLandingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +13,6 @@ import java.util.Map;
  * @date 2021-09-20
  */
 @Service
-@DataSource(DataSourceType.SLAVE)
 public class ConfigLandingServiceImpl implements ConfigLandingService {
 
     @Autowired

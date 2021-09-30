@@ -1,8 +1,6 @@
 package com.manager.system.service.impl;
 
-import com.manager.common.annotation.DataSource;
 import com.manager.common.core.domain.entity.SysTenant;
-import com.manager.common.enums.DataSourceType;
 import com.manager.common.utils.StringUtils;
 import com.manager.system.mapper.SysTenantMapper;
 import com.manager.system.service.SysTenantService;
@@ -14,7 +12,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-@DataSource(DataSourceType.SLAVE)
 public class SysTenantServiceImpl implements SysTenantService {
 
     @Resource

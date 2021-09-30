@@ -1,9 +1,7 @@
 package com.manager.system.service.impl;
 
-import com.manager.common.annotation.DataSource;
 import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.domain.entity.*;
-import com.manager.common.enums.DataSourceType;
 import com.manager.common.utils.SecurityUtils;
 import com.manager.system.mapper.RechargeMapper;
 import com.manager.system.service.RechargeService;
@@ -18,7 +16,6 @@ import java.util.List;
  * 充值 配置service
  */
 @Service
-@DataSource(DataSourceType.SLAVE)
 public class RechargeServiceImpl implements RechargeService {
 
     @Autowired

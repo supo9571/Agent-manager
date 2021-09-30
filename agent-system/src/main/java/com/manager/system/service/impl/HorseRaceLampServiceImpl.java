@@ -1,8 +1,6 @@
 package com.manager.system.service.impl;
 
-import com.manager.common.annotation.DataSource;
 import com.manager.common.core.domain.entity.HorseRaceLamp;
-import com.manager.common.enums.DataSourceType;
 import com.manager.common.utils.DateUtils;
 import com.manager.system.mapper.HorseRaceLampMapper;
 import com.manager.system.service.HorseRaceLampService;
@@ -16,7 +14,6 @@ import java.util.List;
  * @author sieGuang 2021/09/21
  */
 @Service
-@DataSource(DataSourceType.SLAVE)
 public class HorseRaceLampServiceImpl implements HorseRaceLampService {
 
     @Autowired
