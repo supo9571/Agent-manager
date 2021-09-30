@@ -12,6 +12,27 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface AgentService {
 
     @PostMapping(value = "/data/agent/list")
-    AjaxResult getAgents(@RequestParam("tid")Integer tid,@RequestParam("uid")String uid,@RequestParam("page")Integer page,
-                         @RequestParam("size")Integer size,@RequestParam("orderByColumn")String orderByColumn,@RequestParam("isAsc")String isAsc);
+    AjaxResult getAgents(@RequestParam("tid") Integer tid, @RequestParam("uid") String uid, @RequestParam("agentId") String agentId, @RequestParam("page") Integer page,
+                         @RequestParam("size") Integer size, @RequestParam("orderByColumn") String orderByColumn, @RequestParam("isAsc") String isAsc);
+
+    @PostMapping(value = "/data/agent/day")
+    AjaxResult getCommissionDays(@RequestParam("uid") String uid,
+                                 @RequestParam("page") Integer page,
+                                 @RequestParam("size") Integer size,
+                                 @RequestParam("orderByColumn") String orderByColumn,
+                                 @RequestParam("isAsc") String isAsc);
+
+    @PostMapping(value = "/data/agent/cash")
+    AjaxResult getCashs(@RequestParam("uid") String uid,
+                        @RequestParam("page") Integer page,
+                        @RequestParam("size") Integer size,
+                        @RequestParam("orderByColumn") String orderByColumn,
+                        @RequestParam("isAsc") String isAsc);
+
+    @PostMapping(value = "/data/agent/popularize")
+    AjaxResult getPopularizes(@RequestParam("uid") String uid,
+                        @RequestParam("page") Integer page,
+                        @RequestParam("size") Integer size,
+                        @RequestParam("orderByColumn") String orderByColumn,
+                        @RequestParam("isAsc") String isAsc);
 }
