@@ -36,8 +36,7 @@ import java.util.List;
  * @author marvin
  */
 @Component
-public class SysLoginService
-{
+public class SysLoginService {
     @Autowired
     private TokenService tokenService;
 
@@ -55,52 +54,45 @@ public class SysLoginService
 
     @Autowired
     private SysIpWhiteService sysIpWhiteService;
+
     /**
      * 登录验证
      *
-     * @param username 用户名
-     * @param password 密码
+     * @param username   用户名
+     * @param password   密码
      * @param googleCode 验证码
      * @return 结果
      */
-    public String login(String username, String password, String googleCode)
-    {
+    public String login(String username, String password, String googleCode) {
         // 用户验证
         Authentication authentication = null;
-        try
-        {
+        try {
             // 该方法会去调用UserDetailsServiceImpl.loadUserByUsername
             authentication = authenticationManager
                     .authenticate(new UsernamePasswordAuthenticationToken(username, password));
-        }
-        catch (Exception e)
-        {
-            if (e instanceof BadCredentialsException)
-            {
+        } catch (Exception e) {
+            if (e instanceof BadCredentialsException) {
 //                AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, MessageUtils.message("user.password.not.match")));
                 throw new UserPasswordNotMatchException();
-            }
-            else
-            {
+            } else {
 //                AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, e.getMessage()));
                 throw new CustomException(e.getMessage());
             }
         }
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         //验证google验证码
-        if(loginUser.getUser().isSwitchOpen() && !GoogleAuth.isPattern(loginUser.getUser().getGoogleKey(),googleCode)){
+        if (loginUser.getUser().isSwitchOpen() && !GoogleAuth.isPattern(loginUser.getUser().getGoogleKey(), googleCode)) {
             throw new CustomException("google验证码错误");
         }
 
-
         //验证ip
-        String ips = sysIpWhiteService.selectIpByUserId(loginUser.getUser().getUserId()+"");
-        if(ips.isEmpty() || ips.contains(IpUtils.getHostIp())){
+        String ips = sysIpWhiteService.selectIpByUserId(loginUser.getUser().getUserId() + "");
+        if (ips.isEmpty() || ips.contains(IpUtils.getHostIp())) {
             AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success")));
             recordLoginInfo(loginUser.getUser());
             // 生成token
             return tokenService.createToken(loginUser);
-        }else {
+        } else {
             throw new CustomException("ip被限制");
         }
     }
@@ -109,22 +101,19 @@ public class SysLoginService
      * 校验验证码
      *
      * @param username 用户名
-     * @param code 验证码
-     * @param uuid 唯一标识
+     * @param code     验证码
+     * @param uuid     唯一标识
      * @return 结果
      */
-    public void validateCaptcha(String username, String code, String uuid)
-    {
+    public void validateCaptcha(String username, String code, String uuid) {
         String verifyKey = Constants.CAPTCHA_CODE_KEY + uuid;
         String captcha = redisCache.getCacheObject(verifyKey);
         redisCache.deleteObject(verifyKey);
-        if (captcha == null)
-        {
+        if (captcha == null) {
             AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.expire")));
             throw new CaptchaExpireException();
         }
-        if (!code.equalsIgnoreCase(captcha))
-        {
+        if (!code.equalsIgnoreCase(captcha)) {
             AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.error")));
             throw new CaptchaException();
         }
@@ -133,8 +122,7 @@ public class SysLoginService
     /**
      * 记录登录信息
      */
-    public void recordLoginInfo(SysUser user)
-    {
+    public void recordLoginInfo(SysUser user) {
         user.setLoginIp(IpUtils.getIpAddr(ServletUtils.getRequest()));
         user.setLoginDate(DateUtils.getNowDate());
         userService.updateUserProfile(user);
