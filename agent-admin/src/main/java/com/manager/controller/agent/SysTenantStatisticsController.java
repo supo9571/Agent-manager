@@ -1,4 +1,4 @@
-package com.manager.web.controller.agent;
+package com.manager.controller.agent;
 
 import com.manager.common.core.controller.BaseController;
 import com.manager.common.core.domain.AjaxResult;
