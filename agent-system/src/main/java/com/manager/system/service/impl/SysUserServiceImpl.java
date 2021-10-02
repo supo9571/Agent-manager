@@ -63,7 +63,7 @@ public class SysUserServiceImpl implements ISysUserService {
         if (!list.isEmpty()) {
             list.forEach(l -> {
                 Map m = (Map) l;
-                List ips = sysIpWhiteMapper.selectIpByUserId(m.get("userId"));
+                List ips = sysIpWhiteMapper.selectIpByUserId(m.get("userId"),ManagerConfig.getTid());
                 if (!ips.isEmpty()) {
                     StringBuffer userIp = new StringBuffer();
                     ips.forEach(ip -> userIp.append(((Map) ip).get("ip") + ","));

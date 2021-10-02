@@ -52,6 +52,7 @@
         from sys_ip_white i
         left join sys_user u on i.user_id = u.user_id
         where i.user_id = #{userId}
+          and i.tenant = #{tenant}
         and type = 0
     </select>
 </mapper>

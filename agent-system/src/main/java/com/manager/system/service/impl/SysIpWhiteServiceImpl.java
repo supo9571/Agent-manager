@@ -57,7 +57,7 @@ public class SysIpWhiteServiceImpl implements SysIpWhiteService {
     @Override
     public String selectIpByUserId(String userId) {
         StringBuffer userIp = new StringBuffer();
-        List ips = sysIpWhiteMapper.selectIpByUserId(userId);
+        List ips = sysIpWhiteMapper.selectIpByUserId(userId,ManagerConfig.getTid());
         ips.forEach(ip -> userIp.append(((Map) ip).get("ip") + ","));
         return userIp.length() > 1 ? userIp.substring(0, userIp.length() - 1) : "";
     }

@@ -17,5 +17,5 @@ public interface SysIpWhiteMapper {
 
     List selectIpWhiteList(@Param("type") String type, @Param("userId") String userId, @Param("ip") String ip, @Param("userName") String userName,@Param("tenant")Integer tenant);
 
-    List selectIpByUserId(@Param("userId") Object userId);
+    List selectIpByUserId(@Param("userId") Object userId,@Param("tenant")Integer tenant);
 }
