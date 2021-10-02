@@ -94,7 +94,7 @@ public interface SysUserMapper {
      * @param userName 用户名称
      * @return 结果
      */
-    public int checkUserNameUnique(@Param("userName") String userName,@Param("userName") Integer tenant);
+    public int checkUserNameUnique(@Param("userName") String userName,@Param("tenant") String tenant);
 
     /**
      * 校验手机号码是否唯一

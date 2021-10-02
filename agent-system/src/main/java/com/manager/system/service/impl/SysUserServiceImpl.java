@@ -186,7 +186,7 @@ public class SysUserServiceImpl implements ISysUserService {
      */
     @Override
     public String checkUserNameUnique(String userName) {
-        int count = userMapper.checkUserNameUnique(userName,ManagerConfig.getTid());
+        int count = userMapper.checkUserNameUnique(userName,ManagerConfig.getTid()+"");
         if (count > 0) {
             return UserConstants.NOT_UNIQUE;
         }
