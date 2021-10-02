@@ -94,17 +94,15 @@ public class SysMenuServiceImpl implements ISysMenuService {
 
     /**
      * 根据用户ID查询菜单
-     *
-     * @param userId 用户名称
      * @return 菜单列表
      */
     @Override
-    public List<SysMenu> selectMenuTreeByUserId(Long userId) {
+    public List<SysMenu> selectMenuTreeByUserId(SysUser user) {
         List<SysMenu> menus = null;
-        if (SecurityUtils.isAdmin(userId)) {
-            menus = menuMapper.selectMenuTreeAll();
+        if (SecurityUtils.isAdmin(user.getUserName())) {
+            menus = menuMapper.selectMenuTreeAll(user.getTenant());
         } else {
-            menus = menuMapper.selectMenuTreeByUserId(userId);
+            menus = menuMapper.selectMenuTreeByUserId(user.getUserId(),user.getTenant());
         }
         return getChildPerms(menus, 0);
     }
@@ -118,7 +116,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
     @Override
     public List<Integer> selectMenuListByRoleId(Long roleId) {
         SysRole role = roleMapper.selectRoleById(roleId);
-        return menuMapper.selectMenuListByRoleId(roleId, role.isMenuCheckStrictly());
+        return menuMapper.selectMenuListByRoleId(roleId, false);
     }
 
     /**

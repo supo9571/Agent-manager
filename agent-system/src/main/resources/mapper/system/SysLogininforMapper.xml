@@ -17,22 +17,20 @@
     </resultMap>
 
     <insert id="insertLogininfor" parameterType="SysLogininfor">
-        insert into sys_logininfor (user_name, status, ipaddr, login_location, browser, os, msg, login_time, tid)
-        values (#{userName}, #{status}, #{ipaddr}, #{loginLocation}, #{browser}, #{os}, #{msg}, sysdate(), #{tid})
+        insert into sys_logininfor (user_name, status, ipaddr, login_location, browser, os, msg, login_time, tenant)
+        values (#{userName}, #{status}, #{ipaddr}, #{loginLocation}, #{browser}, #{os}, #{msg}, sysdate(), #{tenant})
     </insert>
 
     <select id="selectLogininforList" parameterType="SysLogininfor" resultMap="SysLogininforResult">
         select lf.info_id, lf.user_name, lf.ipaddr, lf.login_location, lf.browser, lf.os, lf.status, lf.msg,
         lf.login_time
         from sys_logininfor lf
-        left join sys_user u on lf.user_name = u.user_name
-        left join sys_tenant t on t.t_id = u.t_id
         <where>
             <if test="ipaddr != null and ipaddr != ''">
                 AND ipaddr like concat('%', #{ipaddr}, '%')
             </if>
             <if test="browser != null and browser != ''">
-                AND browser = #{browser}
+                AND lf.browser like concat('%', #{browser}, '%')
             </if>
             <if test="userName != null and userName != ''">
                 AND lf.user_name like concat('%', #{userName}, '%')
@@ -43,22 +41,9 @@
             <if test="endTime != null and endTime != ''"><!-- 结束时间检索 -->
                 and date_format(login_time,'%Y-%m-%d %H:%i-%s') &lt;= date_format(#{endTime},'%Y-%m-%d %H:%i-%s')
             </if>
-            <if test="tid != null and tid != ''">
-                and t.t_id = #{tid}
-            </if>
+                and lf.tenant = #{tenant}
         </where>
         order by info_id desc
     </select>
-
-    <delete id="deleteLogininforByIds" parameterType="Long">
-        delete from sys_logininfor where info_id in
-        <foreach collection="array" item="infoId" open="(" separator="," close=")">
-            #{infoId}
-        </foreach>
-    </delete>
-
-    <update id="cleanLogininfor">
-        truncate table sys_logininfor
-    </update>
 
 </mapper>

@@ -12,7 +12,6 @@
         <result property="requestMethod" column="request_method"/>
         <result property="operatorType" column="operator_type"/>
         <result property="operName" column="oper_name"/>
-        <result property="tid" column="t_id"/>
         <result property="operUrl" column="oper_url"/>
         <result property="operIp" column="oper_ip"/>
         <result property="operLocation" column="oper_location"/>
@@ -31,7 +30,6 @@
                request_method,
                operator_type,
                oper_name,
-               t_id,
                oper_url,
                oper_ip,
                oper_location,
@@ -44,15 +42,16 @@
     </sql>
 
     <insert id="insertOperlog" parameterType="SysOperLog">
-        insert into sys_oper_log(title, business_type, method, request_method, operator_type, oper_name, t_id, oper_url,
-                                 oper_ip, oper_location, oper_param, json_result, status, error_msg, oper_time)
-        values (#{title}, #{businessType}, #{method}, #{requestMethod}, #{operatorType}, #{operName}, #{tid},
-                #{operUrl}, #{operIp}, #{operLocation}, #{operParam}, #{jsonResult}, #{status}, #{errorMsg}, sysdate())
+        insert into sys_oper_log(title, business_type, method, request_method, operator_type, oper_name, oper_url,
+                                 oper_ip, oper_location, oper_param, json_result, status, error_msg, oper_time, tenant)
+        values (#{title}, #{businessType}, #{method}, #{requestMethod}, #{operatorType}, #{operName},
+                #{operUrl}, #{operIp}, #{operLocation}, #{operParam}, #{jsonResult}, #{status}, #{errorMsg}, sysdate(), #{tenant})
     </insert>
 
     <select id="selectOperLogList" parameterType="SysOperLog" resultMap="SysOperLogResult">
         <include refid="selectOperLogVo"/>
         <where>
+                and tenant = #{tenant}
             <if test="title != null and title != ''">
                 AND title like concat('%', #{title}, '%')
             </if>
@@ -77,30 +76,11 @@
             <if test="endTime != null and endTime != ''"><!-- 结束时间检索 -->
                 and date_format(oper_time,'%Y-%m-%d %H:%i-%s') &lt;= date_format(#{endTime},'%Y-%m-%d %H:%i-%s')
             </if>
-            <if test="tid != null and tid != ''">
-                AND t_id = #{tid}
-            </if>
-            <if test="operIp != null and operIp != ''"><!-- 结束时间检索 -->
+            <if test="operIp != null and operIp != ''">
                 and oper_ip = #{operIp}
             </if>
         </where>
         order by oper_id desc
     </select>
-
-    <delete id="deleteOperLogByIds" parameterType="Long">
-        delete from sys_oper_log where oper_id in
-        <foreach collection="array" item="operId" open="(" separator="," close=")">
-            #{operId}
-        </foreach>
-    </delete>
-
-    <select id="selectOperLogById" parameterType="Long" resultMap="SysOperLogResult">
-        <include refid="selectOperLogVo"/>
-        where oper_id = #{operId}
-    </select>
-
-    <update id="cleanOperLog">
-        truncate table sys_oper_log
-    </update>
 
 </mapper>

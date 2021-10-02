@@ -49,7 +49,7 @@ public interface ISysUserService {
      * @param userName 用户名
      * @return 用户对象信息
      */
-    public SysUser selectUserByUserName(String userName);
+    public SysUser selectUserByUserName(String userName,Integer tid);
 
     /**
      * 通过用户ID查询用户

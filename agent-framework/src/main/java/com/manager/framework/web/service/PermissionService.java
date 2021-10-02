@@ -11,8 +11,6 @@ import com.manager.common.utils.ServletUtils;
 import com.manager.common.utils.StringUtils;
 
 /**
- * RuoYi首创 自定义权限实现，ss取自SpringSecurity首字母
- *
  * @author marvin
  */
 @Service("ss")
@@ -99,7 +97,7 @@ public class PermissionService {
             return false;
         }
         for (SysRole sysRole : loginUser.getUser().getRoles()) {
-            String roleKey = sysRole.getRoleKey();
+            String roleKey = "";//sysRole.getRoleKey();
             if (SUPER_ADMIN.equals(roleKey) || roleKey.equals(StringUtils.trim(role))) {
                 return true;
             }

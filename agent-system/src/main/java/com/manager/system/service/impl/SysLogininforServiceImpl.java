@@ -39,23 +39,4 @@ public class SysLogininforServiceImpl implements ISysLogininforService {
     public List<SysLogininfor> selectLogininforList(SysLogininfor logininfor) {
         return logininforMapper.selectLogininforList(logininfor);
     }
-
-    /**
-     * 批量删除系统登录日志
-     *
-     * @param infoIds 需要删除的登录日志ID
-     * @return
-     */
-    @Override
-    public int deleteLogininforByIds(Long[] infoIds) {
-        return logininforMapper.deleteLogininforByIds(infoIds);
-    }
-
-    /**
-     * 清空系统登录日志
-     */
-    @Override
-    public void cleanLogininfor() {
-        logininforMapper.cleanLogininfor();
-    }
 }

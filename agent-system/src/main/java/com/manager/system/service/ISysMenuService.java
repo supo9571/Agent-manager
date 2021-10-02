@@ -3,6 +3,7 @@ package com.manager.system.service;
 import java.util.List;
 import java.util.Set;
 
+import com.manager.common.core.domain.entity.SysUser;
 import com.manager.system.domain.vo.RouterVo;
 import com.manager.common.core.domain.TreeSelect;
 import com.manager.common.core.domain.entity.SysMenu;
@@ -44,7 +45,7 @@ public interface ISysMenuService {
      * @param userId 用户ID
      * @return 菜单列表
      */
-    public List<SysMenu> selectMenuTreeByUserId(Long userId);
+    public List<SysMenu> selectMenuTreeByUserId(SysUser user);
 
     /**
      * 根据角色ID查询菜单树信息

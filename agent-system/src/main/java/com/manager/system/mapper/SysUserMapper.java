@@ -35,7 +35,7 @@ public interface SysUserMapper {
      * @param userName 用户名
      * @return 用户对象信息
      */
-    public SysUser selectUserByUserName(String userName);
+    public SysUser selectUserByUserName(@Param("userName") String userName,@Param("tenant")String tenant);
 
     /**
      * 通过用户ID查询用户
@@ -121,7 +121,7 @@ public interface SysUserMapper {
     /**
      * 新增用户信息
      */
-    int insertUser(SysUser user);
+    int insertUser(SysUser user,Integer tenant);
 
     /**
      * 新增用户与角色关联

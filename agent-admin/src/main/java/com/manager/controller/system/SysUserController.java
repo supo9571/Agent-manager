@@ -116,33 +116,6 @@ public class SysUserController extends BaseController {
     }
 
     /**
-     * 删除用户
-     */
-//    @PreAuthorize("@ss.hasPermi('system:user:remove')")
-//    @Log(title = "用户管理", businessType = BusinessType.DELETE)
-//    @ApiOperation(value = "删除用户")
-//    @PostMapping("/{userIds}")
-//    public AjaxResult remove(@PathVariable Long[] userIds)
-//    {
-//        return toAjax(userService.deleteUserByIds(userIds));
-//    }
-
-    /**
-     * 重置密码
-     */
-//    @PreAuthorize("@ss.hasPermi('system:user:resetPwd')")
-//    @Log(title = "用户管理", businessType = BusinessType.UPDATE)
-//    @ApiOperation(value = "重置密码")
-//    @PostMapping("/resetPwd")
-//    public AjaxResult resetPwd(@RequestBody SysUser user)
-//    {
-//        userService.checkUserAllowed(user);
-//        user.setPassword(SecurityUtils.encryptPassword(user.getPassword()));
-//        user.setUpdateBy(SecurityUtils.getUsername());
-//        return toAjax(userService.resetPwd(user));
-//    }
-
-    /**
      * 状态修改
      */
     @PreAuthorize("@ss.hasPermi('system:user:edit')")

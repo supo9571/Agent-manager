@@ -1,13 +1,12 @@
 package com.manager.system.service.impl;
 
-import com.manager.common.annotation.DataScope;
+import com.manager.common.config.ManagerConfig;
 import com.manager.common.constant.UserConstants;
 import com.manager.common.core.domain.entity.SysRole;
 import com.manager.common.core.domain.entity.SysUser;
 import com.manager.common.exception.CustomException;
 import com.manager.common.utils.StringUtils;
 import com.manager.system.domain.SysPost;
-import com.manager.system.domain.SysUserPost;
 import com.manager.system.domain.SysUserRole;
 import com.manager.system.mapper.*;
 import com.manager.system.service.ISysUserService;
@@ -59,7 +58,6 @@ public class SysUserServiceImpl implements ISysUserService {
      * @return 用户信息集合信息
      */
     @Override
-    @DataScope(deptAlias = "d", userAlias = "u")
     public List selectUserList(SysUser user) {
         List list = userMapper.selectUserList(user);
         if (!list.isEmpty()) {
@@ -88,11 +86,10 @@ public class SysUserServiceImpl implements ISysUserService {
     @Transactional
     public int insertUser(SysUser user, long userId) {
         // 新增用户信息
-        int rows = userMapper.insertUser(user);
+        int rows = userMapper.insertUser(user,ManagerConfig.getTid());
         // 新增ip白名单
         if (StringUtils.isNotEmpty(user.getIps())) {
-            sysIpWhiteService.addIpWhite(Long.valueOf(user.getTid()),
-                    Long.valueOf(user.getUserId()), user.getIps(), userId, user.getUserName());
+            sysIpWhiteService.addIpWhite(user.getUserId(), user.getUserName(), user.getIps(), "0");
         }
         // 新增用户与角色关联
         userMapper.insertUserRole(user.getUserId(), user.getRoleId());
@@ -106,7 +103,6 @@ public class SysUserServiceImpl implements ISysUserService {
      * @return 用户信息集合信息
      */
     @Override
-    @DataScope(deptAlias = "d", userAlias = "u")
     public List<SysUser> selectAllocatedList(SysUser user) {
         return userMapper.selectAllocatedList(user);
     }
@@ -118,7 +114,6 @@ public class SysUserServiceImpl implements ISysUserService {
      * @return 用户信息集合信息
      */
     @Override
-    @DataScope(deptAlias = "d", userAlias = "u")
     public List<SysUser> selectUnallocatedList(SysUser user) {
         return userMapper.selectUnallocatedList(user);
     }
@@ -130,8 +125,8 @@ public class SysUserServiceImpl implements ISysUserService {
      * @return 用户对象信息
      */
     @Override
-    public SysUser selectUserByUserName(String userName) {
-        return userMapper.selectUserByUserName(userName);
+    public SysUser selectUserByUserName(String userName,Integer tid) {
+        return userMapper.selectUserByUserName(userName,tid+"");
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.manager.controller.system;
 
 import com.manager.common.annotation.Log;
+import com.manager.common.config.ManagerConfig;
 import com.manager.common.constant.UserConstants;
 import com.manager.common.core.controller.BaseController;
 import com.manager.common.core.domain.AjaxResult;
@@ -59,17 +60,6 @@ public class SysRoleController extends BaseController {
         return AjaxResult.success(getDataTable(list));
     }
 
-//    @Log(title = "角色管理", businessType = BusinessType.EXPORT)
-//    @PreAuthorize("@ss.hasPermi('system:role:export')")
-//    @ApiIgnore
-//    @GetMapping("/export")
-//    public AjaxResult export(SysRole role)
-//    {
-//        List<SysRole> list = roleService.selectRoleList(role);
-//        ExcelUtil<SysRole> util = new ExcelUtil<SysRole>(SysRole.class);
-//        return util.exportExcel(list, "角色数据");
-//    }
-
     /**
      * 根据角色编号获取详细信息
      */
@@ -92,7 +82,6 @@ public class SysRoleController extends BaseController {
         if (UserConstants.NOT_UNIQUE.equals(roleService.checkRoleNameUnique(role))) {
             return AjaxResult.error("新增角色'" + role.getRoleName() + "'失败，角色名称已存在");
         }
-        role.setCreateBy(SecurityUtils.getUsername());
         role.setUpdateBy(SecurityUtils.getUsername());
         return toAjax(roleService.insertRole(role));
 
@@ -118,7 +107,7 @@ public class SysRoleController extends BaseController {
             LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
             if (StringUtils.isNotNull(loginUser.getUser()) && !loginUser.getUser().isAdmin()) {
                 loginUser.setPermissions(permissionService.getMenuPermission(loginUser.getUser()));
-                loginUser.setUser(userService.selectUserByUserName(loginUser.getUser().getUserName()));
+                loginUser.setUser(userService.selectUserByUserName(loginUser.getUser().getUserName(), ManagerConfig.getTid()));
                 tokenService.setLoginUser(loginUser);
             }
             return AjaxResult.success();

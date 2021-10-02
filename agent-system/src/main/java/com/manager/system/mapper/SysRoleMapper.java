@@ -3,6 +3,7 @@ package com.manager.system.mapper;
 import java.util.List;
 
 import com.manager.common.core.domain.entity.SysRole;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 角色表 数据层
@@ -63,7 +64,7 @@ public interface SysRoleMapper {
      * @param roleName 角色名称
      * @return 角色信息
      */
-    public SysRole checkRoleNameUnique(String roleName);
+    public SysRole checkRoleNameUnique(@Param("roleName") String roleName,@Param("tenant") String tenant);
 
     /**
      * 校验角色权限是否唯一

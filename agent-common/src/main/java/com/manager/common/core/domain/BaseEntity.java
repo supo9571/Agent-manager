@@ -1,6 +1,7 @@
 package com.manager.common.core.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.manager.common.config.ManagerConfig;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
@@ -20,6 +21,12 @@ import java.util.Map;
 @Data
 public class BaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
+
+    /**
+     * 所属平台
+     */
+    @ApiModelProperty(hidden = true)
+    private Integer tenant = ManagerConfig.getTid();
 
     /**
      * 搜索值

@@ -92,7 +92,7 @@ public class SysLoginController {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         // 用户信息
         SysUser user = loginUser.getUser();
-        List<SysMenu> menus = menuService.selectMenuTreeByUserId(user.getUserId());
+        List<SysMenu> menus = menuService.selectMenuTreeByUserId(user);
         return AjaxResult.success(menuService.buildMenus(menus));
     }
 }

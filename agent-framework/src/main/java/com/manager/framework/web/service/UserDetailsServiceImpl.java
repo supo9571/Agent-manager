@@ -1,5 +1,6 @@
 package com.manager.framework.web.service;
 
+import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.domain.entity.SysUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +32,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        SysUser user = userService.selectUserByUserName(username);
+        SysUser user = userService.selectUserByUserName(username, ManagerConfig.getTid());
         if (StringUtils.isNull(user)) {
             log.info("登录用户：{} 不存在.", username);
             throw new UsernameNotFoundException("登录用户：" + username + " 不存在");

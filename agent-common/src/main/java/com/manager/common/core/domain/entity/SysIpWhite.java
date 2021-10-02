@@ -12,23 +12,10 @@ import lombok.Data;
 public class SysIpWhite extends BaseEntity {
     private long id;
 
-    private long tid;
-
     private long userId;
 
     private String ip;
 
-    private long createUserId;
+    private String type;
 
-    private String creatTime;
-
-    public SysIpWhite() {
-    }
-
-    public SysIpWhite(long tid, long userId, long createUserId, String ip) {
-        this.tid = tid;
-        this.userId = userId;
-        this.ip = ip;
-        this.createUserId = createUserId;
-    }
 }

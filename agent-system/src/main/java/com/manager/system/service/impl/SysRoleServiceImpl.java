@@ -1,11 +1,8 @@
 package com.manager.system.service.impl;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
+import com.manager.common.config.ManagerConfig;
 import com.manager.system.domain.SysRoleDept;
 import com.manager.system.domain.SysRoleMenu;
 import com.manager.system.domain.SysUserRole;
@@ -50,7 +47,6 @@ public class SysRoleServiceImpl implements ISysRoleService {
      * @return 角色数据集合信息
      */
     @Override
-    @DataScope(deptAlias = "d")
     public List<SysRole> selectRoleList(SysRole role) {
         return roleMapper.selectRoleList(role);
     }
@@ -68,7 +64,6 @@ public class SysRoleServiceImpl implements ISysRoleService {
         for (SysRole role : roles) {
             for (SysRole userRole : userRoles) {
                 if (role.getRoleId().longValue() == userRole.getRoleId().longValue()) {
-                    role.setFlag(true);
                     break;
                 }
             }
@@ -88,7 +83,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
         Set<String> permsSet = new HashSet<>();
         for (SysRole perm : perms) {
             if (StringUtils.isNotNull(perm)) {
-                permsSet.addAll(Arrays.asList(perm.getRoleKey().trim().split(",")));
+                permsSet.addAll(Collections.singleton(perm.getRoleId()+""));
             }
         }
         return permsSet;
@@ -135,23 +130,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
     @Override
     public String checkRoleNameUnique(SysRole role) {
         Long roleId = StringUtils.isNull(role.getRoleId()) ? -1L : role.getRoleId();
-        SysRole info = roleMapper.checkRoleNameUnique(role.getRoleName());
-        if (StringUtils.isNotNull(info) && info.getRoleId().longValue() != roleId.longValue()) {
-            return UserConstants.NOT_UNIQUE;
-        }
-        return UserConstants.UNIQUE;
-    }
-
-    /**
-     * 校验角色权限是否唯一
-     *
-     * @param role 角色信息
-     * @return 结果
-     */
-    @Override
-    public String checkRoleKeyUnique(SysRole role) {
-        Long roleId = StringUtils.isNull(role.getRoleId()) ? -1L : role.getRoleId();
-        SysRole info = roleMapper.checkRoleKeyUnique(role.getRoleKey());
+        SysRole info = roleMapper.checkRoleNameUnique(role.getRoleName(), ManagerConfig.getTid()+"");
         if (StringUtils.isNotNull(info) && info.getRoleId().longValue() != roleId.longValue()) {
             return UserConstants.NOT_UNIQUE;
         }

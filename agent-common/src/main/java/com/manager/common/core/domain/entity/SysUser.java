@@ -65,7 +65,7 @@ public class SysUser extends BaseEntity {
     private String isLoginAdmin;
 
     public boolean isAdmin() {
-        return userId == 1;
+        return "admin".equals(userName) || userId == 1;
     }
 
     public static boolean isAdmin(Long userId) {

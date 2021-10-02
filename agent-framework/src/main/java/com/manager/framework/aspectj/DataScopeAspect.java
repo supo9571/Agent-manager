@@ -97,7 +97,7 @@ public class DataScopeAspect {
         StringBuilder sqlString = new StringBuilder();
 
         for (SysRole role : user.getRoles()) {
-            String dataScope = role.getDataScope();
+            String dataScope = "";
             if (DATA_SCOPE_ALL.equals(dataScope)) {
                 sqlString = new StringBuilder();
                 break;
