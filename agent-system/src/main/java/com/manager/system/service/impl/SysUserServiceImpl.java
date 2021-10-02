@@ -86,7 +86,7 @@ public class SysUserServiceImpl implements ISysUserService {
     @Transactional
     public int insertUser(SysUser user, long userId) {
         // 新增用户信息
-        int rows = userMapper.insertUser(user,ManagerConfig.getTid());
+        int rows = userMapper.insertUser(user);
         // 新增ip白名单
         if (StringUtils.isNotEmpty(user.getIps())) {
             sysIpWhiteService.addIpWhite(user.getUserId(), user.getUserName(), user.getIps(), "0");
@@ -186,7 +186,7 @@ public class SysUserServiceImpl implements ISysUserService {
      */
     @Override
     public String checkUserNameUnique(String userName) {
-        int count = userMapper.checkUserNameUnique(userName);
+        int count = userMapper.checkUserNameUnique(userName,ManagerConfig.getTid());
         if (count > 0) {
             return UserConstants.NOT_UNIQUE;
         }

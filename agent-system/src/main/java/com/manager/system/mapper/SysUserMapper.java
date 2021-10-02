@@ -94,7 +94,7 @@ public interface SysUserMapper {
      * @param userName 用户名称
      * @return 结果
      */
-    public int checkUserNameUnique(String userName);
+    public int checkUserNameUnique(@Param("userName") String userName,@Param("userName") Integer tenant);
 
     /**
      * 校验手机号码是否唯一
@@ -121,7 +121,7 @@ public interface SysUserMapper {
     /**
      * 新增用户信息
      */
-    int insertUser(SysUser user,Integer tenant);
+    int insertUser(SysUser user);
 
     /**
      * 新增用户与角色关联

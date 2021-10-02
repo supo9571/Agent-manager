@@ -98,7 +98,7 @@
     <select id="checkUserNameUnique" parameterType="String" resultType="int">
         select count(1)
         from sys_user
-        where user_name = #{userName} limit 1
+        where user_name = #{userName} and tenant = #{tenant} limit 1
     </select>
 
     <select id="checkPhoneUnique" parameterType="String" resultMap="SysUserResult">
