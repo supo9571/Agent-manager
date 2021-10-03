@@ -53,13 +53,12 @@ public class SwaggerConfig {
                 //为当前包下controller生成API文档
 //                .apis(RequestHandlerSelectors.basePackage("com.manager.controller"))
                 .apis(Predicates.or(
+                        RequestHandlerSelectors.basePackage("com.manager.controller.agent"),
+                        RequestHandlerSelectors.basePackage("com.manager.controller.data"),
+                        RequestHandlerSelectors.basePackage("com.manager.controller.finance"),
+                        RequestHandlerSelectors.basePackage("com.manager.controller.game"),
+                        RequestHandlerSelectors.basePackage("com.manager.controller.news"),
                         RequestHandlerSelectors.basePackage("com.manager.controller.system")
-//                        ,
-//                        RequestHandlerSelectors.basePackage("com.manager.controller.game"),
-//                        RequestHandlerSelectors.basePackage("com.manager.controller.finance"),
-//                        RequestHandlerSelectors.basePackage("com.manager.controller.news"),
-//                        RequestHandlerSelectors.basePackage("com.manager.controller.agent")
-//                        RequestHandlerSelectors.basePackage("com.manager.web.controller.common")
                 ))
                 .paths(PathSelectors.any())
                 .build()
