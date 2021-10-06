@@ -1,8 +1,10 @@
 package com.manager.openFegin;
 
 import com.manager.common.core.domain.AjaxResult;
+import com.manager.common.core.domain.model.Summarize;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -35,4 +37,7 @@ public interface AgentService {
                               @RequestParam("size") Integer size,
                               @RequestParam("orderByColumn") String orderByColumn,
                               @RequestParam("isAsc") String isAsc);
+
+    @PostMapping(value = "/data/total/list", consumes = "application/json")
+    AjaxResult getTotals(@RequestBody Summarize summarize);
 }
