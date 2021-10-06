@@ -2,41 +2,34 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.manager.system.mapper.SysTenantChannelStatisticsMapper">
     <resultMap id="BaseResultMap" type="com.manager.common.core.domain.entity.SysTenantChannelStatistics">
-        <id column="day" property="day" jdbcType="VARCHAR"/>
-        <id column="t_id" property="tId" jdbcType="VARCHAR"/>
-        <result column="total_amount" property="totalAmount" jdbcType="VARCHAR"/>
-        <result column="recharge_num" property="rechargeNum" jdbcType="BIGINT"/>
-        <result column="recharge_amount" property="rechargeAmount" jdbcType="DECIMAL"/>
-        <result column="withdraw_num" property="withdrawNum" jdbcType="BIGINT"/>
-        <result column="withdraw_amount" property="withdrawAmount" jdbcType="VARCHAR"/>
-        <result column="up_award_amount" property="upAwardAmount" jdbcType="DECIMAL"/>
-        <result column="lower_award_amount" property="lowerAwardAmount" jdbcType="DECIMAL"/>
-        <result column="under_commission" property="underCommission" jdbcType="DECIMAL"/>
-        <result column="agent_commission" property="agentCommission" jdbcType="DECIMAL"/>
-        <result column="install_num" property="installNum" jdbcType="BIGINT"/>
-        <result column="increased_binding" property="increasedBinding" jdbcType="BIGINT"/>
-        <result column="active_num" property="activeNum" jdbcType="BIGINT"/>
-        <result column="increased_num" property="increasedNum" jdbcType="BIGINT"/>
-        <result column="recharge_first" property="rechargeFirst" jdbcType="BIGINT"/>
-        <result column="recharge_amount_first" property="rechargeAmountFirst" jdbcType="BIGINT"/>
-        <result column="recharge_increased_num" property="rechargeIncreasedNum" jdbcType="BIGINT"/>
-        <result column="recharge_increased_amount" property="rechargeIncreasedAmount" jdbcType="BIGINT"/>
-        <result column="top_up_withdrawal" property="topUpWithdrawal" jdbcType="BIGINT"/>
-        <result column="appu" property="appu" jdbcType="DECIMAL"/>
-        <result column="arpu" property="arpu" jdbcType="DECIMAL"/>
-        <result column="bet_amount" property="betAmount" jdbcType="DECIMAL"/>
-        <result column="rebate" property="rebate" jdbcType="DECIMAL"/>
-        <result column="performance" property="performance" jdbcType="BIGINT"/>
-        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
-        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <id column="day" property="day" jdbcType="VARCHAR" />
+        <id column="t_id" property="tId" jdbcType="VARCHAR" />
+        <result column="total_amount" property="totalAmount" jdbcType="DECIMAL" />
+        <result column="recharge_num" property="rechargeNum" jdbcType="INTEGER" />
+        <result column="recharge_amount" property="rechargeAmount" jdbcType="DECIMAL" />
+        <result column="withdraw_num" property="withdrawNum" jdbcType="INTEGER" />
+        <result column="withdraw_amount" property="withdrawAmount" jdbcType="DECIMAL" />
+        <result column="up_award_amount" property="upAwardAmount" jdbcType="DECIMAL" />
+        <result column="lower_award_amount" property="lowerAwardAmount" jdbcType="DECIMAL" />
+        <result column="under_commission" property="underCommission" jdbcType="DECIMAL" />
+        <result column="agent_commission" property="agentCommission" jdbcType="DECIMAL" />
+        <result column="install_num" property="installNum" jdbcType="INTEGER" />
+        <result column="increased_binding" property="increasedBinding" jdbcType="INTEGER" />
+        <result column="active_num" property="activeNum" jdbcType="INTEGER" />
+        <result column="increased_num" property="increasedNum" jdbcType="INTEGER" />
+        <result column="recharge_first" property="rechargeFirst" jdbcType="INTEGER" />
+        <result column="recharge_amount_first" property="rechargeAmountFirst" jdbcType="DECIMAL" />
+        <result column="recharge_increased_num" property="rechargeIncreasedNum" jdbcType="INTEGER" />
+        <result column="recharge_increased_amount" property="rechargeIncreasedAmount" jdbcType="DECIMAL" />
+        <result column="top_up_withdrawal" property="topUpWithdrawal" jdbcType="DECIMAL" />
+        <result column="appu" property="appu" jdbcType="DECIMAL" />
+        <result column="arpu" property="arpu" jdbcType="DECIMAL" />
+        <result column="bet_amount" property="betAmount" jdbcType="DECIMAL" />
+        <result column="rebate" property="rebate" jdbcType="DECIMAL" />
+        <result column="performance" property="performance" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     </resultMap>
-    <sql id="Base_Column_List">
-    day, t_id, total_amount, recharge_num, recharge_amount, withdraw_num, withdraw_amount, 
-    up_award_amount, lower_award_amount, under_commission, agent_commission, install_num, 
-    increased_binding, active_num, increased_num, recharge_first, recharge_amount_first, 
-    recharge_increased_num, recharge_increased_amount, top_up_withdrawal, appu, arpu, 
-    bet_amount, rebate, performance, create_time, update_time
-    </sql>
 
     <select id="list" resultMap="BaseResultMap" parameterType="com.manager.common.core.domain.entity.SysTenantChannelStatistics">
         SELECT
@@ -53,321 +46,327 @@
         FROM sys_tenant_channel_statistics
     </select>
 
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap"  parameterType="com.manager.common.core.domain.entity.SysTenantChannelStatistics">
+    <sql id="Base_Column_List" >
+        day, t_id, total_amount, recharge_num, recharge_amount, withdraw_num, withdraw_amount,
+    up_award_amount, lower_award_amount, under_commission, agent_commission, install_num,
+    increased_binding, active_num, increased_num, recharge_first, recharge_amount_first,
+    recharge_increased_num, recharge_increased_amount, top_up_withdrawal, appu, arpu,
+    bet_amount, rebate, performance, create_time, update_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.manager.common.core.domain.entity.SysTenantChannelStatistics" >
         select
-        <include refid="Base_Column_List"/>
+        <include refid="Base_Column_List" />
         from sys_tenant_channel_statistics
         where day = #{day,jdbcType=VARCHAR}
         and t_id = #{tId,jdbcType=VARCHAR}
     </select>
-    <delete id="deleteByPrimaryKey"  parameterType="com.manager.common.core.domain.entity.SysTenantChannelStatistics">
-    delete from sys_tenant_channel_statistics
-    where day = #{day,jdbcType=VARCHAR}
-      and t_id = #{tId,jdbcType=VARCHAR}
+    <delete id="deleteByPrimaryKey" parameterType="com.manager.common.core.domain.entity.SysTenantChannelStatistics" >
+        delete from sys_tenant_channel_statistics
+        where day = #{day,jdbcType=VARCHAR}
+          and t_id = #{tId,jdbcType=VARCHAR}
     </delete>
-    <insert id="insert" parameterType="com.manager.common.core.domain.entity.SysTenantChannelStatistics">
-    insert into sys_tenant_channel_statistics (day, t_id, total_amount, 
-      recharge_num, recharge_amount, withdraw_num, 
-      withdraw_amount, up_award_amount, lower_award_amount, 
-      under_commission, agent_commission, install_num, 
-      increased_binding, active_num, increased_num, 
-      recharge_first, recharge_amount_first, recharge_increased_num, 
-      recharge_increased_amount, top_up_withdrawal, 
-      appu, arpu, bet_amount,
-      rebate, performance, create_time, 
-      update_time)
-    values (#{day,jdbcType=VARCHAR}, #{tId,jdbcType=VARCHAR}, #{totalAmount,jdbcType=VARCHAR}, 
-      #{rechargeNum,jdbcType=BIGINT}, #{rechargeAmount,jdbcType=DECIMAL}, #{withdrawNum,jdbcType=BIGINT}, 
-      #{withdrawAmount,jdbcType=VARCHAR}, #{upAwardAmount,jdbcType=DECIMAL}, #{lowerAwardAmount,jdbcType=DECIMAL}, 
-      #{underCommission,jdbcType=DECIMAL}, #{agentCommission,jdbcType=DECIMAL}, #{installNum,jdbcType=BIGINT}, 
-      #{increasedBinding,jdbcType=BIGINT}, #{activeNum,jdbcType=BIGINT}, #{increasedNum,jdbcType=BIGINT}, 
-      #{rechargeFirst,jdbcType=BIGINT}, #{rechargeAmountFirst,jdbcType=BIGINT}, #{rechargeIncreasedNum,jdbcType=BIGINT}, 
-      #{rechargeIncreasedAmount,jdbcType=BIGINT}, #{topUpWithdrawal,jdbcType=BIGINT}, 
-      #{appu,jdbcType=DECIMAL}, #{arpu,jdbcType=DECIMAL}, #{betAmount,jdbcType=DECIMAL},
-      #{rebate,jdbcType=DECIMAL}, #{performance,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP})
-  </insert>
-    <insert id="insertSelective" parameterType="com.manager.common.core.domain.entity.SysTenantChannelStatistics">
+    <insert id="insert" parameterType="com.manager.common.core.domain.entity.SysTenantChannelStatistics" >
+        insert into sys_tenant_channel_statistics (day, t_id, total_amount,
+                                                   recharge_num, recharge_amount, withdraw_num,
+                                                   withdraw_amount, up_award_amount, lower_award_amount,
+                                                   under_commission, agent_commission, install_num,
+                                                   increased_binding, active_num, increased_num,
+                                                   recharge_first, recharge_amount_first, recharge_increased_num,
+                                                   recharge_increased_amount, top_up_withdrawal,
+                                                   appu, arpu, bet_amount,
+                                                   rebate, performance, create_time,
+                                                   update_time)
+        values (#{day,jdbcType=VARCHAR}, #{tId,jdbcType=VARCHAR}, #{totalAmount,jdbcType=DECIMAL},
+                #{rechargeNum,jdbcType=INTEGER}, #{rechargeAmount,jdbcType=DECIMAL}, #{withdrawNum,jdbcType=INTEGER},
+                #{withdrawAmount,jdbcType=DECIMAL}, #{upAwardAmount,jdbcType=DECIMAL}, #{lowerAwardAmount,jdbcType=DECIMAL},
+                #{underCommission,jdbcType=DECIMAL}, #{agentCommission,jdbcType=DECIMAL}, #{installNum,jdbcType=INTEGER},
+                #{increasedBinding,jdbcType=INTEGER}, #{activeNum,jdbcType=INTEGER}, #{increasedNum,jdbcType=INTEGER},
+                #{rechargeFirst,jdbcType=INTEGER}, #{rechargeAmountFirst,jdbcType=DECIMAL}, #{rechargeIncreasedNum,jdbcType=INTEGER},
+                #{rechargeIncreasedAmount,jdbcType=DECIMAL}, #{topUpWithdrawal,jdbcType=DECIMAL},
+                #{appu,jdbcType=DECIMAL}, #{arpu,jdbcType=DECIMAL}, #{betAmount,jdbcType=DECIMAL},
+                #{rebate,jdbcType=DECIMAL}, #{performance,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
+                #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.manager.common.core.domain.entity.SysTenantChannelStatistics" >
         insert into sys_tenant_channel_statistics
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="day != null">
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="day != null" >
                 day,
             </if>
-            <if test="tId != null">
+            <if test="tId != null" >
                 t_id,
             </if>
-            <if test="totalAmount != null">
+            <if test="totalAmount != null" >
                 total_amount,
             </if>
-            <if test="rechargeNum != null">
+            <if test="rechargeNum != null" >
                 recharge_num,
             </if>
-            <if test="rechargeAmount != null">
+            <if test="rechargeAmount != null" >
                 recharge_amount,
             </if>
-            <if test="withdrawNum != null">
+            <if test="withdrawNum != null" >
                 withdraw_num,
             </if>
-            <if test="withdrawAmount != null">
+            <if test="withdrawAmount != null" >
                 withdraw_amount,
             </if>
-            <if test="upAwardAmount != null">
+            <if test="upAwardAmount != null" >
                 up_award_amount,
             </if>
-            <if test="lowerAwardAmount != null">
+            <if test="lowerAwardAmount != null" >
                 lower_award_amount,
             </if>
-            <if test="underCommission != null">
+            <if test="underCommission != null" >
                 under_commission,
             </if>
-            <if test="agentCommission != null">
+            <if test="agentCommission != null" >
                 agent_commission,
             </if>
-            <if test="installNum != null">
+            <if test="installNum != null" >
                 install_num,
             </if>
-            <if test="increasedBinding != null">
+            <if test="increasedBinding != null" >
                 increased_binding,
             </if>
-            <if test="activeNum != null">
+            <if test="activeNum != null" >
                 active_num,
             </if>
-            <if test="increasedNum != null">
+            <if test="increasedNum != null" >
                 increased_num,
             </if>
-            <if test="rechargeFirst != null">
+            <if test="rechargeFirst != null" >
                 recharge_first,
             </if>
-            <if test="rechargeAmountFirst != null">
+            <if test="rechargeAmountFirst != null" >
                 recharge_amount_first,
             </if>
-            <if test="rechargeIncreasedNum != null">
+            <if test="rechargeIncreasedNum != null" >
                 recharge_increased_num,
             </if>
-            <if test="rechargeIncreasedAmount != null">
+            <if test="rechargeIncreasedAmount != null" >
                 recharge_increased_amount,
             </if>
-            <if test="topUpWithdrawal != null">
+            <if test="topUpWithdrawal != null" >
                 top_up_withdrawal,
             </if>
-            <if test="appu != null">
+            <if test="appu != null" >
                 appu,
             </if>
-            <if test="arpu != null">
+            <if test="arpu != null" >
                 arpu,
             </if>
-            <if test="betAmount != null">
+            <if test="betAmount != null" >
                 bet_amount,
             </if>
-            <if test="rebate != null">
+            <if test="rebate != null" >
                 rebate,
             </if>
-            <if test="performance != null">
+            <if test="performance != null" >
                 performance,
             </if>
-            <if test="createTime != null">
+            <if test="createTime != null" >
                 create_time,
             </if>
-            <if test="updateTime != null">
+            <if test="updateTime != null" >
                 update_time,
             </if>
         </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="day != null">
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="day != null" >
                 #{day,jdbcType=VARCHAR},
             </if>
-            <if test="tId != null">
+            <if test="tId != null" >
                 #{tId,jdbcType=VARCHAR},
             </if>
-            <if test="totalAmount != null">
-                #{totalAmount,jdbcType=VARCHAR},
+            <if test="totalAmount != null" >
+                #{totalAmount,jdbcType=DECIMAL},
             </if>
-            <if test="rechargeNum != null">
-                #{rechargeNum,jdbcType=BIGINT},
+            <if test="rechargeNum != null" >
+                #{rechargeNum,jdbcType=INTEGER},
             </if>
-            <if test="rechargeAmount != null">
+            <if test="rechargeAmount != null" >
                 #{rechargeAmount,jdbcType=DECIMAL},
             </if>
-            <if test="withdrawNum != null">
-                #{withdrawNum,jdbcType=BIGINT},
+            <if test="withdrawNum != null" >
+                #{withdrawNum,jdbcType=INTEGER},
             </if>
-            <if test="withdrawAmount != null">
-                #{withdrawAmount,jdbcType=VARCHAR},
+            <if test="withdrawAmount != null" >
+                #{withdrawAmount,jdbcType=DECIMAL},
             </if>
-            <if test="upAwardAmount != null">
+            <if test="upAwardAmount != null" >
                 #{upAwardAmount,jdbcType=DECIMAL},
             </if>
-            <if test="lowerAwardAmount != null">
+            <if test="lowerAwardAmount != null" >
                 #{lowerAwardAmount,jdbcType=DECIMAL},
             </if>
-            <if test="underCommission != null">
+            <if test="underCommission != null" >
                 #{underCommission,jdbcType=DECIMAL},
             </if>
-            <if test="agentCommission != null">
+            <if test="agentCommission != null" >
                 #{agentCommission,jdbcType=DECIMAL},
             </if>
-            <if test="installNum != null">
-                #{installNum,jdbcType=BIGINT},
+            <if test="installNum != null" >
+                #{installNum,jdbcType=INTEGER},
             </if>
-            <if test="increasedBinding != null">
-                #{increasedBinding,jdbcType=BIGINT},
+            <if test="increasedBinding != null" >
+                #{increasedBinding,jdbcType=INTEGER},
             </if>
-            <if test="activeNum != null">
-                #{activeNum,jdbcType=BIGINT},
+            <if test="activeNum != null" >
+                #{activeNum,jdbcType=INTEGER},
             </if>
-            <if test="increasedNum != null">
-                #{increasedNum,jdbcType=BIGINT},
+            <if test="increasedNum != null" >
+                #{increasedNum,jdbcType=INTEGER},
             </if>
-            <if test="rechargeFirst != null">
-                #{rechargeFirst,jdbcType=BIGINT},
+            <if test="rechargeFirst != null" >
+                #{rechargeFirst,jdbcType=INTEGER},
             </if>
-            <if test="rechargeAmountFirst != null">
-                #{rechargeAmountFirst,jdbcType=BIGINT},
+            <if test="rechargeAmountFirst != null" >
+                #{rechargeAmountFirst,jdbcType=DECIMAL},
             </if>
-            <if test="rechargeIncreasedNum != null">
-                #{rechargeIncreasedNum,jdbcType=BIGINT},
+            <if test="rechargeIncreasedNum != null" >
+                #{rechargeIncreasedNum,jdbcType=INTEGER},
             </if>
-            <if test="rechargeIncreasedAmount != null">
-                #{rechargeIncreasedAmount,jdbcType=BIGINT},
+            <if test="rechargeIncreasedAmount != null" >
+                #{rechargeIncreasedAmount,jdbcType=DECIMAL},
             </if>
-            <if test="topUpWithdrawal != null">
-                #{topUpWithdrawal,jdbcType=BIGINT},
+            <if test="topUpWithdrawal != null" >
+                #{topUpWithdrawal,jdbcType=DECIMAL},
             </if>
-            <if test="appu != null">
+            <if test="appu != null" >
                 #{appu,jdbcType=DECIMAL},
             </if>
-            <if test="arpu != null">
+            <if test="arpu != null" >
                 #{arpu,jdbcType=DECIMAL},
             </if>
-            <if test="betAmount != null">
+            <if test="betAmount != null" >
                 #{betAmount,jdbcType=DECIMAL},
             </if>
-            <if test="rebate != null">
+            <if test="rebate != null" >
                 #{rebate,jdbcType=DECIMAL},
             </if>
-            <if test="performance != null">
-                #{performance,jdbcType=BIGINT},
+            <if test="performance != null" >
+                #{performance,jdbcType=INTEGER},
             </if>
-            <if test="createTime != null">
+            <if test="createTime != null" >
                 #{createTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="updateTime != null">
+            <if test="updateTime != null" >
                 #{updateTime,jdbcType=TIMESTAMP},
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective"
-            parameterType="com.manager.common.core.domain.entity.SysTenantChannelStatistics">
+    <update id="updateByPrimaryKeySelective" parameterType="com.manager.common.core.domain.entity.SysTenantChannelStatistics" >
         update sys_tenant_channel_statistics
-        <set>
-            <if test="totalAmount != null">
-                total_amount = #{totalAmount,jdbcType=VARCHAR},
+        <set >
+            <if test="totalAmount != null" >
+                total_amount = #{totalAmount,jdbcType=DECIMAL},
             </if>
-            <if test="rechargeNum != null">
-                recharge_num = #{rechargeNum,jdbcType=BIGINT},
+            <if test="rechargeNum != null" >
+                recharge_num = #{rechargeNum,jdbcType=INTEGER},
             </if>
-            <if test="rechargeAmount != null">
+            <if test="rechargeAmount != null" >
                 recharge_amount = #{rechargeAmount,jdbcType=DECIMAL},
             </if>
-            <if test="withdrawNum != null">
-                withdraw_num = #{withdrawNum,jdbcType=BIGINT},
+            <if test="withdrawNum != null" >
+                withdraw_num = #{withdrawNum,jdbcType=INTEGER},
             </if>
-            <if test="withdrawAmount != null">
-                withdraw_amount = #{withdrawAmount,jdbcType=VARCHAR},
+            <if test="withdrawAmount != null" >
+                withdraw_amount = #{withdrawAmount,jdbcType=DECIMAL},
             </if>
-            <if test="upAwardAmount != null">
+            <if test="upAwardAmount != null" >
                 up_award_amount = #{upAwardAmount,jdbcType=DECIMAL},
             </if>
-            <if test="lowerAwardAmount != null">
+            <if test="lowerAwardAmount != null" >
                 lower_award_amount = #{lowerAwardAmount,jdbcType=DECIMAL},
             </if>
-            <if test="underCommission != null">
+            <if test="underCommission != null" >
                 under_commission = #{underCommission,jdbcType=DECIMAL},
             </if>
-            <if test="agentCommission != null">
+            <if test="agentCommission != null" >
                 agent_commission = #{agentCommission,jdbcType=DECIMAL},
             </if>
-            <if test="installNum != null">
-                install_num = #{installNum,jdbcType=BIGINT},
+            <if test="installNum != null" >
+                install_num = #{installNum,jdbcType=INTEGER},
             </if>
-            <if test="increasedBinding != null">
-                increased_binding = #{increasedBinding,jdbcType=BIGINT},
+            <if test="increasedBinding != null" >
+                increased_binding = #{increasedBinding,jdbcType=INTEGER},
             </if>
-            <if test="activeNum != null">
-                active_num = #{activeNum,jdbcType=BIGINT},
+            <if test="activeNum != null" >
+                active_num = #{activeNum,jdbcType=INTEGER},
             </if>
-            <if test="increasedNum != null">
-                increased_num = #{increasedNum,jdbcType=BIGINT},
+            <if test="increasedNum != null" >
+                increased_num = #{increasedNum,jdbcType=INTEGER},
             </if>
-            <if test="rechargeFirst != null">
-                recharge_first = #{rechargeFirst,jdbcType=BIGINT},
+            <if test="rechargeFirst != null" >
+                recharge_first = #{rechargeFirst,jdbcType=INTEGER},
             </if>
-            <if test="rechargeAmountFirst != null">
-                recharge_amount_first = #{rechargeAmountFirst,jdbcType=BIGINT},
+            <if test="rechargeAmountFirst != null" >
+                recharge_amount_first = #{rechargeAmountFirst,jdbcType=DECIMAL},
             </if>
-            <if test="rechargeIncreasedNum != null">
-                recharge_increased_num = #{rechargeIncreasedNum,jdbcType=BIGINT},
+            <if test="rechargeIncreasedNum != null" >
+                recharge_increased_num = #{rechargeIncreasedNum,jdbcType=INTEGER},
             </if>
-            <if test="rechargeIncreasedAmount != null">
-                recharge_increased_amount = #{rechargeIncreasedAmount,jdbcType=BIGINT},
+            <if test="rechargeIncreasedAmount != null" >
+                recharge_increased_amount = #{rechargeIncreasedAmount,jdbcType=DECIMAL},
             </if>
-            <if test="topUpWithdrawal != null">
-                top_up_withdrawal = #{topUpWithdrawal,jdbcType=BIGINT},
+            <if test="topUpWithdrawal != null" >
+                top_up_withdrawal = #{topUpWithdrawal,jdbcType=DECIMAL},
             </if>
-            <if test="appu != null">
+            <if test="appu != null" >
                 appu = #{appu,jdbcType=DECIMAL},
             </if>
-            <if test="arpu != null">
+            <if test="arpu != null" >
                 arpu = #{arpu,jdbcType=DECIMAL},
             </if>
-            <if test="betAmount != null">
+            <if test="betAmount != null" >
                 bet_amount = #{betAmount,jdbcType=DECIMAL},
             </if>
-            <if test="rebate != null">
+            <if test="rebate != null" >
                 rebate = #{rebate,jdbcType=DECIMAL},
             </if>
-            <if test="performance != null">
-                performance = #{performance,jdbcType=BIGINT},
+            <if test="performance != null" >
+                performance = #{performance,jdbcType=INTEGER},
             </if>
-            <if test="createTime != null">
+            <if test="createTime != null" >
                 create_time = #{createTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="updateTime != null">
+            <if test="updateTime != null" >
                 update_time = #{updateTime,jdbcType=TIMESTAMP},
             </if>
         </set>
         where day = #{day,jdbcType=VARCHAR}
         and t_id = #{tId,jdbcType=VARCHAR}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.manager.common.core.domain.entity.SysTenantChannelStatistics">
-    update sys_tenant_channel_statistics
-    set total_amount = #{totalAmount,jdbcType=VARCHAR},
-      recharge_num = #{rechargeNum,jdbcType=BIGINT},
-      recharge_amount = #{rechargeAmount,jdbcType=DECIMAL},
-      withdraw_num = #{withdrawNum,jdbcType=BIGINT},
-      withdraw_amount = #{withdrawAmount,jdbcType=VARCHAR},
-      up_award_amount = #{upAwardAmount,jdbcType=DECIMAL},
-      lower_award_amount = #{lowerAwardAmount,jdbcType=DECIMAL},
-      under_commission = #{underCommission,jdbcType=DECIMAL},
-      agent_commission = #{agentCommission,jdbcType=DECIMAL},
-      install_num = #{installNum,jdbcType=BIGINT},
-      increased_binding = #{increasedBinding,jdbcType=BIGINT},
-      active_num = #{activeNum,jdbcType=BIGINT},
-      increased_num = #{increasedNum,jdbcType=BIGINT},
-      recharge_first = #{rechargeFirst,jdbcType=BIGINT},
-      recharge_amount_first = #{rechargeAmountFirst,jdbcType=BIGINT},
-      recharge_increased_num = #{rechargeIncreasedNum,jdbcType=BIGINT},
-      recharge_increased_amount = #{rechargeIncreasedAmount,jdbcType=BIGINT},
-      top_up_withdrawal = #{topUpWithdrawal,jdbcType=BIGINT},
-      appu = #{appu,jdbcType=DECIMAL},
-      arpu = #{arpu,jdbcType=DECIMAL},
-      bet_amount = #{betAmount,jdbcType=DECIMAL},
-      rebate = #{rebate,jdbcType=DECIMAL},
-      performance = #{performance,jdbcType=BIGINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
-    where day = #{day,jdbcType=VARCHAR}
-      and t_id = #{tId,jdbcType=VARCHAR}
-  </update>
+    <update id="updateByPrimaryKey" parameterType="com.manager.common.core.domain.entity.SysTenantChannelStatistics" >
+        update sys_tenant_channel_statistics
+        set total_amount = #{totalAmount,jdbcType=DECIMAL},
+            recharge_num = #{rechargeNum,jdbcType=INTEGER},
+            recharge_amount = #{rechargeAmount,jdbcType=DECIMAL},
+            withdraw_num = #{withdrawNum,jdbcType=INTEGER},
+            withdraw_amount = #{withdrawAmount,jdbcType=DECIMAL},
+            up_award_amount = #{upAwardAmount,jdbcType=DECIMAL},
+            lower_award_amount = #{lowerAwardAmount,jdbcType=DECIMAL},
+            under_commission = #{underCommission,jdbcType=DECIMAL},
+            agent_commission = #{agentCommission,jdbcType=DECIMAL},
+            install_num = #{installNum,jdbcType=INTEGER},
+            increased_binding = #{increasedBinding,jdbcType=INTEGER},
+            active_num = #{activeNum,jdbcType=INTEGER},
+            increased_num = #{increasedNum,jdbcType=INTEGER},
+            recharge_first = #{rechargeFirst,jdbcType=INTEGER},
+            recharge_amount_first = #{rechargeAmountFirst,jdbcType=DECIMAL},
+            recharge_increased_num = #{rechargeIncreasedNum,jdbcType=INTEGER},
+            recharge_increased_amount = #{rechargeIncreasedAmount,jdbcType=DECIMAL},
+            top_up_withdrawal = #{topUpWithdrawal,jdbcType=DECIMAL},
+            appu = #{appu,jdbcType=DECIMAL},
+            arpu = #{arpu,jdbcType=DECIMAL},
+            bet_amount = #{betAmount,jdbcType=DECIMAL},
+            rebate = #{rebate,jdbcType=DECIMAL},
+            performance = #{performance,jdbcType=INTEGER},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_time = #{updateTime,jdbcType=TIMESTAMP}
+        where day = #{day,jdbcType=VARCHAR}
+          and t_id = #{tId,jdbcType=VARCHAR}
+    </update>
 
 </mapper>

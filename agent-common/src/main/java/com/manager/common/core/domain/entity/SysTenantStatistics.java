@@ -20,23 +20,20 @@ public class SysTenantStatistics extends BaseEntity {
     @ApiModelProperty("总代/渠道号")
     private String tId;
 
-    @ApiModelProperty("父id")
-    private String parentId;
-
-    @ApiModelProperty("总盈亏")
-    private String totalAmount;
+    @ApiModelProperty("总充提差额")
+    private BigDecimal totalAmount;
 
     @ApiModelProperty("总充值人数")
-    private Long rechargeNum;
+    private int rechargeNum;
 
     @ApiModelProperty("总充值金额")
     private BigDecimal rechargeAmount;
 
     @ApiModelProperty("总提现人数")
-    private Long withdrawNum;
+    private int withdrawNum;
 
     @ApiModelProperty("总提现金额")
-    private String withdrawAmount;
+    private BigDecimal withdrawAmount;
 
     @ApiModelProperty("线上赠送金额")
     private BigDecimal upAwardAmount;
@@ -51,6 +48,6 @@ public class SysTenantStatistics extends BaseEntity {
     private BigDecimal agentCommission;
 
     @ApiModelProperty("总安装量")
-    private Long installNum;
+    private int registerNum;
 
 }

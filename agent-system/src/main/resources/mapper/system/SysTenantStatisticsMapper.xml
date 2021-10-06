@@ -2,27 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.manager.system.mapper.SysTenantStatisticsMapper">
     <resultMap id="BaseResultMap" type="com.manager.common.core.domain.entity.SysTenantStatistics">
-        <id column="t_id" property="tId" jdbcType="VARCHAR"/>
-        <result column="parent_id" property="parentId" jdbcType="VARCHAR"/>
-        <result column="total_amount" property="totalAmount" jdbcType="VARCHAR"/>
-        <result column="recharge_num" property="rechargeNum" jdbcType="BIGINT"/>
-        <result column="recharge_amount" property="rechargeAmount" jdbcType="DECIMAL"/>
-        <result column="withdraw_num" property="withdrawNum" jdbcType="BIGINT"/>
-        <result column="withdraw_amount" property="withdrawAmount" jdbcType="VARCHAR"/>
-        <result column="up_award_amount" property="upAwardAmount" jdbcType="DECIMAL"/>
-        <result column="lower_award_amount" property="lowerAwardAmount" jdbcType="DECIMAL"/>
-        <result column="under_commission" property="underCommission" jdbcType="DECIMAL"/>
-        <result column="agent_commission" property="agentCommission" jdbcType="DECIMAL"/>
-        <result column="install_num" property="installNum" jdbcType="BIGINT"/>
+        <id column="t_id" property="tId" jdbcType="VARCHAR" />
+        <result column="total_amount" property="totalAmount" jdbcType="DECIMAL" />
+        <result column="recharge_num" property="rechargeNum" jdbcType="INTEGER" />
+        <result column="recharge_amount" property="rechargeAmount" jdbcType="DECIMAL" />
+        <result column="withdraw_num" property="withdrawNum" jdbcType="INTEGER" />
+        <result column="withdraw_amount" property="withdrawAmount" jdbcType="DECIMAL" />
+        <result column="up_award_amount" property="upAwardAmount" jdbcType="DECIMAL" />
+        <result column="lower_award_amount" property="lowerAwardAmount" jdbcType="DECIMAL" />
+        <result column="under_commission" property="underCommission" jdbcType="DECIMAL" />
+        <result column="agent_commission" property="agentCommission" jdbcType="DECIMAL" />
+        <result column="register_num" property="registerNum" jdbcType="INTEGER" />
     </resultMap>
-    <sql id="Base_Column_List">
-    t_id, parent_id, total_amount, recharge_num, recharge_amount, withdraw_num, withdraw_amount,
-    up_award_amount, lower_award_amount, under_commission, agent_commission, install_num
-    </sql>
-
-
     <select id="getSysTenantStatistics" resultMap="BaseResultMap" parameterType="com.manager.common.core.domain.entity.SysTenantStatistics">
-       SELECT
+        SELECT
         sum(total_amount) as total_amount,
         sum(recharge_num) as recharge_num,
         sum(recharge_amount) as recharge_amount,
@@ -38,160 +31,152 @@
         </where>
     </select>
 
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    <sql id="Base_Column_List" >
+        t_id, total_amount, recharge_num, recharge_amount, withdraw_num, withdraw_amount,
+    up_award_amount, lower_award_amount, under_commission, agent_commission, register_num
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
         select
-        <include refid="Base_Column_List"/>
+        <include refid="Base_Column_List" />
         from sys_tenant_statistics
         where t_id = #{tId,jdbcType=VARCHAR}
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from sys_tenant_statistics
-    where t_id = #{tId,jdbcType=VARCHAR}
-  </delete>
-    <insert id="insert" parameterType="com.manager.common.core.domain.entity.SysTenantStatistics">
-    insert into sys_tenant_statistics (t_id, parent_id, total_amount,
-      recharge_num, recharge_amount, withdraw_num,
-      withdraw_amount, up_award_amount, lower_award_amount,
-      under_commission, agent_commission, install_num
-      )
-    values (#{tId,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{totalAmount,jdbcType=VARCHAR},
-      #{rechargeNum,jdbcType=BIGINT}, #{rechargeAmount,jdbcType=DECIMAL}, #{withdrawNum,jdbcType=BIGINT},
-      #{withdrawAmount,jdbcType=VARCHAR}, #{upAwardAmount,jdbcType=DECIMAL}, #{lowerAwardAmount,jdbcType=DECIMAL},
-      #{underCommission,jdbcType=DECIMAL}, #{agentCommission,jdbcType=DECIMAL}, #{installNum,jdbcType=BIGINT}
-      )
-  </insert>
-    <insert id="insertSelective" parameterType="com.manager.common.core.domain.entity.SysTenantStatistics">
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from sys_tenant_statistics
+        where t_id = #{tId,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.manager.common.core.domain.entity.SysTenantStatistics" >
+        insert into sys_tenant_statistics (t_id, total_amount, recharge_num,
+                                           recharge_amount, withdraw_num, withdraw_amount,
+                                           up_award_amount, lower_award_amount, under_commission,
+                                           agent_commission, register_num)
+        values (#{tId,jdbcType=VARCHAR}, #{totalAmount,jdbcType=DECIMAL}, #{rechargeNum,jdbcType=INTEGER},
+                #{rechargeAmount,jdbcType=DECIMAL}, #{withdrawNum,jdbcType=INTEGER}, #{withdrawAmount,jdbcType=DECIMAL},
+                #{upAwardAmount,jdbcType=DECIMAL}, #{lowerAwardAmount,jdbcType=DECIMAL}, #{underCommission,jdbcType=DECIMAL},
+                #{agentCommission,jdbcType=DECIMAL}, #{registerNum,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="com.manager.common.core.domain.entity.SysTenantStatistics" >
         insert into sys_tenant_statistics
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="tId != null">
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="tId != null" >
                 t_id,
             </if>
-            <if test="parentId != null">
-                parent_id,
-            </if>
-            <if test="totalAmount != null">
+            <if test="totalAmount != null" >
                 total_amount,
             </if>
-            <if test="rechargeNum != null">
+            <if test="rechargeNum != null" >
                 recharge_num,
             </if>
-            <if test="rechargeAmount != null">
+            <if test="rechargeAmount != null" >
                 recharge_amount,
             </if>
-            <if test="withdrawNum != null">
+            <if test="withdrawNum != null" >
                 withdraw_num,
             </if>
-            <if test="withdrawAmount != null">
+            <if test="withdrawAmount != null" >
                 withdraw_amount,
             </if>
-            <if test="upAwardAmount != null">
+            <if test="upAwardAmount != null" >
                 up_award_amount,
             </if>
-            <if test="lowerAwardAmount != null">
+            <if test="lowerAwardAmount != null" >
                 lower_award_amount,
             </if>
-            <if test="underCommission != null">
+            <if test="underCommission != null" >
                 under_commission,
             </if>
-            <if test="agentCommission != null">
+            <if test="agentCommission != null" >
                 agent_commission,
             </if>
-            <if test="installNum != null">
-                install_num,
+            <if test="registerNum != null" >
+                register_num,
             </if>
         </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="tId != null">
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="tId != null" >
                 #{tId,jdbcType=VARCHAR},
             </if>
-            <if test="parentId != null">
-                #{parentId,jdbcType=VARCHAR},
+            <if test="totalAmount != null" >
+                #{totalAmount,jdbcType=DECIMAL},
             </if>
-            <if test="totalAmount != null">
-                #{totalAmount,jdbcType=VARCHAR},
+            <if test="rechargeNum != null" >
+                #{rechargeNum,jdbcType=INTEGER},
             </if>
-            <if test="rechargeNum != null">
-                #{rechargeNum,jdbcType=BIGINT},
-            </if>
-            <if test="rechargeAmount != null">
+            <if test="rechargeAmount != null" >
                 #{rechargeAmount,jdbcType=DECIMAL},
             </if>
-            <if test="withdrawNum != null">
-                #{withdrawNum,jdbcType=BIGINT},
+            <if test="withdrawNum != null" >
+                #{withdrawNum,jdbcType=INTEGER},
             </if>
-            <if test="withdrawAmount != null">
-                #{withdrawAmount,jdbcType=VARCHAR},
+            <if test="withdrawAmount != null" >
+                #{withdrawAmount,jdbcType=DECIMAL},
             </if>
-            <if test="upAwardAmount != null">
+            <if test="upAwardAmount != null" >
                 #{upAwardAmount,jdbcType=DECIMAL},
             </if>
-            <if test="lowerAwardAmount != null">
+            <if test="lowerAwardAmount != null" >
                 #{lowerAwardAmount,jdbcType=DECIMAL},
             </if>
-            <if test="underCommission != null">
+            <if test="underCommission != null" >
                 #{underCommission,jdbcType=DECIMAL},
             </if>
-            <if test="agentCommission != null">
+            <if test="agentCommission != null" >
                 #{agentCommission,jdbcType=DECIMAL},
             </if>
-            <if test="installNum != null">
-                #{installNum,jdbcType=BIGINT},
+            <if test="registerNum != null" >
+                #{registerNum,jdbcType=INTEGER},
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.manager.common.core.domain.entity.SysTenantStatistics">
+    <update id="updateByPrimaryKeySelective" parameterType="com.manager.common.core.domain.entity.SysTenantStatistics" >
         update sys_tenant_statistics
-        <set>
-            <if test="parentId != null">
-                parent_id = #{parentId,jdbcType=VARCHAR},
+        <set >
+            <if test="totalAmount != null" >
+                total_amount = #{totalAmount,jdbcType=DECIMAL},
             </if>
-            <if test="totalAmount != null">
-                total_amount = #{totalAmount,jdbcType=VARCHAR},
+            <if test="rechargeNum != null" >
+                recharge_num = #{rechargeNum,jdbcType=INTEGER},
             </if>
-            <if test="rechargeNum != null">
-                recharge_num = #{rechargeNum,jdbcType=BIGINT},
-            </if>
-            <if test="rechargeAmount != null">
+            <if test="rechargeAmount != null" >
                 recharge_amount = #{rechargeAmount,jdbcType=DECIMAL},
             </if>
-            <if test="withdrawNum != null">
-                withdraw_num = #{withdrawNum,jdbcType=BIGINT},
+            <if test="withdrawNum != null" >
+                withdraw_num = #{withdrawNum,jdbcType=INTEGER},
             </if>
-            <if test="withdrawAmount != null">
-                withdraw_amount = #{withdrawAmount,jdbcType=VARCHAR},
+            <if test="withdrawAmount != null" >
+                withdraw_amount = #{withdrawAmount,jdbcType=DECIMAL},
             </if>
-            <if test="upAwardAmount != null">
+            <if test="upAwardAmount != null" >
                 up_award_amount = #{upAwardAmount,jdbcType=DECIMAL},
             </if>
-            <if test="lowerAwardAmount != null">
+            <if test="lowerAwardAmount != null" >
                 lower_award_amount = #{lowerAwardAmount,jdbcType=DECIMAL},
             </if>
-            <if test="underCommission != null">
+            <if test="underCommission != null" >
                 under_commission = #{underCommission,jdbcType=DECIMAL},
             </if>
-            <if test="agentCommission != null">
+            <if test="agentCommission != null" >
                 agent_commission = #{agentCommission,jdbcType=DECIMAL},
             </if>
-            <if test="installNum != null">
-                install_num = #{installNum,jdbcType=BIGINT},
+            <if test="registerNum != null" >
+                register_num = #{registerNum,jdbcType=INTEGER},
             </if>
         </set>
         where t_id = #{tId,jdbcType=VARCHAR}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.manager.common.core.domain.entity.SysTenantStatistics">
-    update sys_tenant_statistics
-    set parent_id = #{parentId,jdbcType=VARCHAR},
-      total_amount = #{totalAmount,jdbcType=VARCHAR},
-      recharge_num = #{rechargeNum,jdbcType=BIGINT},
-      recharge_amount = #{rechargeAmount,jdbcType=DECIMAL},
-      withdraw_num = #{withdrawNum,jdbcType=BIGINT},
-      withdraw_amount = #{withdrawAmount,jdbcType=VARCHAR},
-      up_award_amount = #{upAwardAmount,jdbcType=DECIMAL},
-      lower_award_amount = #{lowerAwardAmount,jdbcType=DECIMAL},
-      under_commission = #{underCommission,jdbcType=DECIMAL},
-      agent_commission = #{agentCommission,jdbcType=DECIMAL},
-      install_num = #{installNum,jdbcType=BIGINT}
-    where t_id = #{tId,jdbcType=VARCHAR}
-  </update>
+    <update id="updateByPrimaryKey" parameterType="com.manager.common.core.domain.entity.SysTenantStatistics" >
+        update sys_tenant_statistics
+        set total_amount = #{totalAmount,jdbcType=DECIMAL},
+            recharge_num = #{rechargeNum,jdbcType=INTEGER},
+            recharge_amount = #{rechargeAmount,jdbcType=DECIMAL},
+            withdraw_num = #{withdrawNum,jdbcType=INTEGER},
+            withdraw_amount = #{withdrawAmount,jdbcType=DECIMAL},
+            up_award_amount = #{upAwardAmount,jdbcType=DECIMAL},
+            lower_award_amount = #{lowerAwardAmount,jdbcType=DECIMAL},
+            under_commission = #{underCommission,jdbcType=DECIMAL},
+            agent_commission = #{agentCommission,jdbcType=DECIMAL},
+            register_num = #{registerNum,jdbcType=INTEGER}
+        where t_id = #{tId,jdbcType=VARCHAR}
+    </update>
 
 </mapper>
