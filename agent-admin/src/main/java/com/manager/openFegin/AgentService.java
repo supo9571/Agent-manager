@@ -40,4 +40,10 @@ public interface AgentService {
 
     @PostMapping(value = "/data/total/list", consumes = "application/json")
     AjaxResult getTotals(@RequestBody Summarize summarize);
+
+    @PostMapping(value = "/data/total/left")
+    AjaxResult getLeft(@RequestParam("tid")int tid);
+
+    @PostMapping(value = "/data/total/right")
+    AjaxResult getRight(@RequestParam("tid")int tid,@RequestParam("beginTime") String beginTime,@RequestParam("endTime") String endTime);
 }

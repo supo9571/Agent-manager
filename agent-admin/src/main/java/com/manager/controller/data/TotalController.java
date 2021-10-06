@@ -1,5 +1,6 @@
 package com.manager.controller.data;
 
+import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.domain.AjaxResult;
 import com.manager.common.core.domain.model.Summarize;
 import com.manager.openFegin.AgentService;
@@ -8,6 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,5 +32,25 @@ public class TotalController {
     @GetMapping("/list")
     public AjaxResult list(Summarize summarize) {
         return agentService.getTotals(summarize);
+    }
+
+    /**
+     * 总览 左侧数据
+     */
+    @PreAuthorize("@ss.hasPermi('data:total:list')")
+    @ApiOperation(value = "查询总览左侧数据")
+    @PostMapping("/left")
+    public AjaxResult left() {
+        return agentService.getLeft(ManagerConfig.getTid());
+    }
+
+    /**
+     * 总览 右侧数据
+     */
+    @PreAuthorize("@ss.hasPermi('data:total:list')")
+    @ApiOperation(value = "查询总览右侧数据")
+    @PostMapping("/right")
+    public AjaxResult right(int tid,String beginTime,String endTime) {
+        return agentService.getRight(ManagerConfig.getTid(),beginTime,endTime);
     }
 }
