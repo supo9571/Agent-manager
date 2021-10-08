@@ -49,7 +49,7 @@ public class TotalController {
     @ApiOperation(value = "总览列表导出")
     @GetMapping("/export")
     public void export(Summarize summarize, HttpServletResponse response) throws IOException {
-        List list = (List) agentService.getTotals(summarize).get("data");
+        List list = agentService.getExport(summarize);
         ExcelUtil<Summarize> util = new ExcelUtil(Summarize.class);
         String fileName = "总览列表导出";
         response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);

@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 /**
  * @author marvin 2021/9/29
  */
@@ -46,4 +48,7 @@ public interface AgentService {
 
     @PostMapping(value = "/data/total/right")
     AjaxResult getRight(@RequestParam("tid")int tid,@RequestParam("beginTime") String beginTime,@RequestParam("endTime") String endTime);
+
+    @PostMapping(value = "/data/total/export", consumes = "application/json")
+    List getExport(@RequestBody Summarize summarize);
 }
