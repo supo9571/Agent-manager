@@ -90,4 +90,33 @@ public interface DataService {
     @PostMapping(value = "/data/activity/report/list")
     AjaxResult getActivityList(@RequestBody Coins coins);
 
+    @PostMapping(value = "/data/player/info")
+    AjaxResult getInfo(Long uid);
+
+    @PostMapping(value = "/data/player/editExchange", consumes = "application/json")
+    AjaxResult updateBank(@RequestBody UserExchange userExchange);
+
+    @PostMapping(value = "/data/player/recAndexc")
+    AjaxResult recAndexc(@RequestParam("uid") Long uid);
+
+    @PostMapping(value = "/data/player/rechargeInfo", consumes = "application/json")
+    AjaxResult rechargeInfo(@RequestBody PlayUser playUser);
+
+    @PostMapping(value = "/data/player/exchangeInfo", consumes = "application/json")
+    AjaxResult exchangeInfo(@RequestBody PlayUser playUser);
+
+    @PostMapping(value = "/data/player/userInfo")
+    AjaxResult userInfo(@RequestParam("uid") Long uid);
+
+    @PostMapping(value = "/data/player/waterInfo", consumes = "application/json")
+    AjaxResult waterInfo(@RequestBody PlayWater playWater);
+
+    @PostMapping(value = "/data/player/updateToken")
+    AjaxResult updateToken(@RequestParam("uid") Long uid);
+
+    @PostMapping(value = "/data/player/lock", consumes = "application/json")
+    AjaxResult lock(@RequestBody UserLock userLock);
+
+    @PostMapping(value = "/data/player/lockLog", consumes = "application/json")
+    AjaxResult lockLog(@RequestParam("uid") Long uid);
 }
