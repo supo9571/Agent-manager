@@ -11,6 +11,9 @@ import org.apache.commons.lang3.StringUtils;
 @Data
 public class Coins extends BaseEntity {
 
+    @ApiModelProperty("平台id")
+    private Integer tid;
+
     @ApiModelProperty("流水号")
     private String key;
 
