@@ -11,6 +11,7 @@ import com.manager.common.enums.BusinessType;
 import com.manager.common.utils.SecurityUtils;
 import com.manager.openFegin.AgentService;
 import com.manager.openFegin.DataService;
+import com.manager.system.service.BankService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -174,5 +175,18 @@ public class PlayerController extends BaseController {
     @PostMapping("/lockLog")
     public AjaxResult lockLog(Long uid) {
         return dataService.lockLog(uid);
+    }
+
+    @Autowired
+    private BankService bankService;
+
+    /**
+     * 获取 银行卡列表
+     */
+    @PreAuthorize("@ss.hasPermi('data:player:list')")
+    @ApiOperation(value = "银行卡列表")
+    @GetMapping("/bankList")
+    public AjaxResult bankList() {
+        return AjaxResult.success(bankService.getBankList());
     }
 }

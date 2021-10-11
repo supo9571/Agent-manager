@@ -39,7 +39,7 @@ public class Coins extends BaseEntity {
     private String channel;
 
     @ApiModelProperty("游戏类型")
-    private Long gameType;
+    private String gameType;
 
     @ApiModelProperty("桌号")
     private Long tableType;
