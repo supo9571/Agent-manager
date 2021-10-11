@@ -10,6 +10,9 @@ import lombok.Data;
 @Data
 public class Login extends BaseEntity {
 
+    @ApiModelProperty("平台id")
+    private String tid;
+
     @ApiModelProperty("用户id")
     private String uid;
 

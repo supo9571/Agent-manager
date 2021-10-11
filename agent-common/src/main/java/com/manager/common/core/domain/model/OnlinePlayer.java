@@ -10,6 +10,9 @@ import lombok.Data;
 @Data
 public class OnlinePlayer extends BaseEntity {
 
+    @ApiModelProperty("平台id")
+    private String tid;
+
     @ApiModelProperty("玩家id")
     private Long uid;
 

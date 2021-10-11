@@ -14,6 +14,9 @@ import java.text.SimpleDateFormat;
 @Data
 public class Card extends BaseEntity {
 
+    @ApiModelProperty("平台id")
+    private String tid;
+
     @ApiModelProperty("牌局号")
     private String tableGid;
 
