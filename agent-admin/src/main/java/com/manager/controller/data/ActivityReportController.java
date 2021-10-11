@@ -47,7 +47,7 @@ public class ActivityReportController extends BaseController {
     @Log(title = "活动列表导出", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(@RequestBody Coins coins, HttpServletResponse response) throws IOException {
-        coins.setTid(ManagerConfig.getTid());
+        coins.setTid(ManagerConfig.getTid()+"");
         AjaxResult ajaxResult = dataService.getActivityList(coins);
         ExcelUtil util = new ExcelUtil(Map.class);
         String fileName = "活动列表导出";
