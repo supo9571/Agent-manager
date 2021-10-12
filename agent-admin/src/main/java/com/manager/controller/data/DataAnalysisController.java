@@ -35,7 +35,7 @@ public class DataAnalysisController extends BaseController {
     private DataService dataService;
 
     @ApiOperation(value = "提现top100")
-    @GetMapping("/withdraw/top/List")
+    @PostMapping("/withdraw/top/List")
     public AjaxResult list(DataAnalysisParam param) {
         param.setTId(ManagerConfig.getTid());
         return dataService.withdrawTopList(param);
