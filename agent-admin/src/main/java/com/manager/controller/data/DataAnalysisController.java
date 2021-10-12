@@ -60,7 +60,7 @@ public class DataAnalysisController extends BaseController {
         return dataService.getDataWaterTopList(param);
     }
 
-    @ApiOperation(value = "提现top100导出")
+    @ApiOperation(value = "流水top100导出")
     @Log(title = "提现top100导出", businessType = BusinessType.EXPORT)
     @PostMapping("/water/top/export")
     public void dataWaterTopExport(@RequestBody DataAnalysisParam param, HttpServletResponse response) throws IOException {
