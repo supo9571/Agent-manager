@@ -6,6 +6,7 @@ import com.manager.common.core.controller.BaseController;
 import com.manager.common.core.domain.AjaxResult;
 import com.manager.common.core.domain.model.param.DataAnalysisParam;
 import com.manager.common.core.domain.model.vo.DataAnalysisVO;
+import com.manager.common.core.domain.model.vo.DataWaterTopVO;
 import com.manager.common.enums.BusinessType;
 import com.manager.common.utils.file.FileUtils;
 import com.manager.common.utils.poi.ExcelUtil;
@@ -52,5 +53,24 @@ public class DataAnalysisController extends BaseController {
         FileUtils.setAttachmentResponseHeader(response, fileName + ".xlsx");
         util.downloadExcel((List) ajaxResult.get("data"), fileName, response.getOutputStream());
     }
+
+    @ApiOperation(value = "流水top100")
+    @PostMapping("/water/top/List")
+    public AjaxResult getDataWaterTopList(@RequestBody DataAnalysisParam param) {
+        return dataService.getDataWaterTopList(param);
+    }
+
+    @ApiOperation(value = "提现top100导出")
+    @Log(title = "提现top100导出", businessType = BusinessType.EXPORT)
+    @PostMapping("/water/top/export")
+    public void dataWaterTopExport(@RequestBody DataAnalysisParam param, HttpServletResponse response) throws IOException {
+        AjaxResult ajaxResult = dataService.getDataWaterTopList(param);
+        ExcelUtil<DataWaterTopVO> util = new ExcelUtil(DataWaterTopVO.class);
+        String fileName = "流水top100导出";
+        response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+        FileUtils.setAttachmentResponseHeader(response, fileName + ".xlsx");
+        util.downloadExcel((List) ajaxResult.get("data"), fileName, response.getOutputStream());
+    }
+
 
 }

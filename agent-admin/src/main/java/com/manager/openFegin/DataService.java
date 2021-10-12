@@ -120,7 +120,11 @@ public interface DataService {
 
     @PostMapping(value = "/data/player/lockLog", consumes = "application/json")
     AjaxResult lockLog(@RequestParam("uid") Long uid);
+
     @PostMapping("/data/report/withdraw/top/List")
     AjaxResult withdrawTopList(@RequestBody DataAnalysisParam param);
+
+    @PostMapping("/data/report/water/top/List")
+    AjaxResult getDataWaterTopList(@RequestBody DataAnalysisParam param);
 
 }
