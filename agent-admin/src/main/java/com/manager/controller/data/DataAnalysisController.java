@@ -7,7 +7,9 @@ import com.manager.common.core.domain.AjaxResult;
 import com.manager.common.core.domain.model.param.DataAnalysisParam;
 import com.manager.common.core.domain.model.vo.DataAnalysisVO;
 import com.manager.common.core.domain.model.vo.DataWaterTopVO;
+import com.manager.common.core.domain.model.vo.RechargeTopVO;
 import com.manager.common.enums.BusinessType;
+import com.manager.common.utils.SecurityUtils;
 import com.manager.common.utils.file.FileUtils;
 import com.manager.common.utils.poi.ExcelUtil;
 import com.manager.openFegin.DataService;
@@ -57,13 +59,15 @@ public class DataAnalysisController extends BaseController {
     @ApiOperation(value = "流水top100")
     @PostMapping("/water/top/List")
     public AjaxResult getDataWaterTopList(@RequestBody DataAnalysisParam param) {
+        param.setTId(ManagerConfig.getTid());
         return dataService.getDataWaterTopList(param);
     }
 
     @ApiOperation(value = "流水top100导出")
-    @Log(title = "提现top100导出", businessType = BusinessType.EXPORT)
+    @Log(title = "流水top100导出", businessType = BusinessType.EXPORT)
     @PostMapping("/water/top/export")
     public void dataWaterTopExport(@RequestBody DataAnalysisParam param, HttpServletResponse response) throws IOException {
+        param.setTId(ManagerConfig.getTid());
         AjaxResult ajaxResult = dataService.getDataWaterTopList(param);
         ExcelUtil<DataWaterTopVO> util = new ExcelUtil(DataWaterTopVO.class);
         String fileName = "流水top100导出";
@@ -72,5 +76,24 @@ public class DataAnalysisController extends BaseController {
         util.downloadExcel((List) ajaxResult.get("data"), fileName, response.getOutputStream());
     }
 
+    @ApiOperation(value = "充值top100")
+    @PostMapping("/recharge/top/List")
+    public AjaxResult getRechargeTopList(@RequestBody DataAnalysisParam param) {
+        param.setTId(ManagerConfig.getTid());
+        return dataService.getRechargeTopList(param);
+    }
+
+    @ApiOperation(value = "充值top100导出")
+    @Log(title = "充值top100导出", businessType = BusinessType.EXPORT)
+    @PostMapping("/recharge/top/export")
+    public void getRechargeTopListExport(@RequestBody DataAnalysisParam param, HttpServletResponse response) throws IOException {
+        param.setTId(ManagerConfig.getTid());
+        AjaxResult ajaxResult = dataService.getRechargeTopList(param);
+        ExcelUtil<RechargeTopVO> util = new ExcelUtil(RechargeTopVO.class);
+        String fileName = "充值top100导出";
+        response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+        FileUtils.setAttachmentResponseHeader(response, fileName + ".xlsx");
+        util.downloadExcel((List) ajaxResult.get("data"), fileName, response.getOutputStream());
+    }
 
 }
