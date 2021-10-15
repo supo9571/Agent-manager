@@ -7,13 +7,14 @@ import com.manager.common.core.domain.AjaxResult;
 import com.manager.common.core.domain.model.param.DataAnalysisParam;
 import com.manager.common.core.domain.model.vo.DataAnalysisVO;
 import com.manager.common.core.domain.model.vo.DataWaterTopVO;
+import com.manager.common.core.domain.model.vo.EarningsTopVO;
 import com.manager.common.core.domain.model.vo.RechargeTopVO;
 import com.manager.common.enums.BusinessType;
-import com.manager.common.utils.SecurityUtils;
 import com.manager.common.utils.file.FileUtils;
 import com.manager.common.utils.poi.ExcelUtil;
 import com.manager.openFegin.DataService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,7 @@ import java.util.List;
 
 /**
  * 用于数据分析相关接口
+ *
  * @author jason
  * @date 2021-10-08
  */
@@ -91,6 +93,26 @@ public class DataAnalysisController extends BaseController {
         AjaxResult ajaxResult = dataService.getRechargeTopList(param);
         ExcelUtil<RechargeTopVO> util = new ExcelUtil(RechargeTopVO.class);
         String fileName = "充值top100导出";
+        response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+        FileUtils.setAttachmentResponseHeader(response, fileName + ".xlsx");
+        util.downloadExcel((List) ajaxResult.get("data"), fileName, response.getOutputStream());
+    }
+
+    @ApiOperation(value = "净盈利top100")
+    @PostMapping("/earnings/top/List")
+    public AjaxResult getEarningsTopList(@RequestBody DataAnalysisParam param) {
+        param.setTId(ManagerConfig.getTid());
+        return dataService.getEarningsTopList(param);
+    }
+
+    @ApiOperation(value = "净盈利top100导出")
+    @Log(title = "净盈利top100导出", businessType = BusinessType.EXPORT)
+    @PostMapping("/earnings/top/export")
+    public void getEarningsTopListExport(@RequestBody DataAnalysisParam param, HttpServletResponse response) throws IOException {
+        param.setTId(ManagerConfig.getTid());
+        AjaxResult ajaxResult = dataService.getEarningsTopList(param);
+        ExcelUtil<EarningsTopVO> util = new ExcelUtil(EarningsTopVO.class);
+        String fileName = "净盈利top100导出";
         response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
         FileUtils.setAttachmentResponseHeader(response, fileName + ".xlsx");
         util.downloadExcel((List) ajaxResult.get("data"), fileName, response.getOutputStream());
