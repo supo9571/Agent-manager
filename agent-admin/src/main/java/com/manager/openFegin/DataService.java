@@ -121,19 +121,22 @@ public interface DataService {
     @PostMapping(value = "/data/player/lockLog", consumes = "application/json")
     AjaxResult lockLog(@RequestParam("uid") Long uid);
 
-    @PostMapping("/data/report/withdraw/top/List")
+    @PostMapping(value = "/data/report/withdraw/top/List", consumes = "application/json")
     AjaxResult withdrawTopList(@RequestBody DataAnalysisParam param);
 
-    @PostMapping("/data/report/water/top/List")
+    @PostMapping(value = "/data/report/water/top/List", consumes = "application/json")
     AjaxResult getDataWaterTopList(@RequestBody DataAnalysisParam param);
 
-    @PostMapping("/data/report/recharge/top/List")
+    @PostMapping(value = "/data/report/recharge/top/List", consumes = "application/json")
     AjaxResult getRechargeTopList(@RequestBody DataAnalysisParam param);
 
-    @PostMapping("/data/report/earnings/top/List")
+    @PostMapping(value = "/data/report/earnings/top/List", consumes = "application/json")
     AjaxResult getEarningsTopList(@RequestBody DataAnalysisParam param);
 
-    @PostMapping("/data/report/agent/top/List")
+    @PostMapping(value = "/data/report/agent/top/List", consumes = "application/json")
     AjaxResult getAgentTopList(@RequestBody DataAnalysisParam param);
+
+    @PostMapping(value = "/data/report/pay/top/List", consumes = "application/json")
+    AjaxResult getPayInfoList(@RequestBody DataAnalysisParam param);
 
 }
