@@ -14,6 +14,9 @@ public class DataAnalysisParam extends BaseEntity {
     @ApiModelProperty("平台id")
     private Integer tId;
 
+    @ApiModelProperty("渠道号")
+    private Integer channelId;
+
     @ApiModelProperty(value = "uid",hidden = true)
     private Integer uid;
 
