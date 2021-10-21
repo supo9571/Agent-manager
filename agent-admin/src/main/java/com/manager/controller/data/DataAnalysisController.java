@@ -5,6 +5,7 @@ import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.controller.BaseController;
 import com.manager.common.core.domain.AjaxResult;
 import com.manager.common.core.domain.model.param.DataAnalysisParam;
+import com.manager.common.core.domain.model.param.PlayerReportParam;
 import com.manager.common.core.domain.model.vo.*;
 import com.manager.common.enums.BusinessType;
 import com.manager.common.utils.file.FileUtils;
@@ -149,6 +150,60 @@ public class DataAnalysisController extends BaseController {
         AjaxResult ajaxResult = dataService.getPayInfoList(param);
         ExcelUtil<PayInfoVO> util = new ExcelUtil(PayInfoVO.class);
         String fileName = "付费习惯导出";
+        response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+        FileUtils.setAttachmentResponseHeader(response, fileName + ".xlsx");
+        util.downloadExcel((List) ajaxResult.get("data"), fileName, response.getOutputStream());
+    }
+
+    @ApiOperation(value = "玩家报表")
+    @PostMapping("/player/List")
+    public AjaxResult getPlayerReportList(@RequestBody PlayerReportParam param) {
+        return dataService.getPlayerReportList(param);
+    }
+
+    @ApiOperation(value = "玩家报表导出")
+    @Log(title = "玩家报表导出", businessType = BusinessType.EXPORT)
+    @PostMapping("/player/export")
+    public void getPlayerReportListExport(@RequestBody PlayerReportParam param, HttpServletResponse response) throws IOException {
+        AjaxResult ajaxResult = dataService.getPlayerReportList(param);
+        ExcelUtil<PlayerReportVO> util = new ExcelUtil(PlayerReportVO.class);
+        String fileName = "玩家报表导出";
+        response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+        FileUtils.setAttachmentResponseHeader(response, fileName + ".xlsx");
+        util.downloadExcel((List) ajaxResult.get("data"), fileName, response.getOutputStream());
+    }
+
+    @ApiOperation(value = "玩家报表-游戏列表")
+    @PostMapping("/player/game/List")
+    public AjaxResult getPlayerGameReportList(@RequestBody PlayerReportParam param) {
+        return dataService.getPlayerGameReportList(param);
+    }
+
+    @ApiOperation(value = "玩家报表-游戏导出")
+    @Log(title = "玩家报表-游戏导出", businessType = BusinessType.EXPORT)
+    @PostMapping("/player/game/export")
+    public void getPlayerGameReportListExport(@RequestBody PlayerReportParam param, HttpServletResponse response) throws IOException {
+        AjaxResult ajaxResult = dataService.getPlayerGameReportList(param);
+        ExcelUtil<PlayerGameReportVO> util = new ExcelUtil(PlayerGameReportVO.class);
+        String fileName = "玩家报表-游戏导出";
+        response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+        FileUtils.setAttachmentResponseHeader(response, fileName + ".xlsx");
+        util.downloadExcel((List) ajaxResult.get("data"), fileName, response.getOutputStream());
+    }
+
+    @ApiOperation(value = "玩家报表-日期明细")
+    @PostMapping("/player/day/List")
+    public AjaxResult getPlayerDayReportList(@RequestBody PlayerReportParam param) {
+        return dataService.getPlayerDayReportList(param);
+    }
+
+    @ApiOperation(value = "玩家报表-日期明细导出")
+    @Log(title = "玩家报表-日期明细导出", businessType = BusinessType.EXPORT)
+    @PostMapping("/player/game/day/export")
+    public void getPlayerDayReportListExport(@RequestBody PlayerReportParam param, HttpServletResponse response) throws IOException {
+        AjaxResult ajaxResult = dataService.getPlayerDayReportList(param);
+        ExcelUtil<PlayerDayReportVO> util = new ExcelUtil(PlayerDayReportVO.class);
+        String fileName = "日期明细导出";
         response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
         FileUtils.setAttachmentResponseHeader(response, fileName + ".xlsx");
         util.downloadExcel((List) ajaxResult.get("data"), fileName, response.getOutputStream());
