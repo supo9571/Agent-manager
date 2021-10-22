@@ -50,9 +50,6 @@ public class SysLoginService {
     private ISysUserService userService;
 
     @Autowired
-    private ISysConfigService configService;
-
-    @Autowired
     private SysIpWhiteService sysIpWhiteService;
 
     /**

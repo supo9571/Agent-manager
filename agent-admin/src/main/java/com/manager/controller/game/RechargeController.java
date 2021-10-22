@@ -265,9 +265,9 @@ public class RechargeController extends BaseController {
     @PreAuthorize("@ss.hasPermi('system:recharge:editys')")
     @ApiOperation(value = "银商额度记录")
     @GetMapping("/ysquota")
-    public AjaxResult ysquota(Integer ysid) {
+    public AjaxResult ysquota(Integer ysid,Integer type) {
         startPage();
-        List list = rechargeService.ysquota(ysid);
+        List list = rechargeService.ysquota(ysid,type);
         return AjaxResult.success(getDataTable(list));
     }
 }

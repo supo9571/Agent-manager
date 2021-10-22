@@ -165,7 +165,7 @@ public class RechargeServiceImpl implements RechargeService {
     }
 
     @Override
-    public List ysquota(Integer ysid) {
-        return rechargeMapper.getYsQuotaInfo(ysid);
+    public List ysquota(Integer ysid,Integer type) {
+        return rechargeMapper.getYsQuotaInfo(ysid,type);
     }
 }

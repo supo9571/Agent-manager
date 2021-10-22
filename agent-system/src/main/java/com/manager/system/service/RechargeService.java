@@ -45,5 +45,5 @@ public interface RechargeService {
 
     void ysRecharge(Integer ysid, Long amount);
 
-    List ysquota(Integer ysid);
+    List ysquota(Integer ysid,Integer type);
 }

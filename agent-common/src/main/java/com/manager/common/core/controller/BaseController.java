@@ -29,6 +29,8 @@ import java.util.List;
 public class BaseController {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    protected final String YSID = "ysid";
+
     /**
      * 将前台传递过来的日期格式的字符串，自动转化为Date类型
      */
@@ -192,5 +194,9 @@ public class BaseController {
 
     protected String getHeader(String name) {
         return getReuest().getHeader(name);
+    }
+
+    protected boolean checkLogin(HttpServletRequest httpRequest) {
+        return httpRequest.getSession().getAttribute(YSID)==null;
     }
 }

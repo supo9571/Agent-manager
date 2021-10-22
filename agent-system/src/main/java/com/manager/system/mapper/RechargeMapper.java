@@ -59,5 +59,5 @@ public interface RechargeMapper {
 
     void addYsQuotaInfo(YsQuota ysQuota);
 
-    List<Map> getYsQuotaInfo(@Param("ysid") Integer ysid);
+    List<Map> getYsQuotaInfo(@Param("ysid") Integer ysid,@Param("type") Integer type);
 }

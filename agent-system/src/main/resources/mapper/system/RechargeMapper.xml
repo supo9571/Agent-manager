@@ -223,5 +223,6 @@
         select username,value/10000 value ,amount/10000 amount,type,create_time createTime
         from config_ys_quota
         where ysid = #{ysid}
+        <if test="type!=null and type !='0'"> and type=#{type}</if>
     </select>
 </mapper>
