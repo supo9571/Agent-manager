@@ -221,6 +221,7 @@
         <module>agent-framework</module>
         <module>agent-system</module>
         <module>agent-common</module>
+        <module>ys-manager</module>
     </modules>
     <packaging>pom</packaging>
 
