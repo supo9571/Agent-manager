@@ -207,4 +207,21 @@
         </set>
         where id = #{id} and tid = #{tid}
     </update>
+
+    <select id="findYsinfoById" resultType="com.manager.common.core.domain.entity.YsQuota">
+        select id ysid,username,amount `value`
+        from config_ys
+        where id = #{ysid}
+    </select>
+
+    <insert id="addYsQuotaInfo">
+        insert into config_ys_quota(ysid, username, value, amount, type, create_time)
+        values (#{ysid}, #{username}, #{value}, #{amount}, #{type}, sysdate())
+    </insert>
+
+    <select id="getYsQuotaInfo" resultType="java.util.Map">
+        select username,value/10000 value ,amount/10000 amount,type,create_time createTime
+        from config_ys_quota
+        where ysid = #{ysid}
+    </select>
 </mapper>

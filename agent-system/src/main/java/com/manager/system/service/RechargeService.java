@@ -42,4 +42,8 @@ public interface RechargeService {
     Integer updateYsinfo(Ysinfo ysinfo);
 
     List getYsOption();
+
+    void ysRecharge(Integer ysid, Long amount);
+
+    List ysquota(Integer ysid);
 }

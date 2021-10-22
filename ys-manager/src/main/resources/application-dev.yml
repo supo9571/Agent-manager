@@ -1,6 +1,6 @@
 spring:
   application:
-    name: ys-admin
+    name: ys-manager
 
   # redis 配置
   redis:

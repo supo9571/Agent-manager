@@ -246,4 +246,28 @@ public class RechargeController extends BaseController {
     public AjaxResult ysOption() {
         return AjaxResult.success(rechargeService.getYsOption());
     }
+
+    /**
+     * 银商额度充值
+     */
+    @PreAuthorize("@ss.hasPermi('system:recharge:editys')")
+    @Log(title = "银商额度充值", businessType = BusinessType.INSERT)
+    @ApiOperation(value = "银商额度充值")
+    @GetMapping("/ysrecharge")
+    public AjaxResult ysRecharge(Integer ysid,Long amount) {
+        rechargeService.ysRecharge(ysid,amount);
+        return AjaxResult.success();
+    }
+
+    /**
+     * 银商额度记录
+     */
+    @PreAuthorize("@ss.hasPermi('system:recharge:editys')")
+    @ApiOperation(value = "银商额度记录")
+    @GetMapping("/ysquota")
+    public AjaxResult ysquota(Integer ysid) {
+        startPage();
+        List list = rechargeService.ysquota(ysid);
+        return AjaxResult.success(getDataTable(list));
+    }
 }

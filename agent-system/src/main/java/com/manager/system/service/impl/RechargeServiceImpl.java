@@ -8,6 +8,7 @@ import com.manager.system.service.RechargeService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -148,5 +149,23 @@ public class RechargeServiceImpl implements RechargeService {
     @Override
     public List getYsOption() {
         return rechargeMapper.getYsOption(ManagerConfig.getTid());
+    }
+
+    @Override
+    @Transactional
+    public void ysRecharge(Integer ysid, Long amount) {
+        //添加 额度
+        rechargeMapper.ysRecharge(ysid,amount*10000);
+        //查询 银商 额度信息
+        YsQuota ysQuota = rechargeMapper.findYsinfoById(ysid);
+        ysQuota.setType(1);
+        ysQuota.setAmount(amount*10000);
+        //添加 额度记录
+        rechargeMapper.addYsQuotaInfo(ysQuota);
+    }
+
+    @Override
+    public List ysquota(Integer ysid) {
+        return rechargeMapper.getYsQuotaInfo(ysid);
     }
 }

@@ -4,6 +4,7 @@ import com.manager.common.core.domain.entity.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 import java.util.Map;
@@ -50,4 +51,13 @@ public interface RechargeMapper {
 
     @Select("select id,username from config_ys where status = '1' and tid =#{tid} ")
     List<Map> getYsOption(@Param("tid") Integer tid);
+
+    @Update("update config_ys set amount = amount+#{amount} where id = #{ysid} ")
+    void ysRecharge(@Param("ysid") Integer ysid, @Param("amount") Long amount);
+
+    YsQuota findYsinfoById(@Param("ysid") Integer ysid);
+
+    void addYsQuotaInfo(YsQuota ysQuota);
+
+    List<Map> getYsQuotaInfo(@Param("ysid") Integer ysid);
 }
