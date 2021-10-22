@@ -165,7 +165,7 @@ public class DataAnalysisController extends BaseController {
     @Log(title = "玩家报表导出", businessType = BusinessType.EXPORT)
     @PostMapping("/player/export")
     public void getPlayerReportListExport(@RequestBody PlayerReportParam param, HttpServletResponse response) throws IOException {
-        AjaxResult ajaxResult = dataService.getPlayerReportList(param);
+        AjaxResult ajaxResult = dataService.getPlayerReportExport(param);
         ExcelUtil<PlayerReportVO> util = new ExcelUtil(PlayerReportVO.class);
         String fileName = "玩家报表导出";
         response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
