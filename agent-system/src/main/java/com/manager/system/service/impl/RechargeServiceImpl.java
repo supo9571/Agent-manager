@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author marvin 2021/9/6
@@ -167,6 +168,11 @@ public class RechargeServiceImpl implements RechargeService {
     @Override
     public List ysquota(Integer ysid,Integer type,String beginTime,String endTime) {
         return rechargeMapper.getYsQuotaInfo(ysid,type,beginTime,endTime);
+    }
+
+    @Override
+    public Map ysquotaCount(Integer ysid, Integer type, String beginTime, String endTime) {
+        return rechargeMapper.ysquotaCount(ysid,type,beginTime,endTime);
     }
 
     @Override

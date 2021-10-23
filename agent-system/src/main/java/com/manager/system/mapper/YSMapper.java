@@ -20,6 +20,8 @@ public interface YSMapper {
 
     List getOrder(@Param("uid") String uid,@Param("beginTime") String beginTime,@Param("endTime") String endTime,@Param("ysid") Integer ysid);
 
+    Map getOrderCount(@Param("uid") String uid,@Param("beginTime") String beginTime,@Param("endTime") String endTime,@Param("ysid") Integer ysid);
+
     List getReport(@Param("beginTime")String beginTime,@Param("endTime") String endTime,@Param("ysid") Integer ysid);
 
     @Select("select amount from config_ys where id = #{ysid}")

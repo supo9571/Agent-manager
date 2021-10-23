@@ -228,6 +228,17 @@
         <if test="endTime!=null and endTime !=''"> and #{endTime}>=create_time</if>
     </select>
 
+    <select id="ysquotaCount" resultType="java.util.Map">
+        select sum(value) value from(
+            select username,value/10000 value ,amount/10000 amount,type,create_time createTime
+            from config_ys_quota
+            where ysid = #{ysid}
+            <if test="type!=null and type !='0'"> and type=#{type}</if>
+            <if test="beginTime!=null and beginTime !=''"> and create_time>=#{beginTime}</if>
+            <if test="endTime!=null and endTime !=''"> and #{endTime}>=create_time</if>
+        )t
+    </select>
+
     <select id="ysreport" resultType="java.util.Map">
         SELECT DATE_FORMAT(create_time, '%Y-%m-%d') day
              ,ysid

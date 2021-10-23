@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author marvin 2021/9/6
@@ -71,7 +73,11 @@ public class YSController extends BaseController {
         startPage();
         Integer ysid = (Integer) httpRequest.getSession().getAttribute(YSID);
         List list = ysService.getOrder(uid,beginTime,endTime,ysid);
-        return AjaxResult.success(getDataTable(list));
+        Map count = ysService.getOrderCount(uid,beginTime,endTime,ysid);
+        Map result = new HashMap();
+        result.put("list", getDataTable(list));
+        result.put("count", count);
+        return AjaxResult.success("查询成功", result);
     }
 
     /**
@@ -101,7 +107,11 @@ public class YSController extends BaseController {
         startPage();
         Integer ysid = (Integer) httpRequest.getSession().getAttribute(YSID);
         List list = rechargeService.ysquota(ysid,type,beginTime,endTime);
-        return AjaxResult.success(getDataTable(list));
+        Map count = rechargeService.ysquotaCount(ysid,type,beginTime,endTime);
+        Map result = new HashMap();
+        result.put("list", getDataTable(list));
+        result.put("count", count);
+        return AjaxResult.success("查询成功", result);
     }
 
     /**

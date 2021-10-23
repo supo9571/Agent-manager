@@ -30,6 +30,35 @@
         </if>
     </select>
 
+    <select id="getOrderCount" resultType="java.util.Map">
+        select count(1) nums,sum(rechargeAmount) countAmount from(
+            select o.order_number orderNumber,
+            o.uid,
+            r.name,
+            o.before_order_money beforeOrderMoney,
+            o.after_order_money afterOrderMoney,
+            o.ex_coins exCoins,
+            o.recharge_amount rechargeAmount,
+            o.payment_status paymentStatus,
+            o.create_time createTime,
+            o.finish_time finishTime
+            from config_recharge_order o
+            left join data_register r
+            on o.uid = r.uid
+            where o.admin_user_id = #{ysid}
+            <if test="uid!=null and uid!=''">
+                and o.uid = #{uid}
+            </if>
+            <if test="beginTime!=null and beginTime!=''">
+                and o.finish_time >= #{beginTime}
+            </if>
+            <if test="endTime!=null and endTime!=''">
+                and #{endTime} >= o.finish_time
+            </if>
+        ) t
+    </select>
+
+
     <select id="getReport" resultType="java.util.Map">
         SELECT DATE_FORMAT(create_time, '%Y-%m-%d') day
              ,COUNT(1) orders

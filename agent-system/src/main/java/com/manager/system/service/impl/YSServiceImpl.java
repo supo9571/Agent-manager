@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author marvin 2021/10/23
@@ -28,6 +29,11 @@ public class YSServiceImpl implements YSService {
     @Override
     public List getOrder(String uid, String beginTime, String endTime, Integer ysid) {
         return ysMapper.getOrder(uid,beginTime,endTime,ysid);
+    }
+
+    @Override
+    public Map getOrderCount(String uid, String beginTime, String endTime, Integer ysid) {
+        return ysMapper.getOrderCount(uid,beginTime,endTime,ysid);
     }
 
     @Override

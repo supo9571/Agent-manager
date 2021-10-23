@@ -4,6 +4,7 @@ import com.manager.common.core.domain.AjaxResult;
 import com.manager.common.core.domain.entity.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author marvin 2021/9/6
@@ -46,6 +47,8 @@ public interface RechargeService {
     void ysRecharge(Integer ysid, Long amount);
 
     List ysquota(Integer ysid,Integer type,String beginTime,String endTime);
+
+    Map ysquotaCount(Integer ysid, Integer type, String beginTime, String endTime);
 
     List ysreport(Integer ysid, String ysname, String beginTime, String endTime, Long transferInMin, Long transferInMax, Long transferOutMin, Long transferOutMax);
 

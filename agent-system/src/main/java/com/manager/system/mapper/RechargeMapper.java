@@ -61,6 +61,8 @@ public interface RechargeMapper {
 
     List<Map> getYsQuotaInfo(@Param("ysid") Integer ysid,@Param("type") Integer type,@Param("beginTime")String beginTime,@Param("endTime")String endTime);
 
+    Map ysquotaCount(@Param("ysid") Integer ysid,@Param("type") Integer type,@Param("beginTime")String beginTime,@Param("endTime")String endTime);
+
     List ysreport(@Param("ysid")Integer ysid,@Param("ysname") String ysname,@Param("beginTime") String beginTime,@Param("endTime") String endTime,
                   @Param("transferInMin")Long transferInMin,@Param("transferInMax") Long transferInMax,
                   @Param("transferOutMin")Long transferOutMin,@Param("transferOutMax") Long transferOutMax);
