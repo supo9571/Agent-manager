@@ -265,9 +265,21 @@ public class RechargeController extends BaseController {
     @PreAuthorize("@ss.hasPermi('system:recharge:editys')")
     @ApiOperation(value = "银商额度记录")
     @GetMapping("/ysquota")
-    public AjaxResult ysquota(Integer ysid,Integer type) {
+    public AjaxResult ysquota(Integer ysid,Integer type,String beginTime,String endTime) {
         startPage();
-        List list = rechargeService.ysquota(ysid,type);
+        List list = rechargeService.ysquota(ysid,type,beginTime,endTime);
+        return AjaxResult.success(getDataTable(list));
+    }
+
+    /**
+     * 银商报表
+     */
+    @PreAuthorize("@ss.hasPermi('system:recharge:editys')")
+    @ApiOperation(value = "银商报表")
+    @GetMapping("/ysreport")
+    public AjaxResult ysreport(Integer ysid,String ysname,String beginTime,String endTime,Long transferInMin,Long transferInMax,Long transferOutMin,Long transferOutMax) {
+        startPage();
+        List list = rechargeService.ysreport(ysid,ysname,beginTime,endTime,transferInMin,transferInMax,transferOutMin,transferOutMax);
         return AjaxResult.success(getDataTable(list));
     }
 }

@@ -14,4 +14,12 @@ public interface YSService {
     List getOrder(String uid, String beginTime, String endTime, Integer ysid);
 
     List getReport(String beginTime, String endTime, Integer ysid);
+
+    String recharge(Integer ysid, Integer uid, Long amount, String name, String bank);
+
+    String risk(Integer ysid, Integer uid, Long amount, String name, String bank);
+
+    List getMark(Integer uid, String beginTime, String endTime);
+
+    List getBlack(Integer uid, String beginTime, String endTime);
 }

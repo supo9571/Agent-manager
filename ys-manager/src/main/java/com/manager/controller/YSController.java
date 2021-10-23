@@ -94,13 +94,69 @@ public class YSController extends BaseController {
      */
     @ApiOperation(value = "额度明细")
     @GetMapping("/quota")
-    public AjaxResult quota(Integer type, HttpServletRequest httpRequest){
+    public AjaxResult quota(Integer type,String beginTime, String endTime, HttpServletRequest httpRequest){
         if(checkLogin(httpRequest)){
             throw new CustomException("登录信息失效，请登录后访问",401);
         }
         startPage();
         Integer ysid = (Integer) httpRequest.getSession().getAttribute(YSID);
-        List list = rechargeService.ysquota(ysid,type);
+        List list = rechargeService.ysquota(ysid,type,beginTime,endTime);
+        return AjaxResult.success(getDataTable(list));
+    }
+
+    /**
+     * 用户充值 风险提示
+     */
+    @ApiOperation(value = "用户充值")
+    @GetMapping("/risk")
+    public AjaxResult risk(Integer uid, Long amount, String name, String bank, HttpServletRequest httpRequest) {
+        if(checkLogin(httpRequest)){
+            throw new CustomException("登录信息失效，请登录后访问",401);
+        }
+        Integer ysid = (Integer) httpRequest.getSession().getAttribute(YSID);
+        String msg = ysService.risk(ysid,uid,amount,name,bank);
+        return AjaxResult.success(msg);
+    }
+
+    /**
+     * 用户充值
+     */
+    @ApiOperation(value = "用户充值")
+    @GetMapping("/recharge")
+    public AjaxResult recharge(Integer uid, Long amount, String name, String bank, HttpServletRequest httpRequest) {
+        if(checkLogin(httpRequest)){
+            throw new CustomException("登录信息失效，请登录后访问",401);
+        }
+        Integer ysid = (Integer) httpRequest.getSession().getAttribute(YSID);
+        String msg = ysService.recharge(ysid,uid,amount,name,bank);
+        return AjaxResult.success(msg);
+    }
+
+    /**
+     * 备注姓名库
+     */
+    @ApiOperation(value = "备注姓名库")
+    @GetMapping("/name")
+    public AjaxResult name(Integer uid, String beginTime, String endTime, HttpServletRequest httpRequest) {
+        if(checkLogin(httpRequest)){
+            throw new CustomException("登录信息失效，请登录后访问",401);
+        }
+        startPage();
+        List list = ysService.getMark(uid,beginTime,endTime);
+        return AjaxResult.success(getDataTable(list));
+    }
+
+    /**
+     * 用户黑名单
+     */
+    @ApiOperation(value = "用户黑名单")
+    @GetMapping("/black")
+    public AjaxResult black(Integer uid, String beginTime, String endTime, HttpServletRequest httpRequest) {
+        if(checkLogin(httpRequest)){
+            throw new CustomException("登录信息失效，请登录后访问",401);
+        }
+        startPage();
+        List list = ysService.getBlack(uid,beginTime,endTime);
         return AjaxResult.success(getDataTable(list));
     }
 }

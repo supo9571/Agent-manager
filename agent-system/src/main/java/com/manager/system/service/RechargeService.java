@@ -45,5 +45,8 @@ public interface RechargeService {
 
     void ysRecharge(Integer ysid, Long amount);
 
-    List ysquota(Integer ysid,Integer type);
+    List ysquota(Integer ysid,Integer type,String beginTime,String endTime);
+
+    List ysreport(Integer ysid, String ysname, String beginTime, String endTime, Long transferInMin, Long transferInMax, Long transferOutMin, Long transferOutMax);
+
 }

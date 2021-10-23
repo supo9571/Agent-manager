@@ -224,5 +224,32 @@
         from config_ys_quota
         where ysid = #{ysid}
         <if test="type!=null and type !='0'"> and type=#{type}</if>
+        <if test="beginTime!=null and beginTime !=''"> and create_time>=#{beginTime}</if>
+        <if test="endTime!=null and endTime !=''"> and #{endTime}>=create_time</if>
+    </select>
+
+    <select id="ysreport" resultType="java.util.Map">
+        SELECT DATE_FORMAT(create_time, '%Y-%m-%d') day
+             ,ysid
+             ,username ysname
+             ,COUNT(IF(TYPE=1,1,0)) transferInCounts
+             ,SUM(IF(TYPE=1,VALUE,0))/10000 transferInAmount
+             ,COUNT(IF(TYPE=2,1,0)) rechargeCounts
+             ,SUM(IF(TYPE=2,VALUE,0))/10000 rechargeAmount
+             ,(SELECT amount FROM config_ys_quota WHERE DATE_FORMAT(create_time, '%Y-%m-%d') = day ORDER BY create_time DESC LIMIT 0,1) curr
+             ,(SELECT SUM(ex_coins) FROM config_recharge_order WHERE DATE_FORMAT(create_time, '%Y-%m-%d') = day AND admin_user_id = ysid) giveAmount
+             ,(SELECT COUNT(ex_coins) FROM config_recharge_order WHERE DATE_FORMAT(create_time, '%Y-%m-%d') = day AND admin_user_id = ysid) giveCount
+        FROM config_ys_quota
+        <where>
+            <if test="ysid!=null and ysid!=''">and ysid = #{ysid}</if>
+            <if test="ysname!=null and ysname!=''">and ysname = #{ysname}</if>
+            <if test="beginTime!=null and beginTime!=''">and create_time >= #{beginTime}</if>
+            <if test="endTime!=null and endTime!=''">and #{endTime} >= create_time</if>
+            <if test="transferInMin!=null and transferInMin!=''">and ((type =1 and value/10000>=#{transferInMin}) or type = 2) </if>
+            <if test="transferInMax!=null and transferInMax!=''">and ((type =1 and #{transferInMin})>=value/10000 or type = 2) </if>
+            <if test="transferOutMin!=null and transferOutMin!=''">and ((type =2 and value/10000>=#{transferOutMin}) or type = 1) </if>
+            <if test="transferOutMax!=null and transferOutMax!=''">and ((type =2 and #{transferOutMax})>=value/10000 or type = 1) </if>
+        </where>
+        GROUP BY DATE_FORMAT(create_time, '%Y-%m-%d'),ysid,username
     </select>
 </mapper>

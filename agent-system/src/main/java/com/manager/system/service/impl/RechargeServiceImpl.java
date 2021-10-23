@@ -165,7 +165,13 @@ public class RechargeServiceImpl implements RechargeService {
     }
 
     @Override
-    public List ysquota(Integer ysid,Integer type) {
-        return rechargeMapper.getYsQuotaInfo(ysid,type);
+    public List ysquota(Integer ysid,Integer type,String beginTime,String endTime) {
+        return rechargeMapper.getYsQuotaInfo(ysid,type,beginTime,endTime);
     }
+
+    @Override
+    public List ysreport(Integer ysid, String ysname, String beginTime, String endTime, Long transferInMin, Long transferInMax, Long transferOutMin, Long transferOutMax) {
+        return rechargeMapper.ysreport(ysid,ysname,beginTime,endTime,transferInMin,transferInMax,transferOutMin,transferOutMax);
+    }
+
 }

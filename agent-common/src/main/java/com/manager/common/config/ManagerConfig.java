@@ -44,6 +44,8 @@ public class ManagerConfig {
 
     private String gameDomain;
 
+    private String reportDomain;
+
     public static Integer getTid() {
         return tid;
     }
