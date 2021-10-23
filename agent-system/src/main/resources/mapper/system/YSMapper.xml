@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manager.system.mapper.YSMapper">
+
+    <select id="getOrder" resultType="java.util.Map">
+        select o.order_number orderNumber,
+               o.uid,
+               r.name,
+               o.before_order_money beforeOrderMoney,
+               o.after_order_money afterOrderMoney,
+               o.ex_coins exCoins,
+               o.recharge_amount rechargeAmount,
+               o.payment_status paymentStatus,
+               o.create_time createTime,
+               o.finish_time finishTime
+        from config_recharge_order o
+        left join data_register r
+        on o.uid = r.uid
+        where o.admin_user_id = #{ysid}
+        <if test="uid!=null and uid!=''">
+            and o.uid = #{uid}
+        </if>
+        <if test="beginTime!=null and beginTime!=''">
+            and o.finish_time >= #{beginTime}
+        </if>
+        <if test="endTime!=null and endTime!=''">
+            and #{endTime} >= o.finish_time
+        </if>
+    </select>
+
+    <select id="getReport" resultType="java.util.Map">
+        SELECT DATE_FORMAT(create_time, '%Y-%m-%d') day
+             ,COUNT(1) orders
+             ,SUM(IF(TYPE=1,VALUE,0))/10000 transferIn
+             ,SUM(IF(TYPE=2,VALUE,0))/10000 transferOut
+             ,(SELECT amount FROM config_ys_quota WHERE DATE_FORMAT(create_time, '%Y-%m-%d') = day ORDER BY create_time DESC LIMIT 0,1) amount
+        FROM config_ys_quota
+        WHERE ysid = #{ysid}
+        <if test="beginTime!=null and beginTime!=''">
+            and create_time >= #{beginTime}
+        </if>
+        <if test="endTime!=null and endTime!=''">
+            and #{endTime} >= create_time
+        </if>
+        GROUP BY DATE_FORMAT(create_time, '%Y-%m-%d')
+    </select>
+
+</mapper>

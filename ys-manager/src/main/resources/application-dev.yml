@@ -114,6 +114,9 @@ server:
   servlet:
     # 应用的访问路径
     context-path: /
+    session:
+      #单位(s)
+      timeout: 86400
   tomcat:
     # tomcat的URI编码
     uri-encoding: UTF-8
