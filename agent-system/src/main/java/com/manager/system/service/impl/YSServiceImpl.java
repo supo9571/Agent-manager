@@ -109,4 +109,11 @@ public class YSServiceImpl implements YSService {
     public List getBlack(Integer uid, String beginTime, String endTime) {
         return ysMapper.getBlack(uid,beginTime,endTime,ManagerConfig.getTid());
     }
+
+    @Override
+    public Long getYsAmount(Integer ysid) {
+        return ysMapper.getYsAmount(ysid);
+    }
+
+
 }
