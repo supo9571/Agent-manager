@@ -169,4 +169,15 @@ public class YSController extends BaseController {
         List list = ysService.getBlack(uid,beginTime,endTime);
         return AjaxResult.success(getDataTable(list));
     }
+
+    @ApiOperation(value = "账户余额")
+    @GetMapping("/ysAmount")
+    public AjaxResult ysAmount(HttpServletRequest httpRequest) {
+        if(checkLogin(httpRequest)){
+            throw new CustomException("登录信息失效，请登录后访问",401);
+        }
+        Integer ysid = (Integer) httpRequest.getSession().getAttribute(YSID);
+        return AjaxResult.success(ysService.getYsAmount(ysid));
+    }
+
 }
