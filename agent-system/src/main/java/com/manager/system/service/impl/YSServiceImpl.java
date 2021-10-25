@@ -29,7 +29,7 @@ public class YSServiceImpl implements YSService {
     private YSMapper ysMapper;
     @Override
     public Ysinfo selectByName(String username) {
-        return ysMapper.selectByName(username);
+        return ysMapper.selectByName(username,ManagerConfig.getTid());
     }
 
     @Override

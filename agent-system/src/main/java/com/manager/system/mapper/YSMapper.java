@@ -15,8 +15,8 @@ import java.util.Map;
 @Mapper
 public interface YSMapper {
     @Select("select id,password,username,ip_white_list ipWhiteList, " +
-            "google_check googleCheck,google_key googleKey from config_ys where username = #{username} and status=1")
-    Ysinfo selectByName(@Param("username") String username);
+            "google_check googleCheck,google_key googleKey from config_ys where username = #{username} and status=1 and tid = #{tid}")
+    Ysinfo selectByName(@Param("username") String username,@Param("tid") Integer tid);
 
     List getOrder(@Param("uid") String uid,@Param("beginTime") String beginTime,@Param("endTime") String endTime,@Param("ysid") Integer ysid);
 
