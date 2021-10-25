@@ -2,14 +2,22 @@ package com.manager.system.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.manager.common.config.ManagerConfig;
+import com.manager.common.core.domain.entity.RechargeOrder;
+import com.manager.common.core.domain.entity.YsQuota;
 import com.manager.common.core.domain.entity.Ysinfo;
+import com.manager.common.utils.SecurityUtils;
 import com.manager.common.utils.http.HttpUtils;
+import com.manager.common.utils.uuid.IdUtils;
+import com.manager.system.mapper.RechargeMapper;
+import com.manager.system.mapper.RechargeOrderMapper;
 import com.manager.system.mapper.YSMapper;
+import com.manager.system.service.RechargeOrderService;
 import com.manager.system.service.YSService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -43,6 +51,13 @@ public class YSServiceImpl implements YSService {
 
     @Autowired
     private ManagerConfig managerConfig;
+
+    @Autowired
+    private RechargeOrderMapper rechargeOrderMapper;
+
+    @Autowired
+    private RechargeMapper rechargeMapper;
+
     @Override
     @Transactional
     public String recharge(Integer ysid, Integer uid, Long amount, String name, String bank) {
@@ -55,24 +70,46 @@ public class YSServiceImpl implements YSService {
         if(ysMapper.checkUid(uid, ManagerConfig.getTid())<1){
             return "用户id不合法，请确认后重试。";
         }
+        Integer rechargeGive = rechargeOrderMapper.selectRechargeGive(1);
+        BigDecimal bigGive = new BigDecimal(amount).multiply(new BigDecimal(rechargeGive)).divide(new BigDecimal(100));
+        Long give = bigGive.longValue();
         //充值
         JSONObject param = new JSONObject();
         param.put("cmd", "addcoins");
         param.put("reason", 100070);
         param.put("type", 1);//1=加金币,2=加流水
-        param.put("value", amount*10000);
+        param.put("value", (amount+give)*10000);
         param.put("uid", uid);
         //操作 用户金币
         String result = HttpUtils.sendPost(managerConfig.getReportDomain(),"data=" + param.toJSONString());
         JSONObject resultJson = JSONObject.parseObject(result);
         if (resultJson != null && resultJson.getInteger("code") == 0) {
+            Long curr = resultJson.getLong("curr")/10000;//用户余额
             //修改银商余额
             ysMapper.updateYSAmount(ysid,amount*10000);
             //添加充值订单
-            //TODO
+            RechargeOrder rechargeOrder = new RechargeOrder();
+            rechargeOrder.setUid(uid);
+            rechargeOrder.setAfterOrderMoney(new BigDecimal(curr));
+            rechargeOrder.setBeforeOrderMoney(new BigDecimal(curr-amount-give));
+            rechargeOrder.setRechargeAmount(new BigDecimal(amount));
+            rechargeOrder.setExCoins(new BigDecimal(give));
+            rechargeOrder.setRemark(name+" "+bank);
+            rechargeOrder.setOrderNumber(IdUtils.getOrderId());
+            rechargeOrder.setAdminUserId(ysid+"");
+            rechargeOrder.setTid(ManagerConfig.getTid());
+            rechargeOrder.setRechargeType("1");
+            rechargeOrderMapper.addRechargeOrder(rechargeOrder);
             //添加额度记录
-
+            YsQuota ysQuota = rechargeMapper.findYsinfoById(ysid);
+            ysQuota.setType(2);
+            ysQuota.setValue(amount*10000);
+            ysQuota.setAmount((ysQuota.getAmount()-amount*10000));
+            rechargeMapper.addYsQuotaInfo(ysQuota);
             //添加 备注信息
+            if (ysMapper.selectExchangeName(uid, name) < 1) {
+                ysMapper.saveMark(uid,name,bank);
+            }
         }
 
         return "操作成功";
