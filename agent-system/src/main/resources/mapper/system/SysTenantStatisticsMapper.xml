@@ -12,7 +12,7 @@
         <result column="lower_award_amount" property="lowerAwardAmount" jdbcType="DECIMAL" />
         <result column="under_commission" property="underCommission" jdbcType="DECIMAL" />
         <result column="agent_commission" property="agentCommission" jdbcType="DECIMAL" />
-        <result column="install_num" property="installNum" jdbcType="INTEGER" />
+        <result column="register_num" property="registerNum" jdbcType="INTEGER" />
     </resultMap>
     <select id="getSysTenantStatistics" resultMap="BaseResultMap" parameterType="com.manager.common.core.domain.entity.SysTenantStatistics">
         SELECT
@@ -25,7 +25,7 @@
         sum(lower_award_amount) as lower_award_amount,
         sum(under_commission) as under_commission,
         sum(agent_commission) as agent_commission,
-        sum(install_num) as install_num
+        sum(register_num) as register_num
         FROM sys_tenant_statistics
         <where>
         </where>
