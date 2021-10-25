@@ -48,6 +48,6 @@ public class SysTenantStatistics extends BaseEntity {
     private BigDecimal agentCommission;
 
     @ApiModelProperty("总安装量")
-    private int installNum;
+    private int registerNum;
 
 }

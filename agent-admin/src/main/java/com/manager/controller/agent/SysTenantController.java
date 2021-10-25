@@ -8,6 +8,7 @@ import com.manager.common.utils.SecurityUtils;
 import com.manager.system.service.SysTenantService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -26,6 +27,7 @@ public class SysTenantController extends BaseController {
     @Resource
     private SysTenantService sysTenantService;
 
+    @PreAuthorize("@ss.hasPermi('system:tenant:list')")
     @ApiOperation(value = "总代列表")
     @GetMapping("/list")
     public AjaxResult list(SysTenant sysTenant) {
@@ -35,6 +37,7 @@ public class SysTenantController extends BaseController {
         return AjaxResult.success(getDataTable(list));
     }
 
+    @PreAuthorize("@ss.hasPermi('system:tenant:list')")
     @ApiOperation(value = "总代新增")
     @PostMapping("/add")
     public AjaxResult add(@RequestBody SysTenant sysTenant) {
@@ -46,6 +49,7 @@ public class SysTenantController extends BaseController {
         return AjaxResult.success(sysTenantService.insertSelective(sysTenant));
     }
 
+    @PreAuthorize("@ss.hasPermi('system:tenant:list')")
     @ApiOperation(value = "总代修改")
     @PostMapping("/update")
     public AjaxResult update(@RequestBody SysTenant sysTenant) {
@@ -54,6 +58,7 @@ public class SysTenantController extends BaseController {
         return AjaxResult.success(sysTenantService.updateByPrimaryKeySelective(sysTenant));
     }
 
+    @PreAuthorize("@ss.hasPermi('system:tenant:channel:list')")
     @ApiOperation(value = "渠道列表")
     @GetMapping("/channel/list")
     public AjaxResult channelList(SysTenant sysTenant) {
@@ -63,6 +68,7 @@ public class SysTenantController extends BaseController {
         return AjaxResult.success(getDataTable(list));
     }
 
+    @PreAuthorize("@ss.hasPermi('system:tenant:channel:list')")
     @ApiOperation(value = "渠道新增")
     @PostMapping("/channel/add")
     public AjaxResult channelAdd(@RequestBody SysTenant sysTenant) {
@@ -76,6 +82,7 @@ public class SysTenantController extends BaseController {
         return AjaxResult.success(sysTenantService.insertSelective(sysTenant));
     }
 
+    @PreAuthorize("@ss.hasPermi('system:tenant:channel:list')")
     @ApiOperation(value = "渠道修改")
     @PostMapping("/channel/update")
     public AjaxResult channelUpdate(@RequestBody SysTenant sysTenant) {
