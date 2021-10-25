@@ -87,9 +87,9 @@ manager:
   # 名称
   name: agent-manager
   #平台id
-  tid: 100
+  tid: 200
   #平台名称
-  tname: 大圣娱乐
+  tname: 冠军娱乐
   # 版本
   version: 1.0.0
   # 版权年份
