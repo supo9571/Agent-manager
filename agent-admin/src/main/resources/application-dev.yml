@@ -1,6 +1,6 @@
 spring:
   application:
-    name: agent-admin
+    name: guanjun-agent-admin
   cloud:
     nacos:
       discovery:
