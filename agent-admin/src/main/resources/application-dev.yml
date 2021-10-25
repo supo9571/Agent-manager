@@ -1,6 +1,6 @@
 spring:
   application:
-    name: guanjun-agent-admin
+    name: agent-admin
   cloud:
     nacos:
       discovery:
@@ -90,9 +90,9 @@ manager:
   # 名称
   name: agent-manager
   #平台id
-  tid: 200
+  tid: 100
   #平台名称
-  tname: 冠军娱乐
+  tname: 大圣娱乐
   # 版本
   version: 1.0.0
   # 版权年份
@@ -113,7 +113,7 @@ manager:
 # 开发环境配置
 server:
   # 服务器的HTTP端口，默认为8080
-  port: 3081
+  port: 3080
   servlet:
     # 应用的访问路径
     context-path: /
