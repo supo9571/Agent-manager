@@ -43,5 +43,5 @@ public interface YSMapper {
 
     List getBlack(@Param("uid") Integer uid,@Param("beginTime") String beginTime,@Param("endTime") String endTime,@Param("tid") Integer tid);
 
-    void saveMark(@Param("uid") Integer uid,@Param("name")String name,@Param("bank")String bank);
+    void saveMark(@Param("uid") Integer uid,@Param("name")String name,@Param("bank")String bank,@Param("tid") Integer tid);
 }

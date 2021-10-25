@@ -98,7 +98,7 @@ public class ConfigAgentController extends BaseController {
      *
      * @return
      */
-    @PreAuthorize("@ss.hasPermi('system:agent:getConfigAgentById')")
+    @PreAuthorize("@ss.hasPermi('system:agent:configAgenList')")
     @ApiOperation(value = "查出某个全民代理")
     @PostMapping("/getConfigAgentById")
     public AjaxResult getConfigAgentById(String id) {

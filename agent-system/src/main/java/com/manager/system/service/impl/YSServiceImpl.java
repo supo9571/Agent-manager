@@ -5,13 +5,11 @@ import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.domain.entity.RechargeOrder;
 import com.manager.common.core.domain.entity.YsQuota;
 import com.manager.common.core.domain.entity.Ysinfo;
-import com.manager.common.utils.SecurityUtils;
 import com.manager.common.utils.http.HttpUtils;
 import com.manager.common.utils.uuid.IdUtils;
 import com.manager.system.mapper.RechargeMapper;
 import com.manager.system.mapper.RechargeOrderMapper;
 import com.manager.system.mapper.YSMapper;
-import com.manager.system.service.RechargeOrderService;
 import com.manager.system.service.YSService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -108,7 +106,7 @@ public class YSServiceImpl implements YSService {
             rechargeMapper.addYsQuotaInfo(ysQuota);
             //添加 备注信息
             if (ysMapper.selectExchangeName(uid, name) < 1) {
-                ysMapper.saveMark(uid,name,bank);
+                ysMapper.saveMark(uid,name,bank,ManagerConfig.getTid());
             }
         }
 

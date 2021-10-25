@@ -1,14 +1,11 @@
 package com.manager.controller.game;
 
-import com.alibaba.fastjson.JSONObject;
-import com.manager.common.annotation.DataSource;
 import com.manager.common.annotation.Log;
 import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.controller.BaseController;
 import com.manager.common.core.domain.AjaxResult;
 import com.manager.common.core.domain.entity.Activity;
 import com.manager.common.enums.BusinessType;
-import com.manager.common.enums.DataSourceType;
 import com.manager.common.utils.SecurityUtils;
 import com.manager.common.utils.http.HttpUtils;
 import com.manager.system.service.ActivityService;

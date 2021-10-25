@@ -96,7 +96,7 @@
     </select>
 
     <insert id="saveMark">
-        insert into user_mark(uid,name,bank,create_time)
-        values (#{uid},#{name},#{bank},sysdate())
+        insert into user_mark(uid,name,bank,create_time,tid)
+        values (#{uid},#{name},#{bank},sysdate(),#{tid})
     </insert>
 </mapper>

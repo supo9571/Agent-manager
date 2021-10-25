@@ -1,10 +1,8 @@
 package com.manager.system.service.impl;
 
 
-import com.manager.common.annotation.DataSource;
 import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.domain.entity.Pay;
-import com.manager.common.enums.DataSourceType;
 import com.manager.system.mapper.PayMapper;
 import com.manager.system.service.PayService;
 import org.springframework.beans.factory.annotation.Autowired;
