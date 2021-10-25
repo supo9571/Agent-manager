@@ -12,7 +12,7 @@
         <result column="lower_award_amount" property="lowerAwardAmount" jdbcType="DECIMAL" />
         <result column="under_commission" property="underCommission" jdbcType="DECIMAL" />
         <result column="agent_commission" property="agentCommission" jdbcType="DECIMAL" />
-        <result column="register_num" property="registerNum" jdbcType="INTEGER" />
+        <result column="install_num" property="installNum" jdbcType="INTEGER" />
     </resultMap>
     <select id="getSysTenantStatistics" resultMap="BaseResultMap" parameterType="com.manager.common.core.domain.entity.SysTenantStatistics">
         SELECT
