@@ -10,8 +10,8 @@ import java.util.List;
 @Mapper
 public interface SysTenantMapper {
 
-    @Select("select t_name from sys_tenant where parent_id = 0")
-    String getPlatformName();
+    @Select("select t_name from sys_tenant where parent_id = 0 and t_id = #{tid}")
+    String getPlatformName(@Param("tid") Integer tid);
 
     @Select("SELECT t_id as tid,t_name as tName from sys_tenant ")
     List<SysTenant> allList();
