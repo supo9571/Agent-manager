@@ -22,7 +22,7 @@ public class SysTenantServiceImpl implements SysTenantService {
     public List list(SysTenant sysTenant) {
         List<Map> list = sysTenantMapper.list(sysTenant);
         if (!CollectionUtils.isEmpty(list)) {
-            String pName = sysTenantMapper.getPlatformName();
+            String pName = sysTenantMapper.getPlatformName(ManagerConfig.getTid());
             list.forEach(map -> {
                 map.put("pName", pName);
                 List<Map> userList = sysTenantMapper.selectUserList(String.valueOf(map.get("tid")));
