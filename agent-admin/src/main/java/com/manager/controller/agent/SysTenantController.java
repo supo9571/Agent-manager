@@ -41,6 +41,10 @@ public class SysTenantController extends BaseController {
     @ApiOperation(value = "总代新增")
     @PostMapping("/add")
     public AjaxResult add(@RequestBody SysTenant sysTenant) {
+        int count = sysTenantService.getTenantCount(sysTenant.getTId());
+        if (count > 0) {
+            return AjaxResult.error("渠道号已存在！");
+        }
         sysTenant.setCreateTime(new Date());
         sysTenant.setCreateBy(SecurityUtils.getUsername());
         sysTenant.setParentId(String.valueOf(ManagerConfig.getTid()));
@@ -74,6 +78,10 @@ public class SysTenantController extends BaseController {
     public AjaxResult channelAdd(@RequestBody SysTenant sysTenant) {
         if (sysTenant.getParentId() == null) {
             return AjaxResult.error("所属总代号不能为空");
+        }
+        int count = sysTenantService.getTenantCount(sysTenant.getTId());
+        if (count > 0) {
+            return AjaxResult.error("渠道号已存在！");
         }
         sysTenant.setCreateTime(new Date());
         sysTenant.setCreateBy(SecurityUtils.getUsername());
