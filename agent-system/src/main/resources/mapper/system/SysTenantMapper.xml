@@ -31,7 +31,7 @@
     <select id="selectAllTenant" resultType="java.util.Map">
         SELECT t_id tid, t_name tName, parent_id parentId
         FROM sys_tenant
-        where t_id = (SELECT t_id FROM sys_user where uid = #{uid})
+        where t_id = (SELECT t_id FROM sys_user where user_id= #{uid})
         OR ancestors LIKE CONCAT('%',(SELECT t_id FROM sys_user WHERE user_id = #{uid}),'%')
     </select>
 
