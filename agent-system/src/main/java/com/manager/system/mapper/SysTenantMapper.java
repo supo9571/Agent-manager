@@ -18,7 +18,7 @@ public interface SysTenantMapper {
 
     List selectTenants(@Param("tid") String tId, @Param("tType") String tType);
 
-    List selectAllTenant(@Param("tenant") Integer tenant);
+    List selectAllTenant(@Param("uid") Long uid);
 
     List list(SysTenant record);
 

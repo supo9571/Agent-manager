@@ -1,25 +1,24 @@
 package com.manager.system.service.impl;
 
-import java.util.*;
-
 import com.manager.common.config.ManagerConfig;
-import com.manager.system.domain.SysRoleDept;
-import com.manager.system.domain.SysRoleMenu;
-import com.manager.system.domain.SysUserRole;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import com.manager.common.annotation.DataScope;
 import com.manager.common.constant.UserConstants;
 import com.manager.common.core.domain.entity.SysRole;
 import com.manager.common.exception.CustomException;
 import com.manager.common.utils.StringUtils;
 import com.manager.common.utils.spring.SpringUtils;
+import com.manager.system.domain.SysRoleDept;
+import com.manager.system.domain.SysRoleMenu;
+import com.manager.system.domain.SysUserRole;
 import com.manager.system.mapper.SysRoleDeptMapper;
 import com.manager.system.mapper.SysRoleMapper;
 import com.manager.system.mapper.SysRoleMenuMapper;
 import com.manager.system.mapper.SysUserRoleMapper;
 import com.manager.system.service.ISysRoleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.*;
 
 /**
  * 角色 业务层处理
