@@ -111,6 +111,11 @@ public class SysTenantServiceImpl implements SysTenantService {
         return sysTenantMapper.updateByPrimaryKeySelective(record);
     }
 
+    @Override
+    public int getTenantCount(String tid) {
+        return sysTenantMapper.getTenantCount(tid);
+    }
+
     /**
      * 递归列表
      */

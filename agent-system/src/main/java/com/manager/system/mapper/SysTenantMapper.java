@@ -37,4 +37,7 @@ public interface SysTenantMapper {
     int updateByPrimaryKeySelective(SysTenant record);
 
     int updateByPrimaryKey(SysTenant record);
+
+    @Select("select count(1) from sys_tenant where t_id = #{tid} ")
+    int getTenantCount(@Param("tid") String tid);
 }
