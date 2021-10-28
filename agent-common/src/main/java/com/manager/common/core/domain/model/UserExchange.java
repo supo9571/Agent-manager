@@ -1,12 +1,14 @@
 package com.manager.common.core.domain.model;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 /**
  * @author marvin 2021/10/8
  * 玩家提现绑定表
  * user_exchange
  */
+@Data
 public class UserExchange {
     @ApiModelProperty("玩家id")
     private String uid;
