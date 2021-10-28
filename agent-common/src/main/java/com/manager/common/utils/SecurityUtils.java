@@ -36,6 +36,17 @@ public class SecurityUtils {
     }
 
     /**
+     * 获取用户 管理范围tid
+     **/
+    public static String getTid() {
+        try {
+            return getLoginUser().getUser().getTid();
+        } catch (Exception e) {
+            throw new CustomException("获取用户账户异常", HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    /**
      * 获取用户
      **/
     public static LoginUser getLoginUser() {

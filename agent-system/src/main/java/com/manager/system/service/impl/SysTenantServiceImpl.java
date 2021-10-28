@@ -81,7 +81,7 @@ public class SysTenantServiceImpl implements SysTenantService {
 
     @Override
     public List selectAllTenant() {
-        return sysTenantMapper.selectAllTenant(SecurityUtils.getUserId());
+        return sysTenantMapper.selectAllTenant(SecurityUtils.getTid());
     }
 
     @Override

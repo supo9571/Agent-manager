@@ -60,7 +60,7 @@
 
     <select id="checkRoleNameUnique" parameterType="String" resultMap="SysRoleResult">
         <include refid="selectRoleVo"/>
-        where r.role_name=#{roleName} and tenant = #{tenant} limit 1
+        where r.role_name=#{roleName} and r.tenant = #{tenant} limit 1
     </select>
 
     <select id="checkRoleKeyUnique" parameterType="String" resultMap="SysRoleResult">

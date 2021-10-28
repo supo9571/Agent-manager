@@ -1,6 +1,7 @@
 package com.manager.system.service;
 
 import com.manager.common.core.domain.entity.SysBlack;
+import com.manager.common.core.domain.entity.SysBlackInfo;
 
 import java.util.List;
 
@@ -13,4 +14,10 @@ public interface SysBlackService {
     List getSysBlacks(SysBlack sysBlack);
 
     void deleteSysBlack(Integer id);
+
+    List getSysBlackInfos(SysBlackInfo sysBlackInfo);
+
+    void readSysBlackInfos(int id);
+
+    void sealSysBlackInfos(int id);
 }

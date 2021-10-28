@@ -37,4 +37,61 @@
         </where>
 
     </select>
+
+
+    <select id="getSysBlackInfos" parameterType="com.manager.common.core.domain.entity.SysBlackInfo" resultType="java.util.Map">
+        select id,black_type blackType,
+        handle_type handleType,
+        tid,
+        uid,
+        black_num blackNum,
+        create_time createTime,
+        create_by createBy
+        from sys_black_info
+        <where>
+            <if test="beginTime !=null and beginTime !=''">
+                and create_time >=#{beginTime}
+            </if>
+            <if test="endTime !=null and endTime !=''">
+                and #{endTime} >=create_time
+            </if>
+            <if test="blackType !=null and blackType !=''">
+                and black_type = #{blackType}
+            </if>
+            <if test="handleType !=null and handleType !=''">
+                and handle_type = #{handleType}
+            </if>
+            <if test="blackNum !=null and blackNum !=''">
+                and black_num = #{blackNum}
+            </if>
+        </where>
+    </select>
+
+    <select id="getSysBlackInfo" resultType="com.manager.common.core.domain.entity.SysBlackInfo">
+        select id,black_type blackType,
+               handle_type handleType,
+               tid,
+               uid,
+               black_num blackNum,
+               create_time createTime,
+               create_by createBy
+        from sys_black_info
+        where id = #{id}
+    </select>
+
+    <insert id="saveUserLock">
+        insert into data_user_lock(uid, lock_type, lock_day, lock_mark, create_time, update_time, create_by)
+        values (#{uid}, #{lockType}, #{lockDay}, #{lockMark}, sysdate(), sysdate(), #{createBy})
+            ON DUPLICATE KEY
+        UPDATE lock_type=values (lock_type),
+            lock_day=values (lock_day),
+            lock_mark=values (lock_mark),
+            update_time=values (update_time),
+            create_by=values (create_by);
+    </insert>
+
+    <insert id="saveUserLockLog">
+        insert into data_lock_log(uid, lock_type, lock_day, lock_mark, create_time, create_by)
+        values (#{uid}, #{lockType}, #{lockDay}, #{lockMark}, sysdate(), #{createBy})
+    </insert>
 </mapper>

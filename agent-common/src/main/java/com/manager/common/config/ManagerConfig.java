@@ -18,6 +18,10 @@ public class ManagerConfig {
      */
     private String name;
 
+    private String domain;
+
+    //操作金币
+    private String changeCoins;
     /**
      * 版本
      */

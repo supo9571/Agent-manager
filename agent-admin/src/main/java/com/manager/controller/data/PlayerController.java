@@ -79,7 +79,7 @@ public class PlayerController extends BaseController {
     @PreAuthorize("@ss.hasPermi('data:player:edit')")
     @ApiOperation(value = "银行卡/支付宝修改")
     @Log(title = "修改玩家银行卡/支付宝信息", businessType = BusinessType.UPDATE)
-    @GetMapping("/editExchange")
+    @PostMapping("/editExchange")
     public AjaxResult editBank(@RequestBody UserExchange userExchange) {
         return dataService.updateBank(userExchange);
     }

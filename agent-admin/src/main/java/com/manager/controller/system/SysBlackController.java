@@ -4,6 +4,7 @@ import com.manager.common.annotation.Log;
 import com.manager.common.core.controller.BaseController;
 import com.manager.common.core.domain.AjaxResult;
 import com.manager.common.core.domain.entity.SysBlack;
+import com.manager.common.core.domain.entity.SysBlackInfo;
 import com.manager.common.enums.BusinessType;
 import com.manager.common.utils.SecurityUtils;
 import com.manager.system.service.SysBlackService;
@@ -61,6 +62,41 @@ public class SysBlackController extends BaseController {
     @GetMapping("/del")
     public AjaxResult del(Integer id) {
         sysBlackService.deleteSysBlack(id);
+        return AjaxResult.success();
+    }
+
+
+    /**
+     * 查询黑名单执行结果
+     */
+    @PreAuthorize("@ss.hasPermi('system:black:list')")
+    @ApiOperation(value = "查询黑名单执行结果")
+    @PostMapping("/info")
+    public AjaxResult info(SysBlackInfo sysBlackInfo) {
+        startPage();
+        List list = sysBlackService.getSysBlackInfos(sysBlackInfo);
+        return AjaxResult.success(getDataTable(list));
+    }
+
+    /**
+     * 黑名单执行结果 已读
+     */
+    @PreAuthorize("@ss.hasPermi('system:black:list')")
+    @ApiOperation(value = "已读黑名单执行结果")
+    @PostMapping("/read")
+    public AjaxResult read(int id) {
+        sysBlackService.readSysBlackInfos(id);
+        return AjaxResult.success();
+    }
+
+    /**
+     * 黑名单执行结果 封停
+     */
+    @PreAuthorize("@ss.hasPermi('system:black:list')")
+    @ApiOperation(value = "封停黑名单执行结果")
+    @PostMapping("/seal")
+    public AjaxResult seal(int id) {
+        sysBlackService.sealSysBlackInfos(id);
         return AjaxResult.success();
     }
 }

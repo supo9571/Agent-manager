@@ -109,6 +109,10 @@ manager:
   #游戏服 发送配置地址
   gameDomain: http://18.142.67.104:6661/upload
 #  gameDomain: http://10.39.1.88:6661/upload
+  #游戏服 地址
+  domain: http://18.142.67.104:6661
+  #操作金币
+  changeCoins: /gm
 
 # 开发环境配置
 server:
