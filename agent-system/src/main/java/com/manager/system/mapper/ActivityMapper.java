@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -39,4 +40,8 @@ public interface ActivityMapper {
     List selectActivityDay(Activity activity);
 
     List selectActivityDays(Activity activity);
+
+    BigDecimal selectActivityDayCount(Activity activity);
+
+    BigDecimal selectActivityDaysCount(Activity activity);
 }

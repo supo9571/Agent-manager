@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -100,6 +101,33 @@ public class ActivityServiceImpl implements ActivityService {
             activity.setBeginCoinsName(beginCoinsName);
             activity.setEndCoinsName(endCardName);
             return activityMapper.selectActivityDays(activity);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public BigDecimal getActivityDayCount(Activity activity) {
+        activity.setActivityType(changeType(activity.getActivityType()));
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date beginDate = simpleDateFormat.parse(activity.getBeginTime());
+            String beginYear = String.format("%ty",beginDate);
+            String beginMon = String.format("%tm", beginDate);
+            String beginCoinsName = "data_coins_" + beginYear + beginMon;
+
+            Date endDate = simpleDateFormat.parse(activity.getEndTime());
+            String endYear = String.format("%ty",endDate);
+            String endMon = String.format("%tm", endDate);
+            String endCardName = "data_coins_" + endYear + endMon;
+            if(beginCoinsName.equals(endCardName)){
+                activity.setBeginCoinsName(beginCoinsName);
+                return activityMapper.selectActivityDayCount(activity);
+            }
+            activity.setBeginCoinsName(beginCoinsName);
+            activity.setEndCoinsName(endCardName);
+            return activityMapper.selectActivityDaysCount(activity);
         } catch (ParseException e) {
             e.printStackTrace();
         }

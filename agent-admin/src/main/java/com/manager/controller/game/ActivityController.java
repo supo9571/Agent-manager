@@ -23,7 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author marvin 2021/9/7
@@ -102,7 +105,11 @@ public class ActivityController extends BaseController {
     public AjaxResult day(Activity activity) {
         startPage();
         List list = activityService.getActivityDay(activity);
-        return AjaxResult.success("查询成功",getDataTable(list));
+        BigDecimal count = activityService.getActivityDayCount(activity);
+        Map result = new HashMap();
+        result.put("list", getDataTable(list));
+        result.put("count", count);
+        return AjaxResult.success("查询成功", result);
     }
 
     @ApiOperation(value = "活动日报导出")

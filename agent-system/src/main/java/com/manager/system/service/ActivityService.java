@@ -2,6 +2,7 @@ package com.manager.system.service;
 
 import com.manager.common.core.domain.entity.Activity;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -21,4 +22,6 @@ public interface ActivityService {
     int delActivity(int id);
 
     List getActivityDay(Activity activity);
+
+    BigDecimal getActivityDayCount(Activity activity);
 }

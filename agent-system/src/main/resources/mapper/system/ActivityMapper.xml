@@ -101,4 +101,42 @@
             ) t
         GROUP BY DATE_FORMAT(FROM_UNIXTIME(TIME), '%Y-%m-%d')
     </select>
+
+    <select id="selectActivityDayCount" resultType="java.math.BigDecimal">
+        SELECT sum(VALUE/10000) value
+        FROM ${beginCoinsName}
+        WHERE r in
+        <foreach item="item" index="index" collection="activityType.split(',')" open="(" separator="," close=")">
+            '${item}'
+        </foreach>
+        <if test="beginTime!=null and beginTime !=''">
+            and mstime between #{beginms} and #{endms}
+        </if>
+        and channel IN (SELECT t_id FROM sys_tenant WHERE tenant = #{tenant} AND t_type = '2')
+    </select>
+
+    <select id="selectActivityDaysCount" resultType="java.math.BigDecimal">
+        SELECT SUM(VALUE/10000) value
+        FROM (
+        SELECT TIME,VALUE,uid FROM ${beginCoinsName}
+        WHERE r in
+        <foreach item="item" index="index" collection="activityType.split(',')" open="(" separator="," close=")">
+            '${item}'
+        </foreach>
+        <if test="beginTime!=null and beginTime !=''">
+            and mstime between #{beginms} and #{endms}
+        </if>
+        and channel IN (SELECT t_id FROM sys_tenant WHERE tenant = #{tenant} AND t_type = '2')
+        UNION ALL
+        SELECT TIME,VALUE,uid FROM ${endCoinsName}
+        WHERE r in
+        <foreach item="item" index="index" collection="activityType.split(',')" open="(" separator="," close=")">
+            '${item}'
+        </foreach>
+        <if test="beginTime!=null and beginTime !=''">
+            and mstime between #{beginms} and #{endms}
+        </if>
+        and channel IN (SELECT t_id FROM sys_tenant WHERE tenant = #{tenant} AND t_type = '2')
+        ) t
+    </select>
 </mapper>
