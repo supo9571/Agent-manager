@@ -35,4 +35,8 @@ public interface ActivityMapper {
 
     @Delete("delete from config_activity where id = #{id}")
     int delActivity(@Param("id") int id);
+
+    List selectActivityDay(Activity activity);
+
+    List selectActivityDays(Activity activity);
 }

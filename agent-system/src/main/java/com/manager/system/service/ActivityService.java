@@ -19,4 +19,6 @@ public interface ActivityService {
     String getActivityConfig();
 
     int delActivity(int id);
+
+    List getActivityDay(Activity activity);
 }

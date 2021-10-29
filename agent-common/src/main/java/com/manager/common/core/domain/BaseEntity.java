@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.manager.common.config.ManagerConfig;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
@@ -19,6 +20,7 @@ import java.util.Map;
  * @author marvin
  */
 @Data
+@Slf4j
 public class BaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -119,7 +121,12 @@ public class BaseEntity implements Serializable {
             try {
                 return sdf.parse(this.beginTime).getTime() + "";
             } catch (ParseException e) {
-                e.printStackTrace();
+                SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+                try {
+                    return sdf2.parse(this.beginTime).getTime() + "";
+                } catch (ParseException e1) {
+                    log.error("时间转换失败，{}",beginTime);
+                }
             }
         }
         return beginms;
@@ -131,7 +138,12 @@ public class BaseEntity implements Serializable {
             try {
                 return sdf.parse(this.endTime).getTime() + "";
             } catch (ParseException e) {
-                e.printStackTrace();
+                SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+                try {
+                    return sdf2.parse(this.endTime).getTime() + "";
+                } catch (ParseException e1) {
+                    log.error("时间转换失败，{}",endTime);
+                }
             }
         }
         return endms;

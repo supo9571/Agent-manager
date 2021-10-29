@@ -43,4 +43,10 @@ public class Activity extends BaseEntity {
 
     @ApiModelProperty("活动奖励明细")
     private String activityInfo;
+
+    @ApiModelProperty(hidden = true)
+    private String beginCoinsName;
+
+    @ApiModelProperty(hidden = true)
+    private String endCoinsName;
 }

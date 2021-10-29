@@ -13,6 +13,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -78,6 +81,55 @@ public class ActivityServiceImpl implements ActivityService {
         return activityMapper.delActivity(id);
     }
 
+    @Override
+    public List getActivityDay(Activity activity){
+        activity.setActivityType(changeType(activity.getActivityType()));
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date beginDate = simpleDateFormat.parse(activity.getBeginTime());
+            String beginYear = String.format("%ty",beginDate);
+            String beginMon = String.format("%tm", beginDate);
+            String beginCoinsName = "data_coins_" + beginYear + beginMon;
+
+            Date endDate = simpleDateFormat.parse(activity.getEndTime());
+            String endYear = String.format("%ty",endDate);
+            String endMon = String.format("%tm", endDate);
+            String endCardName = "data_coins_" + endYear + endMon;
+            if(beginCoinsName.equals(endCardName)){
+                activity.setBeginCoinsName(beginCoinsName);
+                return activityMapper.selectActivityDay(activity);
+            }
+            activity.setBeginCoinsName(beginCoinsName);
+            activity.setEndCoinsName(endCardName);
+            return activityMapper.selectActivityDays(activity);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private String changeType(String type){
+        switch (type) {
+            case "113114":
+                return "110003,110001";
+            case "109":
+                return "110003";
+            case "123":
+                return "110007";
+            case "122":
+                return "110004";
+            case "115":
+                return "110006";
+            case "112":
+                return "100063";
+            case "111":
+                return "100000";
+            case "116":
+                return "110005";
+            default:
+                return "-1";
+        }
+    }
     /**
      * 根据 活动 Type 转 活动名称
      */
