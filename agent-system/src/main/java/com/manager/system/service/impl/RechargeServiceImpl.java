@@ -81,6 +81,11 @@ public class RechargeServiceImpl implements RechargeService {
         return rechargeMapper.updateOnlineRecharge(onlineRecharge);
     }
 
+    @Override
+    public int getBankRechargeCount(BankRecharge bankRecharge) {
+        return rechargeMapper.getBankRechargeCount(bankRecharge);
+    }
+
     /**
      * 添加 银行卡充值 配置
      *
