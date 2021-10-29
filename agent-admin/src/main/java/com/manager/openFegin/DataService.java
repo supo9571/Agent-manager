@@ -1,6 +1,7 @@
 package com.manager.openFegin;
 
 import com.manager.common.core.domain.AjaxResult;
+import com.manager.common.core.domain.entity.Activity;
 import com.manager.common.core.domain.model.*;
 import com.manager.common.core.domain.model.param.DataAnalysisParam;
 import com.manager.common.core.domain.model.param.PlayerReportParam;
@@ -152,4 +153,6 @@ public interface DataService {
     @PostMapping(value = "/data/report/player/day/List", consumes = "application/json")
     AjaxResult getPlayerDayReportList(@RequestBody PlayerReportParam param);
 
+    @PostMapping(value = "/data/activity/report/day", consumes = "application/json")
+    AjaxResult getActivityDay(Activity activity);
 }

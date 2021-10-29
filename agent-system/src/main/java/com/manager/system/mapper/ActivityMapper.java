@@ -1,6 +1,8 @@
 package com.manager.system.mapper;
 
 import com.manager.common.core.domain.entity.Activity;
+import lombok.Data;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -30,4 +32,7 @@ public interface ActivityMapper {
             "yin_recharge yinRecharge,yin_recharge_give yinRechargeGive,yin_recharge_give_day yinRechargeGiveDay " +
             "from config_month_recharge where status = '1' order by update_time desc limit 0,1")
     Map getMonthConfig();
+
+    @Delete("delete from config_activity where id = #{id}")
+    int delActivity(@Param("id") int id);
 }

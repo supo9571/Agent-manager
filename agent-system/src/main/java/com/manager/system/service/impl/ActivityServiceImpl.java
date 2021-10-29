@@ -73,6 +73,11 @@ public class ActivityServiceImpl implements ActivityService {
         return result.toJSONString();
     }
 
+    @Override
+    public int delActivity(int id) {
+        return activityMapper.delActivity(id);
+    }
+
     /**
      * 根据 活动 Type 转 活动名称
      */

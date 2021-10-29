@@ -17,4 +17,6 @@ public interface ActivityService {
     Integer updateActivity(Activity activity);
 
     String getActivityConfig();
+
+    int delActivity(int id);
 }
