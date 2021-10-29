@@ -30,6 +30,9 @@ public interface RechargeMapper {
 
     Integer updateOnlineRecharge(OnlineRecharge onlineRecharge);
 
+    @Select("select count(1) from config_bank_recharge where tid = #{tid} and open_type = #{openType} and vip_list = #{vipList} ")
+    int getBankRechargeCount(BankRecharge bankRecharge);
+
     Integer saveBankRecharge(BankRecharge bankRecharge);
 
     List findBankRecharge(BankRecharge bankRecharge);

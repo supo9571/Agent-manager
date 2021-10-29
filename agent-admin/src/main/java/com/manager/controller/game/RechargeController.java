@@ -128,6 +128,10 @@ public class RechargeController extends BaseController {
     @Log(title = "添加银行卡充值", businessType = BusinessType.INSERT)
     @PostMapping("/addbank")
     public AjaxResult addBank(BankRecharge bankRecharge) {
+        int count = rechargeService.getBankRechargeCount(bankRecharge);
+        if (count > 0) {
+            return AjaxResult.error("数据已存在！");
+        }
         bankRecharge.setTid(ManagerConfig.getTid());
         bankRecharge.setUpdateBy(SecurityUtils.getUsername());
         Integer i = rechargeService.saveBankRecharge(bankRecharge);
@@ -254,8 +258,8 @@ public class RechargeController extends BaseController {
     @Log(title = "银商额度充值", businessType = BusinessType.INSERT)
     @ApiOperation(value = "银商额度充值")
     @GetMapping("/ysrecharge")
-    public AjaxResult ysRecharge(Integer ysid,Long amount) {
-        rechargeService.ysRecharge(ysid,amount);
+    public AjaxResult ysRecharge(Integer ysid, Long amount) {
+        rechargeService.ysRecharge(ysid, amount);
         return AjaxResult.success();
     }
 
@@ -265,9 +269,9 @@ public class RechargeController extends BaseController {
     @PreAuthorize("@ss.hasPermi('system:recharge:editys')")
     @ApiOperation(value = "银商额度记录")
     @GetMapping("/ysquota")
-    public AjaxResult ysquota(Integer ysid,Integer type,String beginTime,String endTime) {
+    public AjaxResult ysquota(Integer ysid, Integer type, String beginTime, String endTime) {
         startPage();
-        List list = rechargeService.ysquota(ysid,type,beginTime,endTime);
+        List list = rechargeService.ysquota(ysid, type, beginTime, endTime);
         return AjaxResult.success(getDataTable(list));
     }
 
@@ -277,9 +281,9 @@ public class RechargeController extends BaseController {
     @PreAuthorize("@ss.hasPermi('system:recharge:editys')")
     @ApiOperation(value = "银商报表")
     @GetMapping("/ysreport")
-    public AjaxResult ysreport(Integer ysid,String ysname,String beginTime,String endTime,Long transferInMin,Long transferInMax,Long transferOutMin,Long transferOutMax) {
+    public AjaxResult ysreport(Integer ysid, String ysname, String beginTime, String endTime, Long transferInMin, Long transferInMax, Long transferOutMin, Long transferOutMax) {
         startPage();
-        List list = rechargeService.ysreport(ysid,ysname,beginTime,endTime,transferInMin,transferInMax,transferOutMin,transferOutMax);
+        List list = rechargeService.ysreport(ysid, ysname, beginTime, endTime, transferInMin, transferInMax, transferOutMin, transferOutMax);
         return AjaxResult.success(getDataTable(list));
     }
 }
