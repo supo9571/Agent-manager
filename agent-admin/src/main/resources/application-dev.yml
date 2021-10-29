@@ -141,8 +141,8 @@ token:
   header: Authorization
   # 令牌密钥
   secret: abcdefghijklmnopqrstuvwxyz
-  # 令牌有效期（默认600分钟）
-  expireTime: 60000
+  # 令牌有效期（默认60分钟）
+  expireTime: 60
 
 # Swagger配置
 swagger:

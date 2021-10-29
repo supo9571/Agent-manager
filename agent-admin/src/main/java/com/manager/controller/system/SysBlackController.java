@@ -36,9 +36,7 @@ public class SysBlackController extends BaseController {
     @PostMapping("/add")
     public AjaxResult add(SysBlack sysBlack) {
         sysBlack.setCreateBy(SecurityUtils.getUsername());
-        int i = sysBlackService.insertBlack(sysBlack);
-        if (i > 0) return AjaxResult.success();
-        return AjaxResult.error();
+        return toAjax(sysBlackService.insertBlack(sysBlack));
     }
 
     /**

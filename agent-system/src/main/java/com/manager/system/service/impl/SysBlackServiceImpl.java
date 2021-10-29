@@ -24,6 +24,11 @@ public class SysBlackServiceImpl implements SysBlackService {
 
     @Override
     public int insertBlack(SysBlack sysBlack) {
+        //查询是否已存在
+        int i = sysBlackMapper.check(sysBlack);
+        if(i>0){
+            return 0;
+        }
         return sysBlackMapper.insertBlack(sysBlack);
     }
 
