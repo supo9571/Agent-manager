@@ -122,7 +122,7 @@ public class ActivityController extends BaseController {
      */
     @PreAuthorize("@ss.hasPermi('system:activity:send')")
     @ApiOperation(value = "发送活动配置")
-//    @Log(title = "发送活动配置", businessType = BusinessType.OTHER)
+    @Log(title = "发送活动配置", businessType = BusinessType.OTHER)
     @PostMapping("/send")
     public AjaxResult send() {
         //查询 活动配置

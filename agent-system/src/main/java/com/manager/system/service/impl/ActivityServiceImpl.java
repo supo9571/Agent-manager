@@ -63,16 +63,14 @@ public class ActivityServiceImpl implements ActivityService {
             if (jsonObject.getString(String.valueOf(map.get("ac_type"))) == null && !"113114".equals(String.valueOf(map.get("ac_type")))) {
                 JSONObject acInfo = JSONObject.parseObject(JSON.toJSONStringWithDateFormat(map, "yyyy-MM-dd HH:mm:ss", SerializerFeature.WriteClassName));
                 acInfo.put("ac_name", getNameByType(acInfo.getInteger("ac_type")));
-                acInfo.put("ac_content", JSONObject.parseObject(String.valueOf(map.get("ac_content"))));
+                acInfo.put("ac_content", JSON.parse(String.valueOf(map.get("ac_content"))));
                 jsonObject.put(String.valueOf(acInfo.get("ac_type")), acInfo);
             } else if ("113114".equals(String.valueOf(map.get("ac_type")))) {
                 setRechargeGive(map, jsonObject);
             }
         });
-
         jsonObject.put("116", getMonthConfig());
-        String resultStr = StringUtils.jsonToLua(jsonObject);
-        result.put("activity_new.lua", "return {" + resultStr + "}");
+        result.put("activity_new.json", jsonObject.toJSONString());
         return result.toJSONString();
     }
 
