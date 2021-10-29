@@ -31,5 +31,13 @@ public class OnlineController {
         return dataService.getOnlines(onlinePlayer);
     }
 
-
+    /**
+     * 下线
+     */
+    @PreAuthorize("@ss.hasPermi('data:online:forbidden')")
+    @ApiOperation(value = "下线")
+    @PostMapping("/forbidden")
+    public AjaxResult forbidden(Long uid) {
+        return  dataService.forbidden(uid);
+    }
 }

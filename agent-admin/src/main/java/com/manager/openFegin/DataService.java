@@ -31,6 +31,9 @@ public interface DataService {
     @PostMapping(value = "/data/online/list", consumes = "application/json")
     AjaxResult getOnlines(@RequestBody OnlinePlayer onlinePlayer);
 
+    @PostMapping(value = "/data/online/forbidden")
+    AjaxResult forbidden(@RequestParam("uid") Long uid);
+
     @PostMapping(value = "/data/player/list", consumes = "application/json")
     AjaxResult getPlayers(@RequestBody PlayUser playUser);
 
