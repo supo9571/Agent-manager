@@ -30,7 +30,6 @@ public interface RechargeMapper {
 
     Integer updateOnlineRecharge(OnlineRecharge onlineRecharge);
 
-    @Select("select id from config_bank_recharge where status = 1 and  tid = #{tid} and open_type = #{openType} and vip_list = #{vipList} limit 1 ")
     Integer getBankRechargeId(BankRecharge bankRecharge);
 
     Integer saveBankRecharge(BankRecharge bankRecharge);

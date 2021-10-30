@@ -7,6 +7,7 @@ import com.manager.common.core.domain.AjaxResult;
 import com.manager.common.core.domain.entity.*;
 import com.manager.common.enums.BusinessType;
 import com.manager.common.utils.SecurityUtils;
+import com.manager.common.utils.StringUtils;
 import com.manager.system.service.RechargeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -128,6 +129,9 @@ public class RechargeController extends BaseController {
     @Log(title = "添加银行卡充值", businessType = BusinessType.INSERT)
     @PostMapping("/addbank")
     public AjaxResult addBank(BankRecharge bankRecharge) {
+        if(StringUtils.isEmpty(bankRecharge.getVipList())){
+            return AjaxResult.error("通道层级不能为空！");
+        }
         Integer id = rechargeService.getBankRechargeId(bankRecharge);
         if (id != null) {
             return AjaxResult.error("数据已存在！");
