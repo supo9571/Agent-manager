@@ -160,7 +160,7 @@ public class RechargeController extends BaseController {
     public AjaxResult editBank(BankRecharge bankRecharge) {
         bankRecharge.setTid(ManagerConfig.getTid());
         Integer id = rechargeService.getBankRechargeId(bankRecharge);
-        if (!id.equals(bankRecharge.getId())) {
+        if (id != null && !id.equals(bankRecharge.getId())) {
             return AjaxResult.error("数据已存在！");
         }
         bankRecharge.setUpdateBy(SecurityUtils.getUsername());
