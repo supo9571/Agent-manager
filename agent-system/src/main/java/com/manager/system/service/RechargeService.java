@@ -24,7 +24,7 @@ public interface RechargeService {
 
     Integer updateOnlineRecharge(OnlineRecharge onlineRecharge);
 
-    int getBankRechargeCount(BankRecharge bankRecharge);
+    Integer getBankRechargeId(BankRecharge bankRecharge);
 
     Integer saveBankRecharge(BankRecharge bankRecharge);
 

@@ -128,8 +128,8 @@ public class RechargeController extends BaseController {
     @Log(title = "添加银行卡充值", businessType = BusinessType.INSERT)
     @PostMapping("/addbank")
     public AjaxResult addBank(BankRecharge bankRecharge) {
-        int count = rechargeService.getBankRechargeCount(bankRecharge);
-        if (count > 0) {
+        Integer id = rechargeService.getBankRechargeId(bankRecharge);
+        if (id != null) {
             return AjaxResult.error("数据已存在！");
         }
         bankRecharge.setTid(ManagerConfig.getTid());
@@ -159,6 +159,10 @@ public class RechargeController extends BaseController {
     @PostMapping("/editbank")
     public AjaxResult editBank(BankRecharge bankRecharge) {
         bankRecharge.setTid(ManagerConfig.getTid());
+        Integer id = rechargeService.getBankRechargeId(bankRecharge);
+        if (!id.equals(bankRecharge.getId())) {
+            return AjaxResult.error("数据已存在！");
+        }
         bankRecharge.setUpdateBy(SecurityUtils.getUsername());
         Integer i = rechargeService.updateBankRecharge(bankRecharge);
         return i > 0 ? AjaxResult.success() : AjaxResult.error();

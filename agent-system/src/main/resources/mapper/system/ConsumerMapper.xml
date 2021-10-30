@@ -43,7 +43,7 @@
         #{openType},
         #{liveUrl},
         #{info},
-        sysdate
+        NOW()
         )
     </insert>
 

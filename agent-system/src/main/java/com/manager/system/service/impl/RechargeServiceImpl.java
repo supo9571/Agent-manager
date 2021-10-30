@@ -82,8 +82,8 @@ public class RechargeServiceImpl implements RechargeService {
     }
 
     @Override
-    public int getBankRechargeCount(BankRecharge bankRecharge) {
-        return rechargeMapper.getBankRechargeCount(bankRecharge);
+    public Integer getBankRechargeId(BankRecharge bankRecharge) {
+        return rechargeMapper.getBankRechargeId(bankRecharge);
     }
 
     /**
