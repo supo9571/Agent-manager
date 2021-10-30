@@ -46,6 +46,9 @@ public class SysTenantStatisticsController extends BaseController {
     public AjaxResult channelList(SysTenantChannelStatistics param) {
         this.startPage();
         List<SysTenantChannelStatistics> list = sysTenantChannelStatisticsService.list(param);
+        if (list.get(0) == null) {
+            return AjaxResult.success();
+        }
         return AjaxResult.success(getDataTable(list));
     }
 

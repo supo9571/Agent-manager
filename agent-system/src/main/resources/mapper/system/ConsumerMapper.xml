@@ -37,16 +37,13 @@
                                     live_url,
                                     info,
                                     create_time)
-        values (#{tid};
-        #{status}
-        ,
+        values (#{tid},
+        #{status} ,
         #{accordAddr},
         #{openType},
         #{liveUrl},
         #{info},
         sysdate
-        (
-        )
         )
     </insert>
 
