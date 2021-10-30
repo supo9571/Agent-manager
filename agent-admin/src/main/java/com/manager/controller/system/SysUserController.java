@@ -107,7 +107,7 @@ public class SysUserController extends BaseController {
     @ApiOperation(value = "修改用户")
     @PostMapping("/edit")
     public AjaxResult edit(@Validated @RequestBody SysUser user) {
-        userService.checkUserAllowed(user);
+//        userService.checkUserAllowed(user);
         user.setUpdateBy(SecurityUtils.getUsername());
         if (StringUtils.isNotEmpty(user.getPassword())) {
             user.setPassword(SecurityUtils.encryptPassword(user.getPassword()));
