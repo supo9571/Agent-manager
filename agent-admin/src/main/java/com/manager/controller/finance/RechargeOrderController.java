@@ -7,7 +7,6 @@ import com.manager.common.core.domain.entity.*;
 import com.manager.common.enums.BusinessType;
 import com.manager.common.utils.file.FileUtils;
 import com.manager.common.utils.poi.ExcelUtil;
-import com.manager.framework.manager.AsyncManager;
 import com.manager.openFegin.ReportService;
 import com.manager.system.service.MailRecordService;
 import com.manager.system.service.RechargeOrderService;
@@ -27,7 +26,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimerTask;
 
 /**
  * 充值订单查询
@@ -44,9 +42,6 @@ public class RechargeOrderController extends BaseController {
 
     @Autowired
     private ReportService reportService;
-
-    @Autowired
-    private MailRecordService mailRecordService;
 
     /**
      * 查询
@@ -147,30 +142,6 @@ public class RechargeOrderController extends BaseController {
             rechargeOrder.setBeforeOrderMoney(currBig.subtract(rechargeOrder.getRechargeAmount()).subtract(rechargeOrder.getExCoins()));
             i = rechargeOrderService.addRechargeOrder(rechargeOrder);
         }
-
-        //发邮件 异步
-        AsyncManager.me().execute(new TimerTask() {
-            @Override
-            public void run() {
-                MailRecord mailRecord = new MailRecord();
-                mailRecord.setSignature("系统");
-                mailRecord.setMailTitle("充值成功");
-                mailRecord.setMailContent("亲爱的玩家： 您好！ 您充值的" + rechargeOrder.getRechargeAmount() + "元，已到账，请注意查收。");
-                mailRecord.setMailState("2");
-                mailRecord.setMailState("0");
-                // 处理系统赠送多uid的情况
-                if ("5".equals(rechargeOrder.getRechargeType())) {
-                    mailRecord.setAddressee(rechargeOrder.getUids());
-                    mailRecordService.saveMailRecord(mailRecord);
-                    reportService.sendEmail(2, rechargeOrder.getUids());
-
-                } else {
-                    mailRecord.setAddressee(rechargeOrder.getUid()+"");
-                    mailRecordService.saveMailRecord(mailRecord);
-                    reportService.sendEmail(2, String.valueOf(rechargeOrder.getUid()));
-                }
-            }
-        });
         return i > 0 ? success() : error("充值成功，添加记录失败");
     }
 
@@ -205,21 +176,6 @@ public class RechargeOrderController extends BaseController {
             rechargeOrder.setBeforeOrderMoney(currBig.subtract(rechargeOrder.getRechargeAmount()).subtract(rechargeOrder.getExCoins()));
             rechargeOrder.setPaymentStatus("1");
             Integer i = rechargeOrderService.editRechargeOrder(rechargeOrder);
-            //发邮件 异步
-            AsyncManager.me().execute(new TimerTask() {
-                @Override
-                public void run() {
-                    MailRecord mailRecord = new MailRecord();
-                    mailRecord.setSignature("系统");
-                    mailRecord.setMailTitle("充值成功");
-                    mailRecord.setMailContent("亲爱的玩家： 您好！ 您充值的" + rechargeOrder.getRechargeAmount() + "元，已到账，请注意查收。");
-                    mailRecord.setMailState("2");
-                    mailRecord.setMailState("0");
-                    mailRecord.setAddressee(rechargeOrder.getUid()+"");
-                    mailRecordService.saveMailRecord(mailRecord);
-                    reportService.sendEmail(2, String.valueOf(rechargeOrder.getUid()));
-                }
-            });
             return i > 0 ? AjaxResult.success() : AjaxResult.error("充值成功，修改记录失败");
         }
         rechargeOrder.setPaymentStatus("3");
