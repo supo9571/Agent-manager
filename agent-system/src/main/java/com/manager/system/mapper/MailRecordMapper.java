@@ -18,4 +18,5 @@ public interface MailRecordMapper {
      */
     List<MailRecord> listMailRecord(MailRecord mailRecord);
 
+    void saveMailRecord(MailRecord mailRecord);
 }

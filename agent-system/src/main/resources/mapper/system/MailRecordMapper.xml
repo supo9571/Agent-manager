@@ -33,4 +33,12 @@
         </if>
     </select>
 
+    <insert id="saveMailRecord" parameterType="com.manager.common.core.domain.entity.MailRecord">
+            insert into
+            sys_mail_record(tid,signature,addressee,mail_title,mail_prop,mail_content,mail_state,create_time,update_time)
+            values
+            <foreach item="item" index="index" collection="addressee.split(',')" separator=",">
+                (#{tenant},#{signature},#{item},#{mailTitle},#{mailProp},#{mailContent},#{mailState},sysdate(),sysdate())
+            </foreach>
+    </insert>
 </mapper>

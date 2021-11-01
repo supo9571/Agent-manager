@@ -1,7 +1,6 @@
 package com.manager.openFegin;
 
 import com.manager.common.core.domain.AjaxResult;
-import com.manager.common.core.domain.entity.Activity;
 import com.manager.common.core.domain.model.*;
 import com.manager.common.core.domain.model.param.DataAnalysisParam;
 import com.manager.common.core.domain.model.param.PlayerReportParam;

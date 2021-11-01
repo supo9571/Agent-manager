@@ -26,4 +26,9 @@ public class MailRecordServiceImpl implements MailRecordService {
         return mailRecordMapper.listMailRecord(mailRecord);
     }
 
+    @Override
+    public void saveMailRecord(MailRecord mailRecord) {
+        mailRecordMapper.saveMailRecord(mailRecord);
+    }
+
 }

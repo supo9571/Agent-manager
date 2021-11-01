@@ -17,4 +17,5 @@ public interface MailRecordService {
      */
     List listMailRecord(MailRecord mailRecord);
 
+    void saveMailRecord(MailRecord mailRecord);
 }
