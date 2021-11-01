@@ -4,6 +4,7 @@ package com.manager.system.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.manager.common.config.ManagerConfig;
+import com.manager.common.core.domain.AjaxResult;
 import com.manager.common.core.domain.entity.ExchangeEaa;
 import com.manager.system.mapper.ExchangeEaaMapper;
 import com.manager.system.service.ExchangeEaaService;
