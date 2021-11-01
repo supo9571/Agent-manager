@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -47,7 +48,7 @@ public class SysTenantStatisticsController extends BaseController {
         this.startPage();
         List<SysTenantChannelStatistics> list = sysTenantChannelStatisticsService.list(param);
         if (list.get(0) == null) {
-            return AjaxResult.success();
+            list = new ArrayList<>();
         }
         return AjaxResult.success(getDataTable(list));
     }
