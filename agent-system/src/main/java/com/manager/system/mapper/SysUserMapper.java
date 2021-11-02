@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.manager.common.core.domain.entity.SysUser;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 /**
@@ -137,4 +138,7 @@ public interface SysUserMapper {
 
     @Update("update sys_user set google_key = #{googleKey} where user_id = #{userId}")
     int saveGoogleKey(@Param("userId") Long userId, @Param("googleKey") String googleKey);
+
+    @Select("select count(1) from sys_ip_white where user_id = #{userId}")
+    Integer selectUserIps(@Param("userId")Long userId);
 }

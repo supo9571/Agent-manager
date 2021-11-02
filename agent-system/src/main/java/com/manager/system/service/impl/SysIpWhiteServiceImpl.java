@@ -31,8 +31,11 @@ public class SysIpWhiteServiceImpl implements SysIpWhiteService {
             userId = sysUserMapper.selectUserIdByUserName(userName);
             if (userId == null || userId == 0) throw new CustomException("用户名错误！");
         }
-        List<SysIpWhite> list = new ArrayList<>();
         List<String> ipList = Arrays.asList(ips.split(","));
+        Integer ipCount = sysUserMapper.selectUserIps(userId);
+        if (ipCount+ipList.size()>=100) throw new CustomException("ip数超出限制！");
+
+        List<SysIpWhite> list = new ArrayList<>();
         for (int i = 0; i < ipList.size(); i++) {
             SysIpWhite sysIpWhite = new SysIpWhite();
             sysIpWhite.setUserId(userId);
