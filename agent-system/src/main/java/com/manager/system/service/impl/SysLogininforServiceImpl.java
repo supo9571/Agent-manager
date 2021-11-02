@@ -2,6 +2,7 @@ package com.manager.system.service.impl;
 
 import java.util.List;
 
+import com.manager.common.utils.SecurityUtils;
 import com.manager.system.domain.SysLogininfor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,7 @@ public class SysLogininforServiceImpl implements ISysLogininforService {
      */
     @Override
     public List<SysLogininfor> selectLogininforList(SysLogininfor logininfor) {
+        logininfor.setCreateBy(SecurityUtils.getUsername());
         return logininforMapper.selectLogininforList(logininfor);
     }
 }

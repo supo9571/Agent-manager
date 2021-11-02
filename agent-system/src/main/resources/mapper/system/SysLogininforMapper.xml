@@ -25,9 +25,11 @@
         select lf.info_id, lf.user_name, lf.ipaddr, lf.login_location, lf.browser, lf.os, lf.status, lf.msg,
         lf.login_time
         from sys_logininfor lf
+        left join sys_user u
+        on lf.user_name = u.user_name
         <where>
             <if test="ipaddr != null and ipaddr != ''">
-                AND ipaddr like concat('%', #{ipaddr}, '%')
+                AND lf.ipaddr like concat('%', #{ipaddr}, '%')
             </if>
             <if test="browser != null and browser != ''">
                 AND lf.browser like concat('%', #{browser}, '%')
@@ -36,12 +38,15 @@
                 AND lf.user_name like concat('%', #{userName}, '%')
             </if>
             <if test="beginTime != null and beginTime != ''"><!-- 开始时间检索 -->
-                and date_format(login_time,'%Y-%m-%d %H:%i-%s') &gt;= date_format(#{beginTime},'%Y-%m-%d %H:%i-%s')
+                and date_format(lf.login_time,'%Y-%m-%d %H:%i-%s') &gt;= date_format(#{beginTime},'%Y-%m-%d %H:%i-%s')
             </if>
             <if test="endTime != null and endTime != ''"><!-- 结束时间检索 -->
-                and date_format(login_time,'%Y-%m-%d %H:%i-%s') &lt;= date_format(#{endTime},'%Y-%m-%d %H:%i-%s')
+                and date_format(lf.login_time,'%Y-%m-%d %H:%i-%s') &lt;= date_format(#{endTime},'%Y-%m-%d %H:%i-%s')
             </if>
-                and lf.tenant = #{tenant}
+            <if test="createBy != null and createBy != 'admin'">
+                and (u.create_by = #{createBy} or lf.user_name = #{createBy} )
+            </if>
+            and lf.tenant = #{tenant}
         </where>
         order by info_id desc
     </select>

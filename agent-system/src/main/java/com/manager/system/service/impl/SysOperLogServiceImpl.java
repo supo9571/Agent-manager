@@ -2,6 +2,7 @@ package com.manager.system.service.impl;
 
 import java.util.List;
 
+import com.manager.common.utils.SecurityUtils;
 import com.manager.system.domain.SysOperLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,7 @@ public class SysOperLogServiceImpl implements ISysOperLogService {
      */
     @Override
     public List<SysOperLog> selectOperLogList(SysOperLog operLog) {
+        operLog.setCreateBy(SecurityUtils.getUsername());
         return operLogMapper.selectOperLogList(operLog);
     }
 
