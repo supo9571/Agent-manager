@@ -21,6 +21,8 @@ public interface ReportService {
 
     /**
      * 通知有新邮件
+     *
+     * mailType : 1=全服邮件 2=指定玩家邮件
      */
     @PostMapping("/data/mail/send")
     AjaxResult sendEmail(@RequestParam("mailType") Integer mailType, @RequestParam("range") String range);
@@ -31,5 +33,13 @@ public interface ReportService {
      */
     @PostMapping("/data/user/control")
     AjaxResult control(@RequestParam("cmd") String cmd, @RequestParam("uid") Integer uid, @RequestParam("reason") String reason);
+
+    /**
+     * 驳回提现请求用户返金币
+     * @param uid 用户uid
+     * @param coins 加多少钱
+     */
+    @PostMapping("/data/returnBack")
+    AjaxResult returnBack(@RequestParam("uid") Integer uid, @RequestParam("coins") Integer coins);
 
 }

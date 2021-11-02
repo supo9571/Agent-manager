@@ -7,6 +7,7 @@ import com.manager.common.core.domain.entity.ExchangeEaa;
 import com.manager.common.enums.BusinessType;
 import com.manager.common.utils.file.FileUtils;
 import com.manager.common.utils.poi.ExcelUtil;
+import com.manager.openFegin.ReportService;
 import com.manager.system.service.ExchangeEaaService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -31,6 +33,9 @@ public class ExchangeEaaController extends BaseController {
 
     @Autowired
     private ExchangeEaaService exchangeEaaService;
+
+    @Autowired
+    private ReportService reportService;
 
     /**
      * 查询提现审批数据
@@ -71,6 +76,48 @@ public class ExchangeEaaController extends BaseController {
     @Log(title = "编辑提现审批", businessType = BusinessType.UPDATE)
     @PostMapping("/editExchangeEaaList")
     public AjaxResult editExchangeEaaList(@RequestBody ExchangeEaa exchangeEaa) {
+        if(exchangeEaa != null && exchangeEaa.getUid() != null){
+            // 7已退款
+            if("7".equals(exchangeEaa.getExaaStatus())){
+                BigDecimal withdrawMoney = exchangeEaa.getWithdrawMoney();
+                if(withdrawMoney != null){
+                    withdrawMoney = withdrawMoney.multiply(new BigDecimal("10000"));
+                }else{
+                    withdrawMoney = new BigDecimal("0");
+                }
+
+                // 驳回提现请求用户返金币
+                System.out.println(Integer.valueOf(withdrawMoney.intValue()));
+                AjaxResult ajaxResult = reportService.returnBack(
+                        exchangeEaa.getUid(),Integer.valueOf(withdrawMoney.intValue()));
+
+                // 发邮件告诉提现失败
+                if ("200".equals(String.valueOf(ajaxResult.get("code")))) {
+                    AjaxResult ajaxResult2 = reportService.sendEmail(2,exchangeEaa.getUid().toString());
+                    if(!("200".equals(String.valueOf(ajaxResult2.get("code"))))){
+                        error("请求游戏服失败");
+                    }
+                } else {
+                    return error("请求游戏服失败");
+                }
+            }
+            // 状态改为打款中（财务打款直接改为已打款；第三方代付需要收到回调改为已打款/打款失败）
+            if("4".equals(exchangeEaa.getExaaStatus())){
+                // 财务打款
+                if("1".equals(exchangeEaa.getTransferType())){
+                    exchangeEaa.setExaaStatus("3");
+
+                    // 打款成功发邮件告知玩家
+                    AjaxResult ajaxResult = reportService.sendEmail(2,exchangeEaa.getUid().toString());
+                    if(!("200".equals(String.valueOf(ajaxResult.get("code"))))){
+                        error("请求游戏服失败");
+                    }
+                }
+
+                // 只有打款中状态下===第三方回调返回打款失败，才改为打款失败 (等支持模块实现在做这个功能)
+            }
+        }
+
         int i = exchangeEaaService.editExchangeEaaList(exchangeEaa);
         return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
