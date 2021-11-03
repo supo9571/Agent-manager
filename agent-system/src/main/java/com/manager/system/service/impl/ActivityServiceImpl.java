@@ -6,7 +6,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.domain.entity.Activity;
-import com.manager.common.utils.StringUtils;
 import com.manager.system.mapper.ActivityMapper;
 import com.manager.system.service.ActivityService;
 import lombok.extern.slf4j.Slf4j;
