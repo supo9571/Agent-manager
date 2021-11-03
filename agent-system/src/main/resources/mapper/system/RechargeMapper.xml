@@ -108,6 +108,7 @@
         <if test="id!=null and id!=''">
             and id != #{id}
         </if>
+        LIMIT 1
     </select>
     <!--添加银行充值 配置信息-->
     <insert id="saveBankRecharge" parameterType="com.manager.common.core.domain.entity.BankRecharge">
