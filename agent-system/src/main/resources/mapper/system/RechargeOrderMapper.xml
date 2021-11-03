@@ -44,7 +44,9 @@
         cro.update_time as updateTime,
         cro.commodity_name as commodityName,
         cro.transfer_way as transferWay,
-        cro.remark as remark
+        cro.remark as remark,
+        cro.operate_type as operateType
+        cro.operate_account as operateAccount
         FROM
         config_recharge_order cro
         where 1 = 1
@@ -95,6 +97,8 @@
         <if test="finishTime2 !=null and finishTime2 !=''">
             and date_format(cro.finish_time,'%Y-%m-%d') <![CDATA[<=]]>  #{finishTime2}
         </if>
+        order by
+        finishTime DESC
     </select>
 
     <insert id="addRechargeOrder" parameterType="com.manager.common.core.domain.entity.RechargeOrder">
@@ -109,6 +113,8 @@
                                           create_time,
                                           finish_time,
                                           remark,
+                                          operate_type,
+                                          operate_account,
                                           before_order_money, after_order_money, admin_user_id, ex_coins)
         values (#{tid},
                 #{orderNumber},
@@ -121,6 +127,8 @@
                 sysdate(),
                 sysdate(),
                 #{remark},
+                #{operateType},
+                #{operateAccount},
                 #{beforeOrderMoney}, #{afterOrderMoney}, #{adminUserId}, #{exCoins})
     </insert>
 

@@ -62,6 +62,8 @@
         <if test="createTime2 !=null and createTime2 !=''">
             and date_format(cro.create_time,'%Y-%m-%d') <![CDATA[<=]]>  #{finishTime2}
         </if>
+        order by
+            createTime DESC
     </select>
 
 

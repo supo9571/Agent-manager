@@ -93,7 +93,7 @@ public class RechargeOrderController extends BaseController {
                 amount = new BigDecimal(monthGive).multiply(b).longValue();
                 reason = 100072;
             }
-        } else if ("5".equals(rechargeOrder.getRechargeType())) {
+        } else if ("5".equals(rechargeOrder.getRechargeType())) {//5系统赠送/人工充值
             if ("2".equals(rechargeOrder.getOperateType()) ||
                     "4".equals(rechargeOrder.getOperateType())) {
                 cmd = "reducecoins";
