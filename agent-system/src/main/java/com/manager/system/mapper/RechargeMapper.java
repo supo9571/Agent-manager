@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -69,4 +70,6 @@ public interface RechargeMapper {
                   @Param("transferInMin")Long transferInMin,@Param("transferInMax") Long transferInMax,
                   @Param("transferOutMin")Long transferOutMin,@Param("transferOutMax") Long transferOutMax);
 
+    @Select("select amount/10000 from config_ys where id = #{ysid}")
+    BigDecimal ysCount(Integer ysid);
 }

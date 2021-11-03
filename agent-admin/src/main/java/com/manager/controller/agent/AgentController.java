@@ -1,8 +1,10 @@
 package com.manager.controller.agent;
 
 import com.manager.common.config.ManagerConfig;
+import com.manager.common.core.controller.BaseController;
 import com.manager.common.core.domain.AjaxResult;
 import com.manager.openFegin.AgentService;
+import com.manager.system.service.PlayerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Api(tags = "代理查询")
 @RequestMapping("/data/agent")
-public class AgentController {
+public class AgentController extends BaseController {
 
     @Autowired
     private AgentService agentService;
 
+    @Autowired
+    private PlayerService playerService;
     /**
      * 代理列表
      */
@@ -58,7 +62,8 @@ public class AgentController {
     @PreAuthorize("@ss.hasPermi('data:agent:list')")
     @ApiOperation(value = "推广记录")
     @GetMapping("/popularize")
-    public AjaxResult popularize(String uid, Integer page, Integer size, String orderByColumn, String isAsc) {
-        return agentService.getPopularizes(uid, page, size, orderByColumn, isAsc);
+    public AjaxResult popularize(String uid) {
+        startPage();
+        return AjaxResult.success("查询成功",getDataTable(playerService.getPopularizes(uid)));
     }
 }

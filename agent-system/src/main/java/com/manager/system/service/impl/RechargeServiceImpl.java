@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -184,6 +185,11 @@ public class RechargeServiceImpl implements RechargeService {
     @Override
     public List ysreport(Integer ysid, String ysname, String beginTime, String endTime, Long transferInMin, Long transferInMax, Long transferOutMin, Long transferOutMax) {
         return rechargeMapper.ysreport(ysid,ysname,beginTime,endTime,transferInMin,transferInMax,transferOutMin,transferOutMax);
+    }
+
+    @Override
+    public BigDecimal ysCount(Integer ysid) {
+        return rechargeMapper.ysCount(ysid);
     }
 
 }

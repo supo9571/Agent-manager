@@ -3,6 +3,7 @@ package com.manager.system.service;
 import com.manager.common.core.domain.AjaxResult;
 import com.manager.common.core.domain.entity.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -54,4 +55,5 @@ public interface RechargeService {
 
     List ysreport(Integer ysid, String ysname, String beginTime, String endTime, Long transferInMin, Long transferInMax, Long transferOutMin, Long transferOutMax);
 
+    BigDecimal ysCount(Integer ysid);
 }

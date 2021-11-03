@@ -33,12 +33,12 @@ public interface AgentService {
                         @RequestParam("orderByColumn") String orderByColumn,
                         @RequestParam("isAsc") String isAsc);
 
-    @PostMapping(value = "/data/agent/popularize")
-    AjaxResult getPopularizes(@RequestParam("uid") String uid,
-                              @RequestParam("page") Integer page,
-                              @RequestParam("size") Integer size,
-                              @RequestParam("orderByColumn") String orderByColumn,
-                              @RequestParam("isAsc") String isAsc);
+//    @PostMapping(value = "/data/agent/popularize")
+//    AjaxResult getPopularizes(@RequestParam("uid") String uid,
+//                              @RequestParam("page") Integer page,
+//                              @RequestParam("size") Integer size,
+//                              @RequestParam("orderByColumn") String orderByColumn,
+//                              @RequestParam("isAsc") String isAsc);
 
     @PostMapping(value = "/data/total/list", consumes = "application/json")
     AjaxResult getTotals(@RequestBody Summarize summarize);

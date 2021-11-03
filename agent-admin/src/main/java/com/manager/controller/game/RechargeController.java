@@ -260,6 +260,16 @@ public class RechargeController extends BaseController {
     }
 
     /**
+     * 获取银商额度
+     */
+    @PreAuthorize("@ss.hasPermi('system:recharge:editys')")
+    @ApiOperation(value = "获取银商额度")
+    @GetMapping("/yscount")
+    public AjaxResult ysCount(Integer ysid) {
+        return AjaxResult.success("查询成功",rechargeService.ysCount(ysid));
+    }
+
+    /**
      * 银商额度充值
      */
     @PreAuthorize("@ss.hasPermi('system:recharge:editys')")
