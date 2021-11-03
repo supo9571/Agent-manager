@@ -134,7 +134,7 @@ public class RechargeController extends BaseController {
         }
         Integer id = rechargeService.getBankRechargeId(bankRecharge);
         if (id != null) {
-            return AjaxResult.error("数据已存在！");
+            return AjaxResult.error("选择的通道层级中存在正在使用中的通道层级！");
         }
         bankRecharge.setTid(ManagerConfig.getTid());
         bankRecharge.setUpdateBy(SecurityUtils.getUsername());
