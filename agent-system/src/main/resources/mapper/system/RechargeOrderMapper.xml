@@ -45,7 +45,7 @@
         cro.commodity_name as commodityName,
         cro.transfer_way as transferWay,
         cro.remark as remark,
-        cro.operate_type as operateType
+        cro.operate_type as operateType,
         cro.operate_account as operateAccount
         FROM
         config_recharge_order cro
