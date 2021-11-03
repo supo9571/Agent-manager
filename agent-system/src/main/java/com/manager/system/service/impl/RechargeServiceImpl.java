@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -85,6 +86,13 @@ public class RechargeServiceImpl implements RechargeService {
 
     @Override
     public Integer getBankRechargeId(BankRecharge bankRecharge) {
+        String[] vipList = bankRecharge.getVipList().split(",");
+        StringBuffer sb = new StringBuffer("(");
+        for (int i = 0; i < vipList.length; i++) {
+            sb.append("vip_list like  '%").append(vipList[i]).append("%' or ");
+        }
+        String str = sb.toString().substring(0, sb.lastIndexOf("or ")) + ")";
+        bankRecharge.setVipStr(str);
         return rechargeMapper.getBankRechargeId(bankRecharge);
     }
 
