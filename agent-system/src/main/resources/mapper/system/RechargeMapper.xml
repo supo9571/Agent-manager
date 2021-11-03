@@ -7,10 +7,10 @@
     <insert id="saveVipRecharge" parameterType="com.manager.common.core.domain.entity.VipRecharge">
         insert into config_vip_recharge (tid, vip_name, recharge_type, recharge_other_type, open_type, img_type,
                                          live_addr, url, qq, wechat, status, create_time, update_time, create_by,
-                                         update_by, ys_id)
+                                         update_by, ys_id, order_num)
         values (#{tid}, #{vipName}, #{rechargeType}, #{rechargeOtherType}, #{openType}, #{imgType},
                 #{liveAddr}, #{url}, #{qq}, #{wechat}, #{status}, sysdate(), sysdate(), #{createBy}, #{createBy},
-                #{ysid})
+                #{ysid}, #{orderNum})
     </insert>
 
     <select id="findVipRecharge" resultType="java.util.Map">
@@ -26,9 +26,11 @@
                wechat,
                status,
                update_time         updateTime,
-               ys_id               ysid
+               ys_id               ysid,
+               order_num           orderNum
         from config_vip_recharge
         where tid = #{tid}
+        order by order_num asc
     </select>
 
     <update id="updateVipRecharge">
@@ -39,13 +41,13 @@
             <if test="vipName!=null and vipName!=''">vip_name = #{vipName},</if>
             <if test="imgType!=null and imgType!=''">img_type = #{imgType},</if>
             <if test="rechargeType!=null and rechargeType!=''">recharge_type = #{rechargeType},</if>
-            <if test="rechargeOtherType!=null and rechargeOtherType!=''">recharge_other_type = #{rechargeOtherType},
-            </if>
+            <if test="rechargeOtherType!=null and rechargeOtherType!=''">recharge_other_type = #{rechargeOtherType},</if>
             <if test="ysid!=null and ysid!=''">ys_id = #{ysid},</if>
             <if test="liveAddr!=null and liveAddr!=''">live_addr = #{liveAddr},</if>
             <if test="url!=null and url!=''">url = #{url},</if>
             <if test="qq!=null and qq!=''">qq = #{qq},</if>
             <if test="wechat!=null and wechat!=''">wechat = #{wechat},</if>
+            <if test="orderNum!=null and orderNum!=''">order_num = #{orderNum},</if>
             update_time = sysdate(),
             update_by = #{updateBy}
         </set>

@@ -51,4 +51,9 @@ public class VipRecharge extends BaseEntity {
 
     @ApiModelProperty("状态 1开启 2关闭")
     private String status;
+
+    @ApiModelProperty("排序")
+    private int orderNum;
+
+
 }
