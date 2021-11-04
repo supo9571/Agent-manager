@@ -56,4 +56,6 @@ public class VipRecharge extends BaseEntity {
     private int orderNum;
 
 
+
+
 }

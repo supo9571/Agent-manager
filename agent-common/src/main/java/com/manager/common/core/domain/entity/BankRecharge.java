@@ -37,5 +37,6 @@ public class BankRecharge extends BaseEntity {
     @ApiModelProperty("状态 1开启 2关闭")
     private String status;
 
+    private String vipStr;
 
 }

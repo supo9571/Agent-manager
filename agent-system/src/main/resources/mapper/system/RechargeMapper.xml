@@ -104,13 +104,11 @@
 
     <select id="getBankRechargeId" resultType="java.lang.Integer">
         select id from config_bank_recharge
-        where status = 1
-          and  tid = #{tid}
-          and vip_list in
-            <foreach item="item" index="index" collection="vipList.split(',')" open="(" separator="," close=")">
-                ${item}
-            </foreach>
-           limit 1
+        where status = 1 and tid = #{tid}  and ${vipStr}
+        <if test="id!=null and id!=''">
+            and id != #{id}
+        </if>
+        LIMIT 1
     </select>
     <!--添加银行充值 配置信息-->
     <insert id="saveBankRecharge" parameterType="com.manager.common.core.domain.entity.BankRecharge">

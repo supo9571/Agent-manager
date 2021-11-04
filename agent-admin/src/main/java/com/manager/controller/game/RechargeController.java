@@ -132,12 +132,15 @@ public class RechargeController extends BaseController {
         if(StringUtils.isEmpty(bankRecharge.getVipList())){
             return AjaxResult.error("通道层级不能为空！");
         }
-        Integer id = rechargeService.getBankRechargeId(bankRecharge);
-        if (id != null) {
-            return AjaxResult.error("选择的通道层级中存在正在使用中的通道层级！");
-        }
         bankRecharge.setTid(ManagerConfig.getTid());
+        if (bankRecharge.getStatus().equals("1")) {
+            Integer id = rechargeService.getBankRechargeId(bankRecharge);
+            if (id != null) {
+                return AjaxResult.error("选择的通道层级中存在正在使用中的通道层级！");
+            }
+        }
         bankRecharge.setUpdateBy(SecurityUtils.getUsername());
+        bankRecharge.setId(null);
         Integer i = rechargeService.saveBankRecharge(bankRecharge);
         return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
@@ -162,10 +165,13 @@ public class RechargeController extends BaseController {
     @ApiOperation(value = "修改银行卡充值")
     @PostMapping("/editbank")
     public AjaxResult editBank(BankRecharge bankRecharge) {
+        if(StringUtils.isEmpty(bankRecharge.getVipList())){
+            return AjaxResult.error("通道层级不能为空！");
+        }
         bankRecharge.setTid(ManagerConfig.getTid());
         Integer id = rechargeService.getBankRechargeId(bankRecharge);
         if (id != null && !id.equals(bankRecharge.getId())) {
-            return AjaxResult.error("数据已存在！");
+            return AjaxResult.error("选择的通道层级中存在正在使用中的通道层级！");
         }
         bankRecharge.setUpdateBy(SecurityUtils.getUsername());
         Integer i = rechargeService.updateBankRecharge(bankRecharge);
