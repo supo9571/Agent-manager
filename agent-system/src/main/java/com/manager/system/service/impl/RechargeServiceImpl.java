@@ -200,4 +200,14 @@ public class RechargeServiceImpl implements RechargeService {
         return rechargeMapper.ysCount(ysid);
     }
 
+    @Override
+    public List getMark(Integer uid, String beginTime, String endTime) {
+        return rechargeMapper.getMark(uid,beginTime,endTime,ManagerConfig.getTid());
+    }
+
+    @Override
+    public List getBlack(Integer uid, String beginTime, String endTime) {
+        return rechargeMapper.getBlack(uid,beginTime,endTime,ManagerConfig.getTid());
+    }
+
 }

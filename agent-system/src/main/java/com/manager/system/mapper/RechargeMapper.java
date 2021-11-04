@@ -72,4 +72,8 @@ public interface RechargeMapper {
 
     @Select("select amount/10000 from config_ys where id = #{ysid}")
     BigDecimal ysCount(Integer ysid);
+
+    List getMark(@Param("uid") Integer uid,@Param("beginTime") String beginTime,@Param("endTime") String endTime,@Param("tid") Integer tid);
+
+    List getBlack(@Param("uid") Integer uid,@Param("beginTime") String beginTime,@Param("endTime") String endTime,@Param("tid") Integer tid);
 }

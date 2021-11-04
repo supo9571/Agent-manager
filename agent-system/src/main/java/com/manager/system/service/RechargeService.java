@@ -56,4 +56,8 @@ public interface RechargeService {
     List ysreport(Integer ysid, String ysname, String beginTime, String endTime, Long transferInMin, Long transferInMax, Long transferOutMin, Long transferOutMax);
 
     BigDecimal ysCount(Integer ysid);
+
+    List getMark(Integer uid, String beginTime, String endTime);
+
+    List getBlack(Integer uid, String beginTime, String endTime);
 }

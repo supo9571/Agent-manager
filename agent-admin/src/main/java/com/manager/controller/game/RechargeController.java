@@ -6,6 +6,7 @@ import com.manager.common.core.controller.BaseController;
 import com.manager.common.core.domain.AjaxResult;
 import com.manager.common.core.domain.entity.*;
 import com.manager.common.enums.BusinessType;
+import com.manager.common.exception.CustomException;
 import com.manager.common.utils.SecurityUtils;
 import com.manager.common.utils.StringUtils;
 import com.manager.system.service.RechargeService;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -308,6 +310,30 @@ public class RechargeController extends BaseController {
     public AjaxResult ysreport(Integer ysid, String ysname, String beginTime, String endTime, Long transferInMin, Long transferInMax, Long transferOutMin, Long transferOutMax) {
         startPage();
         List list = rechargeService.ysreport(ysid, ysname, beginTime, endTime, transferInMin, transferInMax, transferOutMin, transferOutMax);
+        return AjaxResult.success(getDataTable(list));
+    }
+
+    /**
+     * 备注姓名库
+     */
+    @PreAuthorize("@ss.hasPermi('system:recharge:editys')")
+    @ApiOperation(value = "备注姓名库")
+    @GetMapping("/name")
+    public AjaxResult name(Integer uid, String beginTime, String endTime) {
+        startPage();
+        List list = rechargeService.getMark(uid,beginTime,endTime);
+        return AjaxResult.success(getDataTable(list));
+    }
+
+    /**
+     * 用户黑名单
+     */
+    @PreAuthorize("@ss.hasPermi('system:recharge:editys')")
+    @ApiOperation(value = "用户黑名单")
+    @GetMapping("/black")
+    public AjaxResult black(Integer uid, String beginTime, String endTime) {
+        startPage();
+        List list = rechargeService.getBlack(uid,beginTime,endTime);
         return AjaxResult.success(getDataTable(list));
     }
 }

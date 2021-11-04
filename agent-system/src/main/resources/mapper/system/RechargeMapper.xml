@@ -274,4 +274,22 @@
         </where>
         GROUP BY DATE_FORMAT(create_time, '%Y-%m-%d'),ysid,username
     </select>
+
+    <select id="getMark" resultType="java.util.Map">
+        select id,uid,name,bank,create_time createTime
+        from user_mark
+        where tid = #{tid}
+        <if test="uid!=null and uid!=''">and uid = #{uid}</if>
+        <if test="beginTime!=null and beginTime!=''">and create_time >= #{beginTime}</if>
+        <if test="endTime!=null and endTime!=''">and #{endTime} >= create_time</if>
+    </select>
+
+    <select id="getBlack" resultType="java.util.Map">
+        select id,uid,name,bank,mark,status,create_time createTime,update_time updateTime
+        from user_black
+        where tid = #{tid}
+        <if test="uid!=null and uid!=''">and uid = #{uid}</if>
+        <if test="beginTime!=null and beginTime!=''">and update_time >= #{beginTime}</if>
+        <if test="endTime!=null and endTime!=''">and #{endTime} >= update_time</if>
+    </select>
 </mapper>
