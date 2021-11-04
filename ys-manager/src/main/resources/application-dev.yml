@@ -106,8 +106,8 @@ manager:
   #游戏服 发送配置地址
   gameDomain: http://18.142.67.104:6661/upload
 #  gameDomain: http://10.39.1.88:6661/upload
-  #游戏服 通讯地址
-  reportDomain: http://18.142.67.104:8888/gm
+  #通知充值成功
+  reportDomain: http://18.142.67.104:8888/notify_payment
 
 # 开发环境配置
 server:

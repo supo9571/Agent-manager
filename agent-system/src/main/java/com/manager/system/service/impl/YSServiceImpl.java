@@ -2,6 +2,7 @@ package com.manager.system.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.manager.common.config.ManagerConfig;
+import com.manager.common.core.domain.AjaxResult;
 import com.manager.common.core.domain.entity.RechargeOrder;
 import com.manager.common.core.domain.entity.YsQuota;
 import com.manager.common.core.domain.entity.Ysinfo;
@@ -60,8 +61,8 @@ public class YSServiceImpl implements YSService {
     @Transactional
     public String recharge(Integer ysid, Integer uid, Long amount, String name, String bank) {
         //查询银商余额
-        Long ysAmount = ysMapper.getYsAmount(ysid);
-        if(ysAmount<amount*1000){
+        BigDecimal ysAmount = ysMapper.getYsAmount(ysid);
+        if(ysAmount.compareTo(new BigDecimal(amount))<0){
             return "账号额度不足，请充值。";
         }
         //判断uid是否合法
@@ -73,23 +74,25 @@ public class YSServiceImpl implements YSService {
         Long give = bigGive.longValue();
         //充值
         JSONObject param = new JSONObject();
-        param.put("cmd", "addcoins");
-        param.put("reason", 100070);
-        param.put("type", 1);//1=加金币,2=加流水
-        param.put("value", (amount+give)*10000);
         param.put("uid", uid);
+        param.put("reason", 100070);
+        param.put("amount", amount*10000);
+        param.put("ex_coins", give*10000);
+        param.put("other_amount", 0);
+
         //操作 用户金币
         String result = HttpUtils.sendPost(managerConfig.getReportDomain(),"data=" + param.toJSONString());
         JSONObject resultJson = JSONObject.parseObject(result);
         if (resultJson != null && resultJson.getInteger("code") == 0) {
-            Long curr = resultJson.getLong("curr")/10000;//用户余额
+            BigDecimal curr = new BigDecimal(resultJson.getJSONObject("ret").getLong("curr"))
+                    .divide(new BigDecimal(10000));//用户余额
             //修改银商余额
             ysMapper.updateYSAmount(ysid,amount*10000);
             //添加充值订单
             RechargeOrder rechargeOrder = new RechargeOrder();
             rechargeOrder.setUid(uid);
-            rechargeOrder.setAfterOrderMoney(new BigDecimal(curr));
-            rechargeOrder.setBeforeOrderMoney(new BigDecimal(curr-amount-give));
+            rechargeOrder.setAfterOrderMoney(curr);
+            rechargeOrder.setBeforeOrderMoney(curr.subtract(new BigDecimal(amount)).subtract(new BigDecimal(give)));
             rechargeOrder.setRechargeAmount(new BigDecimal(amount));
             rechargeOrder.setExCoins(new BigDecimal(give));
             rechargeOrder.setRemark(name+" "+bank);
@@ -116,8 +119,8 @@ public class YSServiceImpl implements YSService {
     @Override
     public String risk(Integer ysid, Integer uid, Long amount, String name, String bank) {
         //查询银商余额
-        Long ysAmount = ysMapper.getYsAmount(ysid);
-        if(ysAmount<amount*1000){
+        BigDecimal ysAmount = ysMapper.getYsAmount(ysid);
+        if(ysAmount.compareTo(new BigDecimal(amount))<0){
             return "账号额度不足，请充值。";
         }
         //判断uid是否合法
@@ -146,7 +149,7 @@ public class YSServiceImpl implements YSService {
     }
 
     @Override
-    public Long getYsAmount(Integer ysid) {
+    public BigDecimal getYsAmount(Integer ysid) {
         return ysMapper.getYsAmount(ysid);
     }
 

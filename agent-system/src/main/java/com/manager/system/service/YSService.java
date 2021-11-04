@@ -3,6 +3,7 @@ package com.manager.system.service;
 import com.manager.common.core.domain.entity.Ysinfo;
 import org.apache.ibatis.annotations.Param;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -27,5 +28,5 @@ public interface YSService {
 
     List getBlack(Integer uid, String beginTime, String endTime);
 
-    Long getYsAmount(Integer ysid);
+    BigDecimal getYsAmount(Integer ysid);
 }

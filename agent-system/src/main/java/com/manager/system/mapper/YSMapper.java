@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -24,8 +25,8 @@ public interface YSMapper {
 
     List getReport(@Param("beginTime")String beginTime,@Param("endTime") String endTime,@Param("ysid") Integer ysid);
 
-    @Select("select amount from config_ys where id = #{ysid}")
-    Long getYsAmount(@Param("ysid")Integer ysid);
+    @Select("select amount/10000 from config_ys where id = #{ysid}")
+    BigDecimal getYsAmount(@Param("ysid")Integer ysid);
 
     @Select("SELECT count(1) FROM data_register WHERE uid = #{uid} AND channel IN (SELECT t_id from sys_tenant where t_type = '2' and tenant = #{tid})")
     Integer checkUid(@Param("uid")Integer uid, @Param("tid")Integer tid);
