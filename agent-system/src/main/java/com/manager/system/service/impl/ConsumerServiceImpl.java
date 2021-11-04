@@ -27,6 +27,12 @@ public class ConsumerServiceImpl implements ConsumerService {
     }
 
     @Override
+    public int consumerCount(Consumer consumer) {
+        return consumerMapper.consumerCount(consumer);
+    }
+
+
+    @Override
     public int addConsumer(Consumer consumer) {
         return consumerMapper.addConsumer(consumer);
     }

@@ -4,6 +4,7 @@ import com.manager.common.core.domain.entity.Consumer;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,12 @@ public interface ConsumerMapper {
      * 查询
      */
     List<Map> getConsumerList(Integer tid);
+
+    /**
+     * 查询count
+     *
+     */
+    int consumerCount(Consumer consumer);
 
     /**
      * 新增
