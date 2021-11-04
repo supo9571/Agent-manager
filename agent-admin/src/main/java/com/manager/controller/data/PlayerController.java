@@ -172,7 +172,7 @@ public class PlayerController extends BaseController {
      * 封号解封状态
      */
     @PreAuthorize("@ss.hasPermi('data:player:list')")
-    @ApiOperation(value = "封号解封")
+    @ApiOperation(value = "封号解封状态")
     @PostMapping("/lockType")
     public AjaxResult lockType(Long uid) {
         return dataService.lockType(uid);

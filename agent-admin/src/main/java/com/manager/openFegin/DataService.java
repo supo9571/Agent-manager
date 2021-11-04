@@ -122,7 +122,7 @@ public interface DataService {
     @PostMapping(value = "/data/player/lock", consumes = "application/json")
     AjaxResult lock(@RequestBody UserLock userLock);
 
-    @PostMapping(value = "/data/player/lock", consumes = "application/json")
+    @PostMapping(value = "/data/player/lockType", consumes = "application/json")
     AjaxResult lockType(@RequestParam("uid") Long uid);
 
     @PostMapping(value = "/data/player/lockLog", consumes = "application/json")
