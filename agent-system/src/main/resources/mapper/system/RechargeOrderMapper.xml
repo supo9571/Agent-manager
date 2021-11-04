@@ -97,8 +97,6 @@
         <if test="finishTime2 !=null and finishTime2 !=''">
             and date_format(cro.finish_time,'%Y-%m-%d') <![CDATA[<=]]>  #{finishTime2}
         </if>
-        order by
-        finishTime DESC
     </select>
 
     <insert id="addRechargeOrder" parameterType="com.manager.common.core.domain.entity.RechargeOrder">
