@@ -126,6 +126,7 @@
             <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
             <if test="remark != null">remark = #{remark},</if>
             <if test="googleSwitch != null and googleSwitch!=''">google_switch = #{googleSwitch},</if>
+            <if test="googleKey != null and googleKey != ''">google_key = #{googleKey},</if>
             update_time = sysdate()
         </set>
         where user_id = #{userId}
