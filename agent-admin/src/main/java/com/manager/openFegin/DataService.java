@@ -37,7 +37,7 @@ public interface DataService {
     AjaxResult getPlayers(@RequestBody PlayUser playUser);
 
     @PostMapping(value = "/data/player/curr")
-    AjaxResult getPlayerCurr(@RequestParam("uid") Long uid);
+    AjaxResult getPlayerCurr(@RequestParam("uid") Long uid,@RequestParam("beginTime")String beginTime,@RequestParam("endTime")String endTime);
 
     @PostMapping(value = "/data/card/list", consumes = "application/json")
     AjaxResult getCards(@RequestBody Card card);

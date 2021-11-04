@@ -47,8 +47,8 @@ public class PlayerController extends BaseController {
     @PreAuthorize("@ss.hasPermi('data:player:curr')")
     @ApiOperation(value = "查询玩家余额")
     @GetMapping("/curr")
-    public AjaxResult curr(Long uid) {
-        return dataService.getPlayerCurr(uid);
+    public AjaxResult curr(Long uid,String beginTime,String endTime) {
+        return dataService.getPlayerCurr(uid,beginTime,endTime);
     }
 
 
