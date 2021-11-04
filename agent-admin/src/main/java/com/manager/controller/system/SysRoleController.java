@@ -128,7 +128,7 @@ public class SysRoleController extends BaseController {
         if (UserConstants.NOT_UNIQUE.equals(roleService.checkRoleNameUnique(role))) {
             return AjaxResult.error("修改角色'" + role.getRoleName() + "'失败，角色名称已存在");
         }
-        role.setCreateBy(SecurityUtils.getUsername());
+        role.setUpdateBy(SecurityUtils.getUsername());
         roleService.updateRoleName(role);
         return AjaxResult.success();
     }

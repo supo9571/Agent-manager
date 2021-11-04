@@ -97,7 +97,7 @@
                 and l.oper_ip = #{operIp}
             </if>
             <if test="createBy != null and createBy != 'admin'">
-                and (u.create_by = #{createBy} or l.oper_time = #{createBy})
+                and (u.create_by = #{createBy} or l.oper_name = #{createBy})
             </if>
 
         </where>
