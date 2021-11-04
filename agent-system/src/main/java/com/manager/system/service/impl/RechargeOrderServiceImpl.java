@@ -65,7 +65,6 @@ public class RechargeOrderServiceImpl implements RechargeOrderService {
             }
 
             for (RechargeOrder order : list) {
-                System.out.println(order.getRechargeAmount());
                 rechargeRechargeAmount.add(order.getRechargeAmount());
             }
 
