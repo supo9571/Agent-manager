@@ -29,6 +29,14 @@
         where id = #{id}
     </update>
 
+    <select id="consumerCount" resultType="integer"  parameterType="com.manager.common.core.domain.entity.Consumer">
+        select count(1) from config_consumer
+        where accordAddr = #{accordAddr}
+        <if test="id!=null and id!=''">
+            and id != #{id}
+        </if>
+    </select>
+
     <insert id="addConsumer" parameterType="com.manager.common.core.domain.entity.Consumer">
         insert into config_consumer(tid,
                                     status,
@@ -36,13 +44,15 @@
                                     open_type,
                                     live_url,
                                     info,
-                                    create_time)
+                                    create_time,
+                                    updated_at)
         values (#{tid},
         #{status} ,
         #{accordAddr},
         #{openType},
         #{liveUrl},
         #{info},
+        NOW(),
         NOW()
         )
     </insert>

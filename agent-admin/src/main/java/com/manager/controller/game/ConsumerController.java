@@ -49,6 +49,11 @@ public class ConsumerController extends BaseController {
     @PostMapping("/addConsumer")
     public AjaxResult addConsumer(@RequestBody Consumer consumer) {
         consumer.setTid(ManagerConfig.getTid());
+        consumer.setId(null);
+        int count = consumerService.consumerCount(consumer);
+        if (count > 0) {
+            return AjaxResult.error("客服场景已存在！");
+        }
         int i = consumerService.addConsumer(consumer);
         return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }
@@ -75,6 +80,10 @@ public class ConsumerController extends BaseController {
     @Log(title = "编辑客服信息", businessType = BusinessType.UPDATE)
     @PostMapping("/editConsumer")
     public AjaxResult editConsumer(@RequestBody Consumer consumer) {
+        int count = consumerService.consumerCount(consumer);
+        if (count > 0) {
+            return AjaxResult.error("客服场景已存在！");
+        }
         int i = consumerService.editConsumer(consumer);
         return i > 0 ? AjaxResult.success() : AjaxResult.error();
     }

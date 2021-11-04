@@ -171,9 +171,11 @@ public class RechargeController extends BaseController {
             return AjaxResult.error("通道层级不能为空！");
         }
         bankRecharge.setTid(ManagerConfig.getTid());
-        Integer id = rechargeService.getBankRechargeId(bankRecharge);
-        if (id != null && !id.equals(bankRecharge.getId())) {
-            return AjaxResult.error("选择的通道层级中存在正在使用中的通道层级！");
+        if (bankRecharge.getStatus().equals("1")) {
+            Integer id = rechargeService.getBankRechargeId(bankRecharge);
+            if (id != null && !id.equals(bankRecharge.getId())) {
+                return AjaxResult.error("选择的通道层级中存在正在使用中的通道层级！");
+            }
         }
         bankRecharge.setUpdateBy(SecurityUtils.getUsername());
         Integer i = rechargeService.updateBankRecharge(bankRecharge);

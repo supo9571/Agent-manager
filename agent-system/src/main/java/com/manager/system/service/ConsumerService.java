@@ -16,6 +16,8 @@ public interface ConsumerService {
      */
     List getConsumerList();
 
+    int consumerCount(Consumer consumer);
+
     /**
      * 新增
      *
