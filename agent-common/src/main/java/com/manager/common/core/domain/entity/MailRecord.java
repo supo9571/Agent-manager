@@ -12,7 +12,7 @@ import lombok.Data;
 @Data
 public class MailRecord extends BaseEntity {
 
-    @ApiModelProperty("主键id")
+    @ApiModelProperty("主键id(日记序号)")
     private Integer id;
 
     @ApiModelProperty("平台id")

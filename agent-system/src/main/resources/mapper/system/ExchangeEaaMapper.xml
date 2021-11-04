@@ -57,20 +57,19 @@
             and ceo.transfer_type = #{transferType}
         </if>
         <if test="createTime1 !=null and createTime1 !=''">
-            and date_format(ceo.create_time,'%Y-%m-%d') >= #{createTime1}
+            and ceo.create_time >= #{createTime1}
         </if>
         <if test="createTime2 !=null and createTime2 !=''">
-            and date_format(cro.create_time,'%Y-%m-%d') <![CDATA[<=]]>  #{finishTime2}
+            and cro.create_time <![CDATA[<=]]>  #{finishTime2}
         </if>
-        order by
-            createTime DESC
     </select>
 
 
     <select id="getAddMosaicPlayerList" resultType="java.util.Map">
         SELECT
         dr.uid as uid,
-        dr.total_water as accumulateWater,
+        (SELECT SUM(cro.recharge_amount) from config_recharge_order cro where cro.uid = dr.uid) as accumulateRecharge,
+        dr.total_water / 10000  as accumulateWater,
         dr.total_give as accumulateExcoins
         FROM
         data_register dr

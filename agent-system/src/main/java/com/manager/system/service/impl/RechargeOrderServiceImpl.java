@@ -65,7 +65,7 @@ public class RechargeOrderServiceImpl implements RechargeOrderService {
             }
 
             for (RechargeOrder order : list) {
-                rechargeRechargeAmount.add(order.getRechargeAmount());
+                rechargeRechargeAmount = rechargeRechargeAmount.add(order.getRechargeAmount());
             }
 
             // 查询系统赠送页面的多放回几个字段

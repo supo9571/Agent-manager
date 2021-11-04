@@ -90,7 +90,6 @@
         <if test="createTime2 !=null and createTime2 !=''">
             and cro.create_time <![CDATA[<=]]>  #{createTime2}
         </if>
-
         <if test="finishTime1 !=null and finishTime1 !=''">
             and cro.finish_time >= #{finishTime1}
         </if>
@@ -134,25 +133,25 @@
         update config_recharge_order cro
         <set>
             <if test="rechargeAmount !=null">
-                and cro.recharge_amount = #{rechargeAmount}
+                cro.recharge_amount = #{rechargeAmount},
             </if>
             <if test="beforeOrderMoney !=null">
-                and cro.before_order_money = #{beforeOrderMoney}
+                cro.before_order_money = #{beforeOrderMoney},
             </if>
             <if test="afterOrderMoney !=null">
-                and cro.after_order_money = #{afterOrderMoney}
+                cro.after_order_money = #{afterOrderMoney},
             </if>
             <if test="adminUserId !=null">
-                and cro.admin_user_id = #{adminUserId}
+                cro.admin_user_id = #{adminUserId},
             </if>
             <if test="exCoins !=null">
-                and cro.ex_coins = #{exCoins}
+                cro.ex_coins = #{exCoins},
             </if>
             <if test="paymentStatus !=null">
-                and cro.payment_status = #{paymentStatus}
+                cro.payment_status = #{paymentStatus},
             </if>
             <if test="thirdPartyOrderNumber!=null and thirdPartyOrderNumber!=''">
-                and cro.third_party_order_number = #{thirdPartyOrderNumber},
+                cro.third_party_order_number = #{thirdPartyOrderNumber},
             </if>
             <if test="remark!=null and remark!=''">
                 remark = #{remark},
