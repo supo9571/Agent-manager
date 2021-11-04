@@ -1,6 +1,7 @@
 package com.manager.controller.data;
 
 import com.manager.common.annotation.Log;
+import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.domain.AjaxResult;
 import com.manager.common.enums.BusinessType;
 import com.manager.common.utils.SecurityUtils;
@@ -32,7 +33,7 @@ public class GameController {
     @ApiOperation(value = "获取游戏下拉列表")
     @GetMapping("/option")
     public AjaxResult option() {
-        return dataService.getGames();
+        return dataService.getGames(ManagerConfig.getTid());
     }
 
     /**
