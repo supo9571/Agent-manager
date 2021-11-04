@@ -47,7 +47,7 @@ public interface RechargeMapper {
 
     Integer saveYsinfo(Ysinfo ysinfo);
 
-    @Select("select id,username,password,amount,update_time updateTime,google_check googleCheck,google_key googleKey,recharge_status rechargeStatus from config_ys where status = '1' and tid =#{tid} ")
+    @Select("select id,username,password,amount/10000 amount,update_time updateTime,google_check googleCheck,google_key googleKey,recharge_status rechargeStatus from config_ys where status = '1' and tid =#{tid} ")
     List<Map> fingYsinfo(@Param("tid") Integer tid);
 
     Integer updateYsinfo(Ysinfo ysinfo);
