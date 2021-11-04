@@ -31,7 +31,7 @@
 
     <select id="consumerCount" resultType="integer"  parameterType="com.manager.common.core.domain.entity.Consumer">
         select count(1) from config_consumer
-        where accordAddr = #{accordAddr}
+        where accord_addr = #{accordAddr}
         <if test="id!=null and id!=''">
             and id != #{id}
         </if>
