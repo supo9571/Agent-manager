@@ -42,6 +42,7 @@ public class ExchangeEaaController extends BaseController {
      * 查询提现审批数据
      */
     @ApiOperation(value = "提现审批查询")
+    @PreAuthorize("@ss.hasPermi('system:finance:exchangeEaa:list')")
     @PostMapping("/listExchangeEaa")
     public AjaxResult getExchangeEaaList(@RequestBody ExchangeEaa exchangeEaa) {
         return AjaxResult.success("查询成功", exchangeEaaService.getExchangeEaaList(exchangeEaa));
@@ -51,6 +52,7 @@ public class ExchangeEaaController extends BaseController {
      * 玩家打码信息查询
      */
     @ApiOperation(value = "玩家打码信息查询")
+    @PreAuthorize("@ss.hasPermi('system:finance:exchangeEaa:list')")
     @PostMapping("/getAddMosaicPlayerList")
     public AjaxResult getAddMosaicPlayerList(int uid) {
         return AjaxResult.success("查询成功", exchangeEaaService.getAddMosaicPlayerList(uid));

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.domain.entity.SysUser;
 import com.manager.system.domain.vo.MetaVo;
 import com.manager.system.domain.vo.RouterVo;
@@ -116,7 +117,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
     @Override
     public List<Integer> selectMenuListByRoleId(Long roleId) {
 //        SysRole role = roleMapper.selectRoleById(roleId);
-        return menuMapper.selectMenuListByRoleId(roleId, false);
+        return menuMapper.selectMenuListByRoleId(roleId, ManagerConfig.getTid());
     }
 
     /**

@@ -37,7 +37,7 @@ public class SysTenantController extends BaseController {
         return AjaxResult.success(getDataTable(list));
     }
 
-    @PreAuthorize("@ss.hasPermi('system:tenant:list')")
+    @PreAuthorize("@ss.hasPermi('system:tenant:add')")
     @ApiOperation(value = "总代新增")
     @PostMapping("/add")
     public AjaxResult add(@RequestBody SysTenant sysTenant) {
@@ -53,7 +53,7 @@ public class SysTenantController extends BaseController {
         return AjaxResult.success(sysTenantService.insertSelective(sysTenant));
     }
 
-    @PreAuthorize("@ss.hasPermi('system:tenant:list')")
+    @PreAuthorize("@ss.hasPermi('system:tenant:update')")
     @ApiOperation(value = "总代修改")
     @PostMapping("/update")
     public AjaxResult update(@RequestBody SysTenant sysTenant) {
@@ -72,7 +72,7 @@ public class SysTenantController extends BaseController {
         return AjaxResult.success(getDataTable(list));
     }
 
-    @PreAuthorize("@ss.hasPermi('system:tenant:channel:list')")
+    @PreAuthorize("@ss.hasPermi('system:tenant:channel:add')")
     @ApiOperation(value = "渠道新增")
     @PostMapping("/channel/add")
     public AjaxResult channelAdd(@RequestBody SysTenant sysTenant) {
@@ -90,7 +90,7 @@ public class SysTenantController extends BaseController {
         return AjaxResult.success(sysTenantService.insertSelective(sysTenant));
     }
 
-    @PreAuthorize("@ss.hasPermi('system:tenant:channel:list')")
+    @PreAuthorize("@ss.hasPermi('system:tenant:channel:update')")
     @ApiOperation(value = "渠道修改")
     @PostMapping("/channel/update")
     public AjaxResult channelUpdate(@RequestBody SysTenant sysTenant) {

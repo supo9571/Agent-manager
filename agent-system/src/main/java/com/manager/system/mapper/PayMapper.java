@@ -1,8 +1,6 @@
 package com.manager.system.mapper;
 
-import com.manager.common.core.domain.entity.Consumer;
 import com.manager.common.core.domain.entity.Pay;
-import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
