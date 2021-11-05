@@ -5,6 +5,7 @@ import com.manager.common.core.controller.BaseController;
 import com.manager.common.core.domain.AjaxResult;
 import com.manager.common.core.domain.entity.ExchangeEaa;
 import com.manager.common.enums.BusinessType;
+import com.manager.common.utils.SecurityUtils;
 import com.manager.common.utils.file.FileUtils;
 import com.manager.common.utils.poi.ExcelUtil;
 import com.manager.openFegin.ReportService;
@@ -77,6 +78,7 @@ public class ExchangeEaaController extends BaseController {
     @PostMapping("/editExchangeEaaList")
     public AjaxResult editExchangeEaaList(@RequestBody ExchangeEaa exchangeEaa) {
         if(exchangeEaa != null && exchangeEaa.getUid() != null){
+            exchangeEaa.setUpdateBy(SecurityUtils.getUsername());
             // 7已退款
             if("7".equals(exchangeEaa.getExaaStatus())){
                 BigDecimal withdrawMoney = exchangeEaa.getWithdrawMoney();

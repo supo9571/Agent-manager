@@ -73,27 +73,27 @@ public class ExchangeEaaServiceImpl implements ExchangeEaaService {
             for (ExchangeEaa eaa : list) {
                 if ("1".equals(eaa.getExaaStatus())) {
                     exchangeNum1++;
-                    exchangeMoney1.add(eaa.getWithdrawMoney());
+                    exchangeMoney1 = exchangeMoney1.add(eaa.getWithdrawMoney());
                 } else if ("2".equals(eaa.getExaaStatus())) {
                     exchangeNum2++;
-                    exchangeMoney2.add(eaa.getWithdrawMoney());
+                    exchangeMoney2 = exchangeMoney2.add(eaa.getWithdrawMoney());
                 } else if ("3".equals(eaa.getExaaStatus())) {
                     exchangeNum3++;
-                    exchangeMoney3.add(eaa.getWithdrawMoney());
-                    exchangeMoney32.add(eaa.getTransferAmount());
-                    exchangeMoney33.add(eaa.getPoundage());
+                    exchangeMoney3 = exchangeMoney3.add(eaa.getWithdrawMoney());
+                    exchangeMoney32 = exchangeMoney32.add(eaa.getTransferAmount());
+                    exchangeMoney33 = exchangeMoney33.add(eaa.getPoundage());
                 } else if ("4".equals(eaa.getExaaStatus())) {
                     exchangeNum4++;
-                    exchangeMoney4.add(eaa.getWithdrawMoney());
+                    exchangeMoney4 = exchangeMoney4.add(eaa.getWithdrawMoney());
                 } else if ("5".equals(eaa.getExaaStatus())) {
                     exchangeNum5++;
-                    exchangeMoney5.add(eaa.getWithdrawMoney());
+                    exchangeMoney5 = exchangeMoney5.add(eaa.getWithdrawMoney());
                 } else if ("6".equals(eaa.getExaaStatus())) {
                     exchangeNum6++;
-                    exchangeMoney6.add(eaa.getWithdrawMoney());
+                    exchangeMoney6 = exchangeMoney6.add(eaa.getWithdrawMoney());
                 } else if ("7".equals(eaa.getExaaStatus())) {
                     exchangeNum7++;
-                    exchangeMoney7.add(eaa.getWithdrawMoney());
+                    exchangeMoney7 = exchangeMoney7.add(eaa.getWithdrawMoney());
                 }
             }
         }

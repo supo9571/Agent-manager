@@ -8,6 +8,7 @@
             resultType="com.manager.common.core.domain.entity.RechargeOrder">
         SELECT
         cro.id as id,
+        cro.tid as tid,
         cro.order_number as orderNumber,
         cro.third_party_order_number as thirdPartyOrderNumber,
         cro.uid as uid,

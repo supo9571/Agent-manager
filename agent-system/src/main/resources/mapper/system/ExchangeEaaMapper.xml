@@ -85,6 +85,7 @@
             <if test="remark!=null and remark!=''">remark = #{remark},</if>
             <if test="exaaStatus!=null and exaaStatus!=''">exaa_status = #{exaaStatus},</if>
             <if test="transferType!=null and transferType!=''">transfer_type = #{transferType},</if>
+            update_by = #{updateBy},
             update_time = sysdate()
         </set>
         where id = #{id} and tid=#{tid}
