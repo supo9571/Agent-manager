@@ -44,8 +44,7 @@ public class SysMenuController extends BaseController {
     @GetMapping("/list")
     public AjaxResult list(SysMenu menu) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        Long userId = loginUser.getUser().getUserId();
-        List<SysMenu> menus = menuService.selectMenuList(menu, userId);
+        List<SysMenu> menus = menuService.selectMenuList(menu, loginUser.getUser());
         return AjaxResult.success(menus);
     }
 
@@ -66,8 +65,7 @@ public class SysMenuController extends BaseController {
     @GetMapping("/treeselect")
     public AjaxResult treeselect(SysMenu menu) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        Long userId = loginUser.getUser().getUserId();
-        List<SysMenu> menus = menuService.selectMenuList(menu, userId);
+        List<SysMenu> menus = menuService.selectMenuList(menu, loginUser.getUser());
         return AjaxResult.success(menuService.buildMenuTreeSelect(menus));
     }
 
