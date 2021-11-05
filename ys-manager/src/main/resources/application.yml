@@ -1,8 +1,7 @@
 # Spring环境配置
 spring:
   profiles:
-    active: dev
-  #    active: prod
+    active: prod
 
   # 资源信息
   messages:

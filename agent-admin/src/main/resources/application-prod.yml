@@ -1,14 +1,18 @@
 spring:
+  application:
+    name: agent-admin
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 54.179.46.149:8848 #Nacos服务注册中心地址
   # redis 配置
   redis:
     # 地址
-    host: 18.162.75.63
+    host: 54.179.46.149
     # 端口，默认为6379
     port: 6379
     # 数据库索引
     database: 0
-    # 密码
-    password:
     # 连接超时时间
     timeout: 10s
     lettuce:
@@ -28,9 +32,9 @@ spring:
     druid:
       # 主库数据源
       master:
-        url: jdbc:mysql://127.0.0.1:3306/sys-manager?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+        url: jdbc:mysql://54.179.46.149:3306/sys-data?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
         username: root
-        password: root
+        password: Aa123456
       # 从库数据源
       slave:
         # 从数据源开关/默认关闭
@@ -66,7 +70,7 @@ spring:
         url-pattern: /druid/*
         # 控制台管理用户名和密码
         login-username: admin
-        login-password: 123456
+        login-password: admin3306
       filter:
         stat:
           enabled: true
@@ -77,28 +81,39 @@ spring:
         wall:
           config:
             multi-statement-allow: true
-
+  main:
+    allow-bean-definition-overriding: true
 # 项目相关配置
 manager:
   # 名称
-  name: system-manager
+  name: agent-manager
+  #平台id
+  tid: 100
+  #平台名称
+  tname: 澳门娱乐
   # 版本
   version: 1.0.0
   # 版权年份
   copyrightYear: 2021
   # 实例演示开关
   demoEnabled: true
-  # 文件路径 示例（ Windows配置D:/uploadPath，Linux配置 /home/uploadPath）
-  profile: /home/manager/uploadPath
+  # 文件路径 示例（ Windows配置D:/uploadPath，Linux配置 /package/apk）
+  profile: /home/manager/package/apk
   # 获取ip地址开关
   addressEnabled: false
   # 验证码类型 math 数组计算 char 字符验证
   captchaType: math
+  #游戏服 发送配置地址
+  gameDomain: http://18.142.67.104:6661/upload
+  #游戏服 地址
+  domain: http://18.142.67.104:6661
+  #操作金币
+  changeCoins: /gm
 
 # 开发环境配置
 server:
-  # 服务器的HTTP端口
-  port: 8848
+  # 服务器的HTTP端口，默认为8080
+  port: 3080
   servlet:
     # 应用的访问路径
     context-path: /
@@ -122,13 +137,13 @@ token:
   header: Authorization
   # 令牌密钥
   secret: abcdefghijklmnopqrstuvwxyz
-  # 令牌有效期（分钟）
+  # 令牌有效期（默认60分钟）
   expireTime: 60
 
 # Swagger配置
 swagger:
   # 是否开启swagger
-  enabled: false
+  enabled: true
 
 # 防止XSS攻击
 xss:
@@ -137,4 +152,11 @@ xss:
   # 排除链接（多个用逗号分隔）
   excludes: /system/notice
   # 匹配链接
-  urlPatterns: /system/*,/monitor/*,/tool/*
+  urlPatterns: /agent/*,/data/*
+
+ribbon:
+  OkToRetryOnAllOperations: false #对所有操作请求都进行重试,默认false
+  ReadTimeout: 60000   #负载均衡超时时间，默认值5000
+  ConnectTimeout: 6000 #ribbon请求连接的超时时间，默认值2000
+  MaxAutoRetries: 0     #对当前实例的重试次数，默认0
+  MaxAutoRetriesNextServer: 1 #对切换实例的重试次数，默认1
