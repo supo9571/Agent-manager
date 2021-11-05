@@ -84,6 +84,9 @@
         <if test="rechargeAmount !=null">
             and cro.recharge_amount = #{rechargeAmount}
         </if>
+        <if test="operateType !=null and operateType !=''">
+            and cro.operate_type = #{operateType}
+        </if>
 
         <if test="createTime1 !=null and createTime1 !=''">
             and cro.create_time >= #{createTime1}

@@ -33,7 +33,15 @@ public class SystemNoticeServiceImpl implements SystemNoticeService {
 
     @Override
     public List listSystemNotice(SystemNotice systemNotice) {
-        return systemNoticeMapper.listSystemNotice(systemNotice);
+        List<SystemNotice> list = systemNoticeMapper.listSystemNotice(systemNotice);
+
+        // 状态不等于已下线 且 判断当前时间是否大于发送时间
+        list.forEach(l ->{
+                if ((!"3".equals(l.getState())) && DateUtils.dateCompare(l.getSendOutTime())) {
+                l.setState("2");
+            }
+        });
+        return list;
     }
 
     @Override
