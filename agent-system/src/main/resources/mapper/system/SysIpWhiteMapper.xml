@@ -24,7 +24,7 @@
         select u.user_name userName
         ,w.create_by createName
         ,w.ip
-        ,DATE_FORMAT(w.create_time,'%Y-%m-%d %H:%i-%s') createTime
+        ,DATE_FORMAT(w.create_time,'%Y-%m-%d %H:%i:%s') createTime
         ,w.id
         ,w.type
         from sys_ip_white w
