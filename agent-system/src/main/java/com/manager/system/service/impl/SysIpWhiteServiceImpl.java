@@ -29,7 +29,7 @@ public class SysIpWhiteServiceImpl implements SysIpWhiteService {
         if (userId == null || userId == 0) {
             //根据userName 查询id
             userId = sysUserMapper.selectUserIdByUserName(userName);
-            if (userId == null || userId == 0) throw new CustomException("用户名错误！");
+            if (userId == null || userId == 0) throw new CustomException("用户名不存！");
         }
         List<String> ipList = Arrays.asList(ips.split(","));
         Integer ipCount = sysUserMapper.selectUserIps(userId);

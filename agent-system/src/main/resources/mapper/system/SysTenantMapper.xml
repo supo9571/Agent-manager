@@ -38,7 +38,7 @@
     <select id="selectUserList" resultType="java.util.Map">
         SELECT nick_name nickName, user_name userName
         FROM sys_user
-        where t_id = #{tid} limit 5
+        where t_id = #{tid} and tenant !='0' limit 5
     </select>
 
     <select id="list" parameterType="com.manager.common.core.domain.entity.SysTenant" resultType="java.util.Map">
@@ -51,7 +51,6 @@
             <if test="tType != null">
                 and t_type = #{tType}
             </if>
-
             <if test="beginTime != null and beginTime != ''"><!-- 开始时间检索 -->
                 and date_format(create_time,'%Y-%m-%d %H:%i-%s') &gt;= date_format(#{beginTime},'%Y-%m-%d %H:%i-%s')
             </if>

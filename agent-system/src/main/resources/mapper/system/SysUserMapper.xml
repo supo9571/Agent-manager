@@ -243,6 +243,6 @@
     <select id="selectUserIdByUserName" resultType="java.lang.Long">
         select user_id
         from sys_user
-        where user_name = #{userName} limit 0,1
+        where user_name = #{userName} and tenant != '0' limit 0,1
     </select>
 </mapper>
