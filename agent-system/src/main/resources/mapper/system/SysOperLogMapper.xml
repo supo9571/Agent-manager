@@ -49,7 +49,7 @@
     </insert>
 
     <select id="selectOperLogList" parameterType="SysOperLog" resultMap="SysOperLogResult">
-        select oper_id,
+        select distinct oper_id,
         title,
         business_type,
         method,
