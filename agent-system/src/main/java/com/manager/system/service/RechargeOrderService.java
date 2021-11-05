@@ -33,6 +33,8 @@ public interface RechargeOrderService {
      */
     Integer editRechargeOrder(RechargeOrder rechargeOrder);
 
+    Integer uidIsPresent(int uid);
+
     Integer selectRechargeGive(int i);
 
     Integer selectJinMonthGive();

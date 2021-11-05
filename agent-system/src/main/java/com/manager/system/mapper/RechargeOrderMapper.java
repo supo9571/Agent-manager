@@ -27,6 +27,9 @@ public interface RechargeOrderMapper {
 
     Integer editRechargeOrder(RechargeOrder rechargeOrder);
 
+    @Select("SELECT COUNT(1) from data_register dr where dr.uid = #{uid}")
+    Integer uidIsPresent(@Param("uid") int uid);
+
     @Select("select recharge_give from config_pay where pay_type = #{payType} and status = '1' limit 0,1")
     Integer selectRechargeGive(@Param("payType") int payType);
 

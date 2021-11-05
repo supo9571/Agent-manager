@@ -1,6 +1,7 @@
 package com.manager.openFegin;
 
 import com.manager.common.core.domain.AjaxResult;
+import com.manager.common.core.domain.entity.Game;
 import com.manager.common.core.domain.model.ControlPlayer;
 import com.manager.common.core.domain.model.ControlPlayerInfo;
 import com.manager.common.core.domain.model.SubGameData;
@@ -34,4 +35,10 @@ public interface SubGameDataService {
 
     @PostMapping(value = "/data/control/player/del", consumes = "application/json")
     AjaxResult infoList(@RequestBody ControlPlayerInfo controlPlayerInfo);
+
+    @PostMapping(value = "/data/game/list", consumes = "application/json")
+    AjaxResult getSubGameList(@RequestBody Game game);
+
+    @PostMapping(value = "/data/game/edit", consumes = "application/json")
+    AjaxResult editSubGame(@RequestBody Game game);
 }

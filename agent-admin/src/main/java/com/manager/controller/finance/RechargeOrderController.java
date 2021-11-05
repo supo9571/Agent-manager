@@ -63,6 +63,25 @@ public class RechargeOrderController extends BaseController {
     @Log(title = "新增手动充值", businessType = BusinessType.INSERT)
     @PostMapping("/addRechargeOrder")
     public AjaxResult addRechargeOrder(@RequestBody RechargeOrder rechargeOrder) {
+        // 判断充值的用户是否存在
+        if(rechargeOrder != null){
+            // 处理系统赠送多uid的情况
+            if("5".equals(rechargeOrder.getRechargeType()) && rechargeOrder.getUids() != null){
+                String[] arrayUids = rechargeOrder.getUids().split(",");
+                for (String uid : arrayUids) {
+                    Integer uidCount = rechargeOrderService.uidIsPresent(Integer.parseInt(uid));
+                    if(uidCount <= 0){
+                        return error("用户不存在");
+                    }
+                }
+            }else if(rechargeOrder.getUid() != 0){
+                Integer uidCount = rechargeOrderService.uidIsPresent(rechargeOrder.getUid());
+                if(uidCount <= 0){
+                    return error("用户不存在");
+                }
+            }
+        }
+
         //支付类型 1VIP充值 2银行卡充值 3月卡充值 4线上支付 5系统赠送/人工充值 6彩金充值
         BigDecimal b = new BigDecimal(10000);//乘以 一万
         Long amount = rechargeOrder.getRechargeAmount().multiply(b).longValue();//充值金额
