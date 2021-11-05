@@ -34,7 +34,7 @@ spring:
       master:
         url: jdbc:mysql://54.179.46.149:3306/sys-data?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
         username: root
-        password: Aa123456
+        password: Aa2021
       # 从库数据源
       slave:
         # 从数据源开关/默认关闭
@@ -104,9 +104,9 @@ manager:
   # 验证码类型 math 数组计算 char 字符验证
   captchaType: math
   #游戏服 发送配置地址
-  gameDomain: http://18.142.67.104:6661/upload
+  gameDomain: http://3.0.203.84:6661/upload
   #游戏服 地址
-  domain: http://18.142.67.104:6661
+  domain: http://3.0.203.84:6661
   #操作金币
   changeCoins: /gm
 
