@@ -12,6 +12,8 @@
                                         horse_race_grade,
                                         begin_time,
                                         end_time,
+                                        play_begin_time,
+                                        play_end_time,
                                         create_time, update_time, create_by, update_by)
         values (#{tid},
                 #{content},
@@ -20,6 +22,8 @@
                 #{horseRaceGrade},
                 #{beginTime},
                 #{endTime},
+                #{playBeginTime},
+                #{playEndTime},
                 sysdate(), sysdate(), #{createBy}, #{createBy})
     </insert>
 
@@ -46,11 +50,11 @@
         <if test="state !=null and state !=''">
             and shrl.state = #{state}
         </if>
-        <if test="createTime1 !=null and createTime1 !=''">
-            and date_format(shrl.create_time,'%Y-%m-%d') >= #{createTime1}
+        <if test="beginTime !=null and beginTime !=''">
+            and date_format(shrl.create_time,'%Y-%m-%d') >= #{beginTime}
         </if>
-        <if test="createTime2 !=null and createTime2 !=''">
-            and date_format(shrl.create_time,'%Y-%m-%d') <![CDATA[<=]]>  #{createTime2}
+        <if test="endTime !=null and endTime !=''">
+            and date_format(shrl.create_time,'%Y-%m-%d') <![CDATA[<=]]> #{endTime}
         </if>
     </select>
 
@@ -63,6 +67,8 @@
             <if test="horseRaceGrade!=null and horseRaceGrade!=''">horse_race_grade = #{horseRaceGrade},</if>
             <if test="beginTime!=null and beginTime!=''">begin_time = #{beginTime},</if>
             <if test="endTime!=null and endTime!=''">end_time = #{endTime},</if>
+            <if test="playBeginTime!=null and playBeginTime!=''"> play_begin_time = #{playBeginTime},</if>
+            <if test="playEndTime!=null and playEndTime!=''">play_end_time = #{playEndTime},</if>
             update_time = sysdate(),
             update_by = #{updateBy}
         </set>

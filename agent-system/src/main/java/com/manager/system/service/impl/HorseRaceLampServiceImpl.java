@@ -45,7 +45,24 @@ public class HorseRaceLampServiceImpl implements HorseRaceLampService {
 
     @Override
     public List listHorseRaceLamp(HorseRaceLamp horseRaceLamp) {
-        return horseRaceLampMapper.listHorseRaceLamp(horseRaceLamp);
+        List<HorseRaceLamp> list = horseRaceLampMapper.listHorseRaceLamp(horseRaceLamp);
+        // 处理状态展示
+        list.forEach(l ->{
+            // 当前时间 > 开始时间
+            if (DateUtils.dateCompare(l.getBeginTime())) {
+                // 当前时间 < 结束数据  = 在线
+                // 当前时间 > 结束数据  = 下线（else）
+                if (!(DateUtils.dateCompare(l.getEndTime()))) {
+                    l.setState("2");
+                } else {
+                    l.setState("3");
+                }
+            } else {
+                // 其它 = 待发送
+                l.setState("1");
+            }
+        });
+        return list;
     }
 
     @Override

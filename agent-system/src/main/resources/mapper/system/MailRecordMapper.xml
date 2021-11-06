@@ -31,6 +31,12 @@
         <if test="mailState !=null and mailState !=''">
             and smr.mail_state = #{mailState}
         </if>
+        <if test="beginTime !=null and beginTime !=''">
+            and date_format(smr.create_time,'%Y-%m-%d') >= #{beginTime}
+        </if>
+        <if test="endTime !=null and endTime !=''">
+            and date_format(smr.create_time,'%Y-%m-%d') <![CDATA[<=]]> #{endTime}
+        </if>
     </select>
 
     <insert id="saveMailRecord" parameterType="com.manager.common.core.domain.entity.MailRecord">

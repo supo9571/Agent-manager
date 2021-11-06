@@ -91,16 +91,16 @@ public class RechargeOrderServiceImpl implements RechargeOrderService {
                 for (RechargeOrder order : list) {
                     if ("1".equals(order.getOperateType())) {
                         artificialRechargeNum++;
-                        artificialRechargeAmount = artificialRechargeAmount.add(order.getExCoins());
+                        artificialRechargeAmount = artificialRechargeAmount.add(order.getRechargeAmount());
                     } else if ("2".equals(order.getOperateType())) {
                         rechargeDeductionNum++;
-                        rechargeDeductionAmount = rechargeDeductionAmount.add(order.getExCoins());
+                        rechargeDeductionAmount = rechargeDeductionAmount.add(order.getRechargeAmount());
                     } else if ("3".equals(order.getOperateType())) {
                         jackpotRechargeNum++;
-                        jackpotRechargeAmount = jackpotRechargeAmount.add(order.getExCoins());
+                        jackpotRechargeAmount = jackpotRechargeAmount.add(order.getRechargeAmount());
                     } else if ("4".equals(order.getOperateType())) {
                         jackpotDeductionNum++;
-                        jackpotDeductionAmount = jackpotDeductionAmount.add(order.getExCoins());
+                        jackpotDeductionAmount = jackpotDeductionAmount.add(order.getRechargeAmount());
                     }
                 }
                 result.put("artificialRechargeNum", artificialRechargeNum);
