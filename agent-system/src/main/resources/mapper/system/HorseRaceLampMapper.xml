@@ -69,4 +69,10 @@
         where id = #{id} and tid=#{tid}
     </update>
 
+    <select id="getHorseRaceLamp" resultType="java.util.Map">
+        SELECT tid platform,id,interval_title*60 `interval`,content info
+               ,begin_time play_start_time,end_time play_end_time,
+               UNIX_TIMESTAMP(NOW()) mtime
+        FROM sys_horse_race_lamp WHERE state = '2' OR (state = '1' AND SYSDATE()>=begin_time)
+    </select>
 </mapper>
