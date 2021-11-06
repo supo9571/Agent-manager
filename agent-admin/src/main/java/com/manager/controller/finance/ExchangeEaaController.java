@@ -116,6 +116,8 @@ public class ExchangeEaaController extends BaseController {
                     if(!("200".equals(String.valueOf(ajaxResult.get("code"))))){
                         error("请求游戏服失败");
                     }
+                }else{
+                    exchangeEaa.setExaaStatus("3");
                 }
 
                 // 只有打款中状态下===第三方回调返回打款失败，才改为打款失败 (等支持模块实现在做这个功能)
