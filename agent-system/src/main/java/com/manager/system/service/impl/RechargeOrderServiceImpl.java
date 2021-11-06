@@ -135,8 +135,8 @@ public class RechargeOrderServiceImpl implements RechargeOrderService {
     }
 
     @Override
-    public Integer uidIsPresent(int uid) {
-        return rechargeOrderMapper.uidIsPresent(uid);
+    public Integer uidIsPresent(int uid,int tid) {
+        return rechargeOrderMapper.uidIsPresent(uid,tid);
     }
 
     @Override

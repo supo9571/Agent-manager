@@ -1,6 +1,7 @@
 package com.manager.controller.finance;
 
 import com.manager.common.annotation.Log;
+import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.controller.BaseController;
 import com.manager.common.core.domain.AjaxResult;
 import com.manager.common.core.domain.entity.*;
@@ -69,13 +70,13 @@ public class RechargeOrderController extends BaseController {
             if("5".equals(rechargeOrder.getRechargeType()) && rechargeOrder.getUids() != null){
                 String[] arrayUids = rechargeOrder.getUids().split(",");
                 for (String uid : arrayUids) {
-                    Integer uidCount = rechargeOrderService.uidIsPresent(Integer.parseInt(uid));
+                    Integer uidCount = rechargeOrderService.uidIsPresent(Integer.parseInt(uid), ManagerConfig.getTid());
                     if(uidCount <= 0){
                         return error("用户不存在");
                     }
                 }
             }else if(rechargeOrder.getUid() != 0){
-                Integer uidCount = rechargeOrderService.uidIsPresent(rechargeOrder.getUid());
+                Integer uidCount = rechargeOrderService.uidIsPresent(rechargeOrder.getUid(), ManagerConfig.getTid());
                 if(uidCount <= 0){
                     return error("用户不存在");
                 }
