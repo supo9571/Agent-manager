@@ -60,7 +60,7 @@
             and ceo.create_time >= #{beginTime}
         </if>
         <if test="endTime !=null and endTime !=''">
-            and cro.create_time <![CDATA[<=]]>  #{endTime}
+            and ceo.create_time <![CDATA[<=]]> #{endTime}
         </if>
     </select>
 

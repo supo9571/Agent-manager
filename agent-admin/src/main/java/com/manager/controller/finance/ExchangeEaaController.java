@@ -91,7 +91,6 @@ public class ExchangeEaaController extends BaseController {
                 }
 
                 // 驳回提现请求用户返金币
-                System.out.println(Integer.valueOf(withdrawMoney.intValue()));
                 AjaxResult ajaxResult = reportService.returnBack(
                         exchangeEaa.getUid(),Integer.valueOf(withdrawMoney.intValue()));
 
