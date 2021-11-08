@@ -40,7 +40,9 @@
         shrl.create_time as createTime,
         shrl.update_time as updateTime,
         shrl.create_by as createBy,
-        shrl.update_by as updateBy
+        shrl.update_by as updateBy,
+        shrl.play_begin_time as playBeginTime,
+        shrl.play_end_time as playEndTime
         from
         sys_horse_race_lamp shrl
         where tid = #{tid}
