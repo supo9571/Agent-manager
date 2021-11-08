@@ -95,7 +95,14 @@ public class HorseRaceLampServiceImpl implements HorseRaceLampService {
         JSONObject horseRaceLamp = new JSONObject();
         for (int i = 0; i < horseRaceLampList.size(); i++) {
             Map map = horseRaceLampList.get(i);
-            map.put("is_circul",true);
+            String s_time = (String) map.get("s_time");
+            String de_time = (String) map.get("de_time");
+            String[] s = s_time.split(":");
+            String[] d = de_time.split(":");
+            int sTime = Integer.valueOf(s[0])*60*60+Integer.valueOf(s[1])*60+Integer.valueOf(s[2]);
+            int deTime = Integer.valueOf(d[0])*60*60+Integer.valueOf(d[1])*60+Integer.valueOf(d[2]);
+            map.put("sTime",sTime);
+            map.put("de_time",deTime);
             horseRaceLamp.put(String.valueOf(map.get("id")), new JSONObject(map));
         }
         result.put("system_notice.json", horseRaceLamp.toJSONString());
