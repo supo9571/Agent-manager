@@ -140,7 +140,8 @@ public class RechargeOrderController extends BaseController {
         if ("5".equals(rechargeOrder.getRechargeType()) && rechargeOrder.getUids() != null) {
             String[] arrayUid = rechargeOrder.getUids().split(",");
             for (String uid : arrayUid) {
-                ajaxResult = reportService.editCoinsGm(cmd,amount,uid,rechargeOrder.getOperateAccount(),reason);
+                ajaxResult = reportService.editCoinsGm(cmd,amount,Integer.parseInt(uid)
+                        ,Integer.parseInt(rechargeOrder.getOperateAccount()),reason);
 
                 if ("200".equals(String.valueOf(ajaxResult.get("code")))) {
                     curr = Long.valueOf(String.valueOf(ajaxResult.get("data")));
@@ -227,6 +228,9 @@ public class RechargeOrderController extends BaseController {
             rechargeOrder.setBeforeOrderMoney(currBig.subtract(rechargeOrder.getRechargeAmount()).subtract(rechargeOrder.getExCoins()));
             rechargeOrder.setPaymentStatus("1");
             Integer i = rechargeOrderService.editRechargeOrder(rechargeOrder);
+
+            // 发送邮件
+            sendOutMail(ManagerConfig.getTid(), amount, give, String.valueOf(rechargeOrder.getUid()));
             return i > 0 ? AjaxResult.success() : AjaxResult.error("充值成功，修改记录失败");
         }
         rechargeOrder.setPaymentStatus("3");

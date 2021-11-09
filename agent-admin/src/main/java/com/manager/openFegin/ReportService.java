@@ -23,7 +23,7 @@ public interface ReportService {
     @PostMapping("/data/coins/edit")
     AjaxResult editCoins(@RequestParam("amount")Long amount, @RequestParam("ex_coins")Long ex_coins, @RequestParam("uid")Integer uid
             ,@RequestParam("reason")Integer reason ,@RequestParam("other_amount")Long other_amount
-            ,@RequestParam("saveflag") int saveflag);
+            ,@RequestParam("saveflag") Integer saveflag);
 
     /**
      * 给用户加减金币
@@ -35,7 +35,7 @@ public interface ReportService {
      */
     @PostMapping("/data/coins/editGm")
     AjaxResult editCoinsGm(@RequestParam("cmd") String cmd,@RequestParam("value") Long value
-            ,@RequestParam("uid") String uid,@RequestParam("saveflag") String saveflag,@RequestParam("reason") Integer reason);
+            ,@RequestParam("uid") Integer uid,@RequestParam("saveflag") Integer saveflag,@RequestParam("reason") Integer reason);
 
     /**
      * 通知有新邮件
