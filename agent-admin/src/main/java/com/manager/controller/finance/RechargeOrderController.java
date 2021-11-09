@@ -140,7 +140,7 @@ public class RechargeOrderController extends BaseController {
         if ("5".equals(rechargeOrder.getRechargeType()) && rechargeOrder.getUids() != null) {
             String[] arrayUid = rechargeOrder.getUids().split(",");
             for (String uid : arrayUid) {
-                ajaxResult = reportService.editCoinsGm(cmd,amount,uid
+                ajaxResult = reportService.editCoinsGm(cmd,amount,Integer.parseInt(uid)
                         ,Integer.parseInt(rechargeOrder.getOperateAccount()),reason);
 
                 if ("200".equals(String.valueOf(ajaxResult.get("code")))) {

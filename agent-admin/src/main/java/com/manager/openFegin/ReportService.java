@@ -35,7 +35,7 @@ public interface ReportService {
      */
     @PostMapping("/data/coins/editGm")
     AjaxResult editCoinsGm(@RequestParam("cmd") String cmd,@RequestParam("value") Long value
-            ,@RequestParam("uid") String uid,@RequestParam("saveflag") Integer saveflag,@RequestParam("reason") Integer reason);
+            ,@RequestParam("uid") Integer uid,@RequestParam("saveflag") Integer saveflag,@RequestParam("reason") Integer reason);
 
     /**
      * 通知有新邮件
