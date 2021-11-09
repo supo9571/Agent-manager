@@ -91,7 +91,7 @@ public class RechargeOrder extends BaseEntity {
 
     @ApiModelProperty("赠送金额")
     private BigDecimal exCoins;
-    @ApiModelProperty("操作账户 1钱包 2保险箱")
+    @ApiModelProperty("操作账户 0钱包 1保险箱")
     private String operateAccount;
     @ApiModelProperty("操作类型 1人工充值 2充值扣值 3彩金加款 4彩金扣除")
     private String operateType;

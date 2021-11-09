@@ -18,4 +18,9 @@ public interface MailRecordService {
     List listMailRecord(MailRecord mailRecord);
 
     void saveMailRecord(MailRecord mailRecord);
+
+    /**
+     * 发送邮件
+     */
+    void sendOutMail(MailRecord mail);
 }

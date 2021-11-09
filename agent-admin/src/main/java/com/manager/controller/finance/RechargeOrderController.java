@@ -6,6 +6,7 @@ import com.manager.common.core.controller.BaseController;
 import com.manager.common.core.domain.AjaxResult;
 import com.manager.common.core.domain.entity.*;
 import com.manager.common.enums.BusinessType;
+import com.manager.common.utils.SecurityUtils;
 import com.manager.common.utils.file.FileUtils;
 import com.manager.common.utils.poi.ExcelUtil;
 import com.manager.openFegin.ReportService;
@@ -44,6 +45,10 @@ public class RechargeOrderController extends BaseController {
     @Autowired
     private ReportService reportService;
 
+    @Autowired
+    private MailRecordService mailRecordService;
+
+
     /**
      * 查询
      */
@@ -64,19 +69,21 @@ public class RechargeOrderController extends BaseController {
     @Log(title = "新增手动充值", businessType = BusinessType.INSERT)
     @PostMapping("/addRechargeOrder")
     public AjaxResult addRechargeOrder(@RequestBody RechargeOrder rechargeOrder) {
+        Integer tid = ManagerConfig.getTid();
         // 判断充值的用户是否存在
         if(rechargeOrder != null){
+            rechargeOrder.setUpdateBy(SecurityUtils.getUsername());
             // 处理系统赠送多uid的情况
             if("5".equals(rechargeOrder.getRechargeType()) && rechargeOrder.getUids() != null){
                 String[] arrayUids = rechargeOrder.getUids().split(",");
                 for (String uid : arrayUids) {
-                    Integer uidCount = rechargeOrderService.uidIsPresent(Integer.parseInt(uid), ManagerConfig.getTid());
+                    Integer uidCount = rechargeOrderService.uidIsPresent(Integer.parseInt(uid), tid);
                     if(uidCount <= 0){
                         return error("用户不存在");
                     }
                 }
             }else if(rechargeOrder.getUid() != 0){
-                Integer uidCount = rechargeOrderService.uidIsPresent(rechargeOrder.getUid(), ManagerConfig.getTid());
+                Integer uidCount = rechargeOrderService.uidIsPresent(rechargeOrder.getUid(), tid);
                 if(uidCount <= 0){
                     return error("用户不存在");
                 }
@@ -119,9 +126,9 @@ public class RechargeOrderController extends BaseController {
                 cmd = "reducecoins";
             }
 
-            Integer rechargeGive = rechargeOrderService.selectRechargeGive(2);//赠送比例
+            /*Integer rechargeGive = rechargeOrderService.selectRechargeGive(2);//赠送比例
             bigGive = rechargeOrder.getRechargeAmount().multiply(new BigDecimal(rechargeGive));
-            give = bigGive.longValue();
+            give = bigGive.longValue();*/
             reason = 100075;
         }
         //请求 加金币
@@ -133,7 +140,7 @@ public class RechargeOrderController extends BaseController {
         if ("5".equals(rechargeOrder.getRechargeType()) && rechargeOrder.getUids() != null) {
             String[] arrayUid = rechargeOrder.getUids().split(",");
             for (String uid : arrayUid) {
-                ajaxResult = reportService.editCoins( amount, give, Integer.parseInt(uid), reason,0l);
+                ajaxResult = reportService.editCoinsGm(cmd,amount,uid,rechargeOrder.getOperateAccount(),reason);
 
                 if ("200".equals(String.valueOf(ajaxResult.get("code")))) {
                     curr = Long.valueOf(String.valueOf(ajaxResult.get("data")));
@@ -147,9 +154,12 @@ public class RechargeOrderController extends BaseController {
                 rechargeOrder.setUid(Integer.parseInt(uid));
 
                 i = rechargeOrderService.addRechargeOrder(rechargeOrder);
+
+                // 发送邮件
+                sendOutMail(tid, amount, give, uid);
             }
         } else {
-            ajaxResult = reportService.editCoins(amount,give,rechargeOrder.getUid(),reason,0l);
+            ajaxResult = reportService.editCoins(amount,give,rechargeOrder.getUid(),reason,curr,0);
 
             if ("200".equals(String.valueOf(ajaxResult.get("code")))) {
                 curr = Long.valueOf(String.valueOf(ajaxResult.get("data")));
@@ -161,8 +171,28 @@ public class RechargeOrderController extends BaseController {
             rechargeOrder.setAfterOrderMoney(currBig);
             rechargeOrder.setBeforeOrderMoney(currBig.subtract(rechargeOrder.getRechargeAmount()).subtract(rechargeOrder.getExCoins()));
             i = rechargeOrderService.addRechargeOrder(rechargeOrder);
+
+            // 发送邮件
+            sendOutMail(tid, amount, give, String.valueOf(rechargeOrder.getUid()));
         }
         return i > 0 ? success() : error("充值成功，添加记录失败");
+    }
+
+    /**
+     * 发送邮件
+     * @param tid 平台id
+     * @param amount 金额
+     * @param give 赠送金额
+     * @param uid 用户
+     */
+    private void sendOutMail(Integer tid, Long amount, Long give, String uid) {
+        MailRecord mailRecord = new MailRecord();
+        mailRecord.setTid(tid);
+        mailRecord.setAddressee(uid);
+        mailRecord.setMailTitle("充值成功！");
+        mailRecord.setMailContent("恭喜您充值：" + amount + "成功。 另外系统赠送"+ give);
+
+        mailRecordService.sendOutMail(mailRecord);
     }
 
     /**
@@ -175,6 +205,7 @@ public class RechargeOrderController extends BaseController {
     @Log(title = "银行卡充值页签-确认充值、取消充值", businessType = BusinessType.UPDATE)
     @PostMapping("/editRechargeOrder")
     public AjaxResult editRechargeOrder(@RequestBody RechargeOrder rechargeOrder) {
+        rechargeOrder.setUpdateBy(SecurityUtils.getUsername());
         if ("1".equals(rechargeOrder.getBankCardRechargeType())) {// 确认充值
             BigDecimal b = new BigDecimal(10000);//乘以 一万
             Long amount = rechargeOrder.getRechargeAmount().multiply(b).longValue();//充值金额
@@ -184,7 +215,7 @@ public class RechargeOrderController extends BaseController {
             //请求 加金币
             BigDecimal currBig = new BigDecimal(0);//余额
             Long curr = 0l;
-            AjaxResult ajaxResult = reportService.editCoins(amount,give,rechargeOrder.getUid(),100073,0l);
+            AjaxResult ajaxResult = reportService.editCoins(amount,give,rechargeOrder.getUid(),100073,0l,0);
             if ("200".equals(String.valueOf(ajaxResult.get("code")))) {
                 curr = Long.valueOf(String.valueOf(ajaxResult.get("data")));
                 currBig = new BigDecimal(curr).divide(b);

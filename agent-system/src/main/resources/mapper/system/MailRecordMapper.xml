@@ -47,4 +47,27 @@
                 (#{tenant},#{signature},#{item},#{mailTitle},#{mailProp},#{mailContent},#{mailState},sysdate(),sysdate())
             </foreach>
     </insert>
+
+    <insert id="sendOutMail">
+        insert into sys_mail_record(
+            tid,
+            addressee,
+            mail_title,
+            mail_prop,
+            create_time,
+            update_time,
+            mail_content,
+            del_flag)
+        values (
+            #{tid},
+            #{addressee},
+            #{mailTitle},
+            #{mailProp},
+            sysdate(),
+            sysdate(),
+            #{mailContent},
+            4,
+            0
+       )
+    </insert>
 </mapper>

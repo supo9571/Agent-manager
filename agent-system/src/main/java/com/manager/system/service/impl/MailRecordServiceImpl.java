@@ -31,4 +31,12 @@ public class MailRecordServiceImpl implements MailRecordService {
         mailRecordMapper.saveMailRecord(mailRecord);
     }
 
+    /**
+     * 发送邮件
+     */
+    @Override
+    public void sendOutMail(MailRecord mail) {
+        mailRecordMapper.sendOutMail(mail);
+    }
+
 }
