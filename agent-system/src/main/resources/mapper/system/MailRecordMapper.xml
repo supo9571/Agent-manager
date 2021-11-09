@@ -67,7 +67,7 @@
             sysdate(),
             sysdate(),
             #{mailContent},
-            4,
+            2,
             0
        )
     </insert>
