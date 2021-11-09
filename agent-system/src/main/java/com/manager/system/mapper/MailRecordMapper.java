@@ -19,4 +19,9 @@ public interface MailRecordMapper {
     List<MailRecord> listMailRecord(MailRecord mailRecord);
 
     void saveMailRecord(MailRecord mailRecord);
+
+    /**
+     * 发送邮件
+     */
+    void sendOutMail(MailRecord mail);
 }

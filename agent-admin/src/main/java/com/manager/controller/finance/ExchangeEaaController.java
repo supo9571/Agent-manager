@@ -4,12 +4,14 @@ import com.manager.common.annotation.Log;
 import com.manager.common.core.controller.BaseController;
 import com.manager.common.core.domain.AjaxResult;
 import com.manager.common.core.domain.entity.ExchangeEaa;
+import com.manager.common.core.domain.entity.MailRecord;
 import com.manager.common.enums.BusinessType;
 import com.manager.common.utils.SecurityUtils;
 import com.manager.common.utils.file.FileUtils;
 import com.manager.common.utils.poi.ExcelUtil;
 import com.manager.openFegin.ReportService;
 import com.manager.system.service.ExchangeEaaService;
+import com.manager.system.service.MailRecordService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,9 @@ public class ExchangeEaaController extends BaseController {
 
     @Autowired
     private ReportService reportService;
+
+    @Autowired
+    private MailRecordService mailRecordService;
 
     /**
      * 查询提现审批数据
@@ -74,7 +79,7 @@ public class ExchangeEaaController extends BaseController {
         util.downloadExcel(list, fileName, response.getOutputStream());
     }
 
-    @PreAuthorize("@ss.hasPermi('system:game:editExchange')")
+    @PreAuthorize("@ss.hasPermi('system:finance:editExchange')")
     @ApiOperation(value = "编辑提现审批")
     @Log(title = "编辑提现审批", businessType = BusinessType.UPDATE)
     @PostMapping("/editExchangeEaaList")
@@ -95,14 +100,7 @@ public class ExchangeEaaController extends BaseController {
                         exchangeEaa.getUid(),Integer.valueOf(withdrawMoney.intValue()));
 
                 // 发邮件告诉提现失败
-                if ("200".equals(String.valueOf(ajaxResult.get("code")))) {
-                    AjaxResult ajaxResult2 = reportService.sendEmail(2,exchangeEaa.getUid().toString());
-                    if(!("200".equals(String.valueOf(ajaxResult2.get("code"))))){
-                        error("请求游戏服失败");
-                    }
-                } else {
-                    return error("请求游戏服失败");
-                }
+                sendOutMail(exchangeEaa.getUid(), exchangeEaa.getUid());
             }
             // 状态改为打款中（财务打款直接改为已打款；第三方代付需要收到回调改为已打款/打款失败）
             if("4".equals(exchangeEaa.getExaaStatus())){
@@ -125,6 +123,21 @@ public class ExchangeEaaController extends BaseController {
 
         int i = exchangeEaaService.editExchangeEaaList(exchangeEaa);
         return i > 0 ? AjaxResult.success() : AjaxResult.error();
+    }
+
+    /**
+     * 发送邮件
+     * @param tid 平台id
+     * @param uid 用户
+     */
+    private void sendOutMail(Integer tid, Integer uid) {
+        MailRecord mailRecord = new MailRecord();
+        mailRecord.setTid(tid);
+        mailRecord.setAddressee(String.valueOf(uid));
+        mailRecord.setMailTitle("已退款！");
+        mailRecord.setMailContent("提现失败");
+
+        mailRecordService.sendOutMail(mailRecord);
     }
 
     /**

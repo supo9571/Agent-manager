@@ -65,7 +65,14 @@ public class RechargeOrderServiceImpl implements RechargeOrderService {
             }
 
             for (RechargeOrder order : list) {
-                rechargeRechargeAmount = rechargeRechargeAmount.add(order.getRechargeAmount());
+                // 银行卡充值 只取成功支付状态下的
+                if("2".equals(order.getRechargeType())){
+                    if("1".equals(order.getPaymentStatus())){
+                        rechargeRechargeAmount = rechargeRechargeAmount.add(order.getRechargeAmount());
+                    }
+                }else{
+                    rechargeRechargeAmount = rechargeRechargeAmount.add(order.getRechargeAmount());
+                }
             }
 
             // 查询系统赠送页面的多放回几个字段
