@@ -111,6 +111,8 @@ manager:
 #  gameDomain: http://10.39.1.88:6661/upload
   #游戏服 地址
   domain: http://18.142.67.104:6661
+  #游戏服 地址
+  domainIp: http://18.142.67.104:8888
   #操作金币
   changeCoins: /gm
 
