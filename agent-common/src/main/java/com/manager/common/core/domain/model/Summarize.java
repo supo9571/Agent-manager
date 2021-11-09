@@ -151,6 +151,9 @@ public class Summarize extends BaseEntity {
     //渠道
     private String channel;
 
+    //平台 渠道
+    private String tid;
+
     //渠道
     private Long uid;
 }
