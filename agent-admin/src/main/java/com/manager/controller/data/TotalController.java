@@ -4,6 +4,7 @@ import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.domain.AjaxResult;
 import com.manager.common.core.domain.model.SubGameDataExcel;
 import com.manager.common.core.domain.model.Summarize;
+import com.manager.common.utils.SecurityUtils;
 import com.manager.common.utils.file.FileUtils;
 import com.manager.common.utils.poi.ExcelUtil;
 import com.manager.openFegin.AgentService;
@@ -39,6 +40,7 @@ public class TotalController {
     @ApiOperation(value = "查询总览下方列表")
     @GetMapping("/list")
     public AjaxResult list(Summarize summarize) {
+        summarize.setUid(SecurityUtils.getUserId());
         return agentService.getTotals(summarize);
     }
 
