@@ -126,6 +126,7 @@ public class RechargeOrderController extends BaseController {
                 reason = 100072;
             }
         } else if ("5".equals(rechargeOrder.getRechargeType())) {//5系统赠送/人工充值
+            // 2充值扣值 4彩金扣除
             if ("2".equals(rechargeOrder.getOperateType()) ||
                     "4".equals(rechargeOrder.getOperateType())) {
                 cmd = "reducecoins";
@@ -158,6 +159,10 @@ public class RechargeOrderController extends BaseController {
                 rechargeOrder.setAfterOrderMoney(currBig);
                 rechargeOrder.setBeforeOrderMoney(currBig.subtract(rechargeOrder.getRechargeAmount()).subtract(rechargeOrder.getExCoins()));
                 rechargeOrder.setUid(Integer.parseInt(uid));
+                // 当时扣除是把金额改成负数
+                if(cmd.equals("reducecoins")){
+                    rechargeOrder.setRechargeAmount(rechargeOrder.getRechargeAmount().negate());
+                }
 
                 i = rechargeOrderService.addRechargeOrder(rechargeOrder);
 
