@@ -64,8 +64,8 @@ public class TotalController {
     @PreAuthorize("@ss.hasPermi('data:total:list')")
     @ApiOperation(value = "查询总览左侧数据")
     @PostMapping("/left")
-    public AjaxResult left() {
-        return agentService.getLeft(ManagerConfig.getTid());
+    public AjaxResult left(String tid) {
+        return agentService.getLeft(tid);
     }
 
     /**
@@ -74,7 +74,7 @@ public class TotalController {
     @PreAuthorize("@ss.hasPermi('data:total:list')")
     @ApiOperation(value = "查询总览右侧数据")
     @PostMapping("/right")
-    public AjaxResult right(String beginTime,String endTime) {
-        return agentService.getRight(ManagerConfig.getTid(),beginTime,endTime);
+    public AjaxResult right(String beginTime,String endTime,String tid) {
+        return agentService.getRight(tid,beginTime,endTime);
     }
 }
