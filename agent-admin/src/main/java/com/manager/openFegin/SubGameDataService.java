@@ -33,7 +33,7 @@ public interface SubGameDataService {
     @PostMapping(value = "/data/control/player/del", consumes = "application/json")
     AjaxResult del(@RequestBody ControlPlayer controlPlayer);
 
-    @PostMapping(value = "/data/control/player/del", consumes = "application/json")
+    @PostMapping(value = "/data/control/player/infoList", consumes = "application/json")
     AjaxResult infoList(@RequestBody ControlPlayerInfo controlPlayerInfo);
 
     @PostMapping(value = "/data/game/list", consumes = "application/json")
