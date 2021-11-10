@@ -135,7 +135,7 @@ public class ExchangeEaaController extends BaseController {
         mailRecord.setTid(exchangeEaa.getTid());
         mailRecord.setAddressee(String.valueOf(exchangeEaa.getUid()));
         if("7".equals(exchangeEaa.getExaaStatus())){
-            mailRecord.setMailTitle("【申请提现拒绝】");
+            mailRecord.setMailTitle("申请提现拒绝");
             mailRecord.setMailContent("亲爱的玩家： 您好！ 您申请提现的"
                     + exchangeEaa2.getTransferAmount() +"元已被拒绝，金币已原路返回至您的账号中，如有疑问请联系客服。");
         }else{

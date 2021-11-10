@@ -35,6 +35,8 @@ public interface RechargeOrderService {
 
     Integer uidIsPresent(int uid,int tid);
 
+    String getChannel(int uid);
+
     Integer selectRechargeGive(int i);
 
     Integer selectJinMonthGive();

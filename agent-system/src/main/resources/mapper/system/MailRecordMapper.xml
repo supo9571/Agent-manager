@@ -57,6 +57,7 @@
             create_time,
             update_time,
             mail_content,
+            signature,
             mail_state,
             del_flag)
         values (
@@ -67,6 +68,7 @@
             sysdate(),
             sysdate(),
             #{mailContent},
+            '运营团队',
             2,
             0
        )
