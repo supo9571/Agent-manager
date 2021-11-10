@@ -99,8 +99,11 @@ public class ExchangeEaaController extends BaseController {
                 AjaxResult ajaxResult = reportService.returnBack(
                         exchangeEaa.getUid(),Integer.valueOf(withdrawMoney.intValue()));
 
+                if(!("200".equals(String.valueOf(ajaxResult.get("code"))))){
+                    error("请求游戏服失败");
+                }
                 // 发邮件告诉提现失败
-                sendOutMail(exchangeEaa.getUid(), exchangeEaa.getUid());
+                sendOutMail(exchangeEaa);
             }
             // 状态改为打款中（财务打款直接改为已打款；第三方代付需要收到回调改为已打款/打款失败）
             if("4".equals(exchangeEaa.getExaaStatus())){
@@ -109,10 +112,7 @@ public class ExchangeEaaController extends BaseController {
                     exchangeEaa.setExaaStatus("3");
 
                     // 打款成功发邮件告知玩家
-                    AjaxResult ajaxResult = reportService.sendEmail(2,exchangeEaa.getUid().toString());
-                    if(!("200".equals(String.valueOf(ajaxResult.get("code"))))){
-                        error("请求游戏服失败");
-                    }
+                    sendOutMail(exchangeEaa);
                 }else{
                     exchangeEaa.setExaaStatus("3");
                 }
@@ -127,15 +127,20 @@ public class ExchangeEaaController extends BaseController {
 
     /**
      * 发送邮件
-     * @param tid 平台id
-     * @param uid 用户
      */
-    private void sendOutMail(Integer tid, Integer uid) {
+    private void sendOutMail(ExchangeEaa exchangeEaa) {
         MailRecord mailRecord = new MailRecord();
-        mailRecord.setTid(tid);
-        mailRecord.setAddressee(String.valueOf(uid));
-        mailRecord.setMailTitle("已退款！");
-        mailRecord.setMailContent("提现失败");
+        mailRecord.setTid(exchangeEaa.getTid());
+        mailRecord.setAddressee(String.valueOf(exchangeEaa.getUid()));
+        if("7".equals(exchangeEaa.getExaaStatus())){
+            mailRecord.setMailTitle("已退款！");
+            mailRecord.setMailContent("提现失败");
+        }else{
+            mailRecord.setMailTitle("提现成功");
+            mailRecord.setMailContent("恭喜您提现" + exchangeEaa.getWithdrawMoney()
+                    + "成功。 手续费：" + exchangeEaa.getPoundage() +" 实际到账："+ exchangeEaa.getTransferAmount());
+        }
+
 
         mailRecordService.sendOutMail(mailRecord);
     }
