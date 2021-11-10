@@ -101,7 +101,7 @@ public class HorseRaceLampServiceImpl implements HorseRaceLampService {
             String[] d = de_time.split(":");
             int sTime = Integer.valueOf(s[0])*60*60+Integer.valueOf(s[1])*60+Integer.valueOf(s[2]);
             int deTime = Integer.valueOf(d[0])*60*60+Integer.valueOf(d[1])*60+Integer.valueOf(d[2]);
-            map.put("sTime",sTime);
+            map.put("ds_time",sTime);
             map.put("de_time",deTime);
             horseRaceLamp.put(String.valueOf(map.get("id")), new JSONObject(map));
         }

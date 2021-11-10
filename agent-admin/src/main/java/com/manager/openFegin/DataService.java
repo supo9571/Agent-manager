@@ -158,4 +158,6 @@ public interface DataService {
     @PostMapping(value = "/data/report/player/day/List", consumes = "application/json")
     AjaxResult getPlayerDayReportList(@RequestBody PlayerReportParam param);
 
+    @PostMapping(value = "/data/game/send")
+    AjaxResult send();
 }
