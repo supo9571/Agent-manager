@@ -129,19 +129,20 @@ public class ExchangeEaaController extends BaseController {
      * 发送邮件
      */
     private void sendOutMail(ExchangeEaa exchangeEaa) {
+        ExchangeEaa exchangeEaa2 = exchangeEaaService.getTransferAmount(exchangeEaa.getId());
+
         MailRecord mailRecord = new MailRecord();
         mailRecord.setTid(exchangeEaa.getTid());
         mailRecord.setAddressee(String.valueOf(exchangeEaa.getUid()));
         if("7".equals(exchangeEaa.getExaaStatus())){
-            mailRecord.setMailTitle("已退款！");
-            mailRecord.setMailContent("提现失败");
+            mailRecord.setMailTitle("【申请提现拒绝】");
+            mailRecord.setMailContent("亲爱的玩家： 您好！ 您申请提现的"
+                    + exchangeEaa2.getTransferAmount() +"元已被拒绝，金币已原路返回至您的账号中，如有疑问请联系客服。");
         }else{
-            mailRecord.setMailTitle("提现成功");
-            mailRecord.setMailContent("恭喜您提现" + exchangeEaa.getWithdrawMoney()
-                    + "成功。 手续费：" + exchangeEaa.getPoundage() +" 实际到账："+ exchangeEaa.getTransferAmount());
+            mailRecord.setMailTitle("【申请提现成功】");
+            mailRecord.setMailContent("亲爱的玩家： 您好！ 您申请提现的"
+                    + exchangeEaa2.getTransferAmount() +"元已打款成功，请留意账户动态；部分商户可能会延迟到账，还请耐心等待；如有疑问请联系客服。");
         }
-
-
         mailRecordService.sendOutMail(mailRecord);
     }
 

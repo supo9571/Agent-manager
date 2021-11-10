@@ -33,6 +33,11 @@ public interface ExchangeEaaService {
     int editExchangeEaaList(ExchangeEaa exchangeEaa);
 
     /**
+     * 通过id查询对应的打款金额
+     */
+    ExchangeEaa getTransferAmount(String id);
+
+    /**
      * 获取打款方式下拉框
      */
     List getTransferMode();

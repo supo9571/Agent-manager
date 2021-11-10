@@ -200,9 +200,8 @@ public class RechargeOrderController extends BaseController {
         MailRecord mailRecord = new MailRecord();
         mailRecord.setTid(tid);
         mailRecord.setAddressee(uid);
-        mailRecord.setMailTitle("充值成功！");
-        mailRecord.setMailContent("恭喜您充值：" + amount + "成功。 另外系统赠送"+ give);
-
+        mailRecord.setMailTitle("【充值】");
+        mailRecord.setMailContent("亲爱的玩家：您好！ 您充值的" + amount + "元已到账，（另：活动期间已额外赠送您"+ give +"元），请注意查收。");
         mailRecordService.sendOutMail(mailRecord);
     }
 
