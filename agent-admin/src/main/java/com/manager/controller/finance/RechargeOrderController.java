@@ -161,11 +161,8 @@ public class RechargeOrderController extends BaseController {
                 // 当时扣除是把金额改成负数
                 if(cmd.equals("reducecoins")){
                     rechargeOrder.setRechargeAmount(rechargeOrder.getRechargeAmount().negate());
-
-                    rechargeOrder.setBeforeOrderMoney(currBig.add(rechargeOrder.getRechargeAmount()));
-                }else{
-                    rechargeOrder.setBeforeOrderMoney(currBig.subtract(rechargeOrder.getRechargeAmount()));
                 }
+                rechargeOrder.setBeforeOrderMoney(currBig.subtract(rechargeOrder.getRechargeAmount()));
 
                 i = rechargeOrderService.addRechargeOrder(rechargeOrder);
 
