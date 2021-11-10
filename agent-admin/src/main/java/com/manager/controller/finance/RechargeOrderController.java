@@ -93,6 +93,9 @@ public class RechargeOrderController extends BaseController {
                     return error("用户不存在");
                 }
             }
+
+            // 根据用户id 获取 渠道
+            rechargeOrder.setChannel(rechargeOrderService.getChannel(rechargeOrder.getUid()));
         }
 
         //支付类型 1VIP充值 2银行卡充值 3月卡充值 4线上支付 5系统赠送/人工充值 6彩金充值
@@ -200,8 +203,14 @@ public class RechargeOrderController extends BaseController {
         MailRecord mailRecord = new MailRecord();
         mailRecord.setTid(tid);
         mailRecord.setAddressee(uid);
-        mailRecord.setMailTitle("【充值】");
-        mailRecord.setMailContent("亲爱的玩家：您好！ 您充值的" + amount + "元已到账，（另：活动期间已额外赠送您"+ give +"元），请注意查收。");
+        mailRecord.setMailTitle("充值");
+
+        double amounts = (amount == 0 ? 0 : give.doubleValue() / 10000);
+        double gives = (give == 0 ? 0 : give / 10000);
+
+        mailRecord.setMailContent("亲爱的玩家：您好！ 您充值的"
+                + amounts  + "元已到账，（另：活动期间已额外赠送您"
+                + gives +"元），请注意查收。");
         mailRecordService.sendOutMail(mailRecord);
     }
 

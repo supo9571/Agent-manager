@@ -150,6 +150,11 @@ public class RechargeOrderServiceImpl implements RechargeOrderService {
     }
 
     @Override
+    public String getChannel(int uid) {
+        return rechargeOrderMapper.getChannel(uid);
+    }
+
+    @Override
     public Integer selectRechargeGive(int i) {
         if (i == 1 || i == 2) {
             return rechargeOrderMapper.selectRechargeGive(i);
