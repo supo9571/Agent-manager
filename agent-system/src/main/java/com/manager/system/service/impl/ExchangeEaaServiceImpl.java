@@ -53,6 +53,8 @@ public class ExchangeEaaServiceImpl implements ExchangeEaaService {
         BigDecimal exchangeMoney6 = new BigDecimal(0);
         BigDecimal exchangeMoney7 = new BigDecimal(0);
 
+        List<ExchangeEaa> sumList = exchangeEaaMapper.getExchangeEaaList(exchangeEaa);
+
         // 设置分页数据
         PageHelper.startPage(exchangeEaa.getPage(), exchangeEaa.getSize(),
                 exchangeEaa.getOrderByColumn() + " " + exchangeEaa.getIsAsc());
@@ -68,9 +70,9 @@ public class ExchangeEaaServiceImpl implements ExchangeEaaService {
         list = pageInfo.getList();
 
         // 左下角的哪几个字段
-        if (CollectionUtils.isNotEmpty(list)) {
+        if (CollectionUtils.isNotEmpty(sumList)) {
 
-            for (ExchangeEaa eaa : list) {
+            for (ExchangeEaa eaa : sumList) {
                 if ("1".equals(eaa.getExaaStatus())) {
                     exchangeNum1++;
                     exchangeMoney1 = exchangeMoney1.add(eaa.getWithdrawMoney());
@@ -136,6 +138,11 @@ public class ExchangeEaaServiceImpl implements ExchangeEaaService {
     @Override
     public int editExchangeEaaList(ExchangeEaa exchangeEaa) {
         return exchangeEaaMapper.editExchangeEaaList(exchangeEaa);
+    }
+
+    @Override
+    public ExchangeEaa getTransferAmount(String id) {
+        return exchangeEaaMapper.getTransferAmount(id);
     }
 
     @Override
