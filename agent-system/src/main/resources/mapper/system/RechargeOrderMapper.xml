@@ -43,6 +43,7 @@
         cro.finish_time as finishTime,
         cro.create_time as createTime,
         cro.update_time as updateTime,
+        cro.update_by as updateBy,
         cro.commodity_name as commodityName,
         cro.transfer_way as transferWay,
         cro.remark as remark,

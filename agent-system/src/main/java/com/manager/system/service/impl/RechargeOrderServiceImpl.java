@@ -40,6 +40,9 @@ public class RechargeOrderServiceImpl implements RechargeOrderService {
         BigDecimal rechargeRechargeAmount = new BigDecimal(0);
         // 放回参数
         Map result = new HashMap();
+
+        List<RechargeOrder> sumList = rechargeOrderMapper.getRechargeOrderList(rechargeOrder);
+
         // 设置分页数据
         PageHelper.startPage(rechargeOrder.getPage(), rechargeOrder.getSize(),
                 rechargeOrder.getOrderByColumn() + " " + rechargeOrder.getIsAsc());
@@ -55,16 +58,16 @@ public class RechargeOrderServiceImpl implements RechargeOrderService {
         list = pageInfo.getList();
 
         // 左下角的哪几个字段
-        if (CollectionUtils.isNotEmpty(list)) {
+        if (CollectionUtils.isNotEmpty(sumList)) {
 
-            rechargeNum = list.size();
+            rechargeNum = sumList.size();
 
-            List<RechargeOrder> temp1 = list.stream().filter(f -> "1".equals(f.getPaymentStatus())).collect(Collectors.toList());
+            List<RechargeOrder> temp1 = sumList.stream().filter(f -> "1".equals(f.getPaymentStatus())).collect(Collectors.toList());
             if (CollectionUtils.isNotEmpty(temp1)) {
                 rechargeRechargeNum = temp1.size();
             }
 
-            for (RechargeOrder order : list) {
+            for (RechargeOrder order : sumList) {
                 // 银行卡充值 只取成功支付状态下的
                 if("2".equals(order.getRechargeType())){
                     if("1".equals(order.getPaymentStatus())){
@@ -95,7 +98,7 @@ public class RechargeOrderServiceImpl implements RechargeOrderService {
                 // 彩金扣除金额
                 BigDecimal jackpotDeductionAmount = new BigDecimal(0);
 
-                for (RechargeOrder order : list) {
+                for (RechargeOrder order : sumList) {
                     if ("1".equals(order.getOperateType())) {
                         artificialRechargeNum++;
                         artificialRechargeAmount = artificialRechargeAmount.add(order.getRechargeAmount());

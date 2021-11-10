@@ -17,8 +17,10 @@ public class ManagerConfig {
      * 项目名称
      */
     private String name;
-
+    // 游戏服 地址
     private String domain;
+    // 游戏服 地址
+    private String domainIp;
 
     //操作金币
     private String changeCoins;
