@@ -157,11 +157,14 @@ public class RechargeOrderController extends BaseController {
                 }
                 rechargeOrder.setExCoins(bigGive.divide(b));
                 rechargeOrder.setAfterOrderMoney(currBig);
-                rechargeOrder.setBeforeOrderMoney(currBig.subtract(rechargeOrder.getRechargeAmount()).subtract(rechargeOrder.getExCoins()));
                 rechargeOrder.setUid(Integer.parseInt(uid));
                 // 当时扣除是把金额改成负数
                 if(cmd.equals("reducecoins")){
                     rechargeOrder.setRechargeAmount(rechargeOrder.getRechargeAmount().negate());
+
+                    rechargeOrder.setBeforeOrderMoney(currBig.add(rechargeOrder.getRechargeAmount()));
+                }else{
+                    rechargeOrder.setBeforeOrderMoney(currBig.subtract(rechargeOrder.getRechargeAmount()));
                 }
 
                 i = rechargeOrderService.addRechargeOrder(rechargeOrder);
