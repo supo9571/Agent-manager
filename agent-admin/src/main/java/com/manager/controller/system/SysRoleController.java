@@ -175,7 +175,7 @@ public class SysRoleController extends BaseController {
     /**
      * 获取角色选择框列表
      */
-    @PreAuthorize("@ss.hasPermi('system:role:query')")
+    @PreAuthorize("@ss.hasPermi('system:role:list')")
     @ApiOperation(value = "获取角色选择框列表")
     @GetMapping("/optionselect")
     public AjaxResult optionselect() {
