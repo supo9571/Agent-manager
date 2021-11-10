@@ -60,6 +60,7 @@ public class ActivityServiceImpl implements ActivityService {
         JSONObject result = new JSONObject();
         JSONObject jsonObject = new JSONObject();
         list.forEach(map -> {
+            map.put("open_state",true);
             if (jsonObject.getString(String.valueOf(map.get("ac_type"))) == null && !"113114".equals(String.valueOf(map.get("ac_type")))) {
                 JSONObject acInfo = JSONObject.parseObject(JSON.toJSONStringWithDateFormat(map, "yyyy-MM-dd HH:mm:ss", SerializerFeature.WriteClassName));
                 acInfo.put("ac_name", getNameByType(acInfo.getInteger("ac_type")));
