@@ -245,7 +245,7 @@ public class ActivityServiceImpl implements ActivityService {
         level.put("ac_end_time", String.valueOf(map.get("ac_end_time")));
         level.put("ac_type", 114);
         level.put("sort_index", map.get("sort_index"));
-        level.put("open_state", map.get("open_state"));
+        level.put("open_state", true);
 
         JSONObject levelContent = new JSONObject();
         levelContent.put("level", acInfo.get("level"));
@@ -258,23 +258,23 @@ public class ActivityServiceImpl implements ActivityService {
         random.put("ac_end_time", String.valueOf(map.get("ac_end_time")));
         random.put("ac_type", 113);
         random.put("sort_index", map.get("sort_index"));
-        random.put("open_state", map.get("open_state"));
+        random.put("open_state", true);
 
         JSONObject randomContent = new JSONObject();
-        JSONObject randomArea = new JSONObject();
+        JSONArray randomArea = new JSONArray();
         JSONArray jsonArray = acInfo.getJSONArray("random_area");
         for (int i = 0; i < jsonArray.size(); i++) {
             JSONObject randomInfo = new JSONObject();
             if (i == 0) {
                 randomInfo.put("random_begin", 1);
-                randomInfo.put("random_end", jsonArray.getJSONObject(i).getInteger("random"));
+                randomInfo.put("random_end", jsonArray.getJSONObject(i).getInteger("random")*100);
             } else {
-                Integer beginRandom = randomArea.getJSONObject(i + "").getInteger("random_end");
+                Integer beginRandom = randomArea.getJSONObject(i).getInteger("random_end");
                 randomInfo.put("random_begin", beginRandom + 1);
-                randomInfo.put("random_end", jsonArray.getJSONObject(i).getInteger("random") + beginRandom);
+                randomInfo.put("random_end", jsonArray.getJSONObject(i).getInteger("random")*100 + beginRandom);
             }
             randomInfo.put("coin", jsonArray.getJSONObject(i).get("coin"));
-            randomArea.put(i + 1 + "", randomInfo);
+            randomArea.add(randomInfo);
         }
         randomContent.put("random_area", randomArea);
         random.put("ac_content", randomContent);
