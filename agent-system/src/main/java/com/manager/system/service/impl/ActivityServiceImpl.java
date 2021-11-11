@@ -61,18 +61,37 @@ public class ActivityServiceImpl implements ActivityService {
         JSONObject jsonObject = new JSONObject();
         list.forEach(map -> {
             map.put("open_state",true);
-            if (jsonObject.getString(String.valueOf(map.get("ac_type"))) == null && !"113114".equals(String.valueOf(map.get("ac_type")))) {
+            if (jsonObject.getString(String.valueOf(map.get("ac_type"))) == null && !"113114".equals(String.valueOf(map.get("ac_type"))) && !"123".equals(String.valueOf(map.get("ac_type")))) {
                 JSONObject acInfo = JSONObject.parseObject(JSON.toJSONStringWithDateFormat(map, "yyyy-MM-dd HH:mm:ss", SerializerFeature.WriteClassName));
                 acInfo.put("ac_name", getNameByType(acInfo.getInteger("ac_type")));
                 acInfo.put("ac_content", JSON.parse(String.valueOf(map.get("ac_content"))));
                 jsonObject.put(String.valueOf(acInfo.get("ac_type")), acInfo);
             } else if ("113114".equals(String.valueOf(map.get("ac_type")))) {
                 setRechargeGive(map, jsonObject);
+            }else if("123".equals(String.valueOf(map.get("ac_type")))){
+                setFirstRecharge(map, jsonObject);
             }
         });
         jsonObject.put("116", getMonthConfig());
         result.put("activity_new.json", jsonObject.toJSONString());
         return result.toJSONString();
+    }
+
+    private void setFirstRecharge(Map map, JSONObject jsonObject) {
+        JSONObject give = new JSONObject();// 首充返利
+        give.put("ac_name", getNameByType(123));
+        give.put("ac_begin_time", String.valueOf(map.get("ac_begin_time")));
+        give.put("ac_end_time", String.valueOf(map.get("ac_end_time")));
+        give.put("ac_type", 123);
+        give.put("sort_index", map.get("sort_index"));
+        give.put("open_state", true);
+
+        JSONObject content = JSONObject.parseObject((String) map.get("ac_content"));
+        give.put("limit_charge_time",content.get("limit_charge_time"));
+        give.put("max_award_coin",content.get("max_award_coin"));
+        give.put("min_charge_coin",content.get("min_charge_coin"));
+        give.put("ac_content", content.get("box"));
+        jsonObject.put("123", give);
     }
 
     @Override
