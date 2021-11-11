@@ -37,7 +37,7 @@ public class PlayerController extends BaseController {
     @PreAuthorize("@ss.hasPermi('data:player:list')")
     @ApiOperation(value = "查询玩家列表")
     @PostMapping("/list")
-    public AjaxResult list(PlayUser playUser) {
+    public AjaxResult list(@RequestBody PlayUser playUser) {
         return dataService.getPlayers(playUser);
     }
 
