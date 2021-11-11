@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -203,14 +204,21 @@ public class RechargeOrderController extends BaseController {
         MailRecord mailRecord = new MailRecord();
         mailRecord.setTid(tid);
         mailRecord.setAddressee(uid);
-        mailRecord.setMailTitle("充值");
+        mailRecord.setMailTitle("充值成功");
 
-        double amounts = (amount == 0 ? 0 : give.doubleValue() / 10000);
+        DecimalFormat df  = new DecimalFormat("0.00");
+
+        double amounts = (amount == 0 ? 0 : amount.doubleValue() / 10000);
         double gives = (give == 0 ? 0 : give / 10000);
 
-        mailRecord.setMailContent("亲爱的玩家：您好！ 您充值的"
-                + amounts  + "元已到账，（另：活动期间已额外赠送您"
-                + gives +"元），请注意查收。");
+        String mailContent = "";
+        if(amounts == 0){
+            mailContent = "亲爱的玩家：您好！ 您充值的" + df.format(amounts)  + "元已到账。";
+        }else{
+            mailContent = "亲爱的玩家：您好！ 您充值的" + df.format(amounts)  + "元已到账，（另：活动期间已额外赠送您"
+                    + df.format(gives) + "元），请注意查收。";
+        }
+        mailRecord.setMailContent(mailContent);
         mailRecordService.sendOutMail(mailRecord);
     }
 

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.List;
 
 /**
@@ -115,6 +116,9 @@ public class ExchangeEaaController extends BaseController {
                     sendOutMail(exchangeEaa);
                 }else{
                     exchangeEaa.setExaaStatus("3");
+
+                    // 打款成功发邮件告知玩家
+                    sendOutMail(exchangeEaa);
                 }
 
                 // 只有打款中状态下===第三方回调返回打款失败，才改为打款失败 (等支持模块实现在做这个功能)
@@ -130,18 +134,19 @@ public class ExchangeEaaController extends BaseController {
      */
     private void sendOutMail(ExchangeEaa exchangeEaa) {
         ExchangeEaa exchangeEaa2 = exchangeEaaService.getTransferAmount(exchangeEaa.getId());
+        DecimalFormat df  = new DecimalFormat("0.00");
 
         MailRecord mailRecord = new MailRecord();
         mailRecord.setTid(exchangeEaa.getTid());
         mailRecord.setAddressee(String.valueOf(exchangeEaa.getUid()));
         if("7".equals(exchangeEaa.getExaaStatus())){
-            mailRecord.setMailTitle("申请提现拒绝");
+            mailRecord.setMailTitle("提现失败");
             mailRecord.setMailContent("亲爱的玩家： 您好！ 您申请提现的"
-                    + exchangeEaa2.getTransferAmount() +"元已被拒绝，金币已原路返回至您的账号中，如有疑问请联系客服。");
+                    + df.format(exchangeEaa2.getTransferAmount()) +"元已被拒绝，金币已原路返回至您的账号中，如有疑问请联系客服。");
         }else{
-            mailRecord.setMailTitle("【申请提现成功】");
+            mailRecord.setMailTitle("提现成功");
             mailRecord.setMailContent("亲爱的玩家： 您好！ 您申请提现的"
-                    + exchangeEaa2.getTransferAmount() +"元已打款成功，请留意账户动态；部分商户可能会延迟到账，还请耐心等待；如有疑问请联系客服。");
+                    + df.format(exchangeEaa2.getTransferAmount()) +"元已打款成功，请留意账户动态；部分商户可能会延迟到账，还请耐心等待；如有疑问请联系客服。");
         }
         mailRecordService.sendOutMail(mailRecord);
     }
