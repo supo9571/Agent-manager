@@ -288,7 +288,7 @@ public class ActivityServiceImpl implements ActivityService {
                 randomInfo.put("random_begin", 1);
                 randomInfo.put("random_end", jsonArray.getJSONObject(i).getInteger("random")*100);
             } else {
-                Integer beginRandom = randomArea.getJSONObject(i).getInteger("random_end");
+                Integer beginRandom = randomArea.getJSONObject(i-1).getInteger("random_end");
                 randomInfo.put("random_begin", beginRandom + 1);
                 randomInfo.put("random_end", jsonArray.getJSONObject(i).getInteger("random")*100 + beginRandom);
             }
