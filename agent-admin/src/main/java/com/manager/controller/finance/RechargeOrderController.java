@@ -109,12 +109,12 @@ public class RechargeOrderController extends BaseController {
         if ("1".equals(rechargeOrder.getRechargeType())) {// VIP充值
             //加币类型
             Integer rechargeGive = rechargeOrderService.selectRechargeGive(1);
-            bigGive = rechargeOrder.getRechargeAmount().multiply(new BigDecimal(rechargeGive)).multiply(new BigDecimal(100));
+            bigGive = rechargeOrder.getRechargeAmount().multiply(b).multiply(new BigDecimal(rechargeGive)).divide(new BigDecimal(100));
             give = bigGive.longValue();
             reason = 100070;
         } else if ("2".equals(rechargeOrder.getRechargeType())) {// 银行卡充值
             Integer rechargeGive = rechargeOrderService.selectRechargeGive(3);
-            bigGive = rechargeOrder.getRechargeAmount().multiply(new BigDecimal(rechargeGive));
+            bigGive = rechargeOrder.getRechargeAmount().multiply(b).multiply(new BigDecimal(rechargeGive)).divide(new BigDecimal(100));
             give = bigGive.longValue();
             reason = 100073;
         } else if ("3".equals(rechargeOrder.getRechargeType())) {// 月卡充值
