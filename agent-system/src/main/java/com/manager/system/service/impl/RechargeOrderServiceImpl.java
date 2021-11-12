@@ -156,10 +156,7 @@ public class RechargeOrderServiceImpl implements RechargeOrderService {
 
     @Override
     public Integer selectRechargeGive(int i) {
-        if (i == 1 || i == 2) {
-            return rechargeOrderMapper.selectRechargeGive(i);
-        }
-        return 0;
+        return rechargeOrderMapper.selectRechargeGive(i);
     }
 
     @Override
