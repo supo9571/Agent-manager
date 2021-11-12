@@ -96,7 +96,7 @@ public interface DataService {
     AjaxResult getActivityList(@RequestBody Coins coins);
 
     @PostMapping(value = "/data/player/info")
-    AjaxResult getInfo(Long uid);
+    AjaxResult getInfo(@RequestParam("uid")Long uid);
 
     @PostMapping(value = "/data/player/editExchange", consumes = "application/json")
     AjaxResult updateBank(@RequestBody UserExchange userExchange);
