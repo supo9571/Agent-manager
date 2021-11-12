@@ -113,7 +113,7 @@ public class RechargeOrderController extends BaseController {
             give = bigGive.longValue();
             reason = 100070;
         } else if ("2".equals(rechargeOrder.getRechargeType())) {// 银行卡充值
-            Integer rechargeGive = rechargeOrderService.selectRechargeGive(2);
+            Integer rechargeGive = rechargeOrderService.selectRechargeGive(3);
             bigGive = rechargeOrder.getRechargeAmount().multiply(new BigDecimal(rechargeGive));
             give = bigGive.longValue();
             reason = 100073;
@@ -167,11 +167,13 @@ public class RechargeOrderController extends BaseController {
                     rechargeOrder.setRechargeAmount(rechargeOrder.getRechargeAmount().negate());
                 }
                 rechargeOrder.setBeforeOrderMoney(currBig.subtract(rechargeOrder.getRechargeAmount()));
-
                 i = rechargeOrderService.addRechargeOrder(rechargeOrder);
 
-                // 发送邮件
-                sendOutMail(tid, amount, give, uid);
+                // 1人工充值
+                if ("1".equals(rechargeOrder.getOperateType())){
+                    // 发送邮件
+                    sendOutMail(tid, amount, give, uid);
+                }
             }
         } else {
             ajaxResult = reportService.editCoins(amount,give,rechargeOrder.getUid(),reason,curr,0);

@@ -163,6 +163,7 @@
             <if test="remark!=null and remark!=''">
                 remark = #{remark},
             </if>
+            update_by = #{updateBy},
             update_time = sysdate(),
             finish_time = sysdate()
         </set>
