@@ -39,4 +39,6 @@ public interface ExchangeMapper {
                              @Param("value") String value,
                              @Param("tid") Integer tid);
 
+    @Select("SELECT DISTINCT tid platform,add_mosaic_num recharge_times,num withdraw_times FROM config_exchange")
+    List<Map> getExchangeConfig();
 }
