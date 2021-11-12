@@ -51,15 +51,14 @@ public class PlayerController extends BaseController {
         return dataService.getPlayerCurr(uid,beginTime,endTime);
     }
 
-
     /**
      * 修改玩家信息
      */
     @PreAuthorize("@ss.hasPermi('data:player:edit')")
-    @ApiOperation(value = "修改玩家信息")
-    @Log(title = "修改玩家信息", businessType = BusinessType.UPDATE)
-    @GetMapping("/edit")
-    public AjaxResult edit(PlayUser playUser) {
+    @ApiOperation(value = "修改基础信息")
+    @Log(title = "修改玩家基础信息", businessType = BusinessType.UPDATE)
+    @PostMapping("/edit")
+    public AjaxResult edit(@RequestBody PlayUser playUser) {
         return dataService.updatePlayer(playUser);
     }
 
