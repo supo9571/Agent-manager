@@ -27,6 +27,9 @@ public interface RechargeOrderMapper {
 
     Integer editRechargeOrder(RechargeOrder rechargeOrder);
 
+    void statisticsTotalValue(@Param("tid") Integer tid,@Param("amount") double amount,
+                              @Param("give") double give, @Param("uid") String uid);
+
     @Select("SELECT COUNT(1) from data_register dr where " +
             "dr.uid = #{uid} and dr.channel IN (SELECT t_id FROM sys_tenant WHERE tenant = #{tid} AND t_type = '2')")
     Integer uidIsPresent(@Param("uid") int uid,@Param("tid") int tid);

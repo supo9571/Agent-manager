@@ -170,6 +170,17 @@
         where id = #{id} and tid=#{tid}
     </update>
 
+    <update id="statisticsTotalValue">
+        update data_register dr
+        <set>
+            dr.today_add = today_add + #{amount},
+            dr.today_add = today_add + #{give}
+        </set>
+        where
+            dr.uid = #{uid}
+            and dr.uid = #{tid}
+    </update>
+
     <select id="getRechargeAmount" resultType="java.util.Map">
         select
         <choose>

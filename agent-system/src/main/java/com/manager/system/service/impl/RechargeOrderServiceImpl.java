@@ -145,6 +145,11 @@ public class RechargeOrderServiceImpl implements RechargeOrderService {
     }
 
     @Override
+    public void statisticsTotalValue(Integer tid, double amount, double give, String uid) {
+        rechargeOrderMapper.statisticsTotalValue(tid,amount,give,uid);
+    }
+
+    @Override
     public Integer uidIsPresent(int uid,int tid) {
         return rechargeOrderMapper.uidIsPresent(uid,tid);
     }

@@ -196,6 +196,20 @@ public class RechargeOrderController extends BaseController {
     }
 
     /**
+     * 统计 累计充值 和 累计赠送
+     * @param tid 平台id
+     * @param amount 金额
+     * @param give 赠送金额
+     * @param uid 用户
+     */
+    private void statisticsTotalValue(Integer tid, Long amount, Long give, String uid) {
+        double amounts = (amount == 0 ? 0 : (double)amount.doubleValue() / 10000);
+        double gives = (give == 0 ? 0 : (double)give / 10000);
+
+        rechargeOrderService.statisticsTotalValue(tid,amounts,gives,uid);
+    }
+
+    /**
      * 发送邮件
      * @param tid 平台id
      * @param amount 金额
@@ -210,8 +224,8 @@ public class RechargeOrderController extends BaseController {
 
         DecimalFormat df  = new DecimalFormat("0.00");
 
-        double amounts = (amount == 0 ? 0 : amount.doubleValue() / 10000);
-        double gives = (give == 0 ? 0 : give / 10000);
+        double amounts = (amount == 0 ? 0 : (double)amount.doubleValue() / 10000);
+        double gives = (give == 0 ? 0 : (double)give / 10000);
 
         String mailContent = "";
         if(amounts == 0){
@@ -238,8 +252,9 @@ public class RechargeOrderController extends BaseController {
         if ("1".equals(rechargeOrder.getBankCardRechargeType())) {// 确认充值
             BigDecimal b = new BigDecimal(10000);//乘以 一万
             Long amount = rechargeOrder.getRechargeAmount().multiply(b).longValue();//充值金额
-            Integer rechargeGive = rechargeOrderService.selectRechargeGive(2);//赠送比例
-            BigDecimal bigGive = rechargeOrder.getRechargeAmount().multiply(new BigDecimal(rechargeGive));
+            Integer rechargeGive = rechargeOrderService.selectRechargeGive(3);//赠送比例
+            BigDecimal bigGive = rechargeOrder.getRechargeAmount().multiply(b)
+                    .multiply(new BigDecimal(rechargeGive)).divide(new BigDecimal(100));
             Long give = bigGive.longValue();
             //请求 加金币
             BigDecimal currBig = new BigDecimal(0);//余额
