@@ -45,7 +45,7 @@ public class ExchangeServiceImpl implements ExchangeService {
         //发送配置
         JSONObject param = new JSONObject();
         List exchangeConfig = exchangeMapper.getExchangeConfig();
-        param.put("exchange.json", new JSONArray(exchangeConfig));
+        param.put("exchange.json", new JSONArray(exchangeConfig).toJSONString());
         HttpUtils.sendPost(managerConfig.getGameDomain(), "data=" + param.toJSONString());
         return i;
     }
