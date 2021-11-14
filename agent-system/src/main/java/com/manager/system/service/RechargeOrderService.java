@@ -33,6 +33,12 @@ public interface RechargeOrderService {
      */
     Integer editRechargeOrder(RechargeOrder rechargeOrder);
 
+    void statisticsTotalValue(Integer tid, double amount, double give, String uid);
+
+    Integer uidIsPresent(int uid,int tid);
+
+    String getChannel(int uid);
+
     Integer selectRechargeGive(int i);
 
     Integer selectJinMonthGive();

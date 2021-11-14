@@ -32,4 +32,5 @@ public interface HorseRaceLampService {
      */
     Integer delHorseRaceLamp(String id);
 
+    String getHorseRaceLamp();
 }

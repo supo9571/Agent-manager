@@ -9,15 +9,13 @@ import com.manager.common.enums.BusinessType;
 import com.manager.common.exception.CustomException;
 import com.manager.common.utils.SecurityUtils;
 import com.manager.common.utils.StringUtils;
+import com.manager.system.service.ConfigRegisterConstraintService;
 import com.manager.system.service.RechargeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,6 +31,8 @@ public class RechargeController extends BaseController {
 
     @Autowired
     private RechargeService rechargeService;
+    @Autowired
+    private ConfigRegisterConstraintService configRegisterConstraintService;
 
     /**
      * 添加 vip充值
@@ -338,4 +338,21 @@ public class RechargeController extends BaseController {
         List list = rechargeService.getBlack(uid,beginTime,endTime);
         return AjaxResult.success(getDataTable(list));
     }
+
+
+    @PreAuthorize("@ss.hasPermi('system:recharge:yslist')")
+    @ApiOperation(value = "注册限制")
+    @GetMapping("/getConfigRegisterConstraint")
+    public AjaxResult getConfigRegisterConstraint() {
+        return AjaxResult.success(configRegisterConstraintService.getConfigRegisterConstraint(ManagerConfig.getTid()));
+    }
+
+    @PreAuthorize("@ss.hasPermi('system:recharge:editys')")
+    @ApiOperation(value = "注册限制保存")
+    @PostMapping("/saveConfigRegisterConstraint")
+    public AjaxResult saveConfigRegisterConstraint(@RequestBody ConfigRegisterConstraint configRegisterConstraint) {
+        return AjaxResult.success(configRegisterConstraintService.saveConfigRegisterConstraint(configRegisterConstraint));
+    }
+
+
 }

@@ -194,7 +194,7 @@ public class SysUserController extends BaseController {
     @ApiOperation(value = "获取用户菜单下拉树列表")
     @GetMapping("/userTree")
     public AjaxResult treeselect(Long userId) {
-        List<SysMenu> menus = menuService.selectMenuList(new SysMenu(), userId);
+        List<SysMenu> menus = menuService.selectMenuList(new SysMenu(), new SysUser(userId));
         return AjaxResult.success(menuService.buildMenuTreeSelect(menus));
     }
 }

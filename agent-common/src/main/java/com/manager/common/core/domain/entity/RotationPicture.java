@@ -28,11 +28,11 @@ public class RotationPicture extends BaseEntity {
     @ApiModelProperty("轮播图描述")
     private String describes;
 
-    @ApiModelProperty("跳转状态 1是 2否")
-    private String jumpState;
+    @ApiModelProperty("类型：1：普通轮播图 2：轮播图上显示复制按钮，3：点击轮播图跳转网址 4：点击轮播图跳转界面 5:点击跳转游戏")
+    private String type;
 
     @ApiModelProperty("跳转链接")
-    private String jumpUrl;
+    private String url;
 
     @ApiModelProperty("状态 1启用 2禁用")
     private String state;

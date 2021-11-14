@@ -40,6 +40,9 @@ public class RechargeOrderServiceImpl implements RechargeOrderService {
         BigDecimal rechargeRechargeAmount = new BigDecimal(0);
         // 放回参数
         Map result = new HashMap();
+
+        List<RechargeOrder> sumList = rechargeOrderMapper.getRechargeOrderList(rechargeOrder);
+
         // 设置分页数据
         PageHelper.startPage(rechargeOrder.getPage(), rechargeOrder.getSize(),
                 rechargeOrder.getOrderByColumn() + " " + rechargeOrder.getIsAsc());
@@ -55,17 +58,24 @@ public class RechargeOrderServiceImpl implements RechargeOrderService {
         list = pageInfo.getList();
 
         // 左下角的哪几个字段
-        if (CollectionUtils.isNotEmpty(list)) {
+        if (CollectionUtils.isNotEmpty(sumList)) {
 
-            rechargeNum = list.size();
+            rechargeNum = sumList.size();
 
-            List<RechargeOrder> temp1 = list.stream().filter(f -> "1".equals(f.getPaymentStatus())).collect(Collectors.toList());
+            List<RechargeOrder> temp1 = sumList.stream().filter(f -> "1".equals(f.getPaymentStatus())).collect(Collectors.toList());
             if (CollectionUtils.isNotEmpty(temp1)) {
                 rechargeRechargeNum = temp1.size();
             }
 
-            for (RechargeOrder order : list) {
-                rechargeRechargeAmount = rechargeRechargeAmount.add(order.getRechargeAmount());
+            for (RechargeOrder order : sumList) {
+                // 银行卡充值 只取成功支付状态下的
+                if("2".equals(order.getRechargeType())){
+                    if("1".equals(order.getPaymentStatus())){
+                        rechargeRechargeAmount = rechargeRechargeAmount.add(order.getRechargeAmount());
+                    }
+                }else{
+                    rechargeRechargeAmount = rechargeRechargeAmount.add(order.getRechargeAmount());
+                }
             }
 
             // 查询系统赠送页面的多放回几个字段
@@ -88,19 +98,19 @@ public class RechargeOrderServiceImpl implements RechargeOrderService {
                 // 彩金扣除金额
                 BigDecimal jackpotDeductionAmount = new BigDecimal(0);
 
-                for (RechargeOrder order : list) {
+                for (RechargeOrder order : sumList) {
                     if ("1".equals(order.getOperateType())) {
                         artificialRechargeNum++;
-                        artificialRechargeAmount.add(order.getExCoins());
+                        artificialRechargeAmount = artificialRechargeAmount.add(order.getRechargeAmount());
                     } else if ("2".equals(order.getOperateType())) {
                         rechargeDeductionNum++;
-                        rechargeDeductionAmount.add(order.getExCoins());
+                        rechargeDeductionAmount = rechargeDeductionAmount.add(order.getRechargeAmount());
                     } else if ("3".equals(order.getOperateType())) {
                         jackpotRechargeNum++;
-                        jackpotRechargeAmount.add(order.getExCoins());
+                        jackpotRechargeAmount = jackpotRechargeAmount.add(order.getRechargeAmount());
                     } else if ("4".equals(order.getOperateType())) {
                         jackpotDeductionNum++;
-                        jackpotDeductionAmount.add(order.getExCoins());
+                        jackpotDeductionAmount = jackpotDeductionAmount.add(order.getRechargeAmount());
                     }
                 }
                 result.put("artificialRechargeNum", artificialRechargeNum);
@@ -135,11 +145,23 @@ public class RechargeOrderServiceImpl implements RechargeOrderService {
     }
 
     @Override
+    public void statisticsTotalValue(Integer tid, double amount, double give, String uid) {
+        rechargeOrderMapper.statisticsTotalValue(tid,amount,give,uid);
+    }
+
+    @Override
+    public Integer uidIsPresent(int uid,int tid) {
+        return rechargeOrderMapper.uidIsPresent(uid,tid);
+    }
+
+    @Override
+    public String getChannel(int uid) {
+        return rechargeOrderMapper.getChannel(uid);
+    }
+
+    @Override
     public Integer selectRechargeGive(int i) {
-        if (i == 1 || i == 2) {
-            return rechargeOrderMapper.selectRechargeGive(i);
-        }
-        return 0;
+        return rechargeOrderMapper.selectRechargeGive(i);
     }
 
     @Override

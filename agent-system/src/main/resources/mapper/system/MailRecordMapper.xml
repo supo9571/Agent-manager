@@ -31,6 +31,12 @@
         <if test="mailState !=null and mailState !=''">
             and smr.mail_state = #{mailState}
         </if>
+        <if test="beginTime !=null and beginTime !=''">
+            and date_format(smr.create_time,'%Y-%m-%d') >= #{beginTime}
+        </if>
+        <if test="endTime !=null and endTime !=''">
+            and date_format(smr.create_time,'%Y-%m-%d') <![CDATA[<=]]> #{endTime}
+        </if>
     </select>
 
     <insert id="saveMailRecord" parameterType="com.manager.common.core.domain.entity.MailRecord">
@@ -40,5 +46,31 @@
             <foreach item="item" index="index" collection="addressee.split(',')" separator=",">
                 (#{tenant},#{signature},#{item},#{mailTitle},#{mailProp},#{mailContent},#{mailState},sysdate(),sysdate())
             </foreach>
+    </insert>
+
+    <insert id="sendOutMail">
+        insert into sys_mail_record(
+            tid,
+            addressee,
+            mail_title,
+            mail_prop,
+            create_time,
+            update_time,
+            mail_content,
+            signature,
+            mail_state,
+            del_flag)
+        values (
+            #{tid},
+            #{addressee},
+            #{mailTitle},
+            #{mailProp},
+            sysdate(),
+            sysdate(),
+            #{mailContent},
+            '运营团队',
+            2,
+            0
+       )
     </insert>
 </mapper>

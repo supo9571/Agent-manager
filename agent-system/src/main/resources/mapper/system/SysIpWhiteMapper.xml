@@ -24,7 +24,7 @@
         select u.user_name userName
         ,w.create_by createName
         ,w.ip
-        ,DATE_FORMAT(w.create_time,'%Y-%m-%d %H:%i-%s') createTime
+        ,DATE_FORMAT(w.create_time,'%Y-%m-%d %H:%i:%s') createTime
         ,w.id
         ,w.type
         from sys_ip_white w
@@ -32,9 +32,6 @@
         on w.user_id = u.user_id
         <where>
                and w.tenant = #{tenant}
-            <if test="type != null and type != ''">
-                and w.type = #{type}
-            </if>
             <if test="userId != null and userId != ''">
                 and w.user_id = #{userId}
             </if>
@@ -54,6 +51,5 @@
         left join sys_user u on i.user_id = u.user_id
         where i.user_id = #{userId}
           and i.tenant = #{tenant}
-        and type = 0
     </select>
 </mapper>

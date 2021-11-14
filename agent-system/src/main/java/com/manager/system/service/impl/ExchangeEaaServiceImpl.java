@@ -53,6 +53,8 @@ public class ExchangeEaaServiceImpl implements ExchangeEaaService {
         BigDecimal exchangeMoney6 = new BigDecimal(0);
         BigDecimal exchangeMoney7 = new BigDecimal(0);
 
+        List<ExchangeEaa> sumList = exchangeEaaMapper.getExchangeEaaList(exchangeEaa);
+
         // 设置分页数据
         PageHelper.startPage(exchangeEaa.getPage(), exchangeEaa.getSize(),
                 exchangeEaa.getOrderByColumn() + " " + exchangeEaa.getIsAsc());
@@ -68,32 +70,32 @@ public class ExchangeEaaServiceImpl implements ExchangeEaaService {
         list = pageInfo.getList();
 
         // 左下角的哪几个字段
-        if (CollectionUtils.isNotEmpty(list)) {
+        if (CollectionUtils.isNotEmpty(sumList)) {
 
-            for (ExchangeEaa eaa : list) {
+            for (ExchangeEaa eaa : sumList) {
                 if ("1".equals(eaa.getExaaStatus())) {
                     exchangeNum1++;
-                    exchangeMoney1.add(eaa.getWithdrawMoney());
+                    exchangeMoney1 = exchangeMoney1.add(eaa.getWithdrawMoney());
                 } else if ("2".equals(eaa.getExaaStatus())) {
                     exchangeNum2++;
-                    exchangeMoney2.add(eaa.getWithdrawMoney());
+                    exchangeMoney2 = exchangeMoney2.add(eaa.getWithdrawMoney());
                 } else if ("3".equals(eaa.getExaaStatus())) {
                     exchangeNum3++;
-                    exchangeMoney3.add(eaa.getWithdrawMoney());
-                    exchangeMoney32.add(eaa.getTransferAmount());
-                    exchangeMoney33.add(eaa.getPoundage());
+                    exchangeMoney3 = exchangeMoney3.add(eaa.getWithdrawMoney());
+                    exchangeMoney32 = exchangeMoney32.add(eaa.getTransferAmount());
+                    exchangeMoney33 = exchangeMoney33.add(eaa.getPoundage());
                 } else if ("4".equals(eaa.getExaaStatus())) {
                     exchangeNum4++;
-                    exchangeMoney4.add(eaa.getWithdrawMoney());
+                    exchangeMoney4 = exchangeMoney4.add(eaa.getWithdrawMoney());
                 } else if ("5".equals(eaa.getExaaStatus())) {
                     exchangeNum5++;
-                    exchangeMoney5.add(eaa.getWithdrawMoney());
+                    exchangeMoney5 = exchangeMoney5.add(eaa.getWithdrawMoney());
                 } else if ("6".equals(eaa.getExaaStatus())) {
                     exchangeNum6++;
-                    exchangeMoney6.add(eaa.getWithdrawMoney());
+                    exchangeMoney6 = exchangeMoney6.add(eaa.getWithdrawMoney());
                 } else if ("7".equals(eaa.getExaaStatus())) {
                     exchangeNum7++;
-                    exchangeMoney7.add(eaa.getWithdrawMoney());
+                    exchangeMoney7 = exchangeMoney7.add(eaa.getWithdrawMoney());
                 }
             }
         }
@@ -136,6 +138,11 @@ public class ExchangeEaaServiceImpl implements ExchangeEaaService {
     @Override
     public int editExchangeEaaList(ExchangeEaa exchangeEaa) {
         return exchangeEaaMapper.editExchangeEaaList(exchangeEaa);
+    }
+
+    @Override
+    public ExchangeEaa getTransferAmount(String id) {
+        return exchangeEaaMapper.getTransferAmount(id);
     }
 
     @Override

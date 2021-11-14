@@ -258,7 +258,7 @@
              ,SUM(IF(TYPE=1,VALUE,0))/10000 transferInAmount
              ,COUNT(IF(TYPE=2,1,0)) rechargeCounts
              ,SUM(IF(TYPE=2,VALUE,0))/10000 rechargeAmount
-             ,(SELECT amount FROM config_ys_quota WHERE DATE_FORMAT(create_time, '%Y-%m-%d') = day ORDER BY create_time DESC LIMIT 0,1) curr
+             ,(SELECT amount/10000 FROM config_ys_quota WHERE DATE_FORMAT(create_time, '%Y-%m-%d') = day ORDER BY create_time DESC LIMIT 0,1) curr
              ,(SELECT SUM(ex_coins) FROM config_recharge_order WHERE DATE_FORMAT(create_time, '%Y-%m-%d') = day AND admin_user_id = ysid) giveAmount
              ,(SELECT COUNT(ex_coins) FROM config_recharge_order WHERE DATE_FORMAT(create_time, '%Y-%m-%d') = day AND admin_user_id = ysid) giveCount
         FROM config_ys_quota

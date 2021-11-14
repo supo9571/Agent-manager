@@ -5,6 +5,7 @@ import com.manager.common.config.ManagerConfig;
 import com.manager.common.core.controller.BaseController;
 import com.manager.common.core.domain.AjaxResult;
 import com.manager.common.core.domain.entity.ConfigAgent;
+import com.manager.common.core.redis.RedisCache;
 import com.manager.common.enums.BusinessType;
 import com.manager.system.service.ConfigAgenService;
 import io.swagger.annotations.Api;
@@ -31,6 +32,8 @@ public class ConfigAgentController extends BaseController {
     @Autowired
     private ConfigAgenService configAgenService;
 
+    @Autowired
+    private RedisCache redisCache;
     /**
      * 全民代理配置列表
      *
@@ -60,8 +63,8 @@ public class ConfigAgentController extends BaseController {
     @PostMapping("/saveConfigAgent")
     public AjaxResult saveConfigAgent(@RequestBody ConfigAgent configAgent) {
         configAgent.setTid(ManagerConfig.getTid());
-        int i = configAgenService.saveConfigAgent(configAgent);
-        return i > 0 ? AjaxResult.success() : AjaxResult.error();
+        redisCache.deleteObject("rebate_form");
+        return toAjax(configAgenService.saveConfigAgent(configAgent));
     }
 
     /**
@@ -74,8 +77,8 @@ public class ConfigAgentController extends BaseController {
     @Log(title = "修改全民代理", businessType = BusinessType.UPDATE)
     @PostMapping("/upConfigAgent")
     public AjaxResult upConfigAgent(@RequestBody ConfigAgent configAgent) {
-        int i = configAgenService.upConfigAgent(configAgent);
-        return i > 0 ? AjaxResult.success() : AjaxResult.error();
+        redisCache.deleteObject("rebate_form");
+        return toAjax(configAgenService.upConfigAgent(configAgent));
     }
 
     /**
@@ -88,8 +91,8 @@ public class ConfigAgentController extends BaseController {
     @Log(title = "删除全民代理", businessType = BusinessType.DELETE)
     @PostMapping("/delConfigAgent")
     public AjaxResult delConfigAgent(String id) {
-        int i = configAgenService.delConfigAgent(Integer.valueOf(id));
-        return i > 0 ? AjaxResult.success() : AjaxResult.error();
+        redisCache.deleteObject("rebate_form");
+        return toAjax(configAgenService.delConfigAgent(Integer.valueOf(id)));
     }
 
 
@@ -115,7 +118,7 @@ public class ConfigAgentController extends BaseController {
     @ApiOperation(value = "推广链接域名配置")
     @PostMapping("/upPromotionDomainToAll")
     public AjaxResult upPromotionDomainToAll(String promotionDomain) {
-        int i = configAgenService.upPromotionDomainToAll(promotionDomain);
-        return i > 0 ? AjaxResult.success() : AjaxResult.error();
+        redisCache.deleteObject("rebate_form");
+        return toAjax(configAgenService.upPromotionDomainToAll(promotionDomain));
     }
 }

@@ -25,7 +25,7 @@ public interface ActivityMapper {
 
     Integer updateActivity(Activity activity);
 
-    @Select("select activity_begin ac_begin_time,activity_end ac_end_time,sort sort_index,'true' open_state,activity_info ac_content,activity_type ac_type from config_activity " +
+    @Select("select activity_begin ac_begin_time,activity_end ac_end_time,sort sort_index,activity_info ac_content,activity_type ac_type from config_activity " +
             "where activity_begin<=sysdate() and sysdate()<=activity_end and tid = #{tid} order by update_time desc")
     List<Map> getActivityConfig(@Param("tid") Integer tid);
 

@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 跑马灯配置
@@ -36,5 +37,5 @@ public interface HorseRaceLampMapper {
     @Delete("delete from sys_horse_race_lamp where id = #{id}")
     Integer delHorseRaceLamp(@Param("id") String id);
 
-
+    List<Map> getHorseRaceLamp();
 }

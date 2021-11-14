@@ -9,8 +9,8 @@
                                          sort,
                                          ident,
                                          describes,
-                                         jump_state,
-                                         jump_url,
+                                         type,
+                                         url,
                                          state,
                                          extend_information,
                                          create_time, update_time, create_by, update_by)
@@ -18,8 +18,8 @@
                 #{sort},
                 #{ident},
                 #{describes},
-                #{jumpState},
-                #{jumpUrl},
+                #{type},
+                #{url},
                 #{state},
                 #{extendInformation},
                 sysdate(), sysdate(), #{createBy}, #{createBy})
@@ -32,8 +32,8 @@
         srp.sort as sort,
         srp.ident as ident,
         srp.describes as describes,
-        srp.jump_state as jumpState,
-        srp.jump_url as jumpUrl,
+        srp.type as type,
+        srp.url as url,
         srp.state as state,
         srp.extend_information as extendInformation,
         srp.create_time as createTime,
@@ -61,8 +61,8 @@
             <if test="sort!=null and sort!=''">sort = #{sort},</if>
             <if test="ident!=null and ident!=''">ident = #{ident},</if>
             <if test="describes!=null and describes!=''">describes = #{describes},</if>
-            <if test="jumpState!=null and jumpState!=''">jump_state = #{jumpState},</if>
-            <if test="jumpUrl!=null and jumpUrl!=''">jump_url = #{jumpUrl},</if>
+            <if test="type!=null and type!=''">type = #{type},</if>
+            <if test="url!=null and url!=''">url = #{url},</if>
             <if test="state!=null and state!=''">state = #{state},</if>
             <if test="extendInformation!=null and extendInformation!=''">extend_information = #{extendInformation},</if>
             update_time = sysdate(),

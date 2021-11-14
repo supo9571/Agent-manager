@@ -35,7 +35,14 @@ public class PersonalMailServiceImpl implements PersonalMailService {
 
     @Override
     public List listPersonalMail(PersonalMail personalMail) {
-        return personalMailMapper.listPersonalMail(personalMail);
+        List<PersonalMail> list = personalMailMapper.listPersonalMail(personalMail);
+        // 状态不等于已下线 且 判断当前时间是否大于发送时间
+        list.forEach(l ->{
+            if ((!"3".equals(l.getState())) && DateUtils.dateCompare(l.getSendOutTime())) {
+                l.setState("2");
+            }
+        });
+        return list;
     }
 
     @Override

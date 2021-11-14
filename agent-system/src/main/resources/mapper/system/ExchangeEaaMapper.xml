@@ -41,6 +41,9 @@
         on (ceo.uid = ue.uid and ceo.withdraw_type = ue.type)
         where 1 = 1
         and ceo.tid = #{tid}
+        <if test="uid !=null and uid !=0">
+            and ceo.uid = #{uid}
+        </if>
         <if test="withdrawOrderNumber !=null and withdrawOrderNumber !=''">
             and ceo.withdraw_order_number = #{withdrawOrderNumber}
         </if>
@@ -56,11 +59,11 @@
         <if test="transferType !=null and transferType !=''">
             and ceo.transfer_type = #{transferType}
         </if>
-        <if test="createTime1 !=null and createTime1 !=''">
-            and ceo.create_time >= #{createTime1}
+        <if test="beginTime !=null and beginTime !=''">
+            and ceo.create_time >= #{beginTime}
         </if>
-        <if test="createTime2 !=null and createTime2 !=''">
-            and cro.create_time <![CDATA[<=]]>  #{finishTime2}
+        <if test="endTime !=null and endTime !=''">
+            and ceo.create_time <![CDATA[<=]]> #{endTime}
         </if>
     </select>
 
@@ -85,6 +88,7 @@
             <if test="remark!=null and remark!=''">remark = #{remark},</if>
             <if test="exaaStatus!=null and exaaStatus!=''">exaa_status = #{exaaStatus},</if>
             <if test="transferType!=null and transferType!=''">transfer_type = #{transferType},</if>
+            update_by = #{updateBy},
             update_time = sysdate()
         </set>
         where id = #{id} and tid=#{tid}

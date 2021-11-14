@@ -1,6 +1,7 @@
 package com.manager.framework.web.service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import com.manager.common.core.domain.entity.SysUser;
 import com.manager.common.utils.StringUtils;
@@ -60,7 +61,7 @@ public class SysLoginService {
      * @param googleCode 验证码
      * @return 结果
      */
-    public String login(String username, String password, String googleCode) {
+    public String login(String username, String password, String googleCode, HttpServletRequest request) {
         // 用户验证
         Authentication authentication = null;
         try {
@@ -89,7 +90,7 @@ public class SysLoginService {
 
         //验证ip
         String ips = sysIpWhiteService.selectIpByUserId(loginUser.getUser().getUserId() + "");
-        if (ips.isEmpty() || ips.contains(IpUtils.getHostIp())) {
+        if (ips.isEmpty() || ips.contains(IpUtils.getIpAddr(request))) {
             AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success")));
             recordLoginInfo(loginUser.getUser());
             // 生成token

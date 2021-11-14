@@ -8,6 +8,7 @@
             resultType="com.manager.common.core.domain.entity.RechargeOrder">
         SELECT
         cro.id as id,
+        cro.tid as tid,
         cro.order_number as orderNumber,
         cro.third_party_order_number as thirdPartyOrderNumber,
         cro.uid as uid,
@@ -42,6 +43,7 @@
         cro.finish_time as finishTime,
         cro.create_time as createTime,
         cro.update_time as updateTime,
+        cro.update_by as updateBy,
         cro.commodity_name as commodityName,
         cro.transfer_way as transferWay,
         cro.remark as remark,
@@ -83,6 +85,9 @@
         <if test="rechargeAmount !=null">
             and cro.recharge_amount = #{rechargeAmount}
         </if>
+        <if test="operateType !=null and operateType !=''">
+            and cro.operate_type = #{operateType}
+        </if>
 
         <if test="createTime1 !=null and createTime1 !=''">
             and cro.create_time >= #{createTime1}
@@ -109,6 +114,7 @@
                                           payment_status,
                                           create_time,
                                           finish_time,
+                                          update_by,
                                           remark,
                                           operate_type,
                                           operate_account,
@@ -123,6 +129,7 @@
                 '1',
                 sysdate(),
                 sysdate(),
+                #{updateBy},
                 #{remark},
                 #{operateType},
                 #{operateAccount},
@@ -156,9 +163,22 @@
             <if test="remark!=null and remark!=''">
                 remark = #{remark},
             </if>
-            update_time = sysdate()
+            update_by = #{updateBy},
+            update_time = sysdate(),
+            finish_time = sysdate()
         </set>
         where id = #{id} and tid=#{tid}
+    </update>
+
+    <update id="statisticsTotalValue">
+        update data_register dr
+        <set>
+            dr.today_add = today_add + #{amount},
+            dr.today_add = today_add + #{give}
+        </set>
+        where
+            dr.uid = #{uid}
+            and dr.uid = #{tid}
     </update>
 
     <select id="getRechargeAmount" resultType="java.util.Map">

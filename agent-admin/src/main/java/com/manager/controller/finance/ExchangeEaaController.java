@@ -4,11 +4,14 @@ import com.manager.common.annotation.Log;
 import com.manager.common.core.controller.BaseController;
 import com.manager.common.core.domain.AjaxResult;
 import com.manager.common.core.domain.entity.ExchangeEaa;
+import com.manager.common.core.domain.entity.MailRecord;
 import com.manager.common.enums.BusinessType;
+import com.manager.common.utils.SecurityUtils;
 import com.manager.common.utils.file.FileUtils;
 import com.manager.common.utils.poi.ExcelUtil;
 import com.manager.openFegin.ReportService;
 import com.manager.system.service.ExchangeEaaService;
+import com.manager.system.service.MailRecordService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.List;
 
 /**
@@ -37,10 +41,14 @@ public class ExchangeEaaController extends BaseController {
     @Autowired
     private ReportService reportService;
 
+    @Autowired
+    private MailRecordService mailRecordService;
+
     /**
      * 查询提现审批数据
      */
     @ApiOperation(value = "提现审批查询")
+    @PreAuthorize("@ss.hasPermi('system:finance:exchangeEaa:list')")
     @PostMapping("/listExchangeEaa")
     public AjaxResult getExchangeEaaList(@RequestBody ExchangeEaa exchangeEaa) {
         return AjaxResult.success("查询成功", exchangeEaaService.getExchangeEaaList(exchangeEaa));
@@ -50,6 +58,7 @@ public class ExchangeEaaController extends BaseController {
      * 玩家打码信息查询
      */
     @ApiOperation(value = "玩家打码信息查询")
+    @PreAuthorize("@ss.hasPermi('system:finance:exchangeEaa:list')")
     @PostMapping("/getAddMosaicPlayerList")
     public AjaxResult getAddMosaicPlayerList(int uid) {
         return AjaxResult.success("查询成功", exchangeEaaService.getAddMosaicPlayerList(uid));
@@ -71,12 +80,13 @@ public class ExchangeEaaController extends BaseController {
         util.downloadExcel(list, fileName, response.getOutputStream());
     }
 
-    @PreAuthorize("@ss.hasPermi('system:game:editExchange')")
+    @PreAuthorize("@ss.hasPermi('system:finance:editExchange')")
     @ApiOperation(value = "编辑提现审批")
     @Log(title = "编辑提现审批", businessType = BusinessType.UPDATE)
     @PostMapping("/editExchangeEaaList")
     public AjaxResult editExchangeEaaList(@RequestBody ExchangeEaa exchangeEaa) {
         if(exchangeEaa != null && exchangeEaa.getUid() != null){
+            exchangeEaa.setUpdateBy(SecurityUtils.getUsername());
             // 7已退款
             if("7".equals(exchangeEaa.getExaaStatus())){
                 BigDecimal withdrawMoney = exchangeEaa.getWithdrawMoney();
@@ -87,19 +97,14 @@ public class ExchangeEaaController extends BaseController {
                 }
 
                 // 驳回提现请求用户返金币
-                System.out.println(Integer.valueOf(withdrawMoney.intValue()));
                 AjaxResult ajaxResult = reportService.returnBack(
                         exchangeEaa.getUid(),Integer.valueOf(withdrawMoney.intValue()));
 
-                // 发邮件告诉提现失败
-                if ("200".equals(String.valueOf(ajaxResult.get("code")))) {
-                    AjaxResult ajaxResult2 = reportService.sendEmail(2,exchangeEaa.getUid().toString());
-                    if(!("200".equals(String.valueOf(ajaxResult2.get("code"))))){
-                        error("请求游戏服失败");
-                    }
-                } else {
-                    return error("请求游戏服失败");
+                if(!("200".equals(String.valueOf(ajaxResult.get("code"))))){
+                    error("请求游戏服失败");
                 }
+                // 发邮件告诉提现失败
+                sendOutMail(exchangeEaa);
             }
             // 状态改为打款中（财务打款直接改为已打款；第三方代付需要收到回调改为已打款/打款失败）
             if("4".equals(exchangeEaa.getExaaStatus())){
@@ -108,10 +113,12 @@ public class ExchangeEaaController extends BaseController {
                     exchangeEaa.setExaaStatus("3");
 
                     // 打款成功发邮件告知玩家
-                    AjaxResult ajaxResult = reportService.sendEmail(2,exchangeEaa.getUid().toString());
-                    if(!("200".equals(String.valueOf(ajaxResult.get("code"))))){
-                        error("请求游戏服失败");
-                    }
+                    sendOutMail(exchangeEaa);
+                }else{
+                    exchangeEaa.setExaaStatus("3");
+
+                    // 打款成功发邮件告知玩家
+                    sendOutMail(exchangeEaa);
                 }
 
                 // 只有打款中状态下===第三方回调返回打款失败，才改为打款失败 (等支持模块实现在做这个功能)
@@ -120,6 +127,28 @@ public class ExchangeEaaController extends BaseController {
 
         int i = exchangeEaaService.editExchangeEaaList(exchangeEaa);
         return i > 0 ? AjaxResult.success() : AjaxResult.error();
+    }
+
+    /**
+     * 发送邮件
+     */
+    private void sendOutMail(ExchangeEaa exchangeEaa) {
+        ExchangeEaa exchangeEaa2 = exchangeEaaService.getTransferAmount(exchangeEaa.getId());
+        DecimalFormat df  = new DecimalFormat("0.00");
+
+        MailRecord mailRecord = new MailRecord();
+        mailRecord.setTid(exchangeEaa.getTid());
+        mailRecord.setAddressee(String.valueOf(exchangeEaa.getUid()));
+        if("7".equals(exchangeEaa.getExaaStatus())){
+            mailRecord.setMailTitle("提现失败");
+            mailRecord.setMailContent("亲爱的玩家： 您好！ 您申请提现的"
+                    + df.format(exchangeEaa2.getTransferAmount()) +"元已被拒绝，金币已原路返回至您的账号中，如有疑问请联系客服。");
+        }else{
+            mailRecord.setMailTitle("提现成功");
+            mailRecord.setMailContent("亲爱的玩家： 您好！ 您申请提现的"
+                    + df.format(exchangeEaa2.getTransferAmount()) +"元已打款成功，请留意账户动态；部分商户可能会延迟到账，还请耐心等待；如有疑问请联系客服。");
+        }
+        mailRecordService.sendOutMail(mailRecord);
     }
 
     /**

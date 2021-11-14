@@ -175,7 +175,7 @@ public class SysRoleController extends BaseController {
     /**
      * 获取角色选择框列表
      */
-    @PreAuthorize("@ss.hasPermi('system:role:query')")
+    @PreAuthorize("@ss.hasPermi('system:role:list')")
     @ApiOperation(value = "获取角色选择框列表")
     @GetMapping("/optionselect")
     public AjaxResult optionselect() {
@@ -253,7 +253,7 @@ public class SysRoleController extends BaseController {
     @GetMapping(value = "/roleMenuTreeselect/{roleId}")
     public AjaxResult roleMenuTreeselect(@PathVariable("roleId") Long roleId) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        List<SysMenu> menus = menuService.selectMenuList(loginUser.getUser().getUserId());
+        List<SysMenu> menus = menuService.selectMenuList(loginUser.getUser());
         Map map = new HashMap();
         map.put("checkedKeys", menuService.selectMenuListByRoleId(roleId));
         map.put("menus", menuService.buildMenuTreeSelect(menus));
@@ -267,8 +267,7 @@ public class SysRoleController extends BaseController {
     @GetMapping("/treeselect")
     public AjaxResult treeselect(SysMenu menu) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        Long userId = loginUser.getUser().getUserId();
-        List<SysMenu> menus = menuService.selectMenuList(menu, userId);
+        List<SysMenu> menus = menuService.selectMenuList(menu, loginUser.getUser());
         return AjaxResult.success(menuService.buildMenuTreeSelect(menus));
     }
 }

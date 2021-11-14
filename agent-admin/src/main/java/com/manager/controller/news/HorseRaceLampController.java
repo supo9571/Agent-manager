@@ -7,6 +7,7 @@ import com.manager.common.core.domain.AjaxResult;
 import com.manager.common.core.domain.entity.HorseRaceLamp;
 import com.manager.common.enums.BusinessType;
 import com.manager.common.utils.SecurityUtils;
+import com.manager.common.utils.http.HttpUtils;
 import com.manager.system.service.HorseRaceLampService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -83,6 +84,26 @@ public class HorseRaceLampController extends BaseController {
     public AjaxResult delHorseRaceLamp(String id) {
         Integer i = horseRaceLampService.delHorseRaceLamp(id);
         return i > 0 ? AjaxResult.success() : AjaxResult.error();
+    }
+
+    @Autowired
+    private ManagerConfig managerConfig;
+    /**
+     * 发送跑马灯配置
+     */
+    @PreAuthorize("@ss.hasPermi('system:news:send')")
+    @ApiOperation(value = "发送跑马灯配置")
+    @Log(title = "发送跑马灯配置", businessType = BusinessType.OTHER)
+    @PostMapping("/send")
+    public AjaxResult send() {
+        //查询跑马灯配置
+        String param = horseRaceLampService.getHorseRaceLamp();
+        //发送跑马灯配置
+        String result = HttpUtils.sendPost(managerConfig.getGameDomain(), "data=" + param);
+        if (!"scuess".equals(result)) {
+            return AjaxResult.error(result);
+        }
+        return AjaxResult.success("发送成功");
     }
 
 }

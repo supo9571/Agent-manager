@@ -168,4 +168,17 @@ public class FileUtils {
         String encode = URLEncoder.encode(s, StandardCharsets.UTF_8.toString());
         return encode.replaceAll("\\+", "%20");
     }
+
+    public static void setFileName(HttpServletResponse response, String realFileName) throws UnsupportedEncodingException {
+        String percentEncodedFileName = percentEncode(realFileName);
+        StringBuilder contentDispositionValue = new StringBuilder();
+        contentDispositionValue.append("attachment; filename=")
+                .append(percentEncodedFileName)
+                .append(";")
+                .append("filename*=")
+                .append("utf-8''")
+                .append(percentEncodedFileName);
+
+        response.setHeader("Content-disposition", contentDispositionValue.toString());
+    }
 }

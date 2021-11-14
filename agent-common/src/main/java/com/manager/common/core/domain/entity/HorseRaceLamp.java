@@ -39,4 +39,10 @@ public class HorseRaceLamp extends BaseEntity {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private String createTime2;
 
+    @ApiModelProperty("播放开始时间(字符串就好)")
+    private String playBeginTime;
+
+    @ApiModelProperty("播放结束时间(字符串就好)")
+    private String playEndTime;
+
 }

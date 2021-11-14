@@ -44,10 +44,10 @@ public interface AgentService {
     AjaxResult getTotals(@RequestBody Summarize summarize);
 
     @PostMapping(value = "/data/total/left")
-    AjaxResult getLeft(@RequestParam("tid")int tid);
+    AjaxResult getLeft(@RequestParam("tid")String tid);
 
     @PostMapping(value = "/data/total/right")
-    AjaxResult getRight(@RequestParam("tid")int tid,@RequestParam("beginTime") String beginTime,@RequestParam("endTime") String endTime);
+    AjaxResult getRight(@RequestParam("tid")String tid,@RequestParam("beginTime") String beginTime,@RequestParam("endTime") String endTime);
 
     @PostMapping(value = "/data/total/export", consumes = "application/json")
     List getExport(@RequestBody Summarize summarize);
